@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="de"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DTOMapper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">soprafs20</a> &gt; <a href="index.source.html" class="el_package">ch.uzh.ifi.seal.soprafs20.rest.mapper</a> &gt; <span class="el_source">DTOMapper.java</span></div><h1>DTOMapper.java</h1><pre class="source lang-java linenums">package ch.uzh.ifi.seal.soprafs20.rest.mapper;
+
+import ch.uzh.ifi.seal.soprafs20.entity.User;
+import ch.uzh.ifi.seal.soprafs20.rest.dto.UserGetDTO;
+import ch.uzh.ifi.seal.soprafs20.rest.dto.UserPostDTO;
+import ch.uzh.ifi.seal.soprafs20.rest.dto.UserPutDTO;
+import org.mapstruct.*;
+import org.mapstruct.factory.Mappers;
+
+/**
+ * DTOMapper
+ * This class is responsible for generating classes that will automatically transform/map the internal representation
+ * of an entity (e.g., the User) to the external/API representation (e.g., UserGetDTO for getting, UserPostDTO for creating)
+ * and vice versa.
+ * Additional mappers can be defined for new entities.
+ * Always created one mapper for getting information (GET) and one mapper for creating information (POST).
+ */
+@Mapper
+public interface DTOMapper {
+
+<span class="fc" id="L21">    DTOMapper INSTANCE = Mappers.getMapper(DTOMapper.class);</span>
+
+    @Mapping(source = &quot;name&quot;, target = &quot;name&quot;)
+    @Mapping(source = &quot;username&quot;, target = &quot;username&quot;)
+    @Mapping(source = &quot;password&quot;, target = &quot;password&quot;)
+    User convertUserPostDTOtoEntity(UserPostDTO userPostDTO);
+
+    @Mapping(source = &quot;id&quot;, target = &quot;id&quot;)
+    @Mapping(source = &quot;name&quot;, target = &quot;name&quot;)
+    @Mapping(source = &quot;username&quot;, target = &quot;username&quot;)
+    @Mapping(source = &quot;status&quot;, target = &quot;status&quot;)
+    @Mapping(source = &quot;password&quot;, target = &quot;password&quot;)
+    @Mapping(source = &quot;creationDate&quot;, target = &quot;creationDate&quot;)
+    @Mapping(source = &quot;birthDate&quot;, target = &quot;birthDate&quot;)
+    UserGetDTO convertEntityToUserGetDTO(User user);
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

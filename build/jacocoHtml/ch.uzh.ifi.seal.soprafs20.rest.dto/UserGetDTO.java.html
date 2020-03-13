@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="de"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserGetDTO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">soprafs20</a> &gt; <a href="index.source.html" class="el_package">ch.uzh.ifi.seal.soprafs20.rest.dto</a> &gt; <span class="el_source">UserGetDTO.java</span></div><h1>UserGetDTO.java</h1><pre class="source lang-java linenums">package ch.uzh.ifi.seal.soprafs20.rest.dto;
+
+import ch.uzh.ifi.seal.soprafs20.constant.UserStatus;
+
+<span class="fc" id="L5">public class UserGetDTO {</span>
+
+    private Long id;
+    private String name;
+    private String username;
+    private String password;
+    private UserStatus status;
+    private String creationDate;
+    private String birthDate;
+
+    public Long getId() {
+<span class="fc" id="L16">        return id;</span>
+    }
+
+    public void setId(Long id) {
+<span class="fc" id="L20">        this.id = id;</span>
+<span class="fc" id="L21">    }</span>
+
+    public String getName() {
+<span class="fc" id="L24">        return name;</span>
+    }
+
+    public void setName(String name) {
+<span class="fc" id="L28">        this.name = name;</span>
+<span class="fc" id="L29">    }</span>
+
+    public String getUsername() {
+<span class="fc" id="L32">        return username;</span>
+    }
+
+    public void setUsername(String username) {
+<span class="fc" id="L36">        this.username = username;</span>
+<span class="fc" id="L37">    }</span>
+
+    public String getPassword() {
+<span class="fc" id="L40">        return password;</span>
+    }
+
+    public void setPassword(String password) {
+<span class="fc" id="L44">        this.password = password;</span>
+<span class="fc" id="L45">    }</span>
+
+    public UserStatus getStatus() {
+<span class="fc" id="L48">        return status;</span>
+    }
+
+    public void setStatus(UserStatus status) {
+<span class="fc" id="L52">        this.status = status;</span>
+<span class="fc" id="L53">    }</span>
+
+<span class="fc" id="L55">    public String getCreationDate(){ return creationDate;}</span>
+
+<span class="fc" id="L57">    public void setCreationDate(String creationDate){ this.creationDate = creationDate;}</span>
+
+<span class="fc" id="L59">    public String getBirthDate(){ return birthDate;}</span>
+
+<span class="fc" id="L61">    public void setBirthDate(String birthDate){ this.birthDate = birthDate;}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
