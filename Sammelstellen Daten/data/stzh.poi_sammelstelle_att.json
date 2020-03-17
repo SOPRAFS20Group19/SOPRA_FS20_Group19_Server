@@ -1,0 +1,2082 @@
+{
+	"type" : "FeatureCollection",
+	"name" : "stzh.poi_sammelstelle_att",
+	"features" : [
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42906",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42906",
+				"behindertengerecht" : "X"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa43002",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "43002",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa41375",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "41375",
+				"behindertengerecht" : "X"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42885",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42885",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42886",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : "X",
+				"standort_id" : "42886",
+				"behindertengerecht" : "X"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42836",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42836",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa45705",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "45705",
+				"behindertengerecht" : "X"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa43001",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "43001",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42923",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42923",
+				"behindertengerecht" : "X"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42930",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42930",
+				"behindertengerecht" : "X"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa43904",
+				"glas" : "X",
+				"metall" : null,
+				"oel" : "X",
+				"standort_id" : "43904",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa43010",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "43010",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa43011",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "43011",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa43005",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : "X",
+				"standort_id" : "43005",
+				"behindertengerecht" : "X"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa43009",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "43009",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa43008",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "43008",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42905",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42905",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa43029",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "43029",
+				"behindertengerecht" : "X"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa43030",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "43030",
+				"behindertengerecht" : "X"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa43031",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "43031",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa43028",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : "X",
+				"standort_id" : "43028",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42938",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42938",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42933",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42933",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42922",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42922",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42962",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : "X",
+				"standort_id" : "42962",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42921",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : "X",
+				"standort_id" : "42921",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa62111",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "62111",
+				"behindertengerecht" : "X"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42934",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42934",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42936",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42936",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42911",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42911",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42985",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42985",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42812",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : "X",
+				"standort_id" : "42812",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42912",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42912",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42913",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42913",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42908",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : "X",
+				"standort_id" : "42908",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42907",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : "X",
+				"standort_id" : "42907",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42910",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42910",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa60840",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "60840",
+				"behindertengerecht" : "X"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42909",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : "X",
+				"standort_id" : "42909",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42975",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : "X",
+				"standort_id" : "42975",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42863",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42863",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42864",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : "X",
+				"standort_id" : "42864",
+				"behindertengerecht" : "X"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42977",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42977",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42859",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42859",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42861",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : "X",
+				"standort_id" : "42861",
+				"behindertengerecht" : "X"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa59038",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "59038",
+				"behindertengerecht" : "X"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa45704",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : "X",
+				"standort_id" : "45704",
+				"behindertengerecht" : "X"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42860",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42860",
+				"behindertengerecht" : "X"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42987",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42987",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa61106",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "61106",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42858",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42858",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42976",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42976",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42974",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : "X",
+				"standort_id" : "42974",
+				"behindertengerecht" : "X"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa64343",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "64343",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa46857",
+				"glas" : "X",
+				"metall" : null,
+				"oel" : null,
+				"standort_id" : "46857",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42888",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42888",
+				"behindertengerecht" : "X"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa46865",
+				"glas" : "X",
+				"metall" : null,
+				"oel" : null,
+				"standort_id" : "46865",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42887",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : "X",
+				"standort_id" : "42887",
+				"behindertengerecht" : "X"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa62713",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "62713",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42902",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : "X",
+				"standort_id" : "42902",
+				"behindertengerecht" : "X"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42903",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42903",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42816",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42816",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa61042",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "61042",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa46855",
+				"glas" : "X",
+				"metall" : null,
+				"oel" : null,
+				"standort_id" : "46855",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42890",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42890",
+				"behindertengerecht" : "X"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa46856",
+				"glas" : "X",
+				"metall" : null,
+				"oel" : null,
+				"standort_id" : "46856",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42811",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42811",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42889",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42889",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42810",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : "X",
+				"standort_id" : "42810",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42815",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : "X",
+				"standort_id" : "42815",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa61197",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "61197",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42891",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42891",
+				"behindertengerecht" : "X"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42823",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : "X",
+				"standort_id" : "42823",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42931",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42931",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42818",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42818",
+				"behindertengerecht" : "X"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42901",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : "X",
+				"standort_id" : "42901",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa43021",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "43021",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42928",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42928",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42929",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : "X",
+				"standort_id" : "42929",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42819",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : "X",
+				"standort_id" : "42819",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42925",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42925",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42924",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42924",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa43026",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "43026",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42920",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42920",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42827",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42827",
+				"behindertengerecht" : "X"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42926",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42926",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42900",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : "X",
+				"standort_id" : "42900",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa43000",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : "X",
+				"standort_id" : "43000",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42833",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42833",
+				"behindertengerecht" : "X"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42932",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42932",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42821",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42821",
+				"behindertengerecht" : "X"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa46864",
+				"glas" : "X",
+				"metall" : null,
+				"oel" : null,
+				"standort_id" : "46864",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42806",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42806",
+				"behindertengerecht" : "X"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa46854",
+				"glas" : "X",
+				"metall" : null,
+				"oel" : null,
+				"standort_id" : "46854",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42809",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42809",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa61198",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "61198",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42898",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42898",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42785",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42785",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42808",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42808",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42624",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : "X",
+				"standort_id" : "42624",
+				"behindertengerecht" : "X"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42893",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42893",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa46858",
+				"glas" : "X",
+				"metall" : null,
+				"oel" : null,
+				"standort_id" : "46858",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42894",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42894",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa45746",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : "X",
+				"standort_id" : "45746",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa43042",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "43042",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa43046",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "43046",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa46866",
+				"glas" : "X",
+				"metall" : null,
+				"oel" : null,
+				"standort_id" : "46866",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa43037",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "43037",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42895",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42895",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa43038",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "43038",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42892",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42892",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa46862",
+				"glas" : "X",
+				"metall" : null,
+				"oel" : null,
+				"standort_id" : "46862",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa46863",
+				"glas" : "X",
+				"metall" : null,
+				"oel" : null,
+				"standort_id" : "46863",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa43033",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : "X",
+				"standort_id" : "43033",
+				"behindertengerecht" : "X"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa43045",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "43045",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42966",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : "X",
+				"standort_id" : "42966",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa43044",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "43044",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42965",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42965",
+				"behindertengerecht" : "X"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa43035",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : "X",
+				"standort_id" : "43035",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa43041",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : "X",
+				"standort_id" : "43041",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa43034",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : "X",
+				"standort_id" : "43034",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42967",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42967",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42832",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42832",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42831",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42831",
+				"behindertengerecht" : "X"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42620",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42620",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42829",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42829",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42830",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : "X",
+				"standort_id" : "42830",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42969",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42969",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa62133",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "62133",
+				"behindertengerecht" : "X"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42834",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42834",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa46853",
+				"glas" : "X",
+				"metall" : null,
+				"oel" : null,
+				"standort_id" : "46853",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa41374",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "41374",
+				"behindertengerecht" : "X"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42828",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42828",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42968",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : "X",
+				"standort_id" : "42968",
+				"behindertengerecht" : "X"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa41373",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "41373",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42621",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42621",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42820",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42820",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42963",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42963",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42964",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42964",
+				"behindertengerecht" : "X"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42937",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42937",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42973",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : "X",
+				"standort_id" : "42973",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42970",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42970",
+				"behindertengerecht" : "X"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42971",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42971",
+				"behindertengerecht" : "X"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa43007",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "43007",
+				"behindertengerecht" : "X"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa43006",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "43006",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42917",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42917",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42822",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42822",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42916",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42916",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42915",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : "X",
+				"standort_id" : "42915",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa46793",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "46793",
+				"behindertengerecht" : "X"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42998",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : "X",
+				"standort_id" : "42998",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa43004",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "43004",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42826",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42826",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42817",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : "X",
+				"standort_id" : "42817",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42999",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42999",
+				"behindertengerecht" : "X"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa59225",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : "X",
+				"standort_id" : "59225",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42825",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42825",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42824",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42824",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa43003",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "43003",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa43047",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "43047",
+				"behindertengerecht" : "X"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa43027",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : "X",
+				"standort_id" : "43027",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa43017",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "43017",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa43040",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "43040",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa43039",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "43039",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa62242",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "62242",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa43022",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "43022",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa43036",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : "X",
+				"standort_id" : "43036",
+				"behindertengerecht" : "X"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa43012",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "43012",
+				"behindertengerecht" : "X"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa43032",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "43032",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa61203",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : "X",
+				"standort_id" : "61203",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa43018",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "43018",
+				"behindertengerecht" : "X"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa43020",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "43020",
+				"behindertengerecht" : null
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : null,
+			"properties" : {
+				"poi_id" : "sa42918",
+				"glas" : "X",
+				"metall" : "X",
+				"oel" : null,
+				"standort_id" : "42918",
+				"behindertengerecht" : "X"
+			}
+		}
+	]
+}
