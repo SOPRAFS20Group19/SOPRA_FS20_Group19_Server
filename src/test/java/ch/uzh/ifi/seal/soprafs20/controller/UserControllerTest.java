@@ -6,11 +6,15 @@ import ch.uzh.ifi.seal.soprafs20.exceptions.DuplicatedUserException;
 import ch.uzh.ifi.seal.soprafs20.exceptions.InvalidCredentialsException;
 import ch.uzh.ifi.seal.soprafs20.exceptions.SopraServiceException;
 import ch.uzh.ifi.seal.soprafs20.exceptions.UserNotFoundException;
+import ch.uzh.ifi.seal.soprafs20.rest.dto.UserGetDTO;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.UserPostDTO;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.UserPutDTO;
 import ch.uzh.ifi.seal.soprafs20.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jayway.jsonpath.JsonPath;
+import org.json.JSONArray;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.ArgumentMatcher;
@@ -21,8 +25,13 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import org.skyscreamer.jsonassert.JSONAssert;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -72,48 +81,23 @@ public class UserControllerTest {
         given(userService.createUser(Mockito.any())).willReturn(user);
 
         // when/then -> do the request + validate the result
-        MockHttpServletRequestBuilder postRequest = post("/users")
+        MockHttpServletRequestBuilder postRequest = post("/users/")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(userPostDTO));
 
-        // then
-        mockMvc.perform(postRequest)
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.id", is(user.getId().intValue())))
-                .andExpect(jsonPath("$.name", is(user.getName())))
-                .andExpect(jsonPath("$.username", is(user.getUsername())))
-                .andExpect(jsonPath("$.password", is(user.getPassword())))
-                .andExpect(jsonPath("$.status", is(user.getStatus().toString())));
+        MvcResult response = mockMvc.perform(postRequest).andReturn();
+        String responseAsString = response.getResponse().getContentAsString();
+
+        Assertions.assertEquals(user.getName(), JsonPath.parse(responseAsString).read("$.name"));
+        Assertions.assertEquals(user.getPassword(), JsonPath.parse(responseAsString).read("$.password"));
+        Assertions.assertEquals(user.getUsername(), JsonPath.parse(responseAsString).read("$.username"));
+        Assertions.assertEquals(user.getStatus().toString(), JsonPath.parse(responseAsString).read("$.status"));
+        Assertions.assertEquals(201, response.getResponse().getStatus());
     }
 
     // Code 409 post /users
     @Test
     public void createUser_userAlreadyExists() throws Exception {
-        User user1 = new User();
-
-        user1.setId(1L);
-        user1.setName("Test User");
-        user1.setUsername("testUsername");
-        user1.setPassword("password");
-        user1.setToken("1");
-        user1.setStatus(UserStatus.ONLINE);
-
-        UserPostDTO userPostDTO1 = new UserPostDTO();
-        userPostDTO1.setName("Test User");
-        userPostDTO1.setUsername("testUsername");
-        userPostDTO1.setPassword("password");
-
-        given(userService.createUser(Mockito.any())).willReturn(user1);
-
-        MockHttpServletRequestBuilder postRequest1 = post("/users")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(asJsonString(userPostDTO1));
-
-        mockMvc.perform(postRequest1)
-                .andExpect(status().isCreated());
-
-        System.out.println(userService.getUsers());
-
         User user2 = new User();
 
         user2.setId(2L);
@@ -128,14 +112,16 @@ public class UserControllerTest {
         userPostDTO2.setUsername("testUsername");
         userPostDTO2.setPassword("password");
 
-        given(userService.createUser(Mockito.any())).willThrow(new DuplicatedUserException(Mockito.anyString()));
+        given(userService.createUser(Mockito.any())).willThrow(new DuplicatedUserException("The username provided is not unique. Therefore, the user could not be created!"));
 
-        MockHttpServletRequestBuilder postRequest2 = post("/users")
+        MockHttpServletRequestBuilder postRequest2 = post("/users/")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(userPostDTO2));
 
-        mockMvc.perform(postRequest2)
-                .andExpect(status().isConflict());
+        MvcResult response = mockMvc.perform(postRequest2).andReturn();
+
+        Assertions.assertEquals(409, response.getResponse().getStatus());
+        Assertions.assertEquals("The username provided is not unique. Therefore, the user could not be created!", response.getResolvedException().getMessage());
     }
 
     // Code 200 post /login
@@ -156,17 +142,18 @@ public class UserControllerTest {
 
         given(userService.checkForLogin(Mockito.any())).willReturn(user);
 
-        MockHttpServletRequestBuilder postRequest = post("/login")
+        MockHttpServletRequestBuilder postRequest = post("/login/")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(userPostDTO));
 
-        mockMvc.perform(postRequest)
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id", is(user.getId().intValue())))
-                .andExpect(jsonPath("$.name", is(user.getName())))
-                .andExpect(jsonPath("$.username", is(user.getUsername())))
-                .andExpect(jsonPath("$.password", is(user.getPassword())))
-                .andExpect(jsonPath("$.status", is(user.getStatus().toString())));
+        MvcResult response = mockMvc.perform(postRequest).andReturn();
+        String responseAsString = response.getResponse().getContentAsString();
+
+        Assertions.assertEquals(user.getName(), JsonPath.parse(responseAsString).read("$.name"));
+        Assertions.assertEquals(user.getPassword(), JsonPath.parse(responseAsString).read("$.password"));
+        Assertions.assertEquals(user.getUsername(), JsonPath.parse(responseAsString).read("$.username"));
+        Assertions.assertEquals(user.getStatus().toString(), JsonPath.parse(responseAsString).read("$.status"));
+        Assertions.assertEquals(200, response.getResponse().getStatus());
     }
 
     // Code 401 post /login
@@ -177,14 +164,16 @@ public class UserControllerTest {
         userPostDTO.setUsername("testUsername");
         userPostDTO.setPassword("password");
 
-        given(userService.checkForLogin(Mockito.any())).willThrow(new InvalidCredentialsException(Mockito.anyString()));
+        given(userService.checkForLogin(Mockito.any())).willThrow(new InvalidCredentialsException("Wrong password, please try again."));
 
-        MockHttpServletRequestBuilder postRequest = post("/login")
+        MockHttpServletRequestBuilder postRequest = post("/login/")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(userPostDTO));
 
-        mockMvc.perform(postRequest)
-                .andExpect(status().isUnauthorized());
+        MvcResult response = mockMvc.perform(postRequest).andReturn();
+
+        Assertions.assertEquals(401, response.getResponse().getStatus());
+        Assertions.assertEquals("Wrong password, please try again.", response.getResolvedException().getMessage());
 
     }
 
@@ -205,24 +194,30 @@ public class UserControllerTest {
 
         MockHttpServletRequestBuilder getRequest = get("/users/1").contentType(MediaType.APPLICATION_JSON);
 
-        mockMvc.perform(getRequest).andExpect(status().isOk())
-                .andExpect(jsonPath("$.name", is(user.getName())))
-                .andExpect(jsonPath("$.password", is(user.getPassword())))
-                .andExpect(jsonPath("$.username", is(user.getUsername())))
-                .andExpect(jsonPath("$.creationDate", is(user.getCreationDate())))
-                .andExpect(jsonPath("$.birthDate", is(user.getBirthDate())))
-                .andExpect(jsonPath("$.status", is(user.getStatus().toString())));
+        MvcResult response = mockMvc.perform(getRequest).andReturn();
+        String responseAsString = response.getResponse().getContentAsString();
+
+        Assertions.assertEquals(user.getName(), JsonPath.parse(responseAsString).read("$.name"));
+        Assertions.assertEquals(user.getPassword(), JsonPath.parse(responseAsString).read("$.password"));
+        Assertions.assertEquals(user.getUsername(), JsonPath.parse(responseAsString).read("$.username"));
+        Assertions.assertEquals(user.getStatus().toString(), JsonPath.parse(responseAsString).read("$.status"));
+        Assertions.assertEquals(user.getCreationDate(), JsonPath.parse(responseAsString).read("$.creationDate"));
+        Assertions.assertEquals(user.getBirthDate(), JsonPath.parse(responseAsString).read("$.birthDate"));
+        Assertions.assertEquals(200, response.getResponse().getStatus());
     }
 
     // Code 404 get /users/{userId}
     @Test
     public void getUser_userDoesNotExist() throws Exception {
-        given(userService.getUser(Mockito.anyLong())).willThrow(new UserNotFoundException(Mockito.anyString()));
+        given(userService.getUser(Mockito.anyLong())).willThrow(new UserNotFoundException("This user could not be found."));
 
         MockHttpServletRequestBuilder getRequest = get("/users/99")
                 .contentType(MediaType.APPLICATION_JSON);
 
-        mockMvc.perform(getRequest).andExpect(status().isNotFound());
+        MvcResult response = mockMvc.perform(getRequest).andReturn();
+
+        Assertions.assertEquals(404, response.getResponse().getStatus());
+        Assertions.assertEquals("This user could not be found.", response.getResolvedException().getMessage());
     }
 
     // Code 204 put /users/{userId}
@@ -237,7 +232,10 @@ public class UserControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(userPutDTO));
 
-        mockMvc.perform(putRequest).andExpect(status().isNoContent());
+        MvcResult response = mockMvc.perform(putRequest).andReturn();
+
+        Assertions.assertEquals(204, response.getResponse().getStatus());
+        Assertions.assertEquals("", response.getResponse().getContentAsString());
     }
 
     // Code 404 put /users/{userId}
@@ -247,13 +245,17 @@ public class UserControllerTest {
         userPutDTO.setUsername("username");
         userPutDTO.setBirthDate("01.01.1999");
 
-        doThrow(new UserNotFoundException("")).when(userService).updateUser(Mockito.anyLong(), Mockito.any(UserPutDTO.class));
+        doThrow(new UserNotFoundException("This user could not be found.")).when(userService).updateUser(Mockito.anyLong(), Mockito.any(UserPutDTO.class));
+
 
         MockHttpServletRequestBuilder putRequest = put("/users/99")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(userPutDTO));
 
-        mockMvc.perform(putRequest).andExpect(status().isNotFound());
+        MvcResult response = mockMvc.perform(putRequest).andReturn();
+
+        Assertions.assertEquals(404, response.getResponse().getStatus());
+        Assertions.assertEquals("This user could not be found.", response.getResolvedException().getMessage());
     }
 
     // Code 200 get /users
@@ -265,8 +267,10 @@ public class UserControllerTest {
         user.setUsername("firstname@lastname");
         user.setPassword("password");
         user.setStatus(UserStatus.OFFLINE);
+        user.setCreationDate(userService.getCurrentDate());
 
-        List<User> allUsers = Collections.singletonList(user);
+        ArrayList<User> allUsers = new ArrayList<>();
+        allUsers.add(user);
 
         // this mocks the UserService -> we define above what the userService should return when getUsers() is called
         given(userService.getUsers()).willReturn(allUsers);
@@ -274,13 +278,14 @@ public class UserControllerTest {
         // when
         MockHttpServletRequestBuilder getRequest = get("/users").contentType(MediaType.APPLICATION_JSON);
 
-        // then
-        mockMvc.perform(getRequest).andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(1)))
-                .andExpect(jsonPath("$[0].name", is(user.getName())))
-                .andExpect(jsonPath("$[0].password", is(user.getPassword())))
-                .andExpect(jsonPath("$[0].username", is(user.getUsername())))
-                .andExpect(jsonPath("$[0].status", is(user.getStatus().toString())));
+        MvcResult response = mockMvc.perform(getRequest).andReturn();
+        String responseAsString = response.getResponse().getContentAsString();
+
+        Assertions.assertEquals(user.getName(), JsonPath.parse(responseAsString).read("$[0].name"));
+        Assertions.assertEquals(user.getPassword(), JsonPath.parse(responseAsString).read("$[0].password"));
+        Assertions.assertEquals(user.getUsername(), JsonPath.parse(responseAsString).read("$[0].username"));
+        Assertions.assertEquals(user.getStatus().toString(), JsonPath.parse(responseAsString).read("$[0].status"));
+        Assertions.assertEquals(200, response.getResponse().getStatus());
     }
 
     /**

@@ -36,37 +36,51 @@ import javax.servlet.http.HttpServletRequest;
 
     @ExceptionHandler(UserNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity&lt;String&gt; handleUserNotFoundException(UserNotFoundException ex){
+    public UserNotFoundException handleUserNotFoundException(UserNotFoundException ex){
 <span class="fc" id="L40">        log.error(String.format(&quot;UserNotFoundException raised:%s&quot;, ex));</span>
-<span class="fc" id="L41">        return new ResponseEntity&lt;&gt;(ex.getMessage(), HttpStatus.NOT_FOUND);</span>
+<span class="fc" id="L41">        return ex;</span>
     }
 
     @ExceptionHandler(DuplicatedUserException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
-    public ResponseEntity&lt;String&gt; handleDuplicatedUserException(DuplicatedUserException ex){
+    public DuplicatedUserException handleDuplicatedUserException(DuplicatedUserException ex){
 <span class="fc" id="L47">        log.error(String.format(&quot;DuplicatedUserException raised:%s&quot;, ex));</span>
-<span class="fc" id="L48">        return new ResponseEntity&lt;&gt;(ex.getMessage(), HttpStatus.CONFLICT);</span>
+<span class="fc" id="L48">        return ex;</span>
     }
 
     @ExceptionHandler(InvalidCredentialsException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public ResponseEntity&lt;String&gt; handleInvalidCredentialsException(InvalidCredentialsException ex){
+    public InvalidCredentialsException handleInvalidCredentialsException(InvalidCredentialsException ex){
 <span class="fc" id="L54">        log.error(String.format(&quot;InvalidCredentialsException raised:%s&quot;, ex));</span>
-<span class="fc" id="L55">        return new ResponseEntity&lt;&gt;(ex.getMessage(), HttpStatus.UNAUTHORIZED);</span>
+<span class="fc" id="L55">        return ex;</span>
+    }
+
+    @ExceptionHandler(LocationNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public LocationNotFoundException handleLocationNotFoundException(LocationNotFoundException ex){
+<span class="fc" id="L61">        log.error(String.format(&quot;LocationNotFoundException raised:%s&quot;, ex));</span>
+<span class="fc" id="L62">        return ex;</span>
+    }
+
+    @ExceptionHandler(DuplicatedLocationException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public DuplicatedLocationException handleDuplicatedLocationException(DuplicatedLocationException ex){
+<span class="fc" id="L68">        log.error(String.format(&quot;DuplicatedLocationException raised:%s&quot;, ex));</span>
+<span class="fc" id="L69">        return ex;</span>
     }
 
     @ExceptionHandler(TransactionSystemException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public void handleTransactionSystemException(Exception ex, HttpServletRequest request) {
-<span class="nc" id="L61">        log.error(String.format(&quot;Request: %s raised %s&quot;, request.getRequestURL(), ex));</span>
-<span class="nc" id="L62">    }</span>
+<span class="nc" id="L75">        log.error(String.format(&quot;Request: %s raised %s&quot;, request.getRequestURL(), ex));</span>
+<span class="nc" id="L76">    }</span>
 
     // Keep this one disable for all testing purposes -&gt; it shows more detail with this one disabled
     @ExceptionHandler(HttpServerErrorException.InternalServerError.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Exception handleException(Exception ex) {
-<span class="nc" id="L68">        log.error(String.format(&quot;Exception raised:%s&quot;, ex));</span>
-<span class="nc" id="L69">        return ex;</span>
+<span class="nc" id="L82">        log.error(String.format(&quot;Exception raised:%s&quot;, ex));</span>
+<span class="nc" id="L83">        return ex;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

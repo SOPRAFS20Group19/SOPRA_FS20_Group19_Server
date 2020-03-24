@@ -3,7 +3,6 @@
 import ch.uzh.ifi.seal.soprafs20.entity.User;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.UserGetDTO;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.UserPostDTO;
-import ch.uzh.ifi.seal.soprafs20.rest.dto.UserPutDTO;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
@@ -18,7 +17,7 @@ import org.mapstruct.factory.Mappers;
 @Mapper
 public interface DTOMapper {
 
-<span class="fc" id="L21">    DTOMapper INSTANCE = Mappers.getMapper(DTOMapper.class);</span>
+<span class="fc" id="L20">    DTOMapper INSTANCE = Mappers.getMapper(DTOMapper.class);</span>
 
     @Mapping(source = &quot;name&quot;, target = &quot;name&quot;)
     @Mapping(source = &quot;username&quot;, target = &quot;username&quot;)
