@@ -16,3 +16,7 @@ build/generated/sources/annotationProcessor/java/main/ch/uzh/ifi/seal/soprafs20/
 *.bin
 .gradle/6.0.1/executionHistory/executionHistory.bin
 .gradle/6.0.1/executionHistory/executionHistory.bin
+.gradle/6.0.1/executionHistory/executionHistory.bin
+.gradle/6.0.1/executionHistory/executionHistory.bin
+.gradle/6.0.1/executionHistory/executionHistory.bin
+*.bin
