@@ -100,7 +100,7 @@ public class UserService {
         }
     }
 
-    // checks if the user that is attempting a login has the correct crednetials
+    // checks if the user that is attempting a login has the correct credentials
     public User checkForLogin(User userToBeLoggedIn){
         this.logoutUsers();
         User userByUsername = userRepository.findByUsername(userToBeLoggedIn.getUsername());
@@ -171,7 +171,7 @@ public class UserService {
     }
 
     // creates a timestamp of the current date for the creation date during the registration
-    private String getCurrentDate(){
+    public String getCurrentDate(){
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
         return timestamp.toString();

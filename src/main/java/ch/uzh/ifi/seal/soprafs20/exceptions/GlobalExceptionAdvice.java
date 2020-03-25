@@ -36,23 +36,37 @@ public class GlobalExceptionAdvice extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(UserNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<String> handleUserNotFoundException(UserNotFoundException ex){
+    public UserNotFoundException handleUserNotFoundException(UserNotFoundException ex){
         log.error(String.format("UserNotFoundException raised:%s", ex));
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+        return ex;
     }
 
     @ExceptionHandler(DuplicatedUserException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
-    public ResponseEntity<String> handleDuplicatedUserException(DuplicatedUserException ex){
+    public DuplicatedUserException handleDuplicatedUserException(DuplicatedUserException ex){
         log.error(String.format("DuplicatedUserException raised:%s", ex));
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
+        return ex;
     }
 
     @ExceptionHandler(InvalidCredentialsException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public ResponseEntity<String> handleInvalidCredentialsException(InvalidCredentialsException ex){
+    public InvalidCredentialsException handleInvalidCredentialsException(InvalidCredentialsException ex){
         log.error(String.format("InvalidCredentialsException raised:%s", ex));
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.UNAUTHORIZED);
+        return ex;
+    }
+
+    @ExceptionHandler(LocationNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public LocationNotFoundException handleLocationNotFoundException(LocationNotFoundException ex){
+        log.error(String.format("LocationNotFoundException raised:%s", ex));
+        return ex;
+    }
+
+    @ExceptionHandler(DuplicatedLocationException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public DuplicatedLocationException handleDuplicatedLocationException(DuplicatedLocationException ex){
+        log.error(String.format("DuplicatedLocationException raised:%s", ex));
+        return ex;
     }
 
     @ExceptionHandler(TransactionSystemException.class)
