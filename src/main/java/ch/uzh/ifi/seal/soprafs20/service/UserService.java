@@ -105,6 +105,9 @@ public class UserService {
 
     // checks if the user that is attempting a login has the correct credentials
     public User checkForLogin(User userToBeLoggedIn){
+        //XXXXX
+        //DatabaseConnector.findByUsername(userToBeLoggedIn.getUsername());
+
         this.logoutUsers();
         User userByUsername = userRepository.findByUsername(userToBeLoggedIn.getUsername());
 
@@ -134,6 +137,8 @@ public class UserService {
     // creates a new user in the user repository
     public User createUser(User newUser) {
         newUser.setToken(UUID.randomUUID().toString());
+
+        //we have to add status also to Mongo. like that it's saved in userRepository
         newUser.setStatus(UserStatus.ONLINE);
         newUser.setCreationDate(getCurrentDate());
 

@@ -2,17 +2,16 @@ package ch.uzh.ifi.seal.soprafs20.database;
 
 
 import ch.uzh.ifi.seal.soprafs20.entity.User;
+import com.mongodb.*;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
-import com.mongodb.ServerAddress;
 
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.MongoCollection;
 
 import org.bson.Document;
 import java.util.Arrays;
-import com.mongodb.Block;
 
 import com.mongodb.client.MongoCursor;
 import static com.mongodb.client.model.Filters.*;
@@ -37,7 +36,15 @@ public class DatabaseConnector {
     //Establish connection to the Users Collection (development purposes only)
     static MongoCollection<Document> usersCollection = usersDevelopment.getCollection("Users");
 
+    //XXXXX
+    /*
+    static DB objects = (DB) mongoClient.getDatabase("LocationStorage");
+    static DBCollection fountains = objects.getCollection("Fountains");
 
+    static DB userDatabaseDB = (DB) mongoClient.getDatabase("UsersDevelopment");
+    static DBCollection userCollectionDB = userDatabaseDB.getCollection("Users");
+
+     */
     //creates User in the database; called bi createUser() in UserService
     public static void createUser(User user) {
 
@@ -48,5 +55,18 @@ public class DatabaseConnector {
          usersCollection.insertOne(doc);
     }
 
+    //XXXXX
+    /*
+    public static void findByUsername (String givenUsername){
+
+        BasicDBObject whereQuery = new BasicDBObject();
+        whereQuery.put("username", givenUsername);
+        DBCursor cursor = userCollectionDB.find(whereQuery);
+        while(cursor.hasNext()) {
+            System.out.println(cursor.next());
+        }
+    }
+
+     */
 
 }
