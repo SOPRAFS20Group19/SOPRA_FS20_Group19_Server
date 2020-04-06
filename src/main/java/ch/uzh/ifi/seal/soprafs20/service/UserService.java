@@ -1,6 +1,7 @@
 package ch.uzh.ifi.seal.soprafs20.service;
 
 import ch.uzh.ifi.seal.soprafs20.constant.UserStatus;
+import ch.uzh.ifi.seal.soprafs20.database.DatabaseConnector;
 import ch.uzh.ifi.seal.soprafs20.entity.User;
 import ch.uzh.ifi.seal.soprafs20.exceptions.DuplicatedUserException;
 import ch.uzh.ifi.seal.soprafs20.exceptions.InvalidCredentialsException;
@@ -34,9 +35,11 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+
     @Autowired
     public UserService(@Qualifier("userRepository") UserRepository userRepository) {
         this.userRepository = userRepository;
+
     }
 
     // returns all users in the repository
@@ -137,8 +140,9 @@ public class UserService {
         checkIfUserExists(newUser);
 
         // saves the given entity but data is only persisted in the database once flush() is called
-        newUser = userRepository.save(newUser);
-        userRepository.flush();
+        //newUser = userRepository.save(newUser);
+        //userRepository.flush();
+        DatabaseConnector.createUser(newUser);
 
         log.debug("Created Information for User: {}", newUser);
         return newUser;

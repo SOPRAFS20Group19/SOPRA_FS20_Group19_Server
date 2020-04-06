@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="de"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">soprafs20</a> &gt; <a href="index.source.html" class="el_package">ch.uzh.ifi.seal.soprafs20.service</a> &gt; <span class="el_source">UserService.java</span></div><h1>UserService.java</h1><pre class="source lang-java linenums">package ch.uzh.ifi.seal.soprafs20.service;
 
 import ch.uzh.ifi.seal.soprafs20.constant.UserStatus;
+import ch.uzh.ifi.seal.soprafs20.database.DatabaseConnector;
 import ch.uzh.ifi.seal.soprafs20.entity.User;
 import ch.uzh.ifi.seal.soprafs20.exceptions.DuplicatedUserException;
 import ch.uzh.ifi.seal.soprafs20.exceptions.InvalidCredentialsException;
@@ -30,118 +31,119 @@ import java.util.UUID;
 @Transactional
 public class UserService {
 
-<span class="nc" id="L33">    private final Logger log = LoggerFactory.getLogger(UserService.class);</span>
+<span class="fc" id="L34">    private final Logger log = LoggerFactory.getLogger(UserService.class);</span>
 
     private final UserRepository userRepository;
 
     @Autowired
-<span class="nc" id="L38">    public UserService(@Qualifier(&quot;userRepository&quot;) UserRepository userRepository) {</span>
-<span class="nc" id="L39">        this.userRepository = userRepository;</span>
-<span class="nc" id="L40">    }</span>
+<span class="fc" id="L39">    public UserService(@Qualifier(&quot;userRepository&quot;) UserRepository userRepository) {</span>
+<span class="fc" id="L40">        this.userRepository = userRepository;</span>
+<span class="fc" id="L41">    }</span>
 
     // returns all users in the repository
     public List&lt;User&gt; getUsers() {
-<span class="nc" id="L44">        return this.userRepository.findAll();</span>
+<span class="nc" id="L45">        return this.userRepository.findAll();</span>
     }
 
     // returns a user in the repository identified by his ID
     public User getUser(Long id){
-<span class="nc" id="L49">        List&lt;User&gt; users = this.userRepository.findAll();</span>
+<span class="nc" id="L50">        List&lt;User&gt; users = this.userRepository.findAll();</span>
 
-<span class="nc" id="L51">        User userToReturn = null;</span>
+<span class="nc" id="L52">        User userToReturn = null;</span>
 
-<span class="nc bnc" id="L53" title="All 2 branches missed.">        for (User user: users){</span>
-<span class="nc bnc" id="L54" title="All 2 branches missed.">            if (id.equals(user.getId())){</span>
-<span class="nc" id="L55">                userToReturn = user;</span>
+<span class="nc bnc" id="L54" title="All 2 branches missed.">        for (User user: users){</span>
+<span class="nc bnc" id="L55" title="All 2 branches missed.">            if (id.equals(user.getId())){</span>
+<span class="nc" id="L56">                userToReturn = user;</span>
             }
-<span class="nc" id="L57">        }</span>
+<span class="nc" id="L58">        }</span>
 
-<span class="nc bnc" id="L59" title="All 2 branches missed.">        if (userToReturn == null){</span>
-<span class="nc" id="L60">            throw new UserNotFoundException(&quot;This user could not be found.&quot;);</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">        if (userToReturn == null){</span>
+<span class="nc" id="L61">            throw new UserNotFoundException(&quot;This user could not be found.&quot;);</span>
         }
 
-<span class="nc" id="L63">        return userToReturn;</span>
+<span class="nc" id="L64">        return userToReturn;</span>
     }
 
     // updates a user with the updated username and birthdate
     public void updateUser(Long userId, UserPutDTO userWithNewData){
-<span class="nc" id="L68">        List&lt;User&gt; users = this.userRepository.findAll();</span>
+<span class="nc" id="L69">        List&lt;User&gt; users = this.userRepository.findAll();</span>
 
-<span class="nc" id="L70">        User userToUpdate = null;</span>
+<span class="nc" id="L71">        User userToUpdate = null;</span>
 
-<span class="nc bnc" id="L72" title="All 2 branches missed.">        for (User user: users){</span>
-<span class="nc bnc" id="L73" title="All 2 branches missed.">            if (userId.equals(user.getId())){</span>
-<span class="nc" id="L74">                userToUpdate = user;</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">        for (User user: users){</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">            if (userId.equals(user.getId())){</span>
+<span class="nc" id="L75">                userToUpdate = user;</span>
             }
-<span class="nc" id="L76">        }</span>
+<span class="nc" id="L77">        }</span>
 
-<span class="nc bnc" id="L78" title="All 2 branches missed.">        if (userToUpdate == null){</span>
-<span class="nc" id="L79">            throw new UserNotFoundException(&quot;This user could not be found.&quot;);</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">        if (userToUpdate == null){</span>
+<span class="nc" id="L80">            throw new UserNotFoundException(&quot;This user could not be found.&quot;);</span>
         }
 
-<span class="nc bnc" id="L82" title="All 2 branches missed.">        if (userWithNewData.getUsername() != null){</span>
-<span class="nc" id="L83">            userToUpdate.setUsername(userWithNewData.getUsername());</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">        if (userWithNewData.getUsername() != null){</span>
+<span class="nc" id="L84">            userToUpdate.setUsername(userWithNewData.getUsername());</span>
         }
 
-<span class="nc bnc" id="L86" title="All 2 branches missed.">        if (userWithNewData.getBirthDate() != null){</span>
-<span class="nc" id="L87">            userToUpdate.setBirthDate(userWithNewData.getBirthDate());</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">        if (userWithNewData.getBirthDate() != null){</span>
+<span class="nc" id="L88">            userToUpdate.setBirthDate(userWithNewData.getBirthDate());</span>
         }
 
-<span class="nc" id="L90">        userRepository.save(userToUpdate);</span>
-<span class="nc" id="L91">        userRepository.flush();</span>
-<span class="nc" id="L92">    }</span>
+<span class="nc" id="L91">        userRepository.save(userToUpdate);</span>
+<span class="nc" id="L92">        userRepository.flush();</span>
+<span class="nc" id="L93">    }</span>
 
     // logs out all users
     public void logoutUsers(){
-<span class="nc" id="L96">        List&lt;User&gt; users = this.userRepository.findAll();</span>
+<span class="nc" id="L97">        List&lt;User&gt; users = this.userRepository.findAll();</span>
 
-<span class="nc bnc" id="L98" title="All 2 branches missed.">        for (User user: users){</span>
-<span class="nc" id="L99">            user.setStatus(UserStatus.OFFLINE);</span>
-<span class="nc" id="L100">        }</span>
-<span class="nc" id="L101">    }</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">        for (User user: users){</span>
+<span class="nc" id="L100">            user.setStatus(UserStatus.OFFLINE);</span>
+<span class="nc" id="L101">        }</span>
+<span class="nc" id="L102">    }</span>
 
     // checks if the user that is attempting a login has the correct credentials
     public User checkForLogin(User userToBeLoggedIn){
-<span class="nc" id="L105">        this.logoutUsers();</span>
-<span class="nc" id="L106">        User userByUsername = userRepository.findByUsername(userToBeLoggedIn.getUsername());</span>
+<span class="nc" id="L106">        this.logoutUsers();</span>
+<span class="nc" id="L107">        User userByUsername = userRepository.findByUsername(userToBeLoggedIn.getUsername());</span>
 
-<span class="nc bnc" id="L108" title="All 2 branches missed.">        if (userByUsername == null) {</span>
-<span class="nc" id="L109">            throw new InvalidCredentialsException(&quot;This username does not exist, please register first.&quot;);</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">        if (userByUsername == null) {</span>
+<span class="nc" id="L110">            throw new InvalidCredentialsException(&quot;This username does not exist, please register first.&quot;);</span>
         }
 
-<span class="nc" id="L112">        userByUsername.setStatus(UserStatus.ONLINE);</span>
+<span class="nc" id="L113">        userByUsername.setStatus(UserStatus.ONLINE);</span>
 
-<span class="nc" id="L114">        String passwordToBeChecked = userToBeLoggedIn.getPassword();</span>
-<span class="nc" id="L115">        String correctPassword = userByUsername.getPassword();</span>
+<span class="nc" id="L115">        String passwordToBeChecked = userToBeLoggedIn.getPassword();</span>
+<span class="nc" id="L116">        String correctPassword = userByUsername.getPassword();</span>
 
-<span class="nc" id="L117">        String nameToBeChecked = userToBeLoggedIn.getName();</span>
-<span class="nc" id="L118">        String correctName = userByUsername.getName();</span>
+<span class="nc" id="L118">        String nameToBeChecked = userToBeLoggedIn.getName();</span>
+<span class="nc" id="L119">        String correctName = userByUsername.getName();</span>
 
-<span class="nc bnc" id="L120" title="All 2 branches missed.">        if (!passwordToBeChecked.equals(correctPassword)){</span>
-<span class="nc" id="L121">            throw new InvalidCredentialsException(&quot;Wrong password, please try again.&quot;);</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">        if (!passwordToBeChecked.equals(correctPassword)){</span>
+<span class="nc" id="L122">            throw new InvalidCredentialsException(&quot;Wrong password, please try again.&quot;);</span>
         }
 
-<span class="nc bnc" id="L124" title="All 2 branches missed.">        if (!nameToBeChecked.equals(correctName)){</span>
-<span class="nc" id="L125">            throw new InvalidCredentialsException(&quot;Wrong name, please try again.&quot;);</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">        if (!nameToBeChecked.equals(correctName)){</span>
+<span class="nc" id="L126">            throw new InvalidCredentialsException(&quot;Wrong name, please try again.&quot;);</span>
         }
 
-<span class="nc" id="L128">        return userByUsername;</span>
+<span class="nc" id="L129">        return userByUsername;</span>
     }
 
     // creates a new user in the user repository
     public User createUser(User newUser) {
-<span class="nc" id="L133">        newUser.setToken(UUID.randomUUID().toString());</span>
-<span class="nc" id="L134">        newUser.setStatus(UserStatus.ONLINE);</span>
-<span class="nc" id="L135">        newUser.setCreationDate(getCurrentDate());</span>
+<span class="fc" id="L134">        newUser.setToken(UUID.randomUUID().toString());</span>
+<span class="fc" id="L135">        newUser.setStatus(UserStatus.ONLINE);</span>
+<span class="fc" id="L136">        newUser.setCreationDate(getCurrentDate());</span>
 
-<span class="nc" id="L137">        checkIfUserExists(newUser);</span>
+<span class="fc" id="L138">        checkIfUserExists(newUser);</span>
 
         // saves the given entity but data is only persisted in the database once flush() is called
-<span class="nc" id="L140">        newUser = userRepository.save(newUser);</span>
-<span class="nc" id="L141">        userRepository.flush();</span>
+        //newUser = userRepository.save(newUser);
+        //userRepository.flush();
+<span class="nc" id="L143">        DatabaseConnector.createUser(newUser);</span>
 
-<span class="nc" id="L143">        log.debug(&quot;Created Information for User: {}&quot;, newUser);</span>
-<span class="nc" id="L144">        return newUser;</span>
+<span class="nc" id="L145">        log.debug(&quot;Created Information for User: {}&quot;, newUser);</span>
+<span class="nc" id="L146">        return newUser;</span>
     }
 
     /**
@@ -153,28 +155,28 @@ public class UserService {
      * @see User
      */
     private void checkIfUserExists(User userToBeCreated) {
-<span class="nc" id="L156">        User userByUsername = userRepository.findByUsername(userToBeCreated.getUsername());</span>
-<span class="nc" id="L157">        User userByName = userRepository.findByName(userToBeCreated.getName());</span>
+<span class="fc" id="L158">        User userByUsername = userRepository.findByUsername(userToBeCreated.getUsername());</span>
+<span class="fc" id="L159">        User userByName = userRepository.findByName(userToBeCreated.getName());</span>
 
-<span class="nc" id="L159">        String baseErrorMessage = &quot;The %s provided %s not unique. Therefore, the user could not be created!&quot;;</span>
-<span class="nc bnc" id="L160" title="All 4 branches missed.">        if (userByUsername != null &amp;&amp; userByName != null) {</span>
-<span class="nc" id="L161">            throw new DuplicatedUserException(&quot;The username and the name provided are not unique. Therefore, the user could not be created!&quot;);</span>
+<span class="fc" id="L161">        String baseErrorMessage = &quot;The %s provided %s not unique. Therefore, the user could not be created!&quot;;</span>
+<span class="pc bpc" id="L162" title="3 of 4 branches missed.">        if (userByUsername != null &amp;&amp; userByName != null) {</span>
+<span class="nc" id="L163">            throw new DuplicatedUserException(&quot;The username and the name provided are not unique. Therefore, the user could not be created!&quot;);</span>
         }
-<span class="nc bnc" id="L163" title="All 2 branches missed.">        else if (userByUsername != null) {</span>
-<span class="nc" id="L164">            throw new DuplicatedUserException(&quot;The username provided is not unique. Therefore, the user could not be created!&quot;);</span>
-
-        }
-<span class="nc bnc" id="L167" title="All 2 branches missed.">        else if (userByName != null) {</span>
-<span class="nc" id="L168">            throw new DuplicatedUserException(&quot;The name provided is not unique. Therefore, the user could not be created!&quot;);</span>
+<span class="pc bpc" id="L165" title="1 of 2 branches missed.">        else if (userByUsername != null) {</span>
+<span class="nc" id="L166">            throw new DuplicatedUserException(&quot;The username provided is not unique. Therefore, the user could not be created!&quot;);</span>
 
         }
-<span class="nc" id="L171">    }</span>
+<span class="pc bpc" id="L169" title="1 of 2 branches missed.">        else if (userByName != null) {</span>
+<span class="nc" id="L170">            throw new DuplicatedUserException(&quot;The name provided is not unique. Therefore, the user could not be created!&quot;);</span>
+
+        }
+<span class="fc" id="L173">    }</span>
 
     // creates a timestamp of the current date for the creation date during the registration
     public String getCurrentDate(){
-<span class="nc" id="L175">        Timestamp timestamp = new Timestamp(System.currentTimeMillis());</span>
+<span class="fc" id="L177">        Timestamp timestamp = new Timestamp(System.currentTimeMillis());</span>
 
-<span class="nc" id="L177">        return timestamp.toString();</span>
+<span class="fc" id="L179">        return timestamp.toString();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

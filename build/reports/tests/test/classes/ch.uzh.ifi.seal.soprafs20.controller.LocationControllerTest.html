@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.246s</div>
+<div class="counter">2.467s</div>
 <p>duration</p>
 </div>
 </td>
@@ -79,77 +79,77 @@
 </thead>
 <tr>
 <td class="success">createLocation_locationAlreadyExists()</td>
-<td class="success">0.014s</td>
+<td class="success">0.042s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">createLocation_validInput()</td>
-<td class="success">0.013s</td>
+<td class="success">0.057s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">getChatOfLocation_invalidInput()</td>
-<td class="success">0.011s</td>
+<td class="success">0.029s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">getChatOfLocation_validInput()</td>
-<td class="success">0.036s</td>
+<td class="success">0.087s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">getFavoritesOfUser_invalidInput()</td>
-<td class="success">0.012s</td>
+<td class="success">0.039s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">getFavoritesOfUser_validInput()</td>
-<td class="success">0.013s</td>
+<td class="success">0.286s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">getLocation_invalidInput()</td>
-<td class="success">0.012s</td>
+<td class="success">0.801s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">getLocation_validInput()</td>
-<td class="success">0.022s</td>
+<td class="success">0.033s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">getLocations_validInput()</td>
-<td class="success">0.010s</td>
+<td class="success">0.032s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">postMessageToLocation_invalidInput()</td>
-<td class="success">0.014s</td>
+<td class="success">0.053s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">postMessageToLocation_validInput()</td>
-<td class="success">0.014s</td>
+<td class="success">0.059s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">updateFavoritesOfUser_invalidInput()</td>
-<td class="success">0.021s</td>
+<td class="success">0.417s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">updateFavoritesOfUser_validInput()</td>
-<td class="success">0.009s</td>
+<td class="success">0.035s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">updateLocation_invalidInput()</td>
-<td class="success">0.028s</td>
+<td class="success">0.455s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">updateLocation_validInput()</td>
-<td class="success">0.017s</td>
+<td class="success">0.042s</td>
 <td class="success">passed</td>
 </tr>
 </table>
@@ -157,12 +157,22 @@
 <div id="tab1" class="tab">
 <h2>Standard output</h2>
 <span class="code">
-<pre>2020-03-24 20:35:33.910  INFO 32617 --- [    Test worker] .b.t.a.w.s.WebMvcTestContextBootstrapper : Neither @ContextConfiguration nor @ContextHierarchy found for test class [ch.uzh.ifi.seal.soprafs20.controller.LocationControllerTest], using SpringBootContextLoader
-2020-03-24 20:35:33.912  INFO 32617 --- [    Test worker] o.s.t.c.support.AbstractContextLoader    : Could not detect default resource locations for test class [ch.uzh.ifi.seal.soprafs20.controller.LocationControllerTest]: no resource found for suffixes {-context.xml, Context.groovy}.
-2020-03-24 20:35:33.912  INFO 32617 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [ch.uzh.ifi.seal.soprafs20.controller.LocationControllerTest]: LocationControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2020-03-24 20:35:33.918  INFO 32617 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration ch.uzh.ifi.seal.soprafs20.Application for test class ch.uzh.ifi.seal.soprafs20.controller.LocationControllerTest
-2020-03-24 20:35:33.919  INFO 32617 --- [    Test worker] .b.t.a.w.s.WebMvcTestContextBootstrapper : Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
-2020-03-24 20:35:33.920  INFO 32617 --- [    Test worker] .b.t.a.w.s.WebMvcTestContextBootstrapper : Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@787605c2, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@ff08948, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@dab00c0, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@bf9ab7c, org.springframework.test.context.support.DirtiesContextTestExecutionListener@43e9f7d4, org.springframework.test.context.transaction.TransactionalTestExecutionListener@48d89c28, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@1d2038f3, org.springframework.test.context.event.EventPublishingTestExecutionListener@5bc4d260, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@571fd99b, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@5baa268c, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@47516aaa, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@3a7be7f2, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@13813227]
+<pre>09:30:33.951 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating CacheAwareContextLoaderDelegate from class [org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate]
+09:30:34.057 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating BootstrapContext using constructor [public org.springframework.test.context.support.DefaultBootstrapContext(java.lang.Class,org.springframework.test.context.CacheAwareContextLoaderDelegate)]
+09:30:34.242 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating TestContextBootstrapper for test class [ch.uzh.ifi.seal.soprafs20.controller.LocationControllerTest] from class [org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTestContextBootstrapper]
+09:30:34.391 [Test worker] INFO org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTestContextBootstrapper - Neither @ContextConfiguration nor @ContextHierarchy found for test class [ch.uzh.ifi.seal.soprafs20.controller.LocationControllerTest], using SpringBootContextLoader
+09:30:34.425 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [ch.uzh.ifi.seal.soprafs20.controller.LocationControllerTest]: class path resource [ch/uzh/ifi/seal/soprafs20/controller/LocationControllerTest-context.xml] does not exist
+09:30:34.428 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [ch.uzh.ifi.seal.soprafs20.controller.LocationControllerTest]: class path resource [ch/uzh/ifi/seal/soprafs20/controller/LocationControllerTestContext.groovy] does not exist
+09:30:34.429 [Test worker] INFO org.springframework.test.context.support.AbstractContextLoader - Could not detect default resource locations for test class [ch.uzh.ifi.seal.soprafs20.controller.LocationControllerTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+09:30:34.433 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [ch.uzh.ifi.seal.soprafs20.controller.LocationControllerTest]: LocationControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+09:30:34.773 [Test worker] DEBUG org.springframework.test.context.support.ActiveProfilesUtils - Could not find an 'annotation declaring class' for annotation type [org.springframework.test.context.ActiveProfiles] and class [ch.uzh.ifi.seal.soprafs20.controller.LocationControllerTest]
+09:30:35.240 [Test worker] DEBUG org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider - Identified candidate component class: file [C:\Users\lulo1\Desktop\Studium\20 FS\SOPRA\KnowYourCity\Github\SOPRA_FS20_Group19_Server\build\classes\java\main\ch\uzh\ifi\seal\soprafs20\Application.class]
+09:30:35.245 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration ch.uzh.ifi.seal.soprafs20.Application for test class ch.uzh.ifi.seal.soprafs20.controller.LocationControllerTest
+09:30:35.253 [Test worker] DEBUG org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTestContextBootstrapper - @TestExecutionListeners is not present for class [ch.uzh.ifi.seal.soprafs20.controller.LocationControllerTest]: using defaults.
+09:30:35.256 [Test worker] INFO org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTestContextBootstrapper - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
+09:30:35.365 [Test worker] INFO org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTestContextBootstrapper - Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@61d1ada7, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@57ed10c6, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@303db92b, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@768fd2e0, org.springframework.test.context.support.DirtiesContextTestExecutionListener@1adfe503, org.springframework.test.context.transaction.TransactionalTestExecutionListener@258badbe, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@78a2bcc5, org.springframework.test.context.event.EventPublishingTestExecutionListener@703269e3, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@15206d1b, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@6dbec45c, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@1709ba, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@6389052a, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@7557e4f5]
+09:30:35.384 [Test worker] DEBUG org.springframework.test.context.support.AbstractDirtiesContextTestExecutionListener - Before test class: context [DefaultTestContext@a9bd4f5 testClass = LocationControllerTest, testInstance = [null], testMethod = [null], testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@32342bcf testClass = LocationControllerTest, locations = '{}', classes = '{class ch.uzh.ifi.seal.soprafs20.Application}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.OverrideAutoConfigurationContextCustomizerFactory$DisableAutoConfigurationContextCustomizer@1c6d8fe0, org.springframework.boot.test.autoconfigure.filter.TypeExcludeFiltersContextCustomizer@abe1c8dc, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@d0beb9dd, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@1f9d490a, [ImportsContextCustomizer@49a958ce key = [org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration, org.springframework.boot.autoconfigure.context.MessageSourceAutoConfiguration, org.springframework.boot.autoconfigure.data.web.SpringDataWebAutoConfiguration, org.springframework.boot.autoconfigure.freemarker.FreeMarkerAutoConfiguration, org.springframework.boot.autoconfigure.groovy.template.GroovyTemplateAutoConfiguration, org.springframework.boot.autoconfigure.gson.GsonAutoConfiguration, org.springframework.boot.autoconfigure.hateoas.HypermediaAutoConfiguration, org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration, org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration, org.springframework.boot.autoconfigure.jsonb.JsonbAutoConfiguration, org.springframework.boot.autoconfigure.mustache.MustacheAutoConfiguration, org.springframework.boot.autoconfigure.task.TaskExecutionAutoConfiguration, org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration, org.springframework.boot.autoconfigure.validation.ValidationAutoConfiguration, org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration, org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcWebClientAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcWebDriverAutoConfiguration, org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration, org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcSecurityConfiguration]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@9324ca6, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@6e1082be, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@888f43f7], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map[[empty]]], class annotated with @DirtiesContext [false] with mode [null].
+09:30:36.104 [Test worker] DEBUG org.springframework.test.context.support.TestPropertySourceUtils - Adding inlined properties to environment: {spring.jmx.enabled=false, org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTestContextBootstrapper=true, server.port=-1}
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -172,20 +182,20 @@
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::        (v2.2.4.RELEASE)
 
-2020-03-24 20:35:33.974  INFO 32617 --- [    Test worker] c.u.i.s.s.c.LocationControllerTest       : Starting LocationControllerTest on Luis-MacBook-Pro.local with PID 32617 (started by luisknufinke in /Users/luisknufinke/Documents/UZH/04 - FS20/Softwarepraktikum/Know your City/SOPRA_FS20_Group19_Server)
-2020-03-24 20:35:33.976  INFO 32617 --- [    Test worker] c.u.i.s.s.c.LocationControllerTest       : No active profile set, falling back to default profiles: default
-2020-03-24 20:35:34.521  INFO 32617 --- [    Test worker] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
-2020-03-24 20:35:34.689  INFO 32617 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-2020-03-24 20:35:34.689  INFO 32617 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2020-03-24 20:35:34.699  INFO 32617 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 9 ms
-2020-03-24 20:35:34.722  INFO 32617 --- [    Test worker] c.u.i.s.s.c.LocationControllerTest       : Started LocationControllerTest in 0.797 seconds (JVM running for 8.258)
-2020-03-24 20:35:34.737 ERROR 32617 --- [    Test worker] c.u.i.s.s.e.GlobalExceptionAdvice        : LocationNotFoundException raised:ch.uzh.ifi.seal.soprafs20.exceptions.LocationNotFoundException: This location could not be found.
-2020-03-24 20:35:34.760 ERROR 32617 --- [    Test worker] c.u.i.s.s.e.GlobalExceptionAdvice        : UserNotFoundException raised:ch.uzh.ifi.seal.soprafs20.exceptions.UserNotFoundException: This user could not be found.
-2020-03-24 20:35:34.792 ERROR 32617 --- [    Test worker] c.u.i.s.s.e.GlobalExceptionAdvice        : LocationNotFoundException raised:ch.uzh.ifi.seal.soprafs20.exceptions.LocationNotFoundException: This location could not be found.
-2020-03-24 20:35:34.894 ERROR 32617 --- [    Test worker] c.u.i.s.s.e.GlobalExceptionAdvice        : LocationNotFoundException raised:ch.uzh.ifi.seal.soprafs20.exceptions.LocationNotFoundException: This location could not be found.
-2020-03-24 20:35:34.912 ERROR 32617 --- [    Test worker] c.u.i.s.s.e.GlobalExceptionAdvice        : DuplicatedLocationException raised:ch.uzh.ifi.seal.soprafs20.exceptions.DuplicatedLocationException: This location already exists.
-2020-03-24 20:35:34.960 ERROR 32617 --- [    Test worker] c.u.i.s.s.e.GlobalExceptionAdvice        : LocationNotFoundException raised:ch.uzh.ifi.seal.soprafs20.exceptions.LocationNotFoundException: This location could not be found.
-2020-03-24 20:35:35.001 ERROR 32617 --- [    Test worker] c.u.i.s.s.e.GlobalExceptionAdvice        : UserNotFoundException raised:ch.uzh.ifi.seal.soprafs20.exceptions.UserNotFoundException: This user could not be found.
+2020-04-06 09:30:37.591  INFO 4512 --- [    Test worker] c.u.i.s.s.c.LocationControllerTest       : Starting LocationControllerTest on LAPTOP-L2007AB1 with PID 4512 (started by lulo1 in C:\Users\lulo1\Desktop\Studium\20 FS\SOPRA\KnowYourCity\Github\SOPRA_FS20_Group19_Server)
+2020-04-06 09:30:37.604  INFO 4512 --- [    Test worker] c.u.i.s.s.c.LocationControllerTest       : No active profile set, falling back to default profiles: default
+2020-04-06 09:30:51.808  INFO 4512 --- [    Test worker] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2020-04-06 09:30:54.324  INFO 4512 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2020-04-06 09:30:54.325  INFO 4512 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2020-04-06 09:30:54.427  INFO 4512 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 102 ms
+2020-04-06 09:30:54.658  INFO 4512 --- [    Test worker] c.u.i.s.s.c.LocationControllerTest       : Started LocationControllerTest in 18.478 seconds (JVM running for 26.777)
+2020-04-06 09:30:55.336 ERROR 4512 --- [    Test worker] c.u.i.s.s.e.GlobalExceptionAdvice        : LocationNotFoundException raised:ch.uzh.ifi.seal.soprafs20.exceptions.LocationNotFoundException: This location could not be found.
+2020-04-06 09:30:55.922 ERROR 4512 --- [    Test worker] c.u.i.s.s.e.GlobalExceptionAdvice        : UserNotFoundException raised:ch.uzh.ifi.seal.soprafs20.exceptions.UserNotFoundException: This user could not be found.
+2020-04-06 09:30:56.376 ERROR 4512 --- [    Test worker] c.u.i.s.s.e.GlobalExceptionAdvice        : LocationNotFoundException raised:ch.uzh.ifi.seal.soprafs20.exceptions.LocationNotFoundException: This location could not be found.
+2020-04-06 09:30:56.931 ERROR 4512 --- [    Test worker] c.u.i.s.s.e.GlobalExceptionAdvice        : LocationNotFoundException raised:ch.uzh.ifi.seal.soprafs20.exceptions.LocationNotFoundException: This location could not be found.
+2020-04-06 09:30:56.974 ERROR 4512 --- [    Test worker] c.u.i.s.s.e.GlobalExceptionAdvice        : DuplicatedLocationException raised:ch.uzh.ifi.seal.soprafs20.exceptions.DuplicatedLocationException: This location already exists.
+2020-04-06 09:30:57.151 ERROR 4512 --- [    Test worker] c.u.i.s.s.e.GlobalExceptionAdvice        : LocationNotFoundException raised:ch.uzh.ifi.seal.soprafs20.exceptions.LocationNotFoundException: This location could not be found.
+2020-04-06 09:30:57.248 ERROR 4512 --- [    Test worker] c.u.i.s.s.e.GlobalExceptionAdvice        : UserNotFoundException raised:ch.uzh.ifi.seal.soprafs20.exceptions.UserNotFoundException: This user could not be found.
 </pre>
 </span>
 </div>
@@ -197,7 +207,7 @@
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 6.0.1</a> at 24.03.2020, 20:35:35</p>
+<a href="http://www.gradle.org">Gradle 6.0.1</a> at 06.04.2020, 09:31:31</p>
 </div>
 </div>
 </body>
