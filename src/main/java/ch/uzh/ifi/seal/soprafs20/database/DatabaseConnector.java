@@ -28,18 +28,27 @@ public class DatabaseConnector {
 
     public DatabaseConnector(){}
 
-    //connection to mongodb on the cloud with credentials of tim ehrensperger
+    //connection to mongodb on the cloud with credentials of luca locher
+    static MongoClient mongoClient = MongoClients.create(
+            "mongodb+srv://luloch:soprafs20@knowyourcity-ijzn3.gcp.mongodb.net/test?retryWrites=true&w=majority");
+
+    //connection to the user database (development purposes only)
+    static MongoDatabase userDatabase = mongoClient.getDatabase("UsersDevelopment");
+
+    //connection to the users collection (development purposes only)
+    static MongoCollection<Document> usersCollection = userDatabase.getCollection("Users");
 
 
+    //method that inserts a new user into the database; called by createUser() in UserService
     public static void createUser(User user) {
-         MongoClient mongoClient = MongoClients.create(
-                "mongodb+srv://luloch:soprafs20@knowyourcity-ijzn3.gcp.mongodb.net/test?retryWrites=true&w=majority");
-
-         MongoDatabase testDatabase = mongoClient.getDatabase("test");
-         MongoCollection<Document> testCollection = testDatabase.getCollection("hallo");
-         Document doc = new Document("att", user.getUsername());
-         testCollection.insertOne(doc);
+         Document doc = new Document("username", user.getUsername())
+                                    .append("name", user.getName())
+                                    .append("password", user.getPassword())
+                                    .append("creation-date", user.getCreationDate());
+         usersCollection.insertOne(doc);
     }
+
+
 
 
 }
