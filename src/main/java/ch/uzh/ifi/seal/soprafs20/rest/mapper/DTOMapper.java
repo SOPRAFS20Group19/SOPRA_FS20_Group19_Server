@@ -1,6 +1,8 @@
 package ch.uzh.ifi.seal.soprafs20.rest.mapper;
 
+import ch.uzh.ifi.seal.soprafs20.entity.Location;
 import ch.uzh.ifi.seal.soprafs20.entity.User;
+import ch.uzh.ifi.seal.soprafs20.rest.dto.LocationGetDTO;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.UserGetDTO;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.UserPostDTO;
 import org.mapstruct.*;
@@ -32,5 +34,11 @@ public interface DTOMapper {
     @Mapping(source = "creationDate", target = "creationDate")
     @Mapping(source = "birthDate", target = "birthDate")
     UserGetDTO convertEntityToUserGetDTO(User user);
+
+    @Mapping(source = "id", target = "id")
+    @Mapping(source = "coordinates", target = "coordinates")
+    LocationGetDTO convertEntityToLocationGetDTO(Location location);
+
+
 }
 

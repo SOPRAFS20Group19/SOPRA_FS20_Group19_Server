@@ -2,25 +2,28 @@ package ch.uzh.ifi.seal.soprafs20.entity;
 
 import ch.uzh.ifi.seal.soprafs20.constant.LocationType;
 
+import java.lang.reflect.Array;
+import java.util.List;
+
 public class Location {
 
-    private Long id;
-    private String information;
-    private String address;
-    private String coordinates;
-    private LocationType locationType;
-    private String picture;
+    private int id;
+    //private String additional_information;
+    private List coordinates;
+    //private LocationType locationType;
+    //private String picture;
 
     public Location(){}
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
+    /*
     public String getInformation() {
         return information;
     }
@@ -28,23 +31,18 @@ public class Location {
     public void setInformation(String information) {
         this.information = information;
     }
+     */
 
-    public String getAddress() {
-        return address;
-    }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getCoordinates() {
+    public List getCoordinates() {
         return coordinates;
     }
 
-    public void setCoordinates(String coordinates) {
+    public void setCoordinates(List coordinates) {
         this.coordinates = coordinates;
     }
 
+    /*
     public LocationType getLocationType() {
         return locationType;
     }
@@ -53,6 +51,9 @@ public class Location {
         this.locationType = locationType;
     }
 
+     */
+
+    /*
     public String getPicture() {
         return picture;
     }
@@ -60,4 +61,6 @@ public class Location {
     public void setPicture(String picture) {
         this.picture = picture;
     }
+
+     */
 }

@@ -1,6 +1,7 @@
 package ch.uzh.ifi.seal.soprafs20.database;
 
 
+import ch.uzh.ifi.seal.soprafs20.entity.Location;
 import ch.uzh.ifi.seal.soprafs20.entity.User;
 import com.mongodb.*;
 import com.mongodb.client.MongoClient;
@@ -36,15 +37,12 @@ public class DatabaseConnector {
     //Establish connection to the Users Collection (development purposes only)
     static MongoCollection<Document> usersCollection = usersDevelopment.getCollection("Users");
 
-    //XXXXX
-    /*
-    static DB objects = (DB) mongoClient.getDatabase("LocationStorage");
-    static DBCollection fountains = objects.getCollection("Fountains");
+    //Establish connection to the Location Database (development purposes only)
+    static MongoDatabase locationStorage = mongoClient.getDatabase("LocationStorage");
+    //Establish connection to the Fountains Collection (development purposes only)
+    static MongoCollection<Document> fountainsCollection = usersDevelopment.getCollection("Fountains");
 
-    static DB userDatabaseDB = (DB) mongoClient.getDatabase("UsersDevelopment");
-    static DBCollection userCollectionDB = userDatabaseDB.getCollection("Users");
 
-     */
     //creates User in the database; called bi createUser() in UserService
     public static void createUser(User user) {
 
@@ -55,18 +53,25 @@ public class DatabaseConnector {
          usersCollection.insertOne(doc);
     }
 
-    //XXXXX
-    /*
-    public static void findByUsername (String givenUsername){
-
-        BasicDBObject whereQuery = new BasicDBObject();
-        whereQuery.put("username", givenUsername);
-        DBCursor cursor = userCollectionDB.find(whereQuery);
-        while(cursor.hasNext()) {
-            System.out.println(cursor.next());
+    public static List<Location> getFountains(){
+        List<Document> fountainsList = fountainsCollection.find().into(new ArrayList<>());
+        List<Location> fountainsListLocation = new ArrayList<>();
+        for (Document fountain : fountainsList) {
+            fountain.toJson();
+            //convert Document to Location
+            Location fountainLocation = fountainToLocation(fountain);
+            //add Location to List of Locations
+            fountainsListLocation.add(fountainLocation);
         }
+        return fountainsListLocation;
     }
 
-     */
+    public static Location fountainToLocation(Document document){
+        Location newLocation = new Location();
+        newLocation.setId(document.getInteger("objectid"));
+        newLocation.setCoordinates((List) document.get("coordinates"));
+        return newLocation;
+    }
+
 
 }

@@ -3,10 +3,16 @@ package ch.uzh.ifi.seal.soprafs20.controller;
 import ch.uzh.ifi.seal.soprafs20.entity.Chat;
 import ch.uzh.ifi.seal.soprafs20.entity.Location;
 import ch.uzh.ifi.seal.soprafs20.entity.Message;
+import ch.uzh.ifi.seal.soprafs20.entity.User;
+import ch.uzh.ifi.seal.soprafs20.rest.dto.LocationGetDTO;
+import ch.uzh.ifi.seal.soprafs20.rest.dto.UserGetDTO;
+import ch.uzh.ifi.seal.soprafs20.rest.mapper.DTOMapper;
 import ch.uzh.ifi.seal.soprafs20.service.LocationService;
+import org.bson.Document;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,8 +32,16 @@ public class LocationController {
     @GetMapping("/locations")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public List<Location> getAllLocations() {
-        return locationService.getLocations();
+    public List<LocationGetDTO> getAllLocations() {
+        List<Location> locations =  locationService.getLocations();
+        List<LocationGetDTO> locationGetDTOs = new ArrayList<>();
+
+        // convert each user to the API representation
+        for (Location location : locations) {
+            locationGetDTOs.add(DTOMapper.INSTANCE.convertEntityToLocationGetDTO(location));
+        }
+        return locationGetDTOs;
+
     }
 
     @PostMapping("/locations")

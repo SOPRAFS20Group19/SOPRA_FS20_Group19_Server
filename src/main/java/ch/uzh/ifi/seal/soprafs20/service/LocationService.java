@@ -1,6 +1,7 @@
 package ch.uzh.ifi.seal.soprafs20.service;
 
 import ch.uzh.ifi.seal.soprafs20.constant.UserStatus;
+import ch.uzh.ifi.seal.soprafs20.database.DatabaseConnector;
 import ch.uzh.ifi.seal.soprafs20.entity.Chat;
 import ch.uzh.ifi.seal.soprafs20.entity.Location;
 import ch.uzh.ifi.seal.soprafs20.entity.Message;
@@ -11,6 +12,7 @@ import ch.uzh.ifi.seal.soprafs20.exceptions.SopraServiceException;
 import ch.uzh.ifi.seal.soprafs20.exceptions.UserNotFoundException;
 import ch.uzh.ifi.seal.soprafs20.repository.UserRepository;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.UserPutDTO;
+import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
+
+import javax.xml.crypto.Data;
 import java.sql.Timestamp;
 
 import java.util.ArrayList;
@@ -39,8 +43,8 @@ public class LocationService {
     public LocationService(){}
 
     public List<Location> getLocations(){
-        List<Location> allLocations = new ArrayList<>();
-        return allLocations;
+        List<Location> listFountains = DatabaseConnector.getFountains();
+        return listFountains;
     }
 
     public Location getLocation(Long id){
