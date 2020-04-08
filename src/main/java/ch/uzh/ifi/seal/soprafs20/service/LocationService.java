@@ -43,8 +43,16 @@ public class LocationService {
     public LocationService(){}
 
     public List<Location> getLocations(){
+        List<Location> allLocations = new ArrayList<>();
         List<Location> listFountains = DatabaseConnector.getFountains();
-        return listFountains;
+        List<Location> listFireplaces = DatabaseConnector.getFireplaces();
+        List<Location> listRecyclingStations = DatabaseConnector.getRecyclingStations();
+
+        allLocations.addAll(listFountains);
+        allLocations.addAll(listFireplaces);
+        allLocations.addAll(listRecyclingStations);
+
+        return allLocations;
     }
 
     public Location getLocation(Long id){

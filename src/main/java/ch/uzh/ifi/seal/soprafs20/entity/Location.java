@@ -3,14 +3,17 @@ package ch.uzh.ifi.seal.soprafs20.entity;
 import ch.uzh.ifi.seal.soprafs20.constant.LocationType;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Location {
 
     private int id;
     //private String additional_information;
-    private List coordinates;
-    //private LocationType locationType;
+    private double longitude;
+    private double latitude;
+    private double[] coordinates;
+    private LocationType locationType;
     //private String picture;
 
     public Location(){}
@@ -34,15 +37,17 @@ public class Location {
      */
 
 
-    public List getCoordinates() {
+    public double[] getCoordinates() {
         return coordinates;
     }
 
-    public void setCoordinates(List coordinates) {
+    public void setCoordinates(double[] coordinates) {
+        this.longitude = coordinates[0];
+        this.latitude = coordinates[1];
         this.coordinates = coordinates;
     }
 
-    /*
+
     public LocationType getLocationType() {
         return locationType;
     }
@@ -51,7 +56,7 @@ public class Location {
         this.locationType = locationType;
     }
 
-     */
+
 
     /*
     public String getPicture() {
