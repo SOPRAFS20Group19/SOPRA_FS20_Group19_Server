@@ -4,23 +4,24 @@ package ch.uzh.ifi.seal.soprafs20.database;
 import ch.uzh.ifi.seal.soprafs20.entity.Location;
 import ch.uzh.ifi.seal.soprafs20.entity.User;
 import com.mongodb.*;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.*;
 
+import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.MongoCollection;
 
 import org.bson.Document;
+
+import java.lang.reflect.Array;
 import java.util.Arrays;
 
-import com.mongodb.client.MongoCursor;
 import static com.mongodb.client.model.Filters.*;
 import com.mongodb.client.result.DeleteResult;
 import static com.mongodb.client.model.Updates.*;
 import com.mongodb.client.result.UpdateResult;
 import java.util.ArrayList;
 import java.util.List;
+
+
 
 
 
@@ -51,6 +52,37 @@ public class DatabaseConnector {
                                     .append("password", user.getPassword())
                                     .append("creation-date", user.getCreationDate());
          usersCollection.insertOne(doc);
+    }
+
+    //Checks if user tried to login with valid credentials
+    public static boolean checkIfUserAndPasswordExist(String username, String password){
+        Document user = (Document) usersCollection.find(and(eq("username", username), eq("password", password)));
+        if (user == null){
+            return false;
+        }
+        return true;
+    }
+
+    //checks if user provided a valid username
+    public static boolean checkIfUsernameExists(String username){
+        Document user = (Document) usersCollection.find(eq("username", username));
+        if (user == null){
+            return false;
+        }
+        return true;
+    }
+
+
+    //returns a user with a certain username
+    public static User getUserByUsername(String username){
+        Document user = (Document) usersCollection.find(eq("username", username));
+        //create a new user representation
+        User userRepresentation = new User();
+        userRepresentation.setUsername(user.getString("username"));
+        userRepresentation.setName(user.getString("name"));
+        userRepresentation.setPassword(user.getString("password"));
+        userRepresentation.setCreationDate(user.getString("creation-date"));
+        return userRepresentation;
     }
 
     public static List<Location> getFountains(){

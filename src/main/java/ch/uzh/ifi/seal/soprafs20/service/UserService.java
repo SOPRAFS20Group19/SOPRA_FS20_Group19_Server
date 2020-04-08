@@ -17,6 +17,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
+
+import javax.xml.crypto.Data;
 import java.sql.Timestamp;
 
 import java.util.List;
@@ -105,33 +107,19 @@ public class UserService {
 
     // checks if the user that is attempting a login has the correct credentials
     public User checkForLogin(User userToBeLoggedIn){
-        //XXXXX
-        //DatabaseConnector.findByUsername(userToBeLoggedIn.getUsername());
 
-        this.logoutUsers();
-        User userByUsername = userRepository.findByUsername(userToBeLoggedIn.getUsername());
+        boolean validCredentials = DatabaseConnector.checkIfUserAndPasswordExist(userToBeLoggedIn.getUsername(), userToBeLoggedIn.getPassword());
 
-        if (userByUsername == null) {
-            throw new InvalidCredentialsException("This username does not exist, please register first.");
+        //Check if user is allowed to log in
+        if (!validCredentials){ //case that the credentials are invalid
+            boolean validUsername = DatabaseConnector.checkIfUsernameExists(userToBeLoggedIn.getUsername());
+            //check if the username is valid, if yes, the password must be false
+            String message = validUsername ? "Wrong password, please try again." : "This username does not exist, please register first.";
+            throw new InvalidCredentialsException(message);
         }
 
-        userByUsername.setStatus(UserStatus.ONLINE);
-
-        String passwordToBeChecked = userToBeLoggedIn.getPassword();
-        String correctPassword = userByUsername.getPassword();
-
-        String nameToBeChecked = userToBeLoggedIn.getName();
-        String correctName = userByUsername.getName();
-
-        if (!passwordToBeChecked.equals(correctPassword)){
-            throw new InvalidCredentialsException("Wrong password, please try again.");
-        }
-
-        if (!nameToBeChecked.equals(correctName)){
-            throw new InvalidCredentialsException("Wrong name, please try again.");
-        }
-
-        return userByUsername;
+        //If credentials are valid return new user representation
+        return DatabaseConnector.getUserByUsername(userToBeLoggedIn.getUsername());
     }
 
     // creates a new user in the user repository
@@ -147,6 +135,10 @@ public class UserService {
         // saves the given entity but data is only persisted in the database once flush() is called
         //newUser = userRepository.save(newUser);
         //userRepository.flush();
+
+        if (!DatabaseConnector.checkIfUsernameExists(newUser.getUsername())){
+            throw new DuplicatedUserException("The username provided is already taken. Please try a new one.");
+        }
         DatabaseConnector.createUser(newUser);
 
         log.debug("Created Information for User: {}", newUser);
