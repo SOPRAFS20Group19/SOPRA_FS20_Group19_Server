@@ -2,6 +2,7 @@ package ch.uzh.ifi.seal.soprafs20.database;
 
 
 import ch.uzh.ifi.seal.soprafs20.constant.LocationType;
+import ch.uzh.ifi.seal.soprafs20.constant.UserStatus;
 import ch.uzh.ifi.seal.soprafs20.entity.Location;
 import ch.uzh.ifi.seal.soprafs20.entity.User;
 import com.mongodb.*;
@@ -63,13 +64,15 @@ public class DatabaseConnector {
          Document doc = new Document("username", user.getUsername())
                                     .append("name", user.getName())
                                     .append("password", user.getPassword())
-                                    .append("creation-date", user.getCreationDate());
+                                    .append("creation-date", user.getCreationDate())
+                                    .append("online", false);
          usersCollection.insertOne(doc);
     }
 
     //Checks if user tried to login with valid credentials
     public static boolean checkIfUserAndPasswordExist(String username, String password){
-        Document user = (Document) usersCollection.find(and(eq("username", username), eq("password", password)));
+        FindIterable<Document> request = usersCollection.find(and(eq("username", username), eq("password", password)));
+        Document user = request.first();
         if (user == null){
             return false;
         }
@@ -78,17 +81,18 @@ public class DatabaseConnector {
 
     //checks if user provided a valid username
     public static boolean checkIfUsernameExists(String username){
-        Document user = (Document) usersCollection.find(eq("username", username));
+        FindIterable<Document> request = usersCollection.find(eq("username", username));
+        Document user = request.first();
         if (user == null){
             return false;
         }
         return true;
     }
 
-
     //returns a user with a certain username
     public static User getUserByUsername(String username){
-        Document user = (Document) usersCollection.find(eq("username", username));
+        FindIterable<Document> request =  usersCollection.find(eq("username", username));
+        Document user = request.first();
         //create a new user representation
         User userRepresentation = new User();
         userRepresentation.setUsername(user.getString("username"));

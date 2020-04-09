@@ -124,24 +124,16 @@ public class UserService {
 
     // creates a new user in the user repository
     public User createUser(User newUser) {
-        newUser.setToken(UUID.randomUUID().toString());
-
-        //we have to add status also to Mongo. like that it's saved in userRepository
-        newUser.setStatus(UserStatus.ONLINE);
-        newUser.setCreationDate(getCurrentDate());
-
-        checkIfUserExists(newUser);
-
-        // saves the given entity but data is only persisted in the database once flush() is called
-        //newUser = userRepository.save(newUser);
-        //userRepository.flush();
-
-        if (!DatabaseConnector.checkIfUsernameExists(newUser.getUsername())){
-            throw new DuplicatedUserException("The username provided is already taken. Please try a new one.");
+        newUser.setCreationDate(UserService.getCurrentDate());
+        //Checks whether username is already taken
+        if (DatabaseConnector.checkIfUsernameExists(newUser.getUsername())){
+            throw new DuplicatedUserException("The provided username is already taken. Please try a new one.");
         }
+        //If the username is not already taken create a new User in the database
         DatabaseConnector.createUser(newUser);
 
         log.debug("Created Information for User: {}", newUser);
+
         return newUser;
     }
 
@@ -172,7 +164,7 @@ public class UserService {
     }
 
     // creates a timestamp of the current date for the creation date during the registration
-    public String getCurrentDate(){
+    public static String getCurrentDate(){
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
         return timestamp.toString();
