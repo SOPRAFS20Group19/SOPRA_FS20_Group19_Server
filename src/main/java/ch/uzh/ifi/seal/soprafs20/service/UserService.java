@@ -9,6 +9,7 @@ import ch.uzh.ifi.seal.soprafs20.exceptions.SopraServiceException;
 import ch.uzh.ifi.seal.soprafs20.exceptions.UserNotFoundException;
 import ch.uzh.ifi.seal.soprafs20.repository.UserRepository;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.UserPutDTO;
+import org.hibernate.dialect.Database;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,9 +45,9 @@ public class UserService {
 
     }
 
-    // returns all users in the repository
+    // returns all users in the database
     public List<User> getUsers() {
-        return this.userRepository.findAll();
+        return DatabaseConnector.getAllUsers();
     }
 
     // returns a user in the repository identified by his ID

@@ -94,12 +94,32 @@ public class DatabaseConnector {
         FindIterable<Document> request =  usersCollection.find(eq("username", username));
         Document user = request.first();
         //create a new user representation
+        User userRepresentation = DatabaseConnector.getUserInfo(user);
+        return userRepresentation;
+    }
+
+    //transforms BSON User into Backend User Representation
+    public static User getUserInfo(Document user){
         User userRepresentation = new User();
         userRepresentation.setUsername(user.getString("username"));
         userRepresentation.setName(user.getString("name"));
         userRepresentation.setPassword(user.getString("password"));
         userRepresentation.setCreationDate(user.getString("creation-date"));
+        userRepresentation.setStatus(user.getBoolean("online-status")? UserStatus.ONLINE : UserStatus.OFFLINE);
         return userRepresentation;
+    }
+
+    //returns all users represented as User.class
+    public static List<User> getAllUsers(){
+        List<Document> request = usersCollection.find().into(new ArrayList<>());
+        List<User> allUsers = new ArrayList<User>();
+        for (Document doc : request){
+            User tempUser = DatabaseConnector.getUserInfo(doc);
+            allUsers.add(tempUser);
+        }
+        return allUsers;
+
+
     }
 
     public static void getFountainById(int id){
