@@ -105,7 +105,7 @@ public class DatabaseConnector {
         userRepresentation.setName(user.getString("name"));
         userRepresentation.setPassword(user.getString("password"));
         userRepresentation.setCreationDate(user.getString("creation-date"));
-        userRepresentation.setStatus(user.getBoolean("online-status")? UserStatus.ONLINE : UserStatus.OFFLINE);
+        userRepresentation.setStatus(user.getBoolean("online")? UserStatus.ONLINE : UserStatus.OFFLINE);
         return userRepresentation;
     }
 
