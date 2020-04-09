@@ -9,12 +9,13 @@ import java.util.List;
 public class Location {
 
     private int id;
-    //private String additional_information;
+    private String address;
+    private String additionalInformation;
     private double longitude;
     private double latitude;
     private double[] coordinates;
     private LocationType locationType;
-    //private String picture;
+    private String picture;
 
     public Location(){}
 
@@ -26,15 +27,15 @@ public class Location {
         this.id = id;
     }
 
-    /*
+
     public String getInformation() {
-        return information;
+        return additionalInformation;
     }
 
     public void setInformation(String information) {
-        this.information = information;
+        this.additionalInformation = information;
     }
-     */
+
 
 
     public double[] getCoordinates() {
@@ -58,7 +59,7 @@ public class Location {
 
 
 
-    /*
+
     public String getPicture() {
         return picture;
     }
@@ -67,5 +68,11 @@ public class Location {
         this.picture = picture;
     }
 
-     */
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 }
