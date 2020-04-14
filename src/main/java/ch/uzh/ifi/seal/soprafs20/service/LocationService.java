@@ -2,6 +2,7 @@ package ch.uzh.ifi.seal.soprafs20.service;
 
 import ch.uzh.ifi.seal.soprafs20.constant.UserStatus;
 import ch.uzh.ifi.seal.soprafs20.database.DatabaseConnector;
+import ch.uzh.ifi.seal.soprafs20.database.DatabaseConnectorLocation;
 import ch.uzh.ifi.seal.soprafs20.entity.Chat;
 import ch.uzh.ifi.seal.soprafs20.entity.Location;
 import ch.uzh.ifi.seal.soprafs20.entity.Message;
@@ -44,9 +45,9 @@ public class LocationService {
 
     public List<Location> getLocations(){
         List<Location> allLocations = new ArrayList<>();
-        List<Location> listFountains = DatabaseConnector.getFountains();
-        List<Location> listFireplaces = DatabaseConnector.getFireplaces();
-        List<Location> listRecyclingStations = DatabaseConnector.getRecyclingStations();
+        List<Location> listFountains = DatabaseConnectorLocation.getFountains();
+        List<Location> listFireplaces = DatabaseConnectorLocation.getFireplaces();
+        List<Location> listRecyclingStations = DatabaseConnectorLocation.getRecyclingStations();
 
         allLocations.addAll(listFountains);
         allLocations.addAll(listFireplaces);

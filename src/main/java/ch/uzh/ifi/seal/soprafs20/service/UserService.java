@@ -2,6 +2,7 @@ package ch.uzh.ifi.seal.soprafs20.service;
 
 import ch.uzh.ifi.seal.soprafs20.constant.UserStatus;
 import ch.uzh.ifi.seal.soprafs20.database.DatabaseConnector;
+import ch.uzh.ifi.seal.soprafs20.database.DatabaseConnectorUser;
 import ch.uzh.ifi.seal.soprafs20.entity.User;
 import ch.uzh.ifi.seal.soprafs20.exceptions.DuplicatedUserException;
 import ch.uzh.ifi.seal.soprafs20.exceptions.InvalidCredentialsException;
@@ -109,29 +110,29 @@ public class UserService {
     // checks if the user that is attempting a login has the correct credentials
     public User checkForLogin(User userToBeLoggedIn){
 
-        boolean validCredentials = DatabaseConnector.checkIfUserAndPasswordExist(userToBeLoggedIn.getUsername(), userToBeLoggedIn.getPassword());
+        boolean validCredentials = DatabaseConnectorUser.checkIfUserAndPasswordExist(userToBeLoggedIn.getUsername(), userToBeLoggedIn.getPassword());
 
         //Check if user is allowed to log in
         if (!validCredentials){ //case that the credentials are invalid
-            boolean validUsername = DatabaseConnector.checkIfUsernameExists(userToBeLoggedIn.getUsername());
+            boolean validUsername = DatabaseConnectorUser.checkIfUsernameExists(userToBeLoggedIn.getUsername());
             //check if the username is valid, if yes, the password must be false
             String message = validUsername ? "Wrong password, please try again." : "This username does not exist, please register first.";
             throw new InvalidCredentialsException(message);
         }
 
         //If credentials are valid return new user representation
-        return DatabaseConnector.getUserByUsername(userToBeLoggedIn.getUsername());
+        return DatabaseConnectorUser.getUserByUsername(userToBeLoggedIn.getUsername());
     }
 
     // creates a new user in the user repository
     public User createUser(User newUser) {
         newUser.setCreationDate(UserService.getCurrentDate());
         //Checks whether username is already taken
-        if (DatabaseConnector.checkIfUsernameExists(newUser.getUsername())){
+        if (DatabaseConnectorUser.checkIfUsernameExists(newUser.getUsername())){
             throw new DuplicatedUserException("The provided username is already taken. Please try a new one.");
         }
         //If the username is not already taken create a new User in the database
-        DatabaseConnector.createUser(newUser);
+        DatabaseConnectorUser.createUser(newUser);
 
         log.debug("Created Information for User: {}", newUser);
 
