@@ -54,8 +54,13 @@ public class LocationController {
     @GetMapping("/locations/{locationId}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public Location getLocation(@PathVariable Long locationId) {
-        return locationService.getLocation(locationId);
+    public LocationGetDTO getLocation(@PathVariable int locationId) {
+
+        // get the location corresponding to the given ID
+        Location location = locationService.getLocation(locationId);
+
+        // convert the location to the API representation
+        return DTOMapper.INSTANCE.convertEntityToLocationGetDTO(location);
     }
 
     @PutMapping("/locations/{locationId}")

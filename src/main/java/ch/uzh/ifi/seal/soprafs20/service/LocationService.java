@@ -56,9 +56,23 @@ public class LocationService {
         return allLocations;
     }
 
-    public Location getLocation(Long id){
-        Location location = new Location();
-        return location;
+    public Location getLocation(int id){
+        List<Location> allLocations = this.getLocations();
+
+        Location locationToReturn = null;
+
+        for (Location location: allLocations){
+            if (id == (location.getId())){
+                locationToReturn = location;
+            }
+        }
+
+        //TO DO: Wir müssen noch LocationNotFoundException erstellen!
+        if (locationToReturn == null){
+            throw new UserNotFoundException("This location could not be found.");
+        }
+
+        return locationToReturn;
     }
 
     public Location createLocation(Location newLocation){
