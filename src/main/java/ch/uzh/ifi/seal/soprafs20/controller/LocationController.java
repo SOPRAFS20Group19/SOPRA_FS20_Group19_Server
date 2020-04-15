@@ -4,6 +4,7 @@ import ch.uzh.ifi.seal.soprafs20.entity.Chat;
 import ch.uzh.ifi.seal.soprafs20.entity.Location;
 import ch.uzh.ifi.seal.soprafs20.entity.Message;
 import ch.uzh.ifi.seal.soprafs20.entity.User;
+import ch.uzh.ifi.seal.soprafs20.rest.dto.FilterPostDTO;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.LocationGetDTO;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.UserGetDTO;
 import ch.uzh.ifi.seal.soprafs20.rest.mapper.DTOMapper;
@@ -42,6 +43,20 @@ public class LocationController {
         }
         return locationGetDTOs;
 
+    }
+
+    @PostMapping("/locations/filter")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public List<LocationGetDTO> getFilteredLocation(@RequestBody FilterPostDTO filterPostDTO) {
+        List<Location> locations =  locationService.getFilteredLocations(filterPostDTO);
+        List<LocationGetDTO> locationGetDTOs = new ArrayList<>();
+
+        // convert each user to the API representation
+        for (Location location : locations) {
+            locationGetDTOs.add(DTOMapper.INSTANCE.convertEntityToLocationGetDTO(location));
+        }
+        return locationGetDTOs;
     }
 
     @PostMapping("/locations")

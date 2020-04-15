@@ -12,6 +12,7 @@ import ch.uzh.ifi.seal.soprafs20.exceptions.InvalidCredentialsException;
 import ch.uzh.ifi.seal.soprafs20.exceptions.SopraServiceException;
 import ch.uzh.ifi.seal.soprafs20.exceptions.UserNotFoundException;
 import ch.uzh.ifi.seal.soprafs20.repository.UserRepository;
+import ch.uzh.ifi.seal.soprafs20.rest.dto.FilterPostDTO;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.UserPutDTO;
 import org.bson.Document;
 import org.slf4j.Logger;
@@ -54,6 +55,24 @@ public class LocationService {
         allLocations.addAll(listRecyclingStations);
 
         return allLocations;
+    }
+
+    public List<Location> getFilteredLocations(FilterPostDTO filterPostDTO) {
+        List<Location> filteredLocations = new ArrayList<>();
+        if (filterPostDTO.showFountains()){
+            List<Location> listFountains = DatabaseConnectorLocation.getFountains();
+            filteredLocations.addAll(listFountains);
+        }
+        if (filterPostDTO.showFireplaces()){
+            List<Location> listFireplaces = DatabaseConnectorLocation.getFireplaces();
+            filteredLocations.addAll(listFireplaces);
+        }
+        if (filterPostDTO.showRecyclingStations()){
+            List<Location> listRecyclingStations = DatabaseConnectorLocation.getRecyclingStations();
+            filteredLocations.addAll(listRecyclingStations);
+        }
+
+        return filteredLocations;
     }
 
     public Location getLocation(int id){
@@ -100,4 +119,6 @@ public class LocationService {
     }
 
     public void getWebcam(Long locationId){}
+
+
 }
