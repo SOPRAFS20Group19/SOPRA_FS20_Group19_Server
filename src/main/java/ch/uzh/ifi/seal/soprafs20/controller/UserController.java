@@ -26,6 +26,7 @@ public class UserController {
         this.userService = userService;
     }
 
+    /* Currently not in use, drop???
     @GetMapping("/users")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
@@ -41,13 +42,14 @@ public class UserController {
         return userGetDTOs;
     }
 
+     */
+
     @GetMapping("/users/{userId}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public UserGetDTO getUserById(@PathVariable Long userId) {
         // get the user corresponding to the given ID
-        User user = userService.getUser(userId);
-
+        User user = userService.getUserById(userId);
         // convert the user to the API representation
         return DTOMapper.INSTANCE.convertEntityToUserGetDTO(user);
     }

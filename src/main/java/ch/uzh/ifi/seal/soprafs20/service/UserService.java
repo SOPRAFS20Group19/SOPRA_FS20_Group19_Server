@@ -37,74 +37,21 @@ public class UserService {
 
     private final Logger log = LoggerFactory.getLogger(UserService.class);
 
-    private final UserRepository userRepository;
-
-
-    @Autowired
-    public UserService(@Qualifier("userRepository") UserRepository userRepository) {
-        this.userRepository = userRepository;
-
-    }
-
-    // returns all users in the database
-    public List<User> getUsers() {
-        return DatabaseConnector.getAllUsers();
-    }
 
     // returns a user in the repository identified by his ID
-    public User getUser(Long id){
-        List<User> users = this.userRepository.findAll();
-
-        User userToReturn = null;
-
-        for (User user: users){
-            if (id.equals(user.getId())){
-                userToReturn = user;
-            }
-        }
-
-        if (userToReturn == null){
-            throw new UserNotFoundException("This user could not be found.");
-        }
-
-        return userToReturn;
+    public User getUserById(Long id){
+        //Not yet implemented
+        return new User();
     }
 
     // updates a user with the updated username and birthdate
-    public void updateUser(Long userId, UserPutDTO userWithNewData){
-        List<User> users = this.userRepository.findAll();
-
-        User userToUpdate = null;
-
-        for (User user: users){
-            if (userId.equals(user.getId())){
-                userToUpdate = user;
-            }
-        }
-
-        if (userToUpdate == null){
-            throw new UserNotFoundException("This user could not be found.");
-        }
-
-        if (userWithNewData.getUsername() != null){
-            userToUpdate.setUsername(userWithNewData.getUsername());
-        }
-
-        if (userWithNewData.getBirthDate() != null){
-            userToUpdate.setBirthDate(userWithNewData.getBirthDate());
-        }
-
-        userRepository.save(userToUpdate);
-        userRepository.flush();
+    public void updateUser(Long userId, UserPutDTO userWithNewData) {
+        //not yet implemented
     }
 
     // logs out all users
     public void logoutUsers(){
-        List<User> users = this.userRepository.findAll();
-
-        for (User user: users){
-            user.setStatus(UserStatus.OFFLINE);
-        }
+        //not yet implemented
     }
 
     // checks if the user that is attempting a login has the correct credentials
@@ -120,7 +67,9 @@ public class UserService {
             throw new InvalidCredentialsException(message);
         }
 
-        //If credentials are valid return new user representation
+        //If credentials are valid set the user status to online, since the user will be logged in
+        DatabaseConnectorUser.setOnlineStatus(userToBeLoggedIn, true);
+        //return new user representation
         return DatabaseConnectorUser.getUserByUsername(userToBeLoggedIn.getUsername());
     }
 
@@ -137,32 +86,6 @@ public class UserService {
         log.debug("Created Information for User: {}", newUser);
 
         return newUser;
-    }
-
-    /**
-     * This is a helper method that will check the uniqueness criteria of the username and the name
-     * defined in the User entity. The method will do nothing if the input is unique and throw an error otherwise.
-     *
-     * @param userToBeCreated
-     * @throws SopraServiceException
-     * @see User
-     */
-    private void checkIfUserExists(User userToBeCreated) {
-        User userByUsername = userRepository.findByUsername(userToBeCreated.getUsername());
-        User userByName = userRepository.findByName(userToBeCreated.getName());
-
-        String baseErrorMessage = "The %s provided %s not unique. Therefore, the user could not be created!";
-        if (userByUsername != null && userByName != null) {
-            throw new DuplicatedUserException("The username and the name provided are not unique. Therefore, the user could not be created!");
-        }
-        else if (userByUsername != null) {
-            throw new DuplicatedUserException("The username provided is not unique. Therefore, the user could not be created!");
-
-        }
-        else if (userByName != null) {
-            throw new DuplicatedUserException("The name provided is not unique. Therefore, the user could not be created!");
-
-        }
     }
 
     // creates a timestamp of the current date for the creation date during the registration

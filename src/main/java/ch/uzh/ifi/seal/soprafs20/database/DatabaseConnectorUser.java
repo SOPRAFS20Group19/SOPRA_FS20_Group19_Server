@@ -11,6 +11,9 @@ import java.util.List;
 import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
 
+import static com.mongodb.client.model.Updates.*;
+import com.mongodb.client.model.UpdateOptions;
+
 public class DatabaseConnectorUser {
     public DatabaseConnectorUser(){}
 
@@ -53,6 +56,13 @@ public class DatabaseConnectorUser {
         return true;
     }
 
+    //sets the online status of a user to either true or false
+    public static void setOnlineStatus(User user, boolean b){
+        usersCollection.updateOne(eq("username", user.getUsername()),
+                set("online", b));
+    }
+
+
     //returns a user with a certain username
     public static User getUserByUsername(String username){
         FindIterable<Document> request =  usersCollection.find(eq("username", username));
@@ -62,9 +72,19 @@ public class DatabaseConnectorUser {
         return userRepresentation;
     }
 
+    //not finished
+    public static User getUserById(Long id){
+        FindIterable<Document> request =  usersCollection.find(eq("id", id)); //Temporary id-field does not exist by now
+        Document user = request.first();
+        //create a new user representation
+        User userRepresentation = DatabaseConnector.getUserInfo(user);
+        return userRepresentation;
+    }
+
     //transforms BSON User into Backend User Representation
     public static User getUserInfo(Document user){
         User userRepresentation = new User();
+        //userRepresentation.setId(new Long((user.getObjectId("_id").toString().hashCode()))); //dont know if this works
         userRepresentation.setUsername(user.getString("username"));
         userRepresentation.setName(user.getString("name"));
         userRepresentation.setPassword(user.getString("password"));
@@ -78,11 +98,9 @@ public class DatabaseConnectorUser {
         List<Document> request = usersCollection.find().into(new ArrayList<>());
         List<User> allUsers = new ArrayList<User>();
         for (Document doc : request){
-            User tempUser = DatabaseConnector.getUserInfo(doc);
+            User tempUser = DatabaseConnectorUser.getUserInfo(doc);
             allUsers.add(tempUser);
         }
         return allUsers;
-
-
     }
 }
