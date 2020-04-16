@@ -32,7 +32,8 @@ public class DatabaseConnectorUser {
                 .append("name", user.getName())
                 .append("password", user.getPassword())
                 .append("creation-date", user.getCreationDate())
-                .append("online", false);
+                .append("online", false)
+                .append("userId", DatabaseConnectorUser.generateId());
         usersCollection.insertOne(doc);
     }
 
@@ -91,6 +92,14 @@ public class DatabaseConnectorUser {
         userRepresentation.setCreationDate(user.getString("creation-date"));
         userRepresentation.setStatus(user.getBoolean("online")? UserStatus.ONLINE : UserStatus.OFFLINE);
         return userRepresentation;
+    }
+
+    //Helper function which generates a unique user id
+    public static int generateId(){
+        int random = (int) (Math.random() * 100000);
+        FindIterable<Document> request = usersCollection.find(eq("userId", random));
+        if (request.first() != null){random = DatabaseConnectorUser.generateId();};
+        return random;
     }
 
     //returns all users represented as User.class
