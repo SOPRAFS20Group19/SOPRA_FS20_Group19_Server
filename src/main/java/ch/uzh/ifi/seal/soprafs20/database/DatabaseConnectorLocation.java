@@ -86,14 +86,39 @@ public class DatabaseConnectorLocation {
         JSONObject properties = fountainAsJson.getJSONObject("properties");
         JSONObject geometry = fountainAsJson.getJSONObject("geometry");
 
+        // set ID
         newLocation.setId(properties.getInt("objectid"));
 
+        // set coordinates
         JSONArray coordinatesAsJSON = (JSONArray) geometry.get("coordinates");
         double lat = coordinatesAsJSON.getDouble(1);
+        newLocation.setLatitude(lat);
         double lon = coordinatesAsJSON.getDouble(0);
+        newLocation.setLongitude(lon);
         double[] coordinates = {lon, lat};
         newLocation.setCoordinates(coordinates);
+
+        // set locationType
         newLocation.setLocationType(LocationType.FOUNTAIN);
+
+        // retrieve and set additional information
+        ArrayList<String> additionalInformation = new ArrayList<>();
+        String fountainType = "Fountain type: " + properties.getString("art_txt");
+        additionalInformation.add(fountainType);
+        //additionalInformation.append("Fountain type: ").append(properties.getString("art_txt")).append("\\n");
+        String access = "Access: " + properties.getString("brunnenart_txt");
+        additionalInformation.add(access);
+        //additionalInformation.append("Access: ").append(properties.getString("brunnenart_txt")).append("\\n");
+        String yOC = "Year of construction: " + properties.get("baujahr");
+        additionalInformation.add(yOC);
+        //additionalInformation.append("Year of construction: ").append(properties.get("baujahr")).append("\\n");
+        if (properties.getString("wasserart_txt") != null){
+            String waterSource = "Water source type: " + properties.getString("wasserart_txt");
+            additionalInformation.add(waterSource);
+            //additionalInformation.append("Water source type: ").append(properties.getString("wasserart_txt")).append("\\n");
+        }
+        newLocation.setAdditionalInformation(additionalInformation);
+
         return newLocation;
     }
 
@@ -101,13 +126,31 @@ public class DatabaseConnectorLocation {
         Location newLocation = new Location();
 
         JSONObject barbecuePlace = fireplaceAsJSON.getJSONObject("BarbecuePlace");
+        JSONArray features = fireplaceAsJSON.getJSONArray("Ausstattung");
 
+        // set ID
         newLocation.setId(barbecuePlace.getInt("Id"));
+
+        // set coordinates
         double lat = barbecuePlace.getDouble("Latitude");
+        newLocation.setLatitude(lat);
         double lon = barbecuePlace.getDouble("Longitude");
+        newLocation.setLongitude(lon);
         double[] coordinates = {lon, lat};
         newLocation.setCoordinates(coordinates);
+
+        // set locationType
         newLocation.setLocationType(LocationType.FIREPLACE);
+
+        // retrieve and set additional information
+        ArrayList<String> additionalInformation = new ArrayList<>();
+        additionalInformation.add("Features and environment:");
+        for (int i = 0; i < features.length(); i++){
+            String feature = "- " + features.getString(i);
+            additionalInformation.add(feature);
+        }
+        newLocation.setAdditionalInformation(additionalInformation);
+
         return newLocation;
     }
 
@@ -118,12 +161,39 @@ public class DatabaseConnectorLocation {
         JSONObject geometry = recyclingAsJSON.getJSONObject("geometry");
         JSONArray coordinatesAsJSON = (JSONArray) geometry.get("coordinates");
 
+        // set ID
         newLocation.setId(Integer.parseInt(properties.getString("objectid")));
+
+        // set coordinates
         double lat = coordinatesAsJSON.getDouble(1);
+        newLocation.setLatitude(lat);
         double lon = coordinatesAsJSON.getDouble(0);
+        newLocation.setLongitude(lon);
         double[] coordinates = {lon, lat};
         newLocation.setCoordinates(coordinates);
+
+        // set locationType
         newLocation.setLocationType(LocationType.RECYCLING_STATION);
+
+        // retrieve and set additional information
+        ArrayList<String> additionalInformation = new ArrayList<>();
+        StringBuilder address = new StringBuilder();
+        address.append("Address: ").append(properties.getString("adresse")).append(", ")
+                .append(properties.getString("plz")).append(" ").append(properties.getString("ort"));
+        additionalInformation.add(address.toString());
+
+        additionalInformation.add("Disposable at this location:");
+        if (properties.get("metall") != null){
+            additionalInformation.add("- Metal");
+        }
+        if (properties.get("glas") != null){
+            additionalInformation.add("- Glass");
+        }
+        if (properties.get("oel") != null){
+            additionalInformation.add("- Oil");
+        }
+        newLocation.setAdditionalInformation(additionalInformation);
+
         return newLocation;
     }
 

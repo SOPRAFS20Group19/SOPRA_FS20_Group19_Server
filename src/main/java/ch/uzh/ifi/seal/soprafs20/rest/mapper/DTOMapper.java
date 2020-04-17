@@ -35,7 +35,10 @@ public interface DTOMapper {
 
     @Mapping(source = "id", target = "id")
     @Mapping(source = "coordinates", target = "coordinates")
+    @Mapping(source = "latitude", target = "latitude")
+    @Mapping(source = "longitude", target = "longitude")
     @Mapping(source = "locationType", target = "locationType")
+    @Mapping(source = "additionalInformation", target = "additionalInformation")
     LocationGetDTO convertEntityToLocationGetDTO(Location location);
 
 

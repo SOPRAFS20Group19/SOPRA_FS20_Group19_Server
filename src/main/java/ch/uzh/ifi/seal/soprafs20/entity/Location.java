@@ -10,7 +10,7 @@ public class Location {
 
     private int id;
     private String address;
-    private String additionalInformation;
+    private ArrayList<String> additionalInformation;
     private double longitude;
     private double latitude;
     private double[] coordinates;
@@ -28,15 +28,29 @@ public class Location {
     }
 
 
-    public String getInformation() {
+    public ArrayList<String> getAdditionalInformation() {
         return additionalInformation;
     }
 
-    public void setInformation(String information) {
-        this.additionalInformation = information;
+    public void setAdditionalInformation(ArrayList<String> additionalInformation) {
+        this.additionalInformation = additionalInformation;
     }
 
+    public double getLatitude() {
+        return latitude;
+    }
 
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
 
     public double[] getCoordinates() {
         return coordinates;
