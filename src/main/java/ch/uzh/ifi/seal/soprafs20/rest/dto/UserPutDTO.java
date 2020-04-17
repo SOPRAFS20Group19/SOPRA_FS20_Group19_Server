@@ -1,11 +1,12 @@
 package ch.uzh.ifi.seal.soprafs20.rest.dto;
 
+import ch.uzh.ifi.seal.soprafs20.constant.UserStatus;
+
 // representation of the user data given in a put request
 public class UserPutDTO {
 
     private String username;
-
-    private String birthDate;
+    private UserStatus status;
 
     public String getUsername() {
         return username;
@@ -15,11 +16,13 @@ public class UserPutDTO {
         this.username = username;
     }
 
-    public String getBirthDate() {
-        return birthDate;
+    public UserStatus getOnlineStatus() {
+        return status;
     }
 
-    public void setBirthDate(String birthDate) {
-        this.birthDate = birthDate;
+    public void setOnlineStatus(UserStatus status) {
+        this.status = status;
     }
+
+
 }

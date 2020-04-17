@@ -4,7 +4,7 @@ import ch.uzh.ifi.seal.soprafs20.constant.UserStatus;
 
 public class UserGetDTO {
 
-    private Long id;
+    private int id;
     private String name;
     private String username;
     private String password;
@@ -12,11 +12,11 @@ public class UserGetDTO {
     private String creationDate;
     private String birthDate;
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -55,8 +55,4 @@ public class UserGetDTO {
     public String getCreationDate(){ return creationDate;}
 
     public void setCreationDate(String creationDate){ this.creationDate = creationDate;}
-
-    public String getBirthDate(){ return birthDate;}
-
-    public void setBirthDate(String birthDate){ this.birthDate = birthDate;}
 }

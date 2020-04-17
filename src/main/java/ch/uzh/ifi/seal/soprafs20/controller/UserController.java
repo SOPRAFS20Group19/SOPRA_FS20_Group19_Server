@@ -47,7 +47,7 @@ public class UserController {
     @GetMapping("/users/{userId}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public UserGetDTO getUserById(@PathVariable Long userId) {
+    public UserGetDTO getUserById(@PathVariable int userId) {
         // get the user corresponding to the given ID
         User user = userService.getUserById(userId);
         // convert the user to the API representation
@@ -57,7 +57,7 @@ public class UserController {
     @PutMapping ("/users/{userId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @ResponseBody
-    public void updateUser(@PathVariable Long userId, @RequestBody UserPutDTO userPutDTO) {
+    public void updateUser(@PathVariable int userId, @RequestBody UserPutDTO userPutDTO) {
         // updates the user identified by the given ID with the given data by the client
         userService.updateUser(userId, userPutDTO);
     }
@@ -88,5 +88,14 @@ public class UserController {
 
         // convert internal representation of user back to API
         return DTOMapper.INSTANCE.convertEntityToUserGetDTO(loggedInUser);
+    }
+
+    @PutMapping("/logout/{userId}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public void logoutUser(@PathVariable int userId){
+        //log out user with given User id
+        userService.logoutUser(userId);
+
     }
 }

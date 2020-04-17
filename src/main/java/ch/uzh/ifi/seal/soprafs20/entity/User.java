@@ -7,47 +7,31 @@ import java.io.Serializable;
 
 /**
  * Internal User Representation
- * This class composes the internal representation of the user and defines how the user is stored in the database.
- * Every variable will be mapped into a database field with the @Column annotation
- * - nullable = false -> this cannot be left empty
- * - unique = true -> this value must be unqiue across the database -> composes the primary key
  */
-@Entity
-@Table(name = "USER")
-public class User implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+public class User {
 
-	@Id
-	@GeneratedValue
-	private Long id;
-	
-	@Column(nullable = false) 
+	private int id;
+
 	private String name;
-	
-	@Column(nullable = false, unique = true) 
+
 	private String username;
-	
-	@Column(nullable = false, unique = true) 
+
 	private String token;
 
-	@Column()
 	private String password;
 
-	@Column()
 	private String creationDate;
 
-	@Column()
 	private String birthDate;
 
-	@Column(nullable = false)
 	private UserStatus status;
 
-	public Long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -94,8 +78,4 @@ public class User implements Serializable {
 	public String getCreationDate(){ return creationDate; }
 
 	public void setCreationDate(String creationDate){ this.creationDate = creationDate;}
-
-	public String getBirthDate(){ return birthDate; }
-
-	public void setBirthDate(String birthDate){ this.birthDate = birthDate;}
 }

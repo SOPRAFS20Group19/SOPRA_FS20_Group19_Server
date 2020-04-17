@@ -8,7 +8,6 @@ import ch.uzh.ifi.seal.soprafs20.exceptions.DuplicatedUserException;
 import ch.uzh.ifi.seal.soprafs20.exceptions.InvalidCredentialsException;
 import ch.uzh.ifi.seal.soprafs20.exceptions.SopraServiceException;
 import ch.uzh.ifi.seal.soprafs20.exceptions.UserNotFoundException;
-import ch.uzh.ifi.seal.soprafs20.repository.UserRepository;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.UserPutDTO;
 import org.hibernate.dialect.Database;
 import org.slf4j.Logger;
@@ -39,19 +38,20 @@ public class UserService {
 
 
     // returns a user in the repository identified by his ID
-    public User getUserById(Long id){
+    public User getUserById(int id){
         //Not yet implemented
-        return new User();
+        User userToReturn = DatabaseConnectorUser.getUserById(id);
+        return  userToReturn;
     }
 
     // updates a user with the updated username and birthdate
-    public void updateUser(Long userId, UserPutDTO userWithNewData) {
+    public void updateUser(int userId, UserPutDTO userWithNewData) {
         //not yet implemented
     }
 
     // logs out all users
-    public void logoutUsers(){
-        //not yet implemented
+    public void logoutUser(int id){
+        DatabaseConnectorUser.setOnlineStatusById(id, false);
     }
 
     // checks if the user that is attempting a login has the correct credentials

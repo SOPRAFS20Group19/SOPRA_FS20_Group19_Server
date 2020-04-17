@@ -63,6 +63,12 @@ public class DatabaseConnectorUser {
                 set("online", b));
     }
 
+    //sets the online status of a user to either true or false
+    public static void setOnlineStatusById(int id, boolean b){
+        usersCollection.updateOne(eq("userId", id),
+                set("online", b));
+    }
+
 
     //returns a user with a certain username
     public static User getUserByUsername(String username){
@@ -74,8 +80,8 @@ public class DatabaseConnectorUser {
     }
 
     //not finished
-    public static User getUserById(Long id){
-        FindIterable<Document> request =  usersCollection.find(eq("id", id)); //Temporary id-field does not exist by now
+    public static User getUserById(int id){
+        FindIterable<Document> request =  usersCollection.find(eq("UserId", id)); //Temporary id-field does not exist by now
         Document user = request.first();
         //create a new user representation
         User userRepresentation = DatabaseConnector.getUserInfo(user);
@@ -85,11 +91,11 @@ public class DatabaseConnectorUser {
     //transforms BSON User into Backend User Representation
     public static User getUserInfo(Document user){
         User userRepresentation = new User();
-        //userRepresentation.setId(new Long((user.getObjectId("_id").toString().hashCode()))); //dont know if this works
         userRepresentation.setUsername(user.getString("username"));
         userRepresentation.setName(user.getString("name"));
         userRepresentation.setPassword(user.getString("password"));
         userRepresentation.setCreationDate(user.getString("creation-date"));
+        userRepresentation.setId(user.getInteger("userId", 0)); //if user has no id he gets assigned id: 0, flag that something is not working properly
         userRepresentation.setStatus(user.getBoolean("online")? UserStatus.ONLINE : UserStatus.OFFLINE);
         return userRepresentation;
     }

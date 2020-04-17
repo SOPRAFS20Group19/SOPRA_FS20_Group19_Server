@@ -10,7 +10,7 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-04-16T18:47:39+0200",
+    date = "2020-04-17T10:14:33+0200",
     comments = "version: 1.3.1.Final, compiler: javac, environment: Java 13.0.2 (Oracle Corporation)"
 )
 public class DTOMapperImpl implements DTOMapper {
@@ -42,7 +42,6 @@ public class DTOMapperImpl implements DTOMapper {
         userGetDTO.setName( user.getName() );
         userGetDTO.setId( user.getId() );
         userGetDTO.setCreationDate( user.getCreationDate() );
-        userGetDTO.setBirthDate( user.getBirthDate() );
         userGetDTO.setUsername( user.getUsername() );
         userGetDTO.setStatus( user.getStatus() );
 
