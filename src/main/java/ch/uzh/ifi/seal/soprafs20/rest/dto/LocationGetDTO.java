@@ -10,7 +10,7 @@ public class LocationGetDTO {
     private double[] coordinates;
     private double longitude;
     private double latitude;
-    private ArrayList<String> additionalInformation;
+    private String[] additionalInformation;
     private LocationType locationType;
 
     public int getId() {
@@ -21,11 +21,11 @@ public class LocationGetDTO {
         this.id = id;
     }
 
-    public ArrayList<String> getAdditionalInformation() {
+    public String[] getAdditionalInformation() {
         return additionalInformation;
     }
 
-    public void setAdditionalInformation(ArrayList<String> additionalInformation) {
+    public void setAdditionalInformation(String[] additionalInformation) {
         this.additionalInformation = additionalInformation;
     }
 

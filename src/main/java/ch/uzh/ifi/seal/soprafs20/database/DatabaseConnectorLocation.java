@@ -109,15 +109,17 @@ public class DatabaseConnectorLocation {
         String access = "Access: " + properties.getString("brunnenart_txt");
         additionalInformation.add(access);
         //additionalInformation.append("Access: ").append(properties.getString("brunnenart_txt")).append("\\n");
-        String yOC = "Year of construction: " + properties.get("baujahr");
-        additionalInformation.add(yOC);
+        if (properties.get("baujahr") != null) {
+            String yOC = "Year of construction: " + properties.get("baujahr");
+            additionalInformation.add(yOC);
+        }
         //additionalInformation.append("Year of construction: ").append(properties.get("baujahr")).append("\\n");
         if (properties.getString("wasserart_txt") != null){
             String waterSource = "Water source type: " + properties.getString("wasserart_txt");
             additionalInformation.add(waterSource);
             //additionalInformation.append("Water source type: ").append(properties.getString("wasserart_txt")).append("\\n");
         }
-        newLocation.setAdditionalInformation(additionalInformation);
+        newLocation.setAdditionalInformation(additionalInformation.toArray(new String[0]));
 
         return newLocation;
     }
@@ -149,7 +151,7 @@ public class DatabaseConnectorLocation {
             String feature = "- " + features.getString(i);
             additionalInformation.add(feature);
         }
-        newLocation.setAdditionalInformation(additionalInformation);
+        newLocation.setAdditionalInformation(additionalInformation.toArray(new String[0]));
 
         return newLocation;
     }
@@ -192,7 +194,8 @@ public class DatabaseConnectorLocation {
         if (properties.get("oel") != null){
             additionalInformation.add("- Oil");
         }
-        newLocation.setAdditionalInformation(additionalInformation);
+
+        newLocation.setAdditionalInformation(additionalInformation.toArray(new String[0]));
 
         return newLocation;
     }

@@ -10,7 +10,7 @@ public class Location {
 
     private int id;
     private String address;
-    private ArrayList<String> additionalInformation;
+    private String[] additionalInformation;
     private double longitude;
     private double latitude;
     private double[] coordinates;
@@ -28,11 +28,11 @@ public class Location {
     }
 
 
-    public ArrayList<String> getAdditionalInformation() {
+    public String[] getAdditionalInformation() {
         return additionalInformation;
     }
 
-    public void setAdditionalInformation(ArrayList<String> additionalInformation) {
+    public void setAdditionalInformation(String[] additionalInformation) {
         this.additionalInformation = additionalInformation;
     }
 
