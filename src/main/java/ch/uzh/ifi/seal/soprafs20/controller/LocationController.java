@@ -102,14 +102,14 @@ public class LocationController {
     @GetMapping("/locations/favorites/{userId}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public List<Location> getFavoriteLocations(@PathVariable Long userId) {
+    public List<Location> getFavoriteLocations(@PathVariable int userId) {
         return locationService.getFavoriteLocations(userId);
     }
 
-    @PutMapping("/locations/favorites/{userId}")
+    @PutMapping("/locations/favorites/{userId}/{locationId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @ResponseBody
-    public void updateFavoriteLocations(@PathVariable Long userId, @RequestBody Long locationId) {
+    public void updateFavoriteLocations(@PathVariable int userId, @PathVariable Integer locationId) {
         locationService.updateFavoriteLocations(userId, locationId);
     }
 }

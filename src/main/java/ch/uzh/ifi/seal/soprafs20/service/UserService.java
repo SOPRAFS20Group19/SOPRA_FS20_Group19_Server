@@ -3,6 +3,8 @@ package ch.uzh.ifi.seal.soprafs20.service;
 import ch.uzh.ifi.seal.soprafs20.constant.UserStatus;
 import ch.uzh.ifi.seal.soprafs20.database.DatabaseConnector;
 import ch.uzh.ifi.seal.soprafs20.database.DatabaseConnectorUser;
+import ch.uzh.ifi.seal.soprafs20.entity.Location;
+import ch.uzh.ifi.seal.soprafs20.service.LocationService;
 import ch.uzh.ifi.seal.soprafs20.entity.User;
 import ch.uzh.ifi.seal.soprafs20.exceptions.DuplicatedUserException;
 import ch.uzh.ifi.seal.soprafs20.exceptions.InvalidCredentialsException;
@@ -22,6 +24,7 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.xml.crypto.Data;
 import java.sql.Timestamp;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -76,6 +79,7 @@ public class UserService {
     // creates a new user in the user repository
     public User createUser(User newUser) {
         newUser.setCreationDate(UserService.getCurrentDate());
+        newUser.setFavoriteLocations(new ArrayList<Integer>());
         //Checks whether username is already taken
         if (DatabaseConnectorUser.checkIfUsernameExists(newUser.getUsername())){
             throw new DuplicatedUserException("The provided username is already taken. Please try a new one.");

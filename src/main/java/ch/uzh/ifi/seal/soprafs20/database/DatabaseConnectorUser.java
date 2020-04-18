@@ -1,6 +1,7 @@
 package ch.uzh.ifi.seal.soprafs20.database;
 
 import ch.uzh.ifi.seal.soprafs20.constant.UserStatus;
+import ch.uzh.ifi.seal.soprafs20.entity.Location;
 import ch.uzh.ifi.seal.soprafs20.entity.User;
 import com.mongodb.client.*;
 import org.bson.Document;
@@ -13,6 +14,8 @@ import static com.mongodb.client.model.Filters.eq;
 
 import static com.mongodb.client.model.Updates.*;
 import com.mongodb.client.model.UpdateOptions;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class DatabaseConnectorUser {
     public DatabaseConnectorUser(){}
@@ -27,13 +30,13 @@ public class DatabaseConnectorUser {
 
     //creates User in the database; called bi createUser() in UserService
     public static void createUser(User user) {
-
         Document doc = new Document("username", user.getUsername())
                 .append("name", user.getName())
                 .append("password", user.getPassword())
                 .append("creation-date", user.getCreationDate())
                 .append("online", false)
-                .append("userId", DatabaseConnectorUser.generateId());
+                .append("userId", DatabaseConnectorUser.generateId())
+                .append("favoriteLocations", user.getFavoriteLocations());
         usersCollection.insertOne(doc);
     }
 
@@ -69,6 +72,12 @@ public class DatabaseConnectorUser {
                 set("online", b));
     }
 
+    //updates the list of favorite locations of a user
+    public static void updateFavorites(int id, ArrayList<Integer> favorites){
+        usersCollection.updateOne(eq("userId", id),
+                set("favoriteLocations", favorites));
+    }
+
 
     //returns a user with a certain username
     public static User getUserByUsername(String username){
@@ -81,10 +90,10 @@ public class DatabaseConnectorUser {
 
     //not finished
     public static User getUserById(int id){
-        FindIterable<Document> request =  usersCollection.find(eq("UserId", id)); //Temporary id-field does not exist by now
+        FindIterable<Document> request =  usersCollection.find(eq("userId", id)); //Temporary id-field does not exist by now
         Document user = request.first();
         //create a new user representation
-        User userRepresentation = DatabaseConnector.getUserInfo(user);
+        User userRepresentation = DatabaseConnectorUser.getUserInfo(user);
         return userRepresentation;
     }
 
@@ -97,6 +106,15 @@ public class DatabaseConnectorUser {
         userRepresentation.setCreationDate(user.getString("creation-date"));
         userRepresentation.setId(user.getInteger("userId", 0)); //if user has no id he gets assigned id: 0, flag that something is not working properly
         userRepresentation.setStatus(user.getBoolean("online")? UserStatus.ONLINE : UserStatus.OFFLINE);
+
+        JSONObject userAsJSON = new JSONObject(user.toJson());
+        JSONArray favoriteLocationsJSON = userAsJSON.getJSONArray("favoriteLocations");
+        ArrayList<Integer> favoriteLocations = new ArrayList<>();
+        for (int i = 0; i < favoriteLocationsJSON.length(); i++) {
+            favoriteLocations.add(favoriteLocationsJSON.getInt(i));
+        }
+        userRepresentation.setFavoriteLocations(favoriteLocations);
+
         return userRepresentation;
     }
 

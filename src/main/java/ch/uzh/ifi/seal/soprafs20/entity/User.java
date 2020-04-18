@@ -4,6 +4,7 @@ import ch.uzh.ifi.seal.soprafs20.constant.UserStatus;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Internal User Representation
@@ -26,6 +27,8 @@ public class User {
 	private String birthDate;
 
 	private UserStatus status;
+
+	private ArrayList favoriteLocations;
 
 	public int getId() {
 		return id;
@@ -78,4 +81,12 @@ public class User {
 	public String getCreationDate(){ return creationDate; }
 
 	public void setCreationDate(String creationDate){ this.creationDate = creationDate;}
+
+	public ArrayList getFavoriteLocations() {
+		return favoriteLocations;
+	}
+
+	public void setFavoriteLocations(ArrayList favoriteLocations) {
+		this.favoriteLocations = favoriteLocations;
+	}
 }

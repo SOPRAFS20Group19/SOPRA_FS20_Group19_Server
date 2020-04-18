@@ -3,6 +3,7 @@ package ch.uzh.ifi.seal.soprafs20.service;
 import ch.uzh.ifi.seal.soprafs20.constant.UserStatus;
 import ch.uzh.ifi.seal.soprafs20.database.DatabaseConnector;
 import ch.uzh.ifi.seal.soprafs20.database.DatabaseConnectorLocation;
+import ch.uzh.ifi.seal.soprafs20.database.DatabaseConnectorUser;
 import ch.uzh.ifi.seal.soprafs20.entity.Chat;
 import ch.uzh.ifi.seal.soprafs20.entity.Location;
 import ch.uzh.ifi.seal.soprafs20.entity.Message;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.xml.crypto.Data;
 import java.sql.Timestamp;
 
@@ -109,12 +111,26 @@ public class LocationService {
     public void postMessage(Long id, Message message){
     }
 
-    public List<Location> getFavoriteLocations(Long userId){
-        List<Location> allLocations = new ArrayList<>();
-        return allLocations;
+    // gets a users favorite locations
+    public List<Location> getFavoriteLocations(int userId){
+        User user = DatabaseConnectorUser.getUserById(userId);
+        ArrayList<Integer> favoriteLocationIds = user.getFavoriteLocations();
+        List<Location> locationsToReturn = new ArrayList<>();
+        for (Integer locationId : favoriteLocationIds){
+            locationsToReturn.add(this.getLocation(locationId));
+        }
+        return locationsToReturn;
     }
 
-    public void updateFavoriteLocations(Long userId, Long locationId){
+    public void updateFavoriteLocations(int userId, Integer locationId){
+        User user = DatabaseConnectorUser.getUserById(userId);
+        ArrayList<Integer> favorites = user.getFavoriteLocations();
+        ArrayList<Integer> newFavorites = new ArrayList<>();
+        if (favorites != null){
+            newFavorites.addAll(favorites);
+        }
+        newFavorites.add(locationId);
+        DatabaseConnectorUser.updateFavorites(userId, newFavorites);
     }
 
     public void getWebcam(Long locationId){}

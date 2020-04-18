@@ -1,7 +1,9 @@
 package ch.uzh.ifi.seal.soprafs20;
 
 import ch.uzh.ifi.seal.soprafs20.database.DatabaseConnector;
+import ch.uzh.ifi.seal.soprafs20.database.DatabaseConnectorUser;
 import ch.uzh.ifi.seal.soprafs20.entity.Location;
+import ch.uzh.ifi.seal.soprafs20.service.UserService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,6 +25,7 @@ public class Application {
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
+        System.out.println(DatabaseConnectorUser.getUserById(96890).toString());
     }
 
     @GetMapping(value = "/", produces = MediaType.TEXT_PLAIN_VALUE)
