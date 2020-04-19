@@ -5,12 +5,13 @@ import ch.uzh.ifi.seal.soprafs20.entity.User;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.LocationGetDTO;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.UserGetDTO;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.UserPostDTO;
+import ch.uzh.ifi.seal.soprafs20.rest.dto.UserPutDTO;
 import java.util.Arrays;
 import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-04-18T22:34:59+0200",
+    date = "2020-04-19T15:19:41+0200",
     comments = "version: 1.3.1.Final, compiler: javac, environment: Java 13.0.2 (Oracle Corporation)"
 )
 public class DTOMapperImpl implements DTOMapper {
@@ -26,6 +27,20 @@ public class DTOMapperImpl implements DTOMapper {
         user.setName( userPostDTO.getName() );
         user.setPassword( userPostDTO.getPassword() );
         user.setUsername( userPostDTO.getUsername() );
+
+        return user;
+    }
+
+    @Override
+    public User convertUserPutDTOtoEntity(UserPutDTO userPutDTO) {
+        if ( userPutDTO == null ) {
+            return null;
+        }
+
+        User user = new User();
+
+        user.setPassword( userPutDTO.getPassword() );
+        user.setUsername( userPutDTO.getUsername() );
 
         return user;
     }

@@ -58,12 +58,12 @@ public class UserService {
     }
 
     // checks if the user that is attempting a login has the correct credentials
-    public User checkForLogin(User userToBeLoggedIn){
+    public User checkForLogin(User userToBeLoggedIn) {
 
         boolean validCredentials = DatabaseConnectorUser.checkIfUserAndPasswordExist(userToBeLoggedIn.getUsername(), userToBeLoggedIn.getPassword());
 
         //Check if user is allowed to log in
-        if (!validCredentials){ //case that the credentials are invalid
+        if (!validCredentials) { //case that the credentials are invalid
             boolean validUsername = DatabaseConnectorUser.checkIfUsernameExists(userToBeLoggedIn.getUsername());
             //check if the username is valid, if yes, the password must be false
             String message = validUsername ? "Wrong password, please try again." : "This username does not exist, please register first.";
@@ -73,7 +73,9 @@ public class UserService {
         //If credentials are valid set the user status to online, since the user will be logged in
         DatabaseConnectorUser.setOnlineStatus(userToBeLoggedIn, true);
         //return new user representation
-        return DatabaseConnectorUser.getUserByUsername(userToBeLoggedIn.getUsername());
+        User user = DatabaseConnectorUser.getUserByUsername(userToBeLoggedIn.getUsername());
+
+        return user;
     }
 
     // creates a new user in the user repository
@@ -85,11 +87,11 @@ public class UserService {
             throw new DuplicatedUserException("The provided username is already taken. Please try a new one.");
         }
         //If the username is not already taken create a new User in the database
-        DatabaseConnectorUser.createUser(newUser);
+        User userToReturn = DatabaseConnectorUser.createUser(newUser);
 
         log.debug("Created Information for User: {}", newUser);
 
-        return newUser;
+        return userToReturn;
     }
 
     // creates a timestamp of the current date for the creation date during the registration

@@ -10,7 +10,6 @@ public class UserGetDTO {
     private String password;
     private UserStatus status;
     private String creationDate;
-    private String birthDate;
 
     public int getId() {
         return id;

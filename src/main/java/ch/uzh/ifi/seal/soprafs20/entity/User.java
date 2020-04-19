@@ -2,8 +2,6 @@ package ch.uzh.ifi.seal.soprafs20.entity;
 
 import ch.uzh.ifi.seal.soprafs20.constant.UserStatus;
 
-import javax.persistence.*;
-import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -11,6 +9,8 @@ import java.util.ArrayList;
  */
 
 public class User {
+
+
 
 	private int id;
 
@@ -29,6 +29,7 @@ public class User {
 	private UserStatus status;
 
 	private ArrayList favoriteLocations;
+
 
 	public int getId() {
 		return id;

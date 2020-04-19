@@ -29,7 +29,7 @@ public class DatabaseConnectorUser {
     static MongoCollection<Document> usersCollection = usersDevelopment.getCollection("Users");
 
     //creates User in the database; called bi createUser() in UserService
-    public static void createUser(User user) {
+    public static User createUser(User user) {
         Document doc = new Document("username", user.getUsername())
                 .append("name", user.getName())
                 .append("password", user.getPassword())
@@ -38,6 +38,8 @@ public class DatabaseConnectorUser {
                 .append("userId", DatabaseConnectorUser.generateId())
                 .append("favoriteLocations", user.getFavoriteLocations());
         usersCollection.insertOne(doc);
+        User userToReturn = DatabaseConnectorUser.getUserInfo(doc);
+        return userToReturn;
     }
 
     //Checks if user tried to login with valid credentials
@@ -84,7 +86,7 @@ public class DatabaseConnectorUser {
         FindIterable<Document> request =  usersCollection.find(eq("username", username));
         Document user = request.first();
         //create a new user representation
-        User userRepresentation = DatabaseConnector.getUserInfo(user);
+        User userRepresentation = DatabaseConnectorUser.getUserInfo(user);
         return userRepresentation;
     }
 
