@@ -24,11 +24,11 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.xml.crypto.Data;
 import java.sql.Timestamp;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * User Service
@@ -118,8 +118,12 @@ public class UserService {
 
     // creates a timestamp of the current date for the creation date during the registration
     public static String getCurrentDate(){
+
+        Date datenow = Calendar.getInstance().getTime();
+        DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         LocalDate date = LocalDate.now();
-        return date.toString();
+        //return date.toString();
+        return dateFormat.format(datenow);
     }
 }
