@@ -2,16 +2,14 @@ package ch.uzh.ifi.seal.soprafs20.service;
 
 import ch.uzh.ifi.seal.soprafs20.constant.UserStatus;
 import ch.uzh.ifi.seal.soprafs20.database.DatabaseConnector;
+import ch.uzh.ifi.seal.soprafs20.database.DatabaseConnectorFavoriteLocations;
 import ch.uzh.ifi.seal.soprafs20.database.DatabaseConnectorLocation;
 import ch.uzh.ifi.seal.soprafs20.database.DatabaseConnectorUser;
 import ch.uzh.ifi.seal.soprafs20.entity.Chat;
 import ch.uzh.ifi.seal.soprafs20.entity.Location;
 import ch.uzh.ifi.seal.soprafs20.entity.Message;
 import ch.uzh.ifi.seal.soprafs20.entity.User;
-import ch.uzh.ifi.seal.soprafs20.exceptions.DuplicatedUserException;
-import ch.uzh.ifi.seal.soprafs20.exceptions.InvalidCredentialsException;
-import ch.uzh.ifi.seal.soprafs20.exceptions.SopraServiceException;
-import ch.uzh.ifi.seal.soprafs20.exceptions.UserNotFoundException;
+import ch.uzh.ifi.seal.soprafs20.exceptions.*;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.FilterPostDTO;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.UserPutDTO;
 import org.bson.Document;
@@ -87,9 +85,8 @@ public class LocationService {
             }
         }
 
-        //TO DO: Wir müssen noch LocationNotFoundException erstellen!
         if (locationToReturn == null){
-            throw new UserNotFoundException("This location could not be found.");
+            throw new LocationNotFoundException("This location could not be found.");
         }
 
         return locationToReturn;
@@ -113,8 +110,7 @@ public class LocationService {
 
     // gets a users favorite locations
     public List<Location> getFavoriteLocations(int userId){
-        User user = DatabaseConnectorUser.getUserById(userId);
-        ArrayList<Integer> favoriteLocationIds = user.getFavoriteLocations();
+        ArrayList<Integer> favoriteLocationIds = DatabaseConnectorFavoriteLocations.getFavoriteLocations(userId);
         List<Location> locationsToReturn = new ArrayList<>();
         for (Integer locationId : favoriteLocationIds){
             locationsToReturn.add(this.getLocation(locationId));
@@ -123,17 +119,16 @@ public class LocationService {
     }
 
     public void updateFavoriteLocations(int userId, Integer locationId){
-        User user = DatabaseConnectorUser.getUserById(userId);
-        ArrayList<Integer> favorites = user.getFavoriteLocations();
-        ArrayList<Integer> newFavorites = new ArrayList<>();
-        if (favorites != null){
-            newFavorites.addAll(favorites);
-        }
+        ArrayList<Integer> favorites = DatabaseConnectorFavoriteLocations.getFavoriteLocations(userId);
+        ArrayList<Integer> newFavorites = new ArrayList<>(favorites);
         newFavorites.add(locationId);
-        DatabaseConnectorUser.updateFavorites(userId, newFavorites);
+        DatabaseConnectorFavoriteLocations.updateFavoriteLocations(userId, newFavorites);
     }
 
-    public void getWebcam(Long locationId){}
-
-
+    public void deleteFavoriteLocation(int userId, Integer locationId){
+        ArrayList<Integer> favorites = DatabaseConnectorFavoriteLocations.getFavoriteLocations(userId);
+        ArrayList<Integer> newFavorites = new ArrayList<>(favorites);
+        newFavorites.remove(locationId);
+        DatabaseConnectorFavoriteLocations.updateFavoriteLocations(userId, newFavorites);
+    }
 }

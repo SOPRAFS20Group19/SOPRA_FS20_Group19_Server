@@ -112,4 +112,11 @@ public class LocationController {
     public void updateFavoriteLocations(@PathVariable int userId, @PathVariable Integer locationId) {
         locationService.updateFavoriteLocations(userId, locationId);
     }
+
+    @DeleteMapping("/locations/favorites/{userId}/{locationId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseBody
+    public void deleteFavoriteLocation(@PathVariable int userId, @PathVariable Integer locationId) {
+        locationService.deleteFavoriteLocation(userId, locationId);
+    }
 }

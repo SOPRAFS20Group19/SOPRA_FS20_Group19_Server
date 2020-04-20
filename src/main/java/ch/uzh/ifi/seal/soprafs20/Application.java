@@ -25,7 +25,6 @@ public class Application {
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
-        System.out.println(DatabaseConnectorUser.getUserById(96890).toString());
     }
 
     @GetMapping(value = "/", produces = MediaType.TEXT_PLAIN_VALUE)
