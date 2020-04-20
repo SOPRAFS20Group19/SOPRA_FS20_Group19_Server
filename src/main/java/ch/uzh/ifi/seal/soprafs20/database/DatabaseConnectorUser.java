@@ -1,11 +1,14 @@
 package ch.uzh.ifi.seal.soprafs20.database;
 
 import ch.uzh.ifi.seal.soprafs20.constant.UserStatus;
-import ch.uzh.ifi.seal.soprafs20.entity.Location;
 import ch.uzh.ifi.seal.soprafs20.entity.User;
 import com.mongodb.client.*;
+import com.mongodb.client.gridfs.GridFSBucket;
+import com.mongodb.client.gridfs.GridFSBuckets;
+import com.mongodb.client.gridfs.model.GridFSUploadOptions;
 import org.bson.Document;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,9 +16,10 @@ import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
 
 import static com.mongodb.client.model.Updates.*;
-import com.mongodb.client.model.UpdateOptions;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.web.multipart.MultipartFile;
 
 public class DatabaseConnectorUser {
     public DatabaseConnectorUser(){}
@@ -157,4 +161,26 @@ public class DatabaseConnectorUser {
                 set("birthDate", userToUpdate.getBirthDate()));
     }
 
+    public static void uploadPicture() throws FileNotFoundException {
+        GridFSBucket gridFSBucket = GridFSBuckets.create(usersDevelopment);
+        InputStream inputStream = new FileInputStream(new File("src/main/resources/johnny-depp.jpg"));
+        GridFSUploadOptions uploadOptions = new GridFSUploadOptions().chunkSizeBytes(1024).metadata(new Document("type", "image").append("content_type", "image/png"));
+        gridFSBucket.uploadFromStream("johnny", inputStream, uploadOptions);
+    }
+
+    public FileOutputStream getPicture() throws IOException {
+        GridFSBucket gridFSBucket = GridFSBuckets.create(usersDevelopment);
+        FileOutputStream streamToDownloadTo = new FileOutputStream("ja");
+        gridFSBucket.find(eq("filename", "johnny"));
+        gridFSBucket.downloadToStream("johnny", streamToDownloadTo);
+        streamToDownloadTo.close();
+        return streamToDownloadTo;
+    }
+
+    public static void uploadPic(int id, MultipartFile file) throws FileNotFoundException {
+        GridFSBucket gridFSBucket = GridFSBuckets.create(usersDevelopment);
+        InputStream inputStream = new FileInputStream((File) file);
+        GridFSUploadOptions uploadOptions = new GridFSUploadOptions().chunkSizeBytes(1024).metadata(new Document("type", "image").append("content_type", "image/png"));
+        gridFSBucket.uploadFromStream(String.valueOf(id), inputStream, uploadOptions);
+    }
 }

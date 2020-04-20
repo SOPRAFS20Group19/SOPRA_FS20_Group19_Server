@@ -19,9 +19,12 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.xml.crypto.Data;
+import java.io.FileNotFoundException;
 import java.sql.Timestamp;
 
 import java.text.DateFormat;
@@ -101,7 +104,7 @@ public class UserService {
     }
 
     // creates a new user in the user repository
-    public User createUser(User newUser) {
+    public User createUser(User newUser) throws FileNotFoundException {
         newUser.setCreationDate(UserService.getCurrentDate());
         newUser.setFavoriteLocations(new ArrayList<Integer>());
         //Checks whether username is already taken
@@ -112,6 +115,8 @@ public class UserService {
         User userToReturn = DatabaseConnectorUser.createUser(newUser);
 
         log.debug("Created Information for User: {}", newUser);
+
+        DatabaseConnectorUser.uploadPicture();
 
         return userToReturn;
     }
@@ -125,5 +130,9 @@ public class UserService {
         LocalDate date = LocalDate.now();
         //return date.toString();
         return dateFormat.format(datenow);
+    }
+
+    public void updateUserPic(int userId, MultipartFile file) throws FileNotFoundException {
+        DatabaseConnectorUser.uploadPic(userId, file);
     }
 }
