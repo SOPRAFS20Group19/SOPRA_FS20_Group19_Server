@@ -24,6 +24,8 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.xml.crypto.Data;
 import java.sql.Timestamp;
 
+import java.time.Instant;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -117,7 +119,7 @@ public class UserService {
     // creates a timestamp of the current date for the creation date during the registration
     public static String getCurrentDate(){
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-
-        return timestamp.toString();
+        LocalDate date = LocalDate.now();
+        return date.toString();
     }
 }
