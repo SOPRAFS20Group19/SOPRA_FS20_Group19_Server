@@ -138,4 +138,23 @@ public class DatabaseConnectorUser {
         }
         return allUsers;
     }
+
+    //updates the name of a user
+    public static void updateName(User userToUpdate){
+        usersCollection.updateOne(eq("userId", userToUpdate.getId()),
+                set("name", userToUpdate.getName()));
+    }
+
+    //updates the username of a user
+    public static void updateUsername(User userToUpdate){
+        usersCollection.updateOne(eq("userId", userToUpdate.getId()),
+                set("username", userToUpdate.getUsername()));
+    }
+
+    //updates the username of a user
+    public static void updateBirthDate(User userToUpdate){
+        usersCollection.updateOne(eq("userId", userToUpdate.getId()),
+                set("birthDate", userToUpdate.getBirthDate()));
+    }
+
 }

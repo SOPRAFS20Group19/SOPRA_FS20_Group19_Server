@@ -90,4 +90,12 @@ public class User {
 	public void setFavoriteLocations(ArrayList favoriteLocations) {
 		this.favoriteLocations = favoriteLocations;
 	}
+
+	public String getBirthDate() {
+		return birthDate;
+	}
+
+	public void setBirthDate(String birthDate) {
+		this.birthDate = birthDate;
+	}
 }

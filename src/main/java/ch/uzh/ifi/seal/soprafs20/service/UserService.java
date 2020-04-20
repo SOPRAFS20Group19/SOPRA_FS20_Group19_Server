@@ -47,9 +47,29 @@ public class UserService {
         return  userToReturn;
     }
 
-    // updates a user with the updated username and birthdate
+    // updates a user with the updated name, username and birthdate
     public void updateUser(int userId, UserPutDTO userWithNewData) {
-        //not yet implemented
+        User userToUpdate = DatabaseConnectorUser.getUserById(userId);
+
+        if (userToUpdate == null){
+            throw new UserNotFoundException("This user could not be found.");
+        }
+
+        if (userWithNewData.getName() != null){
+            userToUpdate.setName(userWithNewData.getName());
+            DatabaseConnectorUser.updateName(userToUpdate);
+        }
+
+        if (userWithNewData.getUsername() != null){
+            userToUpdate.setUsername(userWithNewData.getUsername());
+            DatabaseConnectorUser.updateUsername(userToUpdate);
+        }
+
+        if (userWithNewData.getBirthDate() != null){
+            userToUpdate.setBirthDate(userWithNewData.getBirthDate());
+            DatabaseConnectorUser.updateBirthDate(userToUpdate);
+        }
+
     }
 
     // logs out all users
