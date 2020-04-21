@@ -1,34 +1,19 @@
 package ch.uzh.ifi.seal.soprafs20.service;
 
-import ch.uzh.ifi.seal.soprafs20.constant.UserStatus;
-import ch.uzh.ifi.seal.soprafs20.database.DatabaseConnector;
 import ch.uzh.ifi.seal.soprafs20.database.DatabaseConnectorFavoriteLocations;
 import ch.uzh.ifi.seal.soprafs20.database.DatabaseConnectorLocation;
-import ch.uzh.ifi.seal.soprafs20.database.DatabaseConnectorUser;
 import ch.uzh.ifi.seal.soprafs20.entity.Chat;
 import ch.uzh.ifi.seal.soprafs20.entity.Location;
 import ch.uzh.ifi.seal.soprafs20.entity.Message;
-import ch.uzh.ifi.seal.soprafs20.entity.User;
 import ch.uzh.ifi.seal.soprafs20.exceptions.*;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.FilterPostDTO;
-import ch.uzh.ifi.seal.soprafs20.rest.dto.UserPutDTO;
-import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
-
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.xml.crypto.Data;
-import java.sql.Timestamp;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * Location Service
@@ -121,14 +106,18 @@ public class LocationService {
     public void updateFavoriteLocations(int userId, Integer locationId){
         ArrayList<Integer> favorites = DatabaseConnectorFavoriteLocations.getFavoriteLocations(userId);
         ArrayList<Integer> newFavorites = new ArrayList<>(favorites);
-        newFavorites.add(locationId);
+        if (!favorites.contains(locationId)){
+            newFavorites.add(locationId);
+        }
         DatabaseConnectorFavoriteLocations.updateFavoriteLocations(userId, newFavorites);
     }
 
     public void deleteFavoriteLocation(int userId, Integer locationId){
         ArrayList<Integer> favorites = DatabaseConnectorFavoriteLocations.getFavoriteLocations(userId);
         ArrayList<Integer> newFavorites = new ArrayList<>(favorites);
-        newFavorites.remove(locationId);
+        if (favorites.contains(locationId)){
+            newFavorites.remove(locationId);
+        }
         DatabaseConnectorFavoriteLocations.updateFavoriteLocations(userId, newFavorites);
     }
 }

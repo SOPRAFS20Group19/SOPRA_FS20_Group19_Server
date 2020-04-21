@@ -1,15 +1,10 @@
 package ch.uzh.ifi.seal.soprafs20.controller;
 
-import ch.uzh.ifi.seal.soprafs20.entity.Chat;
-import ch.uzh.ifi.seal.soprafs20.entity.Location;
-import ch.uzh.ifi.seal.soprafs20.entity.Message;
-import ch.uzh.ifi.seal.soprafs20.entity.User;
+import ch.uzh.ifi.seal.soprafs20.entity.*;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.FilterPostDTO;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.LocationGetDTO;
-import ch.uzh.ifi.seal.soprafs20.rest.dto.UserGetDTO;
 import ch.uzh.ifi.seal.soprafs20.rest.mapper.DTOMapper;
 import ch.uzh.ifi.seal.soprafs20.service.LocationService;
-import org.bson.Document;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
