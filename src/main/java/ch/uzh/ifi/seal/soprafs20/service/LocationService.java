@@ -120,4 +120,15 @@ public class LocationService {
         }
         DatabaseConnectorFavoriteLocations.updateFavoriteLocations(userId, newFavorites);
     }
+
+    public Location checkFavoriteLocations(int userId, Integer locationId){
+        ArrayList<Integer> favoriteLocationIds = DatabaseConnectorFavoriteLocations.getFavoriteLocations(userId);
+        Location locationToReturn = null;
+        for (Integer locationIdToCheck : favoriteLocationIds){
+            if (locationId.equals(locationIdToCheck)){
+                locationToReturn = this.getLocation(locationId);
+            }
+        }
+        return locationToReturn;
+    }
 }

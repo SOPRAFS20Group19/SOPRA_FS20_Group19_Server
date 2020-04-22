@@ -114,4 +114,12 @@ public class LocationController {
     public void deleteFavoriteLocation(@PathVariable int userId, @PathVariable Integer locationId) {
         locationService.deleteFavoriteLocation(userId, locationId);
     }
+
+    @GetMapping("/locations/favorites/{userId}/{locationId}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public LocationGetDTO checkIncludedInFavoriteLocations(@PathVariable int userId, @PathVariable Integer locationId) {
+        Location location = locationService.checkFavoriteLocations(userId, locationId);
+        return DTOMapper.INSTANCE.convertEntityToLocationGetDTO(location);
+    }
 }
