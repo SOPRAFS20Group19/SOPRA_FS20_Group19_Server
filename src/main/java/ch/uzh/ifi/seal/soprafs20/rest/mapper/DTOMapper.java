@@ -1,6 +1,7 @@
 package ch.uzh.ifi.seal.soprafs20.rest.mapper;
 
 import ch.uzh.ifi.seal.soprafs20.entity.Location;
+import ch.uzh.ifi.seal.soprafs20.entity.Message;
 import ch.uzh.ifi.seal.soprafs20.entity.User;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.*;
 import org.mapstruct.*;
@@ -43,6 +44,16 @@ public interface DTOMapper {
     @Mapping(source = "locationType", target = "locationType")
     @Mapping(source = "additionalInformation", target = "additionalInformation")
     LocationGetDTO convertEntityToLocationGetDTO(Location location);
+
+    @Mapping(source = "senderId", target = "senderId")
+    @Mapping(source = "content", target = "content")
+    @Mapping(source = "timestamp", target = "timestamp")
+    Message convertMessagePostDTOToEntity(MessagePostDTO messagePostDTO);
+
+    @Mapping(source = "senderId", target = "senderId")
+    @Mapping(source = "content", target = "content")
+    @Mapping(source = "timestamp", target = "timestamp")
+    MessageGetDTO convertEntityToMessageGetDTO(Message message);
 
 }
 

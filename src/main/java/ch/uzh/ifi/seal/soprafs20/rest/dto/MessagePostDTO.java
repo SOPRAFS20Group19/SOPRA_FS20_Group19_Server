@@ -1,20 +1,10 @@
-package ch.uzh.ifi.seal.soprafs20.entity;
+package ch.uzh.ifi.seal.soprafs20.rest.dto;
 
-public class Message {
+public class MessagePostDTO {
 
-    private String content;
     private int senderId;
+    private String content;
     private String timestamp;
-
-    public Message(){}
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
 
     public int getSenderId() {
         return senderId;
@@ -22,6 +12,14 @@ public class Message {
 
     public void setSenderId(int senderId) {
         this.senderId = senderId;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public String getTimestamp() {

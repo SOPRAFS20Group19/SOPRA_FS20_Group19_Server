@@ -1,8 +1,11 @@
 package ch.uzh.ifi.seal.soprafs20.rest.mapper;
 
 import ch.uzh.ifi.seal.soprafs20.entity.Location;
+import ch.uzh.ifi.seal.soprafs20.entity.Message;
 import ch.uzh.ifi.seal.soprafs20.entity.User;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.LocationGetDTO;
+import ch.uzh.ifi.seal.soprafs20.rest.dto.MessageGetDTO;
+import ch.uzh.ifi.seal.soprafs20.rest.dto.MessagePostDTO;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.UserGetDTO;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.UserPostDTO;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.UserPutDTO;
@@ -11,7 +14,7 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-04-22T16:19:51+0200",
+    date = "2020-04-22T17:01:29+0200",
     comments = "version: 1.3.1.Final, compiler: javac, environment: Java 13.0.1 (Oracle Corporation)"
 )
 public class DTOMapperImpl implements DTOMapper {
@@ -87,5 +90,35 @@ public class DTOMapperImpl implements DTOMapper {
         locationGetDTO.setLongitude( location.getLongitude() );
 
         return locationGetDTO;
+    }
+
+    @Override
+    public Message convertMessagePostDTOToEntity(MessagePostDTO messagePostDTO) {
+        if ( messagePostDTO == null ) {
+            return null;
+        }
+
+        Message message = new Message();
+
+        message.setSenderId( messagePostDTO.getSenderId() );
+        message.setContent( messagePostDTO.getContent() );
+        message.setTimestamp( messagePostDTO.getTimestamp() );
+
+        return message;
+    }
+
+    @Override
+    public MessageGetDTO convertEntityToMessageGetDTO(Message message) {
+        if ( message == null ) {
+            return null;
+        }
+
+        MessageGetDTO messageGetDTO = new MessageGetDTO();
+
+        messageGetDTO.setSenderId( message.getSenderId() );
+        messageGetDTO.setContent( message.getContent() );
+        messageGetDTO.setTimestamp( message.getTimestamp() );
+
+        return messageGetDTO;
     }
 }
