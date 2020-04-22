@@ -60,8 +60,13 @@ public class DatabaseConnectorLocation {
             JSONObject fireplaceAsJSON = new JSONObject(fireplaceAsString);
             //convert Document to Location
             Location fireplaceLocation = fireplaceToLocation(fireplaceAsJSON);
-            //add Location to List of Locations
-            fireplacesListLocation.add(fireplaceLocation);
+
+            // check if fireplace is in Zurich
+            if (fireplaceLocation.getLongitude() > 8.4680486289 && fireplaceLocation.getLongitude() < 8.6191027275
+            && fireplaceLocation.getLatitude() > 47.3232261256 && fireplaceLocation.getLatitude() < 47.4308197123){
+                //add Location to List of Locations
+                fireplacesListLocation.add(fireplaceLocation);
+            }
         }
         return fireplacesListLocation;
     }
