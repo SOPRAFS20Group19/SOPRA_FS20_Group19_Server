@@ -67,9 +67,9 @@ public class UserService {
             DatabaseConnectorUser.updateUsername(userToUpdate);
         }
 
-        if (userWithNewData.getBirthDate() != null){
-            userToUpdate.setBirthDate(userWithNewData.getBirthDate());
-            DatabaseConnectorUser.updateBirthDate(userToUpdate);
+        if (userWithNewData.getPassword() != null){
+            userToUpdate.setPassword(userWithNewData.getPassword());
+            DatabaseConnectorUser.updatePassword(userToUpdate);
         }
 
     }

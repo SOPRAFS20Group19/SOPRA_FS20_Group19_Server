@@ -157,9 +157,9 @@ public class DatabaseConnectorUser {
     }
 
     //updates the username of a user
-    public static void updateBirthDate(User userToUpdate){
+    public static void updatePassword(User userToUpdate){
         usersCollection.updateOne(eq("userId", userToUpdate.getId()),
-                set("birthDate", userToUpdate.getBirthDate()));
+                set("password", userToUpdate.getPassword()));
     }
 
 }
