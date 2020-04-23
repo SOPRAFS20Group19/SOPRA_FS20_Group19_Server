@@ -131,4 +131,20 @@ public class LocationController {
         Location location = locationService.checkFavoriteLocations(userId, locationId);
         return DTOMapper.INSTANCE.convertEntityToLocationGetDTO(location);
     }
+
+    @GetMapping("/locations/rating/{userId}/{locationId}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public int checkIncludedInRatings(@PathVariable int userId, @PathVariable Integer locationId) {
+        int rating = locationService.checkRating(userId, locationId);
+        return rating;
+    }
+
+
+    @PutMapping("/locations/rating/{userId}/{locationId}/{ratedStars}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public void updateRating(@PathVariable int userId, @PathVariable Integer locationId, @PathVariable int ratedStars) {
+        LocationService.updateRating(userId, locationId, ratedStars);
+    }
 }
