@@ -3,6 +3,8 @@ package ch.uzh.ifi.seal.soprafs20.controller;
 import ch.uzh.ifi.seal.soprafs20.entity.*;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.FilterPostDTO;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.LocationGetDTO;
+import ch.uzh.ifi.seal.soprafs20.rest.dto.MessageGetDTO;
+import ch.uzh.ifi.seal.soprafs20.rest.dto.MessagePostDTO;
 import ch.uzh.ifi.seal.soprafs20.rest.mapper.DTOMapper;
 import ch.uzh.ifi.seal.soprafs20.service.LocationService;
 import org.springframework.http.HttpStatus;
@@ -83,15 +85,22 @@ public class LocationController {
     @GetMapping("/locations/chats/{locationId}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public Chat getChat(@PathVariable Long locationId) {
-        return locationService.getChat(locationId);
+    public ArrayList<MessageGetDTO> getChat(@PathVariable Integer locationId) {
+        ArrayList<Message> messages = locationService.getChat(locationId);
+        ArrayList<MessageGetDTO> messagesGetDTO = new ArrayList<>();
+
+        for (Message message : messages){
+            messagesGetDTO.add(DTOMapper.INSTANCE.convertEntityToMessageGetDTO(message));
+        }
+
+        return messagesGetDTO;
     }
 
     @PutMapping("/locations/chats/{locationId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @ResponseBody
-    public void postMessage(@PathVariable Long locationId, @RequestBody Message message) {
-        locationService.postMessage(locationId, message);
+    public void postMessage(@PathVariable Integer locationId, @RequestBody MessagePostDTO messagePostDTO) {
+        locationService.postMessage(locationId, DTOMapper.INSTANCE.convertMessagePostDTOToEntity(messagePostDTO));
     }
 
     @GetMapping("/locations/favorites/{userId}")

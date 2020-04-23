@@ -1,6 +1,7 @@
 package ch.uzh.ifi.seal.soprafs20;
 
 import ch.uzh.ifi.seal.soprafs20.database.DatabaseConnector;
+import ch.uzh.ifi.seal.soprafs20.database.DatabaseConnectorLocationChats;
 import ch.uzh.ifi.seal.soprafs20.database.DatabaseConnectorUser;
 import ch.uzh.ifi.seal.soprafs20.entity.Location;
 import ch.uzh.ifi.seal.soprafs20.service.UserService;

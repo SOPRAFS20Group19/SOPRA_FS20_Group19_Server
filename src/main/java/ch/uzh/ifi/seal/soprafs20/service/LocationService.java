@@ -2,6 +2,7 @@ package ch.uzh.ifi.seal.soprafs20.service;
 
 import ch.uzh.ifi.seal.soprafs20.database.DatabaseConnectorFavoriteLocations;
 import ch.uzh.ifi.seal.soprafs20.database.DatabaseConnectorLocation;
+import ch.uzh.ifi.seal.soprafs20.database.DatabaseConnectorLocationChats;
 import ch.uzh.ifi.seal.soprafs20.entity.Chat;
 import ch.uzh.ifi.seal.soprafs20.entity.Location;
 import ch.uzh.ifi.seal.soprafs20.entity.Message;
@@ -12,8 +13,18 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
 import java.util.List;
+
+import java.text.SimpleDateFormat;
+import java.sql.Timestamp;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.util.*;
 
 /**
  * Location Service
@@ -85,12 +96,13 @@ public class LocationService {
     public void updateLocation(Location location){
     }
 
-    public Chat getChat(Long id){
-        Chat chat = new Chat();
-        return chat;
+    public ArrayList<Message> getChat(Integer locationId){
+        return DatabaseConnectorLocationChats.getChat(locationId);
     }
 
-    public void postMessage(Long id, Message message){
+    public void postMessage(Integer locationId, Message message){
+        message.setTimestamp(getCurrentTimestamp());
+        DatabaseConnectorLocationChats.postMessage(locationId, message);
     }
 
     // gets a users favorite locations
@@ -130,5 +142,11 @@ public class LocationService {
             }
         }
         return locationToReturn;
+    }
+
+    public String getCurrentTimestamp(){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM, HH:mm");
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        return sdf.format(timestamp);
     }
 }
