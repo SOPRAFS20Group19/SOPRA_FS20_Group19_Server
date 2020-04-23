@@ -156,8 +156,10 @@ public class LocationService {
     public static void updateRating(int userId, Integer locationId, int rating){
         DatabaseConnectorRating.updateRating(userId, locationId, rating);
     }
+
     public String getCurrentTimestamp(){
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM, HH:mm");
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         return sdf.format(timestamp);
+    }
 }
