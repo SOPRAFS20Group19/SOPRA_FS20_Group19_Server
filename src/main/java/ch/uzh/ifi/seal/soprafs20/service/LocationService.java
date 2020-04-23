@@ -2,6 +2,7 @@ package ch.uzh.ifi.seal.soprafs20.service;
 
 import ch.uzh.ifi.seal.soprafs20.database.DatabaseConnectorFavoriteLocations;
 import ch.uzh.ifi.seal.soprafs20.database.DatabaseConnectorLocation;
+import ch.uzh.ifi.seal.soprafs20.database.DatabaseConnectorRating;
 import ch.uzh.ifi.seal.soprafs20.entity.Chat;
 import ch.uzh.ifi.seal.soprafs20.entity.Location;
 import ch.uzh.ifi.seal.soprafs20.entity.Message;
@@ -130,5 +131,17 @@ public class LocationService {
             }
         }
         return locationToReturn;
+    }
+
+    public int checkRating(int userId, Integer locationId){
+        int rating = DatabaseConnectorRating.getRating(userId,locationId);
+        //implement the function
+        return rating;
+
+    }
+
+
+    public static void updateRating(int userId, Integer locationId, int rating){
+        DatabaseConnectorRating.updateRating(userId, locationId, rating);
     }
 }
