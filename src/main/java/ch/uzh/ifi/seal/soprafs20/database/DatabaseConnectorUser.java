@@ -104,6 +104,17 @@ public class DatabaseConnectorUser {
         return userRepresentation;
     }
 
+    public static String getUsernameById(int id){
+        FindIterable<Document> request =  usersCollection.find(eq("userId", id)); //Temporary id-field does not exist by now
+        Document user = request.first();
+
+        if (user == null){
+            throw new UserNotFoundException("This user could not be found");
+        }
+
+        return user.getString("username");
+    }
+
     //transforms BSON User into Backend User Representation
     public static User getUserInfo(Document user){
         User userRepresentation = new User();

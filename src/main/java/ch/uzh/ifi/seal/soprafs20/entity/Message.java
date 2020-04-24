@@ -3,6 +3,7 @@ package ch.uzh.ifi.seal.soprafs20.entity;
 public class Message {
 
     private String content;
+    private String senderUsername;
     private int senderId;
     private String timestamp;
 
@@ -30,5 +31,13 @@ public class Message {
 
     public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public String getSenderUsername() {
+        return senderUsername;
+    }
+
+    public void setSenderUsername(String senderUsername) {
+        this.senderUsername = senderUsername;
     }
 }

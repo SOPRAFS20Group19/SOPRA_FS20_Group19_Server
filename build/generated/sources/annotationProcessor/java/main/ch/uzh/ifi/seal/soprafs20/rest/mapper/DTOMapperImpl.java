@@ -14,7 +14,7 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-04-23T19:40:12+0200",
+    date = "2020-04-24T11:32:05+0200",
     comments = "version: 1.3.1.Final, compiler: javac, environment: Java 13.0.1 (Oracle Corporation)"
 )
 public class DTOMapperImpl implements DTOMapper {
@@ -114,7 +114,7 @@ public class DTOMapperImpl implements DTOMapper {
 
         MessageGetDTO messageGetDTO = new MessageGetDTO();
 
-        messageGetDTO.setSenderId( message.getSenderId() );
+        messageGetDTO.setSenderId( message.getSenderUsername() );
         messageGetDTO.setContent( message.getContent() );
         messageGetDTO.setTimestamp( message.getTimestamp() );
 

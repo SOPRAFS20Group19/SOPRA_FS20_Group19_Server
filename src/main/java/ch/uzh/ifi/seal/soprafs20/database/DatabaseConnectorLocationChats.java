@@ -99,30 +99,16 @@ public class DatabaseConnectorLocationChats {
                 .append("timestamp", message.getTimestamp());
 
         chatsCollection.updateOne(eq("locationId", locationId), Updates.addToSet("messages", doc));
-        /*
-        FindIterable<Document> request =  chatsCollection.find(eq("locationId", locationId));
-        Document chatDoc = request.first();
-
-        // throw exception if there is no chat for the given location
-        if (chatDoc == null){
-            throw new LocationNotFoundException("This location could not be found");
-        }
-
-        chatDoc.get("")
-
-        JSONObject chatAsJSON = new JSONObject(chatDoc.toJson());
-
-
-        ArrayList<Message> chat = getChat(locationId);
-        chat.add(message);
-        chatsCollection.updateOne(eq("locationId", locationId),
-                set("messages", chat));*/
     }
 
     public static Message convertMessageJSONToEntity(JSONObject messageJSON){
         Message message = new Message();
 
-        message.setSenderId(messageJSON.getInt("senderId"));
+        int userId = messageJSON.getInt("senderId");
+        User sender = DatabaseConnectorUser.getUserById(messageJSON.getInt("senderId"));
+        String usernameSender = sender.getUsername();
+
+        message.setSenderUsername(DatabaseConnectorUser.getUsernameById(userId));
         message.setContent(messageJSON.getString("content"));
         message.setTimestamp(messageJSON.getString("timestamp"));
 
