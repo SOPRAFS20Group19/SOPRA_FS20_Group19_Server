@@ -108,7 +108,7 @@ public class DatabaseConnectorLocation {
 
         // retrieve and set additional information
         ArrayList<String> additionalInformation = new ArrayList<>();
-        String fountainType = "Fountain type: " + properties.getString("art_txt");
+        String fountainType = "Fountain type: " + properties.getString("art_txt").replace("Brunnen_", "");
         additionalInformation.add(fountainType);
         //additionalInformation.append("Fountain type: ").append(properties.getString("art_txt")).append("\\n");
         String access = "Access: " + properties.getString("brunnenart_txt");
