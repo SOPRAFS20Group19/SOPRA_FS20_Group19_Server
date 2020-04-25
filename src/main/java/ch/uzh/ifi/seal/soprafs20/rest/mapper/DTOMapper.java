@@ -45,6 +45,14 @@ public interface DTOMapper {
     @Mapping(source = "additionalInformation", target = "additionalInformation")
     LocationGetDTO convertEntityToLocationGetDTO(Location location);
 
+    @Mapping(source = "locationType", target = "locationType")
+    @Mapping(source = "longitude", target = "longitude")
+    @Mapping(source = "latitude", target = "latitude")
+    @Mapping(source = "baujahr", target = "baujahr")
+    @Mapping(source = "art_txt", target = "art_txt")
+    @Mapping(source = "brunnenart_txt", target = "brunnenart_txt")
+    Location convertLocationPostDTOtoEntity(LocationPostDTO locationPostDTO);
+
     @Mapping(source = "senderId", target = "senderId")
     @Mapping(source = "content", target = "content")
     Message convertMessagePostDTOToEntity(MessagePostDTO messagePostDTO);

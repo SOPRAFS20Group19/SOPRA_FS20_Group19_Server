@@ -2,19 +2,21 @@ package ch.uzh.ifi.seal.soprafs20.database;
 
 import ch.uzh.ifi.seal.soprafs20.constant.LocationType;
 import ch.uzh.ifi.seal.soprafs20.entity.Location;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.*;
 import org.bson.Document;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.mongodb.client.model.Filters.eq;
+
 public class DatabaseConnectorLocation {
+    private static java.lang.Object Object;
+
     public DatabaseConnectorLocation(){}
 
     //connection to mongodb on the cloud with credentials of luca locher
@@ -29,6 +31,14 @@ public class DatabaseConnectorLocation {
     //Establish connection to the Recycling Collection (development purposes only)
     static MongoCollection<Document> recyclingCollection = locationStorage.getCollection("Recycling");
 
+    static MongoCollection<Document> userFountainsCollection = locationStorage.getCollection("UserFountains");
+
+    static MongoCollection<Document> userFireplacesCollection = locationStorage.getCollection("UserFireplaces");
+
+    static MongoCollection<Document> userRecyclingCollection = locationStorage.getCollection("UserRecycling");
+
+
+
 
 
     public static void getFountainById(int id){
@@ -36,6 +46,136 @@ public class DatabaseConnectorLocation {
 
         //Document fountain = (Document) fountainsCollection.find(eq("properties.objectid", id));
         //return fountainToLocation(fountainOne);
+    }
+
+    public static void addNewFountainToDatabase(Location location){
+        JSONArray coordinatesAsJSON = new JSONArray();
+        coordinatesAsJSON.put(location.getLatitude());
+        coordinatesAsJSON.put(location.getLongitude());
+
+        Document coordinates = new Document("type", "Point")
+                .append("coordinates", coordinatesAsJSON);
+
+        Document properties = new Document("locationtype", "fountain")
+                .append("objectid", location.getId())
+                //.append("nummer", null)
+                .append("art_txt", location.getArt_txt())
+                .append("brunnenart_txt", location.getBrunnenart_txt())
+                .append("historisches_baujahr", location.getBaujahr())
+                //.append("wasserart_txt", null)
+                //.append("bezeichnung", null)
+                .append("baujahr", location.getBaujahr());
+                //.append("druckzone", null)
+                //.append("brunnennummer", null)
+                //.append("eigentuemer_txt", null)
+                //.append("druckzone_txt", null)
+                //.append("betreiber_txt", null);
+
+        Document doc = new Document("type", "Feature")
+                .append("geometry", coordinates)
+                .append("properties", properties);
+        userFountainsCollection.insertOne(doc);
+    }
+
+    public static void addNewFireplaceToDatabase(Location location){
+        JSONArray ausstattungAsJSON = new JSONArray();
+        ausstattungAsJSON.put("Holz");
+        ausstattungAsJSON.put("Zeitung");
+
+        Document idAndCoordinates = new Document("locationtype", "fireplace")
+                .append("Latitude", location.getLatitude())
+                .append("Longitude", location.getLongitude())
+                .append("Id", location.getId());
+
+        Document doc = new Document("IconUrl", "/Content/images/fire-icon.png")
+                .append("BarbecuePlace", idAndCoordinates)
+                .append("Ausstattung", ausstattungAsJSON);
+        userFireplacesCollection.insertOne(doc);
+    }
+
+
+    //Helper function which generates a unique fountain id
+    public static int generateFountainId(){
+        int random = (int) (Math.random() * 10000) + 10000000;
+        FindIterable<Document> request = userFountainsCollection.find(eq("userId", random));
+        FindIterable<Document> request2 = fountainsCollection.find(eq("userId", random));
+
+        if (request.first() != null || request2.first() != null){random = DatabaseConnectorLocation.generateFountainId();};
+        return  random;
+    }
+
+    //Helper function which generates a unique fireplace id
+    public static int generateFireplaceId(){
+        int random = (int) (Math.random() * 10000) + 20000000;
+        FindIterable<Document> request = userFireplacesCollection.find(eq("userId", random));
+        FindIterable<Document> request2 = fireplacesCollection.find(eq("userId", random));
+        if (request.first() != null || request2.first() != null){random = DatabaseConnectorLocation.generateFireplaceId();};
+        return  random;
+    }
+
+    public static int createLocation(Location location){
+
+        if (location.getLocationType() == LocationType.FOUNTAIN){
+            location.setId(generateFountainId());
+            addNewFountainToDatabase(location);
+        }
+
+        else if (location.getLocationType() == LocationType.FIREPLACE){
+            location.setId(generateFireplaceId());
+            addNewFireplaceToDatabase(location);
+
+        }
+        return location.getId();
+
+        /*
+        else if (location.getLocationType() == LocationType.FIREPLACE){
+            fireplacesCollection.insertOne(doc);
+        }
+        else {
+            recyclingCollection.insertOne(doc);
+        }
+
+         */
+
+    }
+
+    public static List<Location> getUserFountains() throws JSONException {
+        List<Document> fountainsList = userFountainsCollection.find().into(new ArrayList<>());
+        List<Location> fountainsListLocation = new ArrayList<>();
+        for (Document fountain : fountainsList) {
+            String fountainAsString = fountain.toJson();
+            JSONObject fountainAsJson = new JSONObject(fountainAsString);
+            //convert Document to Location
+            Location fountainLocation = fountainToLocation(fountainAsJson);
+            //add Location to List of Locations
+            fountainsListLocation.add(fountainLocation);
+        }
+        return fountainsListLocation;
+    }
+
+    public static List<Location> getUserFireplaces(){
+        List<Document> fireplacesList = userFireplacesCollection.find().into(new ArrayList<>());
+        List<Location> fireplacesListLocation = new ArrayList<>();
+        for (Document fireplace: fireplacesList){
+            String fireplaceAsString = fireplace.toJson();
+            JSONObject fireplaceAsJSON = new JSONObject(fireplaceAsString);
+            //convert Document to Location
+            Location fireplaceLocation = fireplaceToLocation(fireplaceAsJSON);
+
+            fireplacesListLocation.add(fireplaceLocation);
+
+
+            // check if fireplace is in Zurich
+            /*
+            if (fireplaceLocation.getLongitude() > 8.4680486289 && fireplaceLocation.getLongitude() < 8.6191027275
+                    && fireplaceLocation.getLatitude() > 47.3232261256 && fireplaceLocation.getLatitude() < 47.4308197123){
+                //add Location to List of Locations
+                fireplacesListLocation.add(fireplaceLocation);
+            }
+
+             */
+        }
+        return fireplacesListLocation;
     }
 
     public static List<Location> getFountains() throws JSONException {
@@ -108,22 +248,29 @@ public class DatabaseConnectorLocation {
 
         // retrieve and set additional information
         ArrayList<String> additionalInformation = new ArrayList<>();
-        String fountainType = "Fountain type: " + properties.getString("art_txt").replace("Brunnen_", "");
-        additionalInformation.add(fountainType);
+        if (properties.get("art_txt") != null){
+            String fountainType = "Fountain type: " + properties.getString("art_txt").replace("Brunnen_", "");
+            additionalInformation.add(fountainType);
+        }
         //additionalInformation.append("Fountain type: ").append(properties.getString("art_txt")).append("\\n");
-        String access = "Access: " + properties.getString("brunnenart_txt");
-        additionalInformation.add(access);
+        if (properties.get("brunnenart_txt") != null){
+            String access = "Access: " + properties.getString("brunnenart_txt");
+            additionalInformation.add(access);
+        }
         //additionalInformation.append("Access: ").append(properties.getString("brunnenart_txt")).append("\\n");
         if (properties.get("baujahr") != null) {
             String yOC = "Year of construction: " + properties.get("baujahr");
             additionalInformation.add(yOC);
         }
         //additionalInformation.append("Year of construction: ").append(properties.get("baujahr")).append("\\n");
+        /*
         if (properties.getString("wasserart_txt") != null){
             String waterSource = "Water source type: " + properties.getString("wasserart_txt");
             additionalInformation.add(waterSource);
             //additionalInformation.append("Water source type: ").append(properties.getString("wasserart_txt")).append("\\n");
         }
+
+         */
         newLocation.setAdditionalInformation(additionalInformation.toArray(new String[0]));
 
         return newLocation;

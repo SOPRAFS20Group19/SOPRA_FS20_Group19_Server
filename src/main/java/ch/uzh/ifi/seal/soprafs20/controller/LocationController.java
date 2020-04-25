@@ -1,10 +1,7 @@
 package ch.uzh.ifi.seal.soprafs20.controller;
 
 import ch.uzh.ifi.seal.soprafs20.entity.*;
-import ch.uzh.ifi.seal.soprafs20.rest.dto.FilterPostDTO;
-import ch.uzh.ifi.seal.soprafs20.rest.dto.LocationGetDTO;
-import ch.uzh.ifi.seal.soprafs20.rest.dto.MessageGetDTO;
-import ch.uzh.ifi.seal.soprafs20.rest.dto.MessagePostDTO;
+import ch.uzh.ifi.seal.soprafs20.rest.dto.*;
 import ch.uzh.ifi.seal.soprafs20.rest.mapper.DTOMapper;
 import ch.uzh.ifi.seal.soprafs20.service.LocationService;
 import org.springframework.http.HttpStatus;
@@ -59,8 +56,15 @@ public class LocationController {
     @PostMapping("/locations")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public Location createLocation(@RequestBody Location location) {
-        return locationService.createLocation(location);
+    public LocationGetDTO createLocation(@RequestBody LocationPostDTO locationPostDTO) {
+        // convert API user to internal representation
+        Location locationInput = DTOMapper.INSTANCE.convertLocationPostDTOtoEntity(locationPostDTO);
+
+        // create user
+        Location locationCreated = locationService.createLocation(locationInput);
+
+        // convert internal representation of user back to API
+        return DTOMapper.INSTANCE.convertEntityToLocationGetDTO(locationCreated);
     }
 
     @GetMapping("/locations/{locationId}")

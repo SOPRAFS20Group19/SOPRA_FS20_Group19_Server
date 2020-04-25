@@ -4,7 +4,6 @@ import ch.uzh.ifi.seal.soprafs20.database.DatabaseConnectorFavoriteLocations;
 import ch.uzh.ifi.seal.soprafs20.database.DatabaseConnectorLocation;
 import ch.uzh.ifi.seal.soprafs20.database.DatabaseConnectorLocationChats;
 import ch.uzh.ifi.seal.soprafs20.database.DatabaseConnectorRating;
-import ch.uzh.ifi.seal.soprafs20.entity.Chat;
 import ch.uzh.ifi.seal.soprafs20.entity.Location;
 import ch.uzh.ifi.seal.soprafs20.entity.Message;
 import ch.uzh.ifi.seal.soprafs20.exceptions.*;
@@ -14,18 +13,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
 import java.text.SimpleDateFormat;
 import java.sql.Timestamp;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.util.*;
 
 /**
  * Location Service
@@ -45,10 +37,17 @@ public class LocationService {
         List<Location> listFountains = DatabaseConnectorLocation.getFountains();
         List<Location> listFireplaces = DatabaseConnectorLocation.getFireplaces();
         List<Location> listRecyclingStations = DatabaseConnectorLocation.getRecyclingStations();
+        List<Location> listUserFountains = DatabaseConnectorLocation.getUserFountains();
+        List<Location> listUserFireplaces = DatabaseConnectorLocation.getUserFireplaces();
+
+
 
         allLocations.addAll(listFountains);
         allLocations.addAll(listFireplaces);
         allLocations.addAll(listRecyclingStations);
+        allLocations.addAll(listUserFountains);
+        allLocations.addAll(listUserFireplaces);
+
 
         return allLocations;
     }
@@ -90,8 +89,9 @@ public class LocationService {
     }
 
     public Location createLocation(Location newLocation){
-        Location location = new Location();
-        return location;
+        int newLocationId = DatabaseConnectorLocation.createLocation(newLocation);
+        Location locationToReturn = this.getLocation(newLocationId);
+        return locationToReturn;
     }
 
     public void updateLocation(Location location){

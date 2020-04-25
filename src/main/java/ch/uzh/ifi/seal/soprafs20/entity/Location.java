@@ -16,8 +16,35 @@ public class Location {
     private double[] coordinates;
     private LocationType locationType;
     private String picture;
+    private int baujahr;
+    private String art_txt;
+    private String brunnenart_txt;
 
     public Location(){}
+
+    public void setBrunnenart_txt(String brunnenart_txt) {
+        this.brunnenart_txt = brunnenart_txt;
+    }
+
+    public void setBaujahr(int baujahr) {
+        this.baujahr = baujahr;
+    }
+
+    public void setArt_txt(String art_txt) {
+        this.art_txt = art_txt;
+    }
+
+    public String getBrunnenart_txt() {
+        return brunnenart_txt;
+    }
+
+    public int getBaujahr() {
+        return baujahr;
+    }
+
+    public String getArt_txt() {
+        return art_txt;
+    }
 
     public int getId() {
         return id;
@@ -70,8 +97,6 @@ public class Location {
     public void setLocationType(LocationType locationType) {
         this.locationType = locationType;
     }
-
-
 
 
     public String getPicture() {
