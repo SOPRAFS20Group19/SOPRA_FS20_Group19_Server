@@ -2,7 +2,6 @@ package ch.uzh.ifi.seal.soprafs20.entity;
 
 import ch.uzh.ifi.seal.soprafs20.constant.LocationType;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +24,15 @@ public class Location {
     private String metall;
     private String glas;
     private String oel;
+    private String ausstattung;
+
+    public String getAusstattung() {
+        return ausstattung;
+    }
+
+    public void setAusstattung(String ausstattung) {
+        this.ausstattung = ausstattung;
+    }
 
     public String getAdresse() {
         return adresse;

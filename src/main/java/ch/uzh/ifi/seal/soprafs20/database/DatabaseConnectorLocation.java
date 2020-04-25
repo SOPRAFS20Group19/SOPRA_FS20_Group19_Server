@@ -10,6 +10,7 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.mongodb.client.model.Filters.eq;
@@ -70,8 +71,13 @@ public class DatabaseConnectorLocation {
 
     public static void addNewFireplaceToDatabase(Location location){
         JSONArray ausstattungAsJSON = new JSONArray();
-        ausstattungAsJSON.put("Holz");
-        ausstattungAsJSON.put("Zeitung");
+        String ausstattung = location.getAusstattung();
+        ArrayList<String> ausstattungList = new ArrayList<>(Arrays.asList(ausstattung.split(",")));
+        for (String property : ausstattungList){
+            ausstattungAsJSON.put(property);
+        }
+        //ausstattungAsJSON.put("Holz");
+        //ausstattungAsJSON.put("Zeitung");
 
         Document idAndCoordinates = new Document("locationtype", "fireplace")
                 .append("Latitude", location.getLatitude())
@@ -92,7 +98,7 @@ public class DatabaseConnectorLocation {
         Document coordinates = new Document("type", "Point")
                 .append("coordinates", coordinatesAsJSON);
 
-        Document properties = new Document()
+        Document properties = new Document("locationtype", "recycling")
                 .append("objectid", Integer.toString(location.getId()))
                 .append("adresse", location.getAdresse())
                 .append("plz", location.getPlz())
@@ -292,19 +298,21 @@ public class DatabaseConnectorLocation {
 
         // retrieve and set additional information
         ArrayList<String> additionalInformation = new ArrayList<>();
-        if (properties.get("art_txt") != null){
+        if (properties.get("art_txt").getClass().toString().equals("class java.lang.String")){
             String fountainType = "Fountain type: " + properties.getString("art_txt").replace("Brunnen_", "");
             additionalInformation.add(fountainType);
         }
         //additionalInformation.append("Fountain type: ").append(properties.getString("art_txt")).append("\\n");
-        if (properties.get("brunnenart_txt") != null){
+        if (properties.get("brunnenart_txt").getClass().toString().equals("class java.lang.String")){
             String access = "Access: " + properties.getString("brunnenart_txt");
             additionalInformation.add(access);
         }
         //additionalInformation.append("Access: ").append(properties.getString("brunnenart_txt")).append("\\n");
-        if (properties.get("baujahr") != null) {
-            String yOC = "Year of construction: " + properties.get("baujahr");
-            additionalInformation.add(yOC);
+        if (properties.get("baujahr").getClass().toString().equals("class java.lang.Integer")) {
+            if (properties.getInt("baujahr") != 0) {
+                String yOC = "Year of construction: " + properties.get("baujahr");
+                additionalInformation.add(yOC);
+            }
         }
         //additionalInformation.append("Year of construction: ").append(properties.get("baujahr")).append("\\n");
         /*
@@ -383,13 +391,13 @@ public class DatabaseConnectorLocation {
         }
 
         additionalInformation.add("Disposable at this location:");
-        if (properties.get("metall") != null){
+        if (properties.get("metall").getClass().toString().equals("class java.lang.String")){
             additionalInformation.add("- Metal");
         }
-        if (properties.get("glas") != null){
+        if (properties.get("glas").getClass().toString().equals("class java.lang.String")){
             additionalInformation.add("- Glass");
         }
-        if (properties.get("oel") != null){
+        if (properties.get("oel").getClass().toString().equals("class java.lang.String")){
             additionalInformation.add("- Oil");
         }
 

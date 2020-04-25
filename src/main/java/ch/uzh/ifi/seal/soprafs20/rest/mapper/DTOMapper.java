@@ -57,6 +57,7 @@ public interface DTOMapper {
     @Mapping(source = "metall", target = "metall")
     @Mapping(source = "glas", target = "glas")
     @Mapping(source = "oel", target = "oel")
+    @Mapping(source = "ausstattung", target = "ausstattung")
     Location convertLocationPostDTOtoEntity(LocationPostDTO locationPostDTO);
 
     @Mapping(source = "senderId", target = "senderId")

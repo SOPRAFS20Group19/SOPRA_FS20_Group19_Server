@@ -1,6 +1,10 @@
 package ch.uzh.ifi.seal.soprafs20.rest.dto;
 import ch.uzh.ifi.seal.soprafs20.constant.LocationType;
 
+import java.awt.*;
+import java.util.List;
+import java.util.ArrayList;
+
 
 public class LocationPostDTO {
     private LocationType locationType;
@@ -15,6 +19,15 @@ public class LocationPostDTO {
     private String metall;
     private String glas;
     private String oel;
+    private String ausstattung;
+
+    public String getAusstattung() {
+        return ausstattung;
+    }
+
+    public void setAusstattung(String ausstattung) {
+        this.ausstattung = ausstattung;
+    }
 
     public String getAdresse() {
         return adresse;
