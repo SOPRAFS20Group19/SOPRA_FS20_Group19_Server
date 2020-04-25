@@ -39,6 +39,7 @@ public class DatabaseConnectorRating {
         ratingsCollection.insertOne(doc);
     }*/
 
+
     public static int getRating(int userId, int locationId){
         FindIterable<Document> request =  ratingsCollection.find(and((eq("userId", userId)), (eq("locationId", locationId))));
         Document test = request.first();

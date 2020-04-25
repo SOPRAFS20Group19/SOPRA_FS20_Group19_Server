@@ -94,12 +94,12 @@ public class DatabaseConnectorLocation {
 
         Document properties = new Document()
                 .append("objectid", Integer.toString(location.getId()))
-                .append("adresse", "Strasse")
-                .append("plz", "8308")
-                .append("ort", "Zürich")
-                .append("metall", "X")
-                .append("glas", "X")
-                .append("oel", "X");
+                .append("adresse", location.getAdresse())
+                .append("plz", location.getPlz())
+                .append("ort", location.getOrt())
+                .append("metall", location.getMetall())
+                .append("glas", location.getGlas())
+                .append("oel", location.getOel());
 
         Document doc = new Document("type", "Feature")
                 .append("geometry", coordinates)
@@ -154,6 +154,7 @@ public class DatabaseConnectorLocation {
             addNewRecyclingStationToDatabase(location);
 
         }
+
         return location.getId();
 
         /*

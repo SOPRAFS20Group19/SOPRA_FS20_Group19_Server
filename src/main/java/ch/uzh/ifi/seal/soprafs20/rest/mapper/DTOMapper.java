@@ -51,6 +51,12 @@ public interface DTOMapper {
     @Mapping(source = "baujahr", target = "baujahr")
     @Mapping(source = "art_txt", target = "art_txt")
     @Mapping(source = "brunnenart_txt", target = "brunnenart_txt")
+    @Mapping(source = "adresse", target = "adresse")
+    @Mapping(source = "plz", target = "plz")
+    @Mapping(source = "ort", target = "ort")
+    @Mapping(source = "metall", target = "metall")
+    @Mapping(source = "glas", target = "glas")
+    @Mapping(source = "oel", target = "oel")
     Location convertLocationPostDTOtoEntity(LocationPostDTO locationPostDTO);
 
     @Mapping(source = "senderId", target = "senderId")

@@ -70,6 +70,13 @@ public class DatabaseConnectorLocationChats {
         chatsCollection.insertOne(doc);
     }
 
+    public static void addChatForNewLocation(int id){
+        ArrayList<Document> emptyChat = new ArrayList<>();
+        Document doc = new Document("locationId", id)
+                .append("messages", emptyChat);
+        chatsCollection.insertOne(doc);
+    }
+
     public static ArrayList<Message> getChat(Integer locationId){
         FindIterable<Document> request =  chatsCollection.find(eq("locationId", locationId));
         Document chatDoc = request.first();

@@ -60,15 +60,23 @@ public class LocationService {
         List<Location> filteredLocations = new ArrayList<>();
         if (filterPostDTO.showFountains()){
             List<Location> listFountains = DatabaseConnectorLocation.getFountains();
+            List<Location> listUserFountains = DatabaseConnectorLocation.getUserFountains();
             filteredLocations.addAll(listFountains);
+            filteredLocations.addAll(listUserFountains);
         }
         if (filterPostDTO.showFireplaces()){
             List<Location> listFireplaces = DatabaseConnectorLocation.getFireplaces();
+            List<Location> listUserFireplaces = DatabaseConnectorLocation.getUserFireplaces();
             filteredLocations.addAll(listFireplaces);
+            filteredLocations.addAll(listUserFireplaces);
+
         }
         if (filterPostDTO.showRecyclingStations()){
             List<Location> listRecyclingStations = DatabaseConnectorLocation.getRecyclingStations();
+            List<Location> listUserRecyclingStations = DatabaseConnectorLocation.getUserRecycling();
             filteredLocations.addAll(listRecyclingStations);
+            filteredLocations.addAll(listUserRecyclingStations);
+
         }
 
         return filteredLocations;
@@ -94,6 +102,8 @@ public class LocationService {
 
     public Location createLocation(Location newLocation){
         int newLocationId = DatabaseConnectorLocation.createLocation(newLocation);
+        //ADD TO CHAT -> IMPORTANT! später die Kommentarfunktion entfernen
+        //DatabaseConnectorLocationChats.addChatForNewLocation(newLocationId);
         Location locationToReturn = this.getLocation(newLocationId);
         return locationToReturn;
     }

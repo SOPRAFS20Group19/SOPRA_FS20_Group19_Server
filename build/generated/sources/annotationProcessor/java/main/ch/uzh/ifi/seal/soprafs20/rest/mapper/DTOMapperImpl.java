@@ -15,7 +15,7 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-04-25T13:51:20+0200",
+    date = "2020-04-25T14:39:55+0200",
     comments = "version: 1.3.1.Final, compiler: javac, environment: Java 13.0.2 (Oracle Corporation)"
 )
 public class DTOMapperImpl implements DTOMapper {
@@ -102,11 +102,17 @@ public class DTOMapperImpl implements DTOMapper {
         Location location = new Location();
 
         location.setArt_txt( locationPostDTO.getArt_txt() );
+        location.setMetall( locationPostDTO.getMetall() );
         location.setLatitude( locationPostDTO.getLatitude() );
+        location.setGlas( locationPostDTO.getGlas() );
         location.setLocationType( locationPostDTO.getLocationType() );
+        location.setOrt( locationPostDTO.getOrt() );
+        location.setOel( locationPostDTO.getOel() );
+        location.setAdresse( locationPostDTO.getAdresse() );
         location.setBaujahr( locationPostDTO.getBaujahr() );
         location.setLongitude( locationPostDTO.getLongitude() );
         location.setBrunnenart_txt( locationPostDTO.getBrunnenart_txt() );
+        location.setPlz( locationPostDTO.getPlz() );
 
         return location;
     }
