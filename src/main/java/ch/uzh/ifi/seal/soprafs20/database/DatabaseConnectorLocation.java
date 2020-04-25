@@ -39,8 +39,6 @@ public class DatabaseConnectorLocation {
 
 
 
-
-
     public static void getFountainById(int id){
         Document fountainOne = fountainsCollection.find().first();
 
@@ -58,18 +56,11 @@ public class DatabaseConnectorLocation {
 
         Document properties = new Document("locationtype", "fountain")
                 .append("objectid", location.getId())
-                //.append("nummer", null)
                 .append("art_txt", location.getArt_txt())
                 .append("brunnenart_txt", location.getBrunnenart_txt())
                 .append("historisches_baujahr", location.getBaujahr())
-                //.append("wasserart_txt", null)
-                //.append("bezeichnung", null)
                 .append("baujahr", location.getBaujahr());
-                //.append("druckzone", null)
-                //.append("brunnennummer", null)
-                //.append("eigentuemer_txt", null)
-                //.append("druckzone_txt", null)
-                //.append("betreiber_txt", null);
+
 
         Document doc = new Document("type", "Feature")
                 .append("geometry", coordinates)
@@ -93,6 +84,29 @@ public class DatabaseConnectorLocation {
         userFireplacesCollection.insertOne(doc);
     }
 
+    public static void addNewRecyclingStationToDatabase(Location location){
+        JSONArray coordinatesAsJSON = new JSONArray();
+        coordinatesAsJSON.put(location.getLatitude());
+        coordinatesAsJSON.put(location.getLongitude());
+
+        Document coordinates = new Document("type", "Point")
+                .append("coordinates", coordinatesAsJSON);
+
+        Document properties = new Document()
+                .append("objectid", Integer.toString(location.getId()))
+                .append("adresse", "Strasse")
+                .append("plz", "8308")
+                .append("ort", "Zürich")
+                .append("metall", "X")
+                .append("glas", "X")
+                .append("oel", "X");
+
+        Document doc = new Document("type", "Feature")
+                .append("geometry", coordinates)
+                .append("properties", properties);
+        userRecyclingCollection.insertOne(doc);
+    }
+
 
     //Helper function which generates a unique fountain id
     public static int generateFountainId(){
@@ -113,6 +127,15 @@ public class DatabaseConnectorLocation {
         return  random;
     }
 
+    //Helper function which generates a unique fireplace id
+    public static int generateRecyclingId(){
+        int random = (int) (Math.random() * 10000) + 30000000;
+        FindIterable<Document> request = userRecyclingCollection.find(eq("userId", random));
+        FindIterable<Document> request2 = recyclingCollection.find(eq("userId", random));
+        if (request.first() != null || request2.first() != null){random = DatabaseConnectorLocation.generateRecyclingId();};
+        return  random;
+    }
+
     public static int createLocation(Location location){
 
         if (location.getLocationType() == LocationType.FOUNTAIN){
@@ -123,6 +146,12 @@ public class DatabaseConnectorLocation {
         else if (location.getLocationType() == LocationType.FIREPLACE){
             location.setId(generateFireplaceId());
             addNewFireplaceToDatabase(location);
+
+        }
+
+        else if (location.getLocationType() == LocationType.RECYCLING_STATION){
+            location.setId(generateRecyclingId());
+            addNewRecyclingStationToDatabase(location);
 
         }
         return location.getId();
@@ -176,6 +205,20 @@ public class DatabaseConnectorLocation {
              */
         }
         return fireplacesListLocation;
+    }
+
+    public static List<Location> getUserRecycling(){
+        List<Document> recyclingList = userRecyclingCollection.find().into(new ArrayList<>());
+        List<Location> recyclingListLocation = new ArrayList<>();
+        for (Document recyclingStation: recyclingList){
+            String recyclingAsString = recyclingStation.toJson();
+            JSONObject recyclingAsJSON = new JSONObject(recyclingAsString);
+            //convert Document to Location
+            Location recyclingLocation = recyclingToLocation(recyclingAsJSON);
+            //add Location to List of Locations
+            recyclingListLocation.add(recyclingLocation);
+        }
+        return recyclingListLocation;
     }
 
     public static List<Location> getFountains() throws JSONException {
@@ -332,9 +375,11 @@ public class DatabaseConnectorLocation {
         // retrieve and set additional information
         ArrayList<String> additionalInformation = new ArrayList<>();
         StringBuilder address = new StringBuilder();
-        address.append("Address: ").append(properties.getString("adresse")).append(", ")
-                .append(properties.getString("plz")).append(" ").append(properties.getString("ort"));
-        additionalInformation.add(address.toString());
+        if (properties.getString("adresse") != null && properties.getString("plz") != null && properties.getString("ort") != null){
+            address.append("Address: ").append(properties.getString("adresse")).append(", ")
+                    .append(properties.getString("plz")).append(" ").append(properties.getString("ort"));
+            additionalInformation.add(address.toString());
+        }
 
         additionalInformation.add("Disposable at this location:");
         if (properties.get("metall") != null){

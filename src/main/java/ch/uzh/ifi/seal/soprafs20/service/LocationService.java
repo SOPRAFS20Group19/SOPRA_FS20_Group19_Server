@@ -39,6 +39,8 @@ public class LocationService {
         List<Location> listRecyclingStations = DatabaseConnectorLocation.getRecyclingStations();
         List<Location> listUserFountains = DatabaseConnectorLocation.getUserFountains();
         List<Location> listUserFireplaces = DatabaseConnectorLocation.getUserFireplaces();
+        List<Location> listUserRecycling = DatabaseConnectorLocation.getUserRecycling();
+
 
 
 
@@ -47,6 +49,8 @@ public class LocationService {
         allLocations.addAll(listRecyclingStations);
         allLocations.addAll(listUserFountains);
         allLocations.addAll(listUserFireplaces);
+        allLocations.addAll(listUserRecycling);
+
 
 
         return allLocations;
