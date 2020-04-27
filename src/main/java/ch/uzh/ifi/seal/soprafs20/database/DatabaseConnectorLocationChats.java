@@ -63,13 +63,6 @@ public class DatabaseConnectorLocationChats {
     }
 
     //creates Entry in the database when a new location is created
-    public static void createEntry(Integer locationId) {
-        ArrayList<Document> emptyChat = new ArrayList<>();
-        Document doc = new Document("locationId", locationId)
-                .append("messages", emptyChat);
-        chatsCollection.insertOne(doc);
-    }
-
     public static void addChatForNewLocation(int id){
         ArrayList<Document> emptyChat = new ArrayList<>();
         Document doc = new Document("locationId", id)

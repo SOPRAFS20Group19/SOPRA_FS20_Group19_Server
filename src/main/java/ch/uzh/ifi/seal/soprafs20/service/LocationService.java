@@ -41,17 +41,12 @@ public class LocationService {
         List<Location> listUserFireplaces = DatabaseConnectorLocation.getUserFireplaces();
         List<Location> listUserRecycling = DatabaseConnectorLocation.getUserRecycling();
 
-
-
-
         allLocations.addAll(listFountains);
         allLocations.addAll(listFireplaces);
         allLocations.addAll(listRecyclingStations);
         allLocations.addAll(listUserFountains);
         allLocations.addAll(listUserFireplaces);
         allLocations.addAll(listUserRecycling);
-
-
 
         return allLocations;
     }
@@ -102,8 +97,8 @@ public class LocationService {
 
     public Location createLocation(Location newLocation){
         int newLocationId = DatabaseConnectorLocation.createLocation(newLocation);
-        //ADD TO CHAT -> IMPORTANT! später die Kommentarfunktion entfernen
-        //DatabaseConnectorLocationChats.addChatForNewLocation(newLocationId);
+        //ADD TO CHAT -> IMPORTANT! später die Kommentarfunktion entfernen, LK: auskommentiert am 27.04
+        DatabaseConnectorLocationChats.addChatForNewLocation(newLocationId);
         Location locationToReturn = this.getLocation(newLocationId);
         return locationToReturn;
     }

@@ -42,7 +42,7 @@ public class DatabaseConnectorAddresses {
     static MongoCollection<Document> addressCollection = AddressZurich.getCollection("Address");
     static MongoCollection<Document> closestAddressCollection = AddressZurich.getCollection("ClosestAddress");
 
-    // only used for initializing the DB collection. Do not run again
+    // only used for initializing the address collection. Do not run again
     public static void initialSetup() throws IOException, ParseException {
         JSONParser parser = new JSONParser();
         Object obj = parser.parse(new FileReader("/Users/luisknufinke/Documents/UZH/04 - FS20/Softwarepraktikum/Know your City/SOPRA_FS20_Group19_Server/src/main/java/ch/uzh/ifi/seal/soprafs20/geoz.adrstzh_strassennamen_stzh_p.json"));
@@ -136,7 +136,7 @@ public class DatabaseConnectorAddresses {
         return locationToReturn;
     }
 
-    public static String getClosestAddressStreet(Integer locationId){
+    public static String calculateClosestAddressStreet(Integer locationId){
         ArrayList<Address> addresses = getAddresses();
         Location location = getLocationById(locationId);
 
@@ -155,7 +155,7 @@ public class DatabaseConnectorAddresses {
         return closestAddress.getStreet();
     }
 
-    // initial setup for closest address collection
+    // initial setup for closest address collection, do not run again
     public static void setupClosestAddressCollection(){
         List<Location> allLocations = new ArrayList<>();
         List<Location> listFountains = DatabaseConnectorLocation.getFountains();
@@ -177,9 +177,30 @@ public class DatabaseConnectorAddresses {
             Document existingDoc = request.first();
             if (existingDoc == null){
                 Document doc = new Document("locationId", location.getId())
-                        .append("closestStreet", getClosestAddressStreet(location.getId()));
+                        .append("closestStreet", calculateClosestAddressStreet(location.getId()));
                 closestAddressCollection.insertOne(doc);
             }
         }
+    }
+
+    public static String getClosestAddress(Integer locationId){
+        FindIterable<Document> request =  closestAddressCollection.find(eq("locationId", locationId));
+        Document doc = request.first();
+        if (doc == null){
+            return " ";
+        }
+        return doc.getString("closestStreet");
+    }
+
+    // adds an entry in the collection for added locations
+    public static void createEntry(Integer locationId){
+        Document doc = new Document("locationId", locationId)
+                .append("closestStreet", calculateClosestAddressStreet(locationId));
+        closestAddressCollection.insertOne(doc);
+    }
+
+    public static void testFieldAdding(Integer locationId){
+        Document updatedDoc = new Document().append("$set", new Document().append("secondAddress", getClosestAddress(locationId)));
+        closestAddressCollection.updateOne(eq("locationId", locationId), updatedDoc);
     }
 }

@@ -3,6 +3,7 @@ package ch.uzh.ifi.seal.soprafs20.database;
 import ch.uzh.ifi.seal.soprafs20.constant.LocationType;
 import ch.uzh.ifi.seal.soprafs20.entity.Location;
 import com.mongodb.client.*;
+import com.mongodb.client.model.Updates;
 import org.bson.Document;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -67,6 +68,9 @@ public class DatabaseConnectorLocation {
                 .append("geometry", coordinates)
                 .append("properties", properties);
         userFountainsCollection.insertOne(doc);
+
+        // creates a new entry in the closestAddress DB
+        DatabaseConnectorAddresses.createEntry(location.getId());
     }
 
     public static void addNewFireplaceToDatabase(Location location){
@@ -88,6 +92,9 @@ public class DatabaseConnectorLocation {
                 .append("BarbecuePlace", idAndCoordinates)
                 .append("Ausstattung", ausstattungAsJSON);
         userFireplacesCollection.insertOne(doc);
+
+        // creates a new entry in the closestAddress DB
+        DatabaseConnectorAddresses.createEntry(location.getId());
     }
 
     public static void addNewRecyclingStationToDatabase(Location location){
@@ -293,6 +300,9 @@ public class DatabaseConnectorLocation {
         double[] coordinates = {lon, lat};
         newLocation.setCoordinates(coordinates);
 
+        // set address
+        newLocation.setAddress(fountainAsJson.getString("closestStreet"));
+
         // set locationType
         newLocation.setLocationType(LocationType.FOUNTAIN);
 
@@ -345,6 +355,13 @@ public class DatabaseConnectorLocation {
         double[] coordinates = {lon, lat};
         newLocation.setCoordinates(coordinates);
 
+        // set address if fireplace is in Zurich
+        if (newLocation.getLongitude() > 8.4680486289 && newLocation.getLongitude() < 8.6191027275
+                && newLocation.getLatitude() > 47.3232261256 && newLocation.getLatitude() < 47.4308197123){
+            newLocation.setAddress(DatabaseConnectorAddresses.getClosestAddress(newLocation.getId()));
+        }
+
+
         // set locationType
         newLocation.setLocationType(LocationType.FIREPLACE);
 
@@ -378,6 +395,9 @@ public class DatabaseConnectorLocation {
         double[] coordinates = {lon, lat};
         newLocation.setCoordinates(coordinates);
 
+        // set address
+        newLocation.setAddress(properties.getString("adresse"));
+
         // set locationType
         newLocation.setLocationType(LocationType.RECYCLING_STATION);
 
@@ -385,7 +405,7 @@ public class DatabaseConnectorLocation {
         ArrayList<String> additionalInformation = new ArrayList<>();
         StringBuilder address = new StringBuilder();
         if (properties.getString("adresse") != null && properties.getString("plz") != null && properties.getString("ort") != null){
-            address.append("Address: ").append(properties.getString("adresse")).append(", ")
+            address.append("Full Address: ").append(properties.getString("adresse")).append(", ")
                     .append(properties.getString("plz")).append(" ").append(properties.getString("ort"));
             additionalInformation.add(address.toString());
         }
@@ -404,6 +424,38 @@ public class DatabaseConnectorLocation {
         newLocation.setAdditionalInformation(additionalInformation.toArray(new String[0]));
 
         return newLocation;
+    }
+
+    // one time move of address from address DB to location DB for performance reasons, do not use again
+    public static void moveAddressToLocation(){
+        List<Location> listFountains = getFountains();
+        List<Location> listFireplaces = getFireplaces();
+        List<Location> listUserFountains = getUserFountains();
+        List<Location> listUserFireplaces = getUserFireplaces();
+
+        for (Location fountain : listFountains){
+            Document updatedDoc = new Document().append("$set", new Document()
+                    .append("closestStreet", DatabaseConnectorAddresses.getClosestAddress(fountain.getId())));
+            fountainsCollection.updateOne(eq("properties.objectid", fountain.getId()), updatedDoc);
+        }
+
+        for (Location fireplace : listFireplaces){
+            Document updatedDoc = new Document().append("$set", new Document()
+                    .append("closestStreet", DatabaseConnectorAddresses.getClosestAddress(fireplace.getId())));
+            fireplacesCollection.updateOne(eq("BarbecuePlace.Id", fireplace.getId()), updatedDoc);
+        }
+
+        for (Location userFountain : listUserFountains){
+            Document updatedDoc = new Document().append("$set", new Document()
+                    .append("closestStreet", DatabaseConnectorAddresses.getClosestAddress(userFountain.getId())));
+            userFountainsCollection.updateOne(eq("properties.objectid", userFountain.getId()), updatedDoc);
+        }
+
+        for (Location userFireplace : listUserFireplaces){
+            Document updatedDoc = new Document().append("$set", new Document()
+                    .append("closestStreet", DatabaseConnectorAddresses.getClosestAddress(userFireplace.getId())));
+            userFireplacesCollection.updateOne(eq("BarbecuePlace.Id", userFireplace.getId()), updatedDoc);
+        }
     }
 
 }

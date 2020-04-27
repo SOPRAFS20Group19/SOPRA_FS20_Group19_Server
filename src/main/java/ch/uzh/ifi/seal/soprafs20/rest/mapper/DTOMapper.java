@@ -38,6 +38,7 @@ public interface DTOMapper {
     UserGetDTO convertEntityToUserGetDTO(User user);
 
     @Mapping(source = "id", target = "id")
+    @Mapping(source = "address", target = "address")
     @Mapping(source = "coordinates", target = "coordinates")
     @Mapping(source = "latitude", target = "latitude")
     @Mapping(source = "longitude", target = "longitude")
