@@ -77,6 +77,8 @@ public class UserServiceIntegrationTest {
         assertEquals(testUser.getName(), createdUser.getName());
         assertEquals(testUser.getUsername(), createdUser.getUsername());
         assertEquals(testUser.getPassword(), createdUser.getPassword());
+
+        usersCollection.deleteOne(eq("username", "testUsername"));
     }
 
 
@@ -103,6 +105,9 @@ public class UserServiceIntegrationTest {
         String exceptionMessage = "The provided username is already taken. Please try a new one.";
         DuplicatedUserException exception = assertThrows(DuplicatedUserException.class, () -> userService.createUser(testUser2), exceptionMessage);
         assertEquals(exceptionMessage, exception.getMessage());
+
+        usersCollection.deleteOne(eq("username", "testUsername"));
+
     }
 
     @Test
@@ -122,6 +127,8 @@ public class UserServiceIntegrationTest {
         loggedInUser = userService.checkForLogin(createdUser);
 
         assertEquals(UserStatus.ONLINE, loggedInUser.getStatus());
+
+        usersCollection.deleteOne(eq("username", "testUsername"));
 
     }
 
@@ -150,6 +157,8 @@ public class UserServiceIntegrationTest {
         String exceptionMessage = "This username does not exist, please register first.";
         InvalidCredentialsException exception = assertThrows(InvalidCredentialsException.class, () -> userService.checkForLogin(testUser2), exceptionMessage);
         assertEquals(exceptionMessage, exception.getMessage());
+
+        usersCollection.deleteOne(eq("username", "testUsername"));
 
     }
 
