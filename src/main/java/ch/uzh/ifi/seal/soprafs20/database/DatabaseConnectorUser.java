@@ -36,7 +36,8 @@ public class DatabaseConnectorUser {
                 .append("password", user.getPassword())
                 .append("creation-date", user.getCreationDate())
                 .append("online", false)
-                .append("userId", DatabaseConnectorUser.generateId());
+                .append("userId", DatabaseConnectorUser.generateId())
+                .append("avatarNr", 0);
         usersCollection.insertOne(doc);
 
         // creates an entry for the new user in the FavoriteLocations DB
@@ -77,8 +78,6 @@ public class DatabaseConnectorUser {
         usersCollection.updateOne(eq("userId", id),
                 set("online", b));
     }
-
-
 
 
     //returns a user with a certain username
@@ -124,14 +123,7 @@ public class DatabaseConnectorUser {
         userRepresentation.setCreationDate(user.getString("creation-date"));
         userRepresentation.setId(user.getInteger("userId", 0)); //if user has no id he gets assigned id: 0, flag that something is not working properly
         userRepresentation.setStatus(user.getBoolean("online")? UserStatus.ONLINE : UserStatus.OFFLINE);
-
-        /*JSONObject userAsJSON = new JSONObject(user.toJson());
-        JSONArray favoriteLocationsJSON = userAsJSON.getJSONArray("favoriteLocations");
-        ArrayList<Integer> favoriteLocations = new ArrayList<>();
-        for (int i = 0; i < favoriteLocationsJSON.length(); i++) {
-            favoriteLocations.add(favoriteLocationsJSON.getInt(i));
-        }
-        userRepresentation.setFavoriteLocations(favoriteLocations);*/
+        userRepresentation.setAvatarNr(user.getInteger( "avatarNr", 0)); //if user has no avatar chosen he gets the default value 0
 
         return userRepresentation;
     }
@@ -171,6 +163,12 @@ public class DatabaseConnectorUser {
     public static void updatePassword(User userToUpdate){
         usersCollection.updateOne(eq("userId", userToUpdate.getId()),
                 set("password", userToUpdate.getPassword()));
+    }
+
+    //updates the new avatar number
+    public static void updateAvatarNr(User userToUpdate){
+        usersCollection.updateOne(eq("userId", userToUpdate.getId()),
+                set("avatarNr", userToUpdate.getAvatarNr()));
     }
 
 }

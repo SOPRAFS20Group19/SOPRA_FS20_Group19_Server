@@ -8,6 +8,8 @@ public class UserPostDTO {
 
     private String password;
 
+    private int avatarNr;
+
     public String getName() {
         return name;
     }
@@ -30,5 +32,11 @@ public class UserPostDTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getAvatarNr(){ return avatarNr; }
+
+    public void setAvatarNr(int avatarNr){
+        this.avatarNr = avatarNr;
     }
 }

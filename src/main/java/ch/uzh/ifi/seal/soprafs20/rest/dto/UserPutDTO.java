@@ -10,6 +10,7 @@ public class UserPutDTO {
     private String password;
     private String birthDate;
     private UserStatus status;
+    private int avatarNr;
 
     public void setBirthDate(String birthDate) {
         this.birthDate = birthDate;
@@ -49,6 +50,12 @@ public class UserPutDTO {
 
     public void setOnlineStatus(UserStatus status) {
         this.status = status;
+    }
+
+    public int getAvatarNr(){ return avatarNr; }
+
+    public void setAvatarId(int avatarNr){
+        this.avatarNr = avatarNr;
     }
 
 

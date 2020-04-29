@@ -10,6 +10,7 @@ public class UserGetDTO {
     private String password;
     private UserStatus status;
     private String creationDate;
+    private int avatarNr;
 
     public int getId() {
         return id;
@@ -54,4 +55,10 @@ public class UserGetDTO {
     public String getCreationDate(){ return creationDate;}
 
     public void setCreationDate(String creationDate){ this.creationDate = creationDate;}
+
+    public int getAvatarNr(){return avatarNr;}
+
+    public void setAvatarNr(int avatarNr){
+        this.avatarNr = avatarNr;
+    }
 }

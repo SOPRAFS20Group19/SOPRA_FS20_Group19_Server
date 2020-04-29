@@ -72,6 +72,11 @@ public class UserService {
             DatabaseConnectorUser.updatePassword(userToUpdate);
         }
 
+        if (userWithNewData.getAvatarNr() != 0){
+            userToUpdate.setAvatarNr(userWithNewData.getAvatarNr());
+            DatabaseConnectorUser.updateAvatarNr(userToUpdate);
+        }
+
     }
 
     // logs out all users

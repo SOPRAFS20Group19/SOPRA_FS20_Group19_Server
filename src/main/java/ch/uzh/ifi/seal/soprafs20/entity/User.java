@@ -28,6 +28,8 @@ public class User {
 
 	private UserStatus status;
 
+	private int avatarNr;
+
 	private ArrayList favoriteLocations;
 
 
@@ -97,5 +99,11 @@ public class User {
 
 	public void setBirthDate(String birthDate) {
 		this.birthDate = birthDate;
+	}
+
+	public int getAvatarNr(){ return avatarNr; }
+
+	public void setAvatarNr(int avatarNr) {
+		this.avatarNr = avatarNr;
 	}
 }
