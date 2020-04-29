@@ -50,8 +50,9 @@ public class DatabaseConnectorLocation {
 
     public static void addNewFountainToDatabase(Location location){
         JSONArray coordinatesAsJSON = new JSONArray();
-        coordinatesAsJSON.put(location.getLatitude());
         coordinatesAsJSON.put(location.getLongitude());
+        coordinatesAsJSON.put(location.getLatitude());
+
 
         Document coordinates = new Document("type", "Point")
                 .append("coordinates", coordinatesAsJSON);
@@ -66,11 +67,17 @@ public class DatabaseConnectorLocation {
 
         Document doc = new Document("type", "Feature")
                 .append("geometry", coordinates)
-                .append("properties", properties);
+                .append("properties", properties)
+                .append("closestStreet", DatabaseConnectorAddresses.getClosestAddress(location.getId()));
         userFountainsCollection.insertOne(doc);
 
         // creates a new entry in the closestAddress DB
         DatabaseConnectorAddresses.createEntry(location.getId());
+
+        Document updatedDoc = new Document().append("$set", new Document()
+                .append("closestStreet", DatabaseConnectorAddresses.getClosestAddress(location.getId())));
+        userFountainsCollection.updateOne(eq("properties.objectid", location.getId()), updatedDoc);
+
     }
 
     public static void addNewFireplaceToDatabase(Location location){
@@ -80,27 +87,35 @@ public class DatabaseConnectorLocation {
         for (String property : ausstattungList){
             ausstattungAsJSON.put(property);
         }
+
         //ausstattungAsJSON.put("Holz");
         //ausstattungAsJSON.put("Zeitung");
 
         Document idAndCoordinates = new Document("locationtype", "fireplace")
                 .append("Latitude", location.getLatitude())
                 .append("Longitude", location.getLongitude())
-                .append("Id", location.getId());
+                .append("Id", location.getId())
+                ;
 
         Document doc = new Document("IconUrl", "/Content/images/fire-icon.png")
                 .append("BarbecuePlace", idAndCoordinates)
-                .append("Ausstattung", ausstattungAsJSON);
+                .append("Ausstattung", ausstattungAsJSON)
+                .append("closestStreet", DatabaseConnectorAddresses.getClosestAddress(location.getId()));
         userFireplacesCollection.insertOne(doc);
 
         // creates a new entry in the closestAddress DB
         DatabaseConnectorAddresses.createEntry(location.getId());
+
+        Document updatedDoc = new Document().append("$set", new Document()
+                .append("closestStreet", DatabaseConnectorAddresses.getClosestAddress(location.getId())));
+        userFireplacesCollection.updateOne(eq("BarbecuePlace.Id", location.getId()), updatedDoc);
+
     }
 
     public static void addNewRecyclingStationToDatabase(Location location){
         JSONArray coordinatesAsJSON = new JSONArray();
-        coordinatesAsJSON.put(location.getLatitude());
         coordinatesAsJSON.put(location.getLongitude());
+        coordinatesAsJSON.put(location.getLatitude());
 
         Document coordinates = new Document("type", "Point")
                 .append("coordinates", coordinatesAsJSON);
