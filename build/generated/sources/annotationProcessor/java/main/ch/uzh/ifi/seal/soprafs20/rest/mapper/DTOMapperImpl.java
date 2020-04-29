@@ -105,16 +105,25 @@ public class DTOMapperImpl implements DTOMapper {
         location.setArt_txt( locationPostDTO.getArt_txt() );
         location.setMetall( locationPostDTO.getMetall() );
         location.setAusstattung( locationPostDTO.getAusstattung() );
+        location.setHolz( locationPostDTO.getHolz() );
+        location.setAbfall( locationPostDTO.getAbfall() );
         location.setLatitude( locationPostDTO.getLatitude() );
         location.setGlas( locationPostDTO.getGlas() );
         location.setLocationType( locationPostDTO.getLocationType() );
+        location.setRost( locationPostDTO.getRost() );
+        location.setKinderwagen( locationPostDTO.getKinderwagen() );
         location.setOrt( locationPostDTO.getOrt() );
+        location.setHunde( locationPostDTO.getHunde() );
         location.setOel( locationPostDTO.getOel() );
+        location.setTisch( locationPostDTO.getTisch() );
         location.setAdresse( locationPostDTO.getAdresse() );
         location.setBaujahr( locationPostDTO.getBaujahr() );
+        location.setBaden( locationPostDTO.getBaden() );
+        location.setParkplatz( locationPostDTO.getParkplatz() );
         location.setLongitude( locationPostDTO.getLongitude() );
         location.setBrunnenart_txt( locationPostDTO.getBrunnenart_txt() );
         location.setPlz( locationPostDTO.getPlz() );
+        location.setTrinkwasser( locationPostDTO.getTrinkwasser() );
 
         return location;
     }

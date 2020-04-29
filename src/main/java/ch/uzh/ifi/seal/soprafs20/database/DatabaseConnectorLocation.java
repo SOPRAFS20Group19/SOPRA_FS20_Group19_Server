@@ -82,14 +82,41 @@ public class DatabaseConnectorLocation {
 
     public static void addNewFireplaceToDatabase(Location location){
         JSONArray ausstattungAsJSON = new JSONArray();
+        /*
         String ausstattung = location.getAusstattung();
         ArrayList<String> ausstattungList = new ArrayList<>(Arrays.asList(ausstattung.split(",")));
         for (String property : ausstattungList){
             ausstattungAsJSON.put(property);
         }
 
-        //ausstattungAsJSON.put("Holz");
-        //ausstattungAsJSON.put("Zeitung");
+         */
+        if (location.getHolz().equals("X")){
+            ausstattungAsJSON.put("Holz");
+        }
+        if (location.getRost().equals("X")){
+            ausstattungAsJSON.put("Rost");
+        }
+        if (location.getTisch().equals("X")){
+            ausstattungAsJSON.put("Tisch");
+        }
+        if (location.getBaden().equals("X")){
+            ausstattungAsJSON.put("Baden");
+        }
+        if (location.getTrinkwasser().equals("X")){
+            ausstattungAsJSON.put("Trinkwasser");
+        }
+        if (location.getAbfall().equals("X")){
+            ausstattungAsJSON.put("Abfall");
+        }
+        if (location.getParkplatz().equals("X")){
+            ausstattungAsJSON.put("Parkplatz");
+        }
+        if (location.getHunde().equals("X")){
+            ausstattungAsJSON.put("Hunde");
+        }
+        if (location.getKinderwagen().equals("X")){
+            ausstattungAsJSON.put("Kinderwagen");
+        }
 
         Document idAndCoordinates = new Document("locationtype", "fireplace")
                 .append("Latitude", location.getLatitude())
