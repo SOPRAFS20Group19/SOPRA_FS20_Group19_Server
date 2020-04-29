@@ -28,9 +28,9 @@ import java.sql.Timestamp;
 @Transactional
 public class LocationService {
 
-<span class="fc" id="L31">    private final Logger log = LoggerFactory.getLogger(LocationService.class);</span>
+<span class="nc" id="L31">    private final Logger log = LoggerFactory.getLogger(LocationService.class);</span>
 
-<span class="fc" id="L33">    public LocationService(){}</span>
+<span class="nc" id="L33">    public LocationService(){}</span>
 
     public List&lt;Location&gt; getLocations(){
 <span class="nc" id="L36">        List&lt;Location&gt; allLocations = new ArrayList&lt;&gt;();</span>
@@ -97,7 +97,7 @@ public class LocationService {
 
     public Location createLocation(Location newLocation){
 <span class="nc" id="L99">        int newLocationId = DatabaseConnectorLocation.createLocation(newLocation);</span>
-        //ADD TO CHAT -&gt; IMPORTANT! spÃ¤ter die Kommentarfunktion entfernen, LK: auskommentiert am 27.04
+        //ADD TO CHAT -&gt; IMPORTANT! später die Kommentarfunktion entfernen, LK: auskommentiert am 27.04
 <span class="nc" id="L101">        DatabaseConnectorLocationChats.addChatForNewLocation(newLocationId);</span>
 <span class="nc" id="L102">        Location locationToReturn = this.getLocation(newLocationId);</span>
 <span class="nc" id="L103">        return locationToReturn;</span>
@@ -155,21 +155,24 @@ public class LocationService {
     }
 
     public int checkRating(int userId, Integer locationId){
-<span class="nc" id="L158">        int rating = DatabaseConnectorRating.getRating(userId,locationId);</span>
         //implement the function
-<span class="nc" id="L160">        return rating;</span>
+<span class="nc" id="L159">        return DatabaseConnectorRating.getRating(userId,locationId);</span>
 
+    }
+
+    public double checkAverageRating(Integer locationId){
+<span class="nc" id="L164">        return DatabaseConnectorRating.getAverageRating(locationId);</span>
     }
 
 
     public static void updateRating(int userId, Integer locationId, int rating){
-<span class="nc" id="L166">        DatabaseConnectorRating.updateRating(userId, locationId, rating);</span>
-<span class="nc" id="L167">    }</span>
+<span class="nc" id="L169">        DatabaseConnectorRating.updateRating(userId, locationId, rating);</span>
+<span class="nc" id="L170">    }</span>
 
     public String getCurrentTimestamp(){
-<span class="nc" id="L170">        SimpleDateFormat sdf = new SimpleDateFormat(&quot;dd.MM, HH:mm&quot;);</span>
-<span class="nc" id="L171">        Timestamp timestamp = new Timestamp(System.currentTimeMillis());</span>
-<span class="nc" id="L172">        return sdf.format(timestamp);</span>
+<span class="nc" id="L173">        SimpleDateFormat sdf = new SimpleDateFormat(&quot;dd.MM, HH:mm&quot;);</span>
+<span class="nc" id="L174">        Timestamp timestamp = new Timestamp(System.currentTimeMillis());</span>
+<span class="nc" id="L175">        return sdf.format(timestamp);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

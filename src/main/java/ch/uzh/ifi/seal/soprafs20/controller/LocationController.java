@@ -79,13 +79,6 @@ public class LocationController {
         return DTOMapper.INSTANCE.convertEntityToLocationGetDTO(location);
     }
 
-    @PutMapping("/locations/{locationId}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @ResponseBody
-    public void updateLocation(@PathVariable Long locationId, @RequestBody Location location) {
-        locationService.updateLocation(location);
-    }
-
     @GetMapping("/locations/chats/{locationId}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
