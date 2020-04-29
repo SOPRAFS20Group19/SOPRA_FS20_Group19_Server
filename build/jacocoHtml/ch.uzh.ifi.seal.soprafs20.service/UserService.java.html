@@ -51,33 +51,33 @@ import java.util.*;
 
     // updates a user with the updated name, username and birthdate
     public void updateUser(int userId, UserPutDTO userWithNewData) {
-<span class="nc" id="L54">        User userToUpdate = DatabaseConnectorUser.getUserById(userId);</span>
+<span class="fc" id="L54">        User userToUpdate = DatabaseConnectorUser.getUserById(userId);</span>
 
-<span class="nc bnc" id="L56" title="All 2 branches missed.">        if (userToUpdate == null){</span>
+<span class="pc bpc" id="L56" title="1 of 2 branches missed.">        if (userToUpdate == null){</span>
 <span class="nc" id="L57">            throw new UserNotFoundException(&quot;This user could not be found.&quot;);</span>
         }
 
-<span class="nc bnc" id="L60" title="All 2 branches missed.">        if (userWithNewData.getName() != null){</span>
-<span class="nc" id="L61">            userToUpdate.setName(userWithNewData.getName());</span>
-<span class="nc" id="L62">            DatabaseConnectorUser.updateName(userToUpdate);</span>
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">        if (userWithNewData.getName() != null){</span>
+<span class="fc" id="L61">            userToUpdate.setName(userWithNewData.getName());</span>
+<span class="fc" id="L62">            DatabaseConnectorUser.updateName(userToUpdate);</span>
         }
 
-<span class="nc bnc" id="L65" title="All 2 branches missed.">        if (userWithNewData.getUsername() != null){</span>
-<span class="nc" id="L66">            userToUpdate.setUsername(userWithNewData.getUsername());</span>
-<span class="nc" id="L67">            DatabaseConnectorUser.updateUsername(userToUpdate);</span>
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">        if (userWithNewData.getUsername() != null){</span>
+<span class="fc" id="L66">            userToUpdate.setUsername(userWithNewData.getUsername());</span>
+<span class="fc" id="L67">            DatabaseConnectorUser.updateUsername(userToUpdate);</span>
         }
 
-<span class="nc bnc" id="L70" title="All 2 branches missed.">        if (userWithNewData.getPassword() != null){</span>
-<span class="nc" id="L71">            userToUpdate.setPassword(userWithNewData.getPassword());</span>
-<span class="nc" id="L72">            DatabaseConnectorUser.updatePassword(userToUpdate);</span>
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">        if (userWithNewData.getPassword() != null){</span>
+<span class="fc" id="L71">            userToUpdate.setPassword(userWithNewData.getPassword());</span>
+<span class="fc" id="L72">            DatabaseConnectorUser.updatePassword(userToUpdate);</span>
         }
 
-<span class="nc" id="L75">    }</span>
+<span class="fc" id="L75">    }</span>
 
     // logs out all users
     public void logoutUser(int id){
-<span class="nc" id="L79">        DatabaseConnectorUser.setOnlineStatusById(id, false);</span>
-<span class="nc" id="L80">    }</span>
+<span class="fc" id="L79">        DatabaseConnectorUser.setOnlineStatusById(id, false);</span>
+<span class="fc" id="L80">    }</span>
 
     // checks if the user that is attempting a login has the correct credentials
     public User checkForLogin(User userToBeLoggedIn) {
@@ -88,7 +88,7 @@ import java.util.*;
 <span class="fc bfc" id="L88" title="All 2 branches covered.">        if (!validCredentials) { //case that the credentials are invalid</span>
 <span class="fc" id="L89">            boolean validUsername = DatabaseConnectorUser.checkIfUsernameExists(userToBeLoggedIn.getUsername());</span>
             //check if the username is valid, if yes, the password must be false
-<span class="pc bpc" id="L91" title="1 of 2 branches missed.">            String message = validUsername ? &quot;Wrong password, please try again.&quot; : &quot;This username does not exist, please register first.&quot;;</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">            String message = validUsername ? &quot;Wrong password, please try again.&quot; : &quot;This username does not exist, please register first.&quot;;</span>
 <span class="fc" id="L92">            throw new InvalidCredentialsException(message);</span>
         }
 
