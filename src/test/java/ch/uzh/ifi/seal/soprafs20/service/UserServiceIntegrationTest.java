@@ -24,6 +24,8 @@ import ch.uzh.ifi.seal.soprafs20.exceptions.UserNotFoundException;
 import com.mongodb.client.*;
 import org.bson.Document;
 
+
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,6 +64,7 @@ public class UserServiceIntegrationTest {
 
      */
 
+    // Checks if a new user is created
     @Test
     public void createUser_validInputs_success() {
         // given
@@ -87,6 +90,7 @@ public class UserServiceIntegrationTest {
     }
 
 
+    // Checks if the user can not be created if the username already exists
     @Test
     public void createUser_duplicateUsername_throwsException() {
         FindIterable<Document> request = usersCollection.find(eq("username", "testUsername"));
@@ -115,6 +119,7 @@ public class UserServiceIntegrationTest {
 
     }
 
+    // Checks if a user is logged in
     @Test
     public void checkForLogin_validInputs_success() {
         FindIterable<Document> request = usersCollection.find(eq("username", "testUsername"));
@@ -137,6 +142,7 @@ public class UserServiceIntegrationTest {
 
     }
 
+    // Checks if the user can not log in if the username does not exist
     @Test
     public void checkForLogin_duplicateUsername_throwsException() {
         FindIterable<Document> request = usersCollection.find(eq("username", "testUsername"));
