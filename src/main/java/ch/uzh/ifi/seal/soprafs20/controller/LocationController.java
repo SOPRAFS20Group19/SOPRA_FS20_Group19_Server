@@ -144,6 +144,14 @@ public class LocationController {
         return rating;
     }
 
+    @GetMapping("/locations/rating/{locationId}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public double getRating(@PathVariable Integer locationId) {
+        double rating = locationService.checkAverageRating(locationId);
+        return rating;
+    }
+
 
     @PutMapping("/locations/rating/{userId}/{locationId}/{ratedStars}")
     @ResponseStatus(HttpStatus.OK)

@@ -10,7 +10,7 @@ import org.bson.Document;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,20 +46,36 @@ public class DatabaseConnectorRating {
         int total = 0;
         int finalRating=0;
         int timesRated=0;
-        if (test == null){
-            return finalRating;
-        }
-        else{
-            for(Document singleRating: request){
+        if (test != null) {
+            for (Document singleRating : request) {
                 JSONObject ratingAsJSON = new JSONObject(singleRating.toJson());
                 int oneRating = ratingAsJSON.getInt("rating");
                 total = total + oneRating;
                 timesRated = timesRated + 1;
             }
-            finalRating = total/timesRated;
+            finalRating = total / timesRated;
+        }
+        return finalRating;
+    }
+
+    public static double getAverageRating(Integer locationId){
+        FindIterable<Document> request = ratingsCollection.find((eq("locationId", locationId)));
+        Document noDoc = request.first();
+        double total = 0;
+        double finalRating = 0;
+        int timesRated = 0;
+        if (noDoc == null){
             return finalRating;
         }
 
+        for (Document doc : request){
+            JSONObject ratingAsJSON = new JSONObject(doc.toJson());
+            int oneRating = ratingAsJSON.getInt("rating");
+            total += oneRating;
+            timesRated++;
+        }
+        finalRating = (double) Math.round(100*(total/timesRated))/100;
+        return finalRating;
     }
 
     //updates the rating
