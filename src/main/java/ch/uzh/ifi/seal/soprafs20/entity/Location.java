@@ -25,6 +25,87 @@ public class Location {
     private String glas;
     private String oel;
     private String ausstattung;
+    private String holz;
+    private String rost;
+    private String tisch;
+    private String trinkwasser;
+    private String abfall;
+    private String parkplatz;
+    private String baden;
+    private String hunde;
+    private String kinderwagen;
+
+    public String getAbfall() {
+        return abfall;
+    }
+
+    public String getBaden() {
+        return baden;
+    }
+
+    public String getHunde() {
+        return hunde;
+    }
+
+    public String getKinderwagen() {
+        return kinderwagen;
+    }
+
+    public String getParkplatz() {
+        return parkplatz;
+    }
+
+    public String getTisch() {
+        return tisch;
+    }
+
+    public String getTrinkwasser() {
+        return trinkwasser;
+    }
+
+    public void setAbfall(String abfall) {
+        this.abfall = abfall;
+    }
+
+    public void setBaden(String baden) {
+        this.baden = baden;
+    }
+
+    public void setHunde(String hunde) {
+        this.hunde = hunde;
+    }
+
+    public void setKinderwagen(String kinderwagen) {
+        this.kinderwagen = kinderwagen;
+    }
+
+    public void setParkplatz(String parkplatz) {
+        this.parkplatz = parkplatz;
+    }
+
+    public void setTisch(String tisch) {
+        this.tisch = tisch;
+    }
+
+    public void setTrinkwasser(String trinkwasser) {
+        this.trinkwasser = trinkwasser;
+    }
+
+    public String getHolz() {
+        return holz;
+    }
+
+    public String getRost() {
+        return rost;
+    }
+
+    public void setHolz(String holz) {
+        this.holz = holz;
+    }
+
+    public void setRost(String rost) {
+        this.rost = rost;
+    }
 
     public String getAusstattung() {
         return ausstattung;
