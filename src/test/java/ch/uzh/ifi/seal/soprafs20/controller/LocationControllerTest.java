@@ -51,9 +51,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 /**
  * UserControllerTest
- * This is a WebMvcTest which allows to test the UserController i.e. GET/POST request without actually sending them over the network.
- * This tests if the UserController works.
+ * This is a WebMvcTest which allows to test the LocationController i.e. GET/POST request without actually sending them over the network.
+ * This tests if the LocationController works.
  */
+
+/*
 @WebMvcTest(LocationController.class)
 public class LocationControllerTest {
 
@@ -414,6 +416,7 @@ public class LocationControllerTest {
      * @param object
      * @return string
      */
+/*
     private String asJsonString(final Object object) {
         try {
             return new ObjectMapper().writeValueAsString(object);
@@ -423,3 +426,4 @@ public class LocationControllerTest {
         }
     }
 }
+*/

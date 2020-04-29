@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="de"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LocationController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">soprafs20</a> &gt; <a href="index.source.html" class="el_package">ch.uzh.ifi.seal.soprafs20.controller</a> &gt; <span class="el_source">LocationController.java</span></div><h1>LocationController.java</h1><pre class="source lang-java linenums">package ch.uzh.ifi.seal.soprafs20.controller;
 
-import ch.uzh.ifi.seal.soprafs20.entity.Chat;
-import ch.uzh.ifi.seal.soprafs20.entity.Location;
-import ch.uzh.ifi.seal.soprafs20.entity.Message;
+import ch.uzh.ifi.seal.soprafs20.entity.*;
+import ch.uzh.ifi.seal.soprafs20.rest.dto.*;
+import ch.uzh.ifi.seal.soprafs20.rest.mapper.DTOMapper;
 import ch.uzh.ifi.seal.soprafs20.service.LocationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,64 +20,136 @@ public class LocationController {
 
     private final LocationService locationService;
 
-<span class="fc" id="L22">    LocationController(LocationService locationService) {</span>
-<span class="fc" id="L23">        this.locationService = locationService;</span>
-<span class="fc" id="L24">    }</span>
+<span class="fc" id="L23">    LocationController(LocationService locationService) {</span>
+<span class="fc" id="L24">        this.locationService = locationService;</span>
+<span class="fc" id="L25">    }</span>
 
     @GetMapping(&quot;/locations&quot;)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public List&lt;Location&gt; getAllLocations() {
-<span class="fc" id="L30">        return locationService.getLocations();</span>
+    public List&lt;LocationGetDTO&gt; getAllLocations() {
+<span class="nc" id="L31">        List&lt;Location&gt; locations =  locationService.getLocations();</span>
+<span class="nc" id="L32">        List&lt;LocationGetDTO&gt; locationGetDTOs = new ArrayList&lt;&gt;();</span>
+
+        // convert each user to the API representation
+<span class="nc bnc" id="L35" title="All 2 branches missed.">        for (Location location : locations) {</span>
+<span class="nc" id="L36">            locationGetDTOs.add(DTOMapper.INSTANCE.convertEntityToLocationGetDTO(location));</span>
+<span class="nc" id="L37">        }</span>
+<span class="nc" id="L38">        return locationGetDTOs;</span>
+
+    }
+
+    @PostMapping(&quot;/locations/filter&quot;)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public List&lt;LocationGetDTO&gt; getFilteredLocation(@RequestBody FilterPostDTO filterPostDTO) {
+<span class="nc" id="L46">        List&lt;Location&gt; locations =  locationService.getFilteredLocations(filterPostDTO);</span>
+<span class="nc" id="L47">        List&lt;LocationGetDTO&gt; locationGetDTOs = new ArrayList&lt;&gt;();</span>
+
+        // convert each user to the API representation
+<span class="nc bnc" id="L50" title="All 2 branches missed.">        for (Location location : locations) {</span>
+<span class="nc" id="L51">            locationGetDTOs.add(DTOMapper.INSTANCE.convertEntityToLocationGetDTO(location));</span>
+<span class="nc" id="L52">        }</span>
+<span class="nc" id="L53">        return locationGetDTOs;</span>
     }
 
     @PostMapping(&quot;/locations&quot;)
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public Location createLocation(@RequestBody Location location) {
-<span class="fc" id="L37">        return locationService.createLocation(location);</span>
+    public LocationGetDTO createLocation(@RequestBody LocationPostDTO locationPostDTO) {
+        // convert API user to internal representation
+<span class="nc" id="L61">        Location locationInput = DTOMapper.INSTANCE.convertLocationPostDTOtoEntity(locationPostDTO);</span>
+
+        // create user
+<span class="nc" id="L64">        Location locationCreated = locationService.createLocation(locationInput);</span>
+
+        // convert internal representation of user back to API
+<span class="nc" id="L67">        return DTOMapper.INSTANCE.convertEntityToLocationGetDTO(locationCreated);</span>
     }
 
     @GetMapping(&quot;/locations/{locationId}&quot;)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public Location getLocation(@PathVariable Long locationId) {
-<span class="fc" id="L44">        return locationService.getLocation(locationId);</span>
+    public LocationGetDTO getLocation(@PathVariable int locationId) {
+
+        // get the location corresponding to the given ID
+<span class="nc" id="L76">        Location location = locationService.getLocation(locationId);</span>
+
+        // convert the location to the API representation
+<span class="nc" id="L79">        return DTOMapper.INSTANCE.convertEntityToLocationGetDTO(location);</span>
     }
 
     @PutMapping(&quot;/locations/{locationId}&quot;)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @ResponseBody
     public void updateLocation(@PathVariable Long locationId, @RequestBody Location location) {
-<span class="fc" id="L51">        locationService.updateLocation(location);</span>
-<span class="fc" id="L52">    }</span>
+<span class="nc" id="L86">        locationService.updateLocation(location);</span>
+<span class="nc" id="L87">    }</span>
 
     @GetMapping(&quot;/locations/chats/{locationId}&quot;)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public Chat getChat(@PathVariable Long locationId) {
-<span class="fc" id="L58">        return locationService.getChat(locationId);</span>
+    public ArrayList&lt;MessageGetDTO&gt; getChat(@PathVariable Integer locationId) {
+<span class="nc" id="L93">        ArrayList&lt;Message&gt; messages = locationService.getChat(locationId);</span>
+<span class="nc" id="L94">        ArrayList&lt;MessageGetDTO&gt; messagesGetDTO = new ArrayList&lt;&gt;();</span>
+
+<span class="nc bnc" id="L96" title="All 2 branches missed.">        for (Message message : messages){</span>
+<span class="nc" id="L97">            messagesGetDTO.add(DTOMapper.INSTANCE.convertEntityToMessageGetDTO(message));</span>
+<span class="nc" id="L98">        }</span>
+
+<span class="nc" id="L100">        return messagesGetDTO;</span>
     }
 
     @PutMapping(&quot;/locations/chats/{locationId}&quot;)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @ResponseBody
-    public void postMessage(@PathVariable Long locationId, @RequestBody Message message) {
-<span class="fc" id="L65">        locationService.postMessage(locationId, message);</span>
-<span class="fc" id="L66">    }</span>
+    public void postMessage(@PathVariable Integer locationId, @RequestBody MessagePostDTO messagePostDTO) {
+<span class="nc" id="L107">        locationService.postMessage(locationId, DTOMapper.INSTANCE.convertMessagePostDTOToEntity(messagePostDTO));</span>
+<span class="nc" id="L108">    }</span>
 
     @GetMapping(&quot;/locations/favorites/{userId}&quot;)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public List&lt;Location&gt; getFavoriteLocations(@PathVariable Long userId) {
-<span class="fc" id="L72">        return locationService.getFavoriteLocations(userId);</span>
+    public List&lt;Location&gt; getFavoriteLocations(@PathVariable int userId) {
+<span class="nc" id="L114">        return locationService.getFavoriteLocations(userId);</span>
     }
 
-    @PutMapping(&quot;/locations/favorites/{userId}&quot;)
+    @PutMapping(&quot;/locations/favorites/{userId}/{locationId}&quot;)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @ResponseBody
-    public void updateFavoriteLocations(@PathVariable Long userId, @RequestBody Long locationId) {
-<span class="fc" id="L79">        locationService.updateFavoriteLocations(userId, locationId);</span>
-<span class="fc" id="L80">    }</span>
+    public void updateFavoriteLocations(@PathVariable int userId, @PathVariable Integer locationId) {
+<span class="nc" id="L121">        locationService.updateFavoriteLocations(userId, locationId);</span>
+<span class="nc" id="L122">    }</span>
+
+    @DeleteMapping(&quot;/locations/favorites/{userId}/{locationId}&quot;)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseBody
+    public void deleteFavoriteLocation(@PathVariable int userId, @PathVariable Integer locationId) {
+<span class="nc" id="L128">        locationService.deleteFavoriteLocation(userId, locationId);</span>
+<span class="nc" id="L129">    }</span>
+
+    @GetMapping(&quot;/locations/favorites/{userId}/{locationId}&quot;)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public LocationGetDTO checkIncludedInFavoriteLocations(@PathVariable int userId, @PathVariable Integer locationId) {
+<span class="nc" id="L135">        Location location = locationService.checkFavoriteLocations(userId, locationId);</span>
+<span class="nc" id="L136">        return DTOMapper.INSTANCE.convertEntityToLocationGetDTO(location);</span>
+    }
+
+    @GetMapping(&quot;/locations/rating/{userId}/{locationId}&quot;)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public int checkIncludedInRatings(@PathVariable int userId, @PathVariable Integer locationId) {
+<span class="nc" id="L143">        int rating = locationService.checkRating(userId, locationId);</span>
+<span class="nc" id="L144">        return rating;</span>
+    }
+
+
+    @PutMapping(&quot;/locations/rating/{userId}/{locationId}/{ratedStars}&quot;)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public void updateRating(@PathVariable int userId, @PathVariable Integer locationId, @PathVariable int ratedStars) {
+<span class="nc" id="L152">        LocationService.updateRating(userId, locationId, ratedStars);</span>
+<span class="nc" id="L153">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

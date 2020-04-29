@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="de"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DatabaseConnectorRating.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">soprafs20</a> &gt; <a href="index.source.html" class="el_package">ch.uzh.ifi.seal.soprafs20.database</a> &gt; <span class="el_source">DatabaseConnectorRating.java</span></div><h1>DatabaseConnectorRating.java</h1><pre class="source lang-java linenums">package ch.uzh.ifi.seal.soprafs20.database;
+
+
+import ch.uzh.ifi.seal.soprafs20.constant.LocationType;
+import ch.uzh.ifi.seal.soprafs20.entity.Location;
+import ch.uzh.ifi.seal.soprafs20.entity.User;
+import ch.uzh.ifi.seal.soprafs20.exceptions.UserNotFoundException;
+import com.mongodb.client.*;
+import org.bson.Document;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.mongodb.client.model.Filters.and;
+import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Updates.set;
+
+
+public class DatabaseConnectorRating {
+<span class="nc" id="L23">    public DatabaseConnectorRating(){}</span>
+
+    //connection to mongodb on the cloud with credentials of luca locher
+<span class="nc" id="L26">    static MongoClient mongoClient = MongoClients.create(</span>
+            &quot;mongodb+srv://lknufi:abc@knowyourcity-ijzn3.gcp.mongodb.net/test?retryWrites=true&amp;w=majority&quot;);
+    //Establish connection to the Location Database (development purposes only)
+<span class="nc" id="L29">    static MongoDatabase ratingLocation = mongoClient.getDatabase(&quot;RatingLocation&quot;);</span>
+    //Establish connection to the Fountains Collection (development purposes only)
+<span class="nc" id="L31">    static MongoCollection&lt;Document&gt; ratingsCollection = ratingLocation.getCollection(&quot;Ratings&quot;);</span>
+
+    /*
+    //creates Entry in the database
+    public static void createEntry(int userId, int locationId) {
+        ArrayList&lt;Integer&gt; emptyFavorites = new ArrayList&lt;Integer&gt;();
+        Document doc = new Document(&quot;userId&quot;, userId)
+                .append(&quot;favoriteLocations&quot;, emptyFavorites);
+        ratingsCollection.insertOne(doc);
+    }*/
+
+
+    public static int getRating(int userId, int locationId){
+<span class="nc" id="L44">        FindIterable&lt;Document&gt; request =  ratingsCollection.find(and((eq(&quot;userId&quot;, userId)), (eq(&quot;locationId&quot;, locationId))));</span>
+<span class="nc" id="L45">        Document test = request.first();</span>
+<span class="nc" id="L46">        int total = 0;</span>
+<span class="nc" id="L47">        int finalRating=0;</span>
+<span class="nc" id="L48">        int timesRated=0;</span>
+<span class="nc bnc" id="L49" title="All 2 branches missed.">        if (test == null){</span>
+<span class="nc" id="L50">            return finalRating;</span>
+        }
+        else{
+<span class="nc bnc" id="L53" title="All 2 branches missed.">            for(Document singleRating: request){</span>
+<span class="nc" id="L54">                JSONObject ratingAsJSON = new JSONObject(singleRating.toJson());</span>
+<span class="nc" id="L55">                int oneRating = ratingAsJSON.getInt(&quot;rating&quot;);</span>
+<span class="nc" id="L56">                total = total + oneRating;</span>
+<span class="nc" id="L57">                timesRated = timesRated + 1;</span>
+<span class="nc" id="L58">            }</span>
+<span class="nc" id="L59">            finalRating = total/timesRated;</span>
+<span class="nc" id="L60">            return finalRating;</span>
+        }
+
+    }
+
+    //updates the rating
+    public static void updateRating(int userId, int locationId, int rating){
+<span class="nc" id="L67">        FindIterable&lt;Document&gt; request =  ratingsCollection.find(and((eq(&quot;userId&quot;, userId)), (eq(&quot;locationId&quot;, locationId))));</span>
+<span class="nc" id="L68">        Document test = request.first();</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">        if (test == null){</span>
+<span class="nc" id="L70">            Document doc = new Document(&quot;userId&quot;, userId)</span>
+<span class="nc" id="L71">                    .append(&quot;locationId&quot;, locationId)</span>
+<span class="nc" id="L72">                    .append(&quot;rating&quot;, rating);</span>
+<span class="nc" id="L73">            ratingsCollection.insertOne(doc);</span>
+<span class="nc" id="L74">        }</span>
+<span class="nc" id="L75">        else{ratingsCollection.updateOne(and(eq(&quot;userId&quot;, userId), (eq(&quot;locationId&quot;, locationId))),</span>
+<span class="nc" id="L76">                set(&quot;rating&quot;, rating));}</span>
+<span class="nc" id="L77">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
