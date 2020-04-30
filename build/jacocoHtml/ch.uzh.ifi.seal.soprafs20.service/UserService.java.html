@@ -37,9 +37,9 @@ import java.util.*;
  */
 @Service
 @Transactional
-<span class="nc" id="L40">public class UserService {</span>
+<span class="fc" id="L40">public class UserService {</span>
 
-<span class="nc" id="L42">    private final Logger log = LoggerFactory.getLogger(UserService.class);</span>
+<span class="fc" id="L42">    private final Logger log = LoggerFactory.getLogger(UserService.class);</span>
 
 
     // returns a user in the repository identified by his ID
@@ -49,7 +49,7 @@ import java.util.*;
 <span class="nc" id="L49">        return  userToReturn;</span>
     }
 
-    // updates a user with the updated name, username and birthdate
+    // updates a user with the updated name, username and password
     public void updateUser(int userId, UserPutDTO userWithNewData) {
 <span class="nc" id="L54">        User userToUpdate = DatabaseConnectorUser.getUserById(userId);</span>
 
@@ -72,59 +72,64 @@ import java.util.*;
 <span class="nc" id="L72">            DatabaseConnectorUser.updatePassword(userToUpdate);</span>
         }
 
-<span class="nc" id="L75">    }</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">        if (userWithNewData.getAvatarNr() != 0){</span>
+<span class="nc" id="L76">            userToUpdate.setAvatarNr(userWithNewData.getAvatarNr());</span>
+<span class="nc" id="L77">            DatabaseConnectorUser.updateAvatarNr(userToUpdate);</span>
+        }
+
+<span class="nc" id="L80">    }</span>
 
     // logs out the user
     public void logoutUser(int id){
-<span class="nc" id="L79">        DatabaseConnectorUser.setOnlineStatusById(id, false);</span>
-<span class="nc" id="L80">    }</span>
+<span class="nc" id="L84">        DatabaseConnectorUser.setOnlineStatusById(id, false);</span>
+<span class="nc" id="L85">    }</span>
 
     // checks if the user that is attempting a login has the correct credentials
     public User checkForLogin(User userToBeLoggedIn) {
 
-<span class="nc" id="L85">        boolean validCredentials = DatabaseConnectorUser.checkIfUserAndPasswordExist(userToBeLoggedIn.getUsername(), userToBeLoggedIn.getPassword());</span>
+<span class="nc" id="L90">        boolean validCredentials = DatabaseConnectorUser.checkIfUserAndPasswordExist(userToBeLoggedIn.getUsername(), userToBeLoggedIn.getPassword());</span>
 
         //Check if user is allowed to log in
-<span class="nc bnc" id="L88" title="All 2 branches missed.">        if (!validCredentials) { //case that the credentials are invalid</span>
-<span class="nc" id="L89">            boolean validUsername = DatabaseConnectorUser.checkIfUsernameExists(userToBeLoggedIn.getUsername());</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">        if (!validCredentials) { //case that the credentials are invalid</span>
+<span class="nc" id="L94">            boolean validUsername = DatabaseConnectorUser.checkIfUsernameExists(userToBeLoggedIn.getUsername());</span>
             //check if the username is valid, if yes, the password must be false
-<span class="nc bnc" id="L91" title="All 2 branches missed.">            String message = validUsername ? &quot;Wrong password, please try again.&quot; : &quot;This username does not exist, please register first.&quot;;</span>
-<span class="nc" id="L92">            throw new InvalidCredentialsException(message);</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">            String message = validUsername ? &quot;Wrong password, please try again.&quot; : &quot;This username does not exist, please register first.&quot;;</span>
+<span class="nc" id="L97">            throw new InvalidCredentialsException(message);</span>
         }
 
         //If credentials are valid set the user status to online, since the user will be logged in
-<span class="nc" id="L96">        DatabaseConnectorUser.setOnlineStatus(userToBeLoggedIn, true);</span>
+<span class="nc" id="L101">        DatabaseConnectorUser.setOnlineStatus(userToBeLoggedIn, true);</span>
         //return new user representation
-<span class="nc" id="L98">        User user = DatabaseConnectorUser.getUserByUsername(userToBeLoggedIn.getUsername());</span>
+<span class="nc" id="L103">        User user = DatabaseConnectorUser.getUserByUsername(userToBeLoggedIn.getUsername());</span>
 
-<span class="nc" id="L100">        return user;</span>
+<span class="nc" id="L105">        return user;</span>
     }
 
     // creates a new user in the user repository
     public User createUser(User newUser) {
-<span class="nc" id="L105">        newUser.setCreationDate(UserService.getCurrentDate());</span>
-<span class="nc" id="L106">        newUser.setFavoriteLocations(new ArrayList&lt;Integer&gt;());</span>
+<span class="nc" id="L110">        newUser.setCreationDate(UserService.getCurrentDate());</span>
+<span class="nc" id="L111">        newUser.setFavoriteLocations(new ArrayList&lt;Integer&gt;());</span>
         //Checks whether username is already taken
-<span class="nc bnc" id="L108" title="All 2 branches missed.">        if (DatabaseConnectorUser.checkIfUsernameExists(newUser.getUsername())){</span>
-<span class="nc" id="L109">            throw new DuplicatedUserException(&quot;The provided username is already taken. Please try a new one.&quot;);</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">        if (DatabaseConnectorUser.checkIfUsernameExists(newUser.getUsername())){</span>
+<span class="nc" id="L114">            throw new DuplicatedUserException(&quot;The provided username is already taken. Please try a new one.&quot;);</span>
         }
         //If the username is not already taken create a new User in the database
-<span class="nc" id="L112">        User userToReturn = DatabaseConnectorUser.createUser(newUser);</span>
+<span class="nc" id="L117">        User userToReturn = DatabaseConnectorUser.createUser(newUser);</span>
 
-<span class="nc" id="L114">        log.debug(&quot;Created Information for User: {}&quot;, newUser);</span>
+<span class="nc" id="L119">        log.debug(&quot;Created Information for User: {}&quot;, newUser);</span>
 
-<span class="nc" id="L116">        return userToReturn;</span>
+<span class="nc" id="L121">        return userToReturn;</span>
     }
 
     // creates a timestamp of the current date for the creation date during the registration
     public static String getCurrentDate(){
 
-<span class="nc" id="L122">        Date datenow = Calendar.getInstance().getTime();</span>
-<span class="nc" id="L123">        DateFormat dateFormat = new SimpleDateFormat(&quot;dd.MM.yyyy&quot;);</span>
-<span class="nc" id="L124">        Timestamp timestamp = new Timestamp(System.currentTimeMillis());</span>
-<span class="nc" id="L125">        LocalDate date = LocalDate.now();</span>
+<span class="nc" id="L127">        Date datenow = Calendar.getInstance().getTime();</span>
+<span class="nc" id="L128">        DateFormat dateFormat = new SimpleDateFormat(&quot;dd.MM.yyyy&quot;);</span>
+<span class="nc" id="L129">        Timestamp timestamp = new Timestamp(System.currentTimeMillis());</span>
+<span class="nc" id="L130">        LocalDate date = LocalDate.now();</span>
         //return date.toString();
-<span class="nc" id="L127">        return dateFormat.format(datenow);</span>
+<span class="nc" id="L132">        return dateFormat.format(datenow);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

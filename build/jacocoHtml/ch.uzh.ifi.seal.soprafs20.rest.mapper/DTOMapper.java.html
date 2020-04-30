@@ -18,15 +18,17 @@ import org.mapstruct.factory.Mappers;
 @Mapper
 public interface DTOMapper {
 
-<span class="fc" id="L21">    DTOMapper INSTANCE = Mappers.getMapper(DTOMapper.class);</span>
+<span class="nc" id="L21">    DTOMapper INSTANCE = Mappers.getMapper(DTOMapper.class);</span>
 
     @Mapping(source = &quot;name&quot;, target = &quot;name&quot;)
     @Mapping(source = &quot;username&quot;, target = &quot;username&quot;)
     @Mapping(source = &quot;password&quot;, target = &quot;password&quot;)
+    @Mapping(source = &quot;avatarNr&quot;, target = &quot;avatarNr&quot;)
     User convertUserPostDTOtoEntity(UserPostDTO userPostDTO);
 
     @Mapping(source = &quot;username&quot;, target = &quot;username&quot;)
     @Mapping(source = &quot;password&quot;, target = &quot;password&quot;)
+    @Mapping(source = &quot;avatarNr&quot;, target = &quot;avatarNr&quot;)
     User convertUserPutDTOtoEntity(UserPutDTO userPutDTO);
 
     @Mapping(source = &quot;id&quot;, target = &quot;id&quot;)
@@ -35,6 +37,7 @@ public interface DTOMapper {
     @Mapping(source = &quot;status&quot;, target = &quot;status&quot;)
     @Mapping(source = &quot;password&quot;, target = &quot;password&quot;)
     @Mapping(source = &quot;creationDate&quot;, target = &quot;creationDate&quot;)
+    @Mapping(source = &quot;avatarNr&quot;, target = &quot;avatarNr&quot;)
     UserGetDTO convertEntityToUserGetDTO(User user);
 
     @Mapping(source = &quot;id&quot;, target = &quot;id&quot;)
@@ -59,6 +62,15 @@ public interface DTOMapper {
     @Mapping(source = &quot;glas&quot;, target = &quot;glas&quot;)
     @Mapping(source = &quot;oel&quot;, target = &quot;oel&quot;)
     @Mapping(source = &quot;ausstattung&quot;, target = &quot;ausstattung&quot;)
+    @Mapping(source = &quot;holz&quot;, target = &quot;holz&quot;)
+    @Mapping(source = &quot;rost&quot;, target = &quot;rost&quot;)
+    @Mapping(source = &quot;tisch&quot;, target = &quot;tisch&quot;)
+    @Mapping(source = &quot;trinkwasser&quot;, target = &quot;trinkwasser&quot;)
+    @Mapping(source = &quot;abfall&quot;, target = &quot;abfall&quot;)
+    @Mapping(source = &quot;parkplatz&quot;, target = &quot;parkplatz&quot;)
+    @Mapping(source = &quot;baden&quot;, target = &quot;baden&quot;)
+    @Mapping(source = &quot;hunde&quot;, target = &quot;hunde&quot;)
+    @Mapping(source = &quot;kinderwagen&quot;, target = &quot;kinderwagen&quot;)
     Location convertLocationPostDTOtoEntity(LocationPostDTO locationPostDTO);
 
     @Mapping(source = &quot;senderId&quot;, target = &quot;senderId&quot;)

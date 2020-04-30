@@ -49,7 +49,7 @@ public class UserService {
         return  userToReturn;
     }
 
-    // updates a user with the updated name, username and birthdate
+    // updates a user with the updated name, username and password
     public void updateUser(int userId, UserPutDTO userWithNewData) {
         User userToUpdate = DatabaseConnectorUser.getUserById(userId);
 

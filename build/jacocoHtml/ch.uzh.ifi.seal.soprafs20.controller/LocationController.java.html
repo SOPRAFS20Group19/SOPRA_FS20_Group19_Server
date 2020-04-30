@@ -20,22 +20,22 @@ public class LocationController {
 
     private final LocationService locationService;
 
-<span class="nc" id="L23">    LocationController(LocationService locationService) {</span>
-<span class="nc" id="L24">        this.locationService = locationService;</span>
-<span class="nc" id="L25">    }</span>
+<span class="fc" id="L23">    LocationController(LocationService locationService) {</span>
+<span class="fc" id="L24">        this.locationService = locationService;</span>
+<span class="fc" id="L25">    }</span>
 
     @GetMapping(&quot;/locations&quot;)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public List&lt;LocationGetDTO&gt; getAllLocations() {
-<span class="fc" id="L31">        List&lt;Location&gt; locations =  locationService.getLocations();</span>
-<span class="fc" id="L32">        List&lt;LocationGetDTO&gt; locationGetDTOs = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L31">        List&lt;Location&gt; locations =  locationService.getLocations();</span>
+<span class="nc" id="L32">        List&lt;LocationGetDTO&gt; locationGetDTOs = new ArrayList&lt;&gt;();</span>
 
         // convert each user to the API representation
-<span class="fc bfc" id="L35" title="All 2 branches covered.">        for (Location location : locations) {</span>
-<span class="fc" id="L36">            locationGetDTOs.add(DTOMapper.INSTANCE.convertEntityToLocationGetDTO(location));</span>
-<span class="fc" id="L37">        }</span>
-<span class="fc" id="L38">        return locationGetDTOs;</span>
+<span class="nc bnc" id="L35" title="All 2 branches missed.">        for (Location location : locations) {</span>
+<span class="nc" id="L36">            locationGetDTOs.add(DTOMapper.INSTANCE.convertEntityToLocationGetDTO(location));</span>
+<span class="nc" id="L37">        }</span>
+<span class="nc" id="L38">        return locationGetDTOs;</span>
 
     }
 
@@ -58,13 +58,13 @@ public class LocationController {
     @ResponseBody
     public LocationGetDTO createLocation(@RequestBody LocationPostDTO locationPostDTO) {
         // convert API user to internal representation
-<span class="fc" id="L61">        Location locationInput = DTOMapper.INSTANCE.convertLocationPostDTOtoEntity(locationPostDTO);</span>
+<span class="nc" id="L61">        Location locationInput = DTOMapper.INSTANCE.convertLocationPostDTOtoEntity(locationPostDTO);</span>
 
         // create user
-<span class="fc" id="L64">        Location locationCreated = locationService.createLocation(locationInput);</span>
+<span class="nc" id="L64">        Location locationCreated = locationService.createLocation(locationInput);</span>
 
         // convert internal representation of user back to API
-<span class="fc" id="L67">        return DTOMapper.INSTANCE.convertEntityToLocationGetDTO(locationCreated);</span>
+<span class="nc" id="L67">        return DTOMapper.INSTANCE.convertEntityToLocationGetDTO(locationCreated);</span>
     }
 
     @GetMapping(&quot;/locations/{locationId}&quot;)
@@ -73,53 +73,53 @@ public class LocationController {
     public LocationGetDTO getLocation(@PathVariable int locationId) {
 
         // get the location corresponding to the given ID
-<span class="fc" id="L76">        Location location = locationService.getLocation(locationId);</span>
+<span class="nc" id="L76">        Location location = locationService.getLocation(locationId);</span>
 
         // convert the location to the API representation
-<span class="fc" id="L79">        return DTOMapper.INSTANCE.convertEntityToLocationGetDTO(location);</span>
+<span class="nc" id="L79">        return DTOMapper.INSTANCE.convertEntityToLocationGetDTO(location);</span>
     }
 
     @GetMapping(&quot;/locations/chats/{locationId}&quot;)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public ArrayList&lt;MessageGetDTO&gt; getChat(@PathVariable Integer locationId) {
-<span class="fc" id="L86">        ArrayList&lt;Message&gt; messages = locationService.getChat(locationId);</span>
-<span class="fc" id="L87">        ArrayList&lt;MessageGetDTO&gt; messagesGetDTO = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L86">        ArrayList&lt;Message&gt; messages = locationService.getChat(locationId);</span>
+<span class="nc" id="L87">        ArrayList&lt;MessageGetDTO&gt; messagesGetDTO = new ArrayList&lt;&gt;();</span>
 
-<span class="fc bfc" id="L89" title="All 2 branches covered.">        for (Message message : messages){</span>
-<span class="fc" id="L90">            messagesGetDTO.add(DTOMapper.INSTANCE.convertEntityToMessageGetDTO(message));</span>
-<span class="fc" id="L91">        }</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">        for (Message message : messages){</span>
+<span class="nc" id="L90">            messagesGetDTO.add(DTOMapper.INSTANCE.convertEntityToMessageGetDTO(message));</span>
+<span class="nc" id="L91">        }</span>
 
-<span class="fc" id="L93">        return messagesGetDTO;</span>
+<span class="nc" id="L93">        return messagesGetDTO;</span>
     }
 
     @PutMapping(&quot;/locations/chats/{locationId}&quot;)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @ResponseBody
     public void postMessage(@PathVariable Integer locationId, @RequestBody MessagePostDTO messagePostDTO) {
-<span class="fc" id="L100">        locationService.postMessage(locationId, DTOMapper.INSTANCE.convertMessagePostDTOToEntity(messagePostDTO));</span>
-<span class="fc" id="L101">    }</span>
+<span class="nc" id="L100">        locationService.postMessage(locationId, DTOMapper.INSTANCE.convertMessagePostDTOToEntity(messagePostDTO));</span>
+<span class="nc" id="L101">    }</span>
 
     @GetMapping(&quot;/locations/favorites/{userId}&quot;)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public List&lt;Location&gt; getFavoriteLocations(@PathVariable int userId) {
-<span class="fc" id="L107">        return locationService.getFavoriteLocations(userId);</span>
+<span class="nc" id="L107">        return locationService.getFavoriteLocations(userId);</span>
     }
 
     @PutMapping(&quot;/locations/favorites/{userId}/{locationId}&quot;)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @ResponseBody
     public void updateFavoriteLocations(@PathVariable int userId, @PathVariable Integer locationId) {
-<span class="fc" id="L114">        locationService.updateFavoriteLocations(userId, locationId);</span>
-<span class="fc" id="L115">    }</span>
+<span class="nc" id="L114">        locationService.updateFavoriteLocations(userId, locationId);</span>
+<span class="nc" id="L115">    }</span>
 
     @DeleteMapping(&quot;/locations/favorites/{userId}/{locationId}&quot;)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @ResponseBody
     public void deleteFavoriteLocation(@PathVariable int userId, @PathVariable Integer locationId) {
-<span class="fc" id="L121">        locationService.deleteFavoriteLocation(userId, locationId);</span>
-<span class="fc" id="L122">    }</span>
+<span class="nc" id="L121">        locationService.deleteFavoriteLocation(userId, locationId);</span>
+<span class="nc" id="L122">    }</span>
 
     @GetMapping(&quot;/locations/favorites/{userId}/{locationId}&quot;)
     @ResponseStatus(HttpStatus.OK)

@@ -17,9 +17,9 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import javax.servlet.http.HttpServletRequest;
 
 @ControllerAdvice
-<span class="nc" id="L20">public class GlobalExceptionAdvice extends ResponseEntityExceptionHandler {</span>
+<span class="fc" id="L20">public class GlobalExceptionAdvice extends ResponseEntityExceptionHandler {</span>
 
-<span class="nc" id="L22">    private final Logger log = LoggerFactory.getLogger(GlobalExceptionAdvice.class);</span>
+<span class="fc" id="L22">    private final Logger log = LoggerFactory.getLogger(GlobalExceptionAdvice.class);</span>
 
     @ExceptionHandler(value = {IllegalArgumentException.class, IllegalStateException.class})
     protected ResponseEntity&lt;Object&gt; handleConflict(RuntimeException ex, WebRequest request) {
@@ -37,36 +37,36 @@ import javax.servlet.http.HttpServletRequest;
     @ExceptionHandler(UserNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public UserNotFoundException handleUserNotFoundException(UserNotFoundException ex){
-<span class="fc" id="L40">        log.error(String.format(&quot;UserNotFoundException raised:%s&quot;, ex));</span>
-<span class="fc" id="L41">        return ex;</span>
+<span class="nc" id="L40">        log.error(String.format(&quot;UserNotFoundException raised:%s&quot;, ex));</span>
+<span class="nc" id="L41">        return ex;</span>
     }
 
     @ExceptionHandler(DuplicatedUserException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public DuplicatedUserException handleDuplicatedUserException(DuplicatedUserException ex){
-<span class="fc" id="L47">        log.error(String.format(&quot;DuplicatedUserException raised:%s&quot;, ex));</span>
-<span class="fc" id="L48">        return ex;</span>
+<span class="nc" id="L47">        log.error(String.format(&quot;DuplicatedUserException raised:%s&quot;, ex));</span>
+<span class="nc" id="L48">        return ex;</span>
     }
 
     @ExceptionHandler(InvalidCredentialsException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public InvalidCredentialsException handleInvalidCredentialsException(InvalidCredentialsException ex){
-<span class="fc" id="L54">        log.error(String.format(&quot;InvalidCredentialsException raised:%s&quot;, ex));</span>
-<span class="fc" id="L55">        return ex;</span>
+<span class="nc" id="L54">        log.error(String.format(&quot;InvalidCredentialsException raised:%s&quot;, ex));</span>
+<span class="nc" id="L55">        return ex;</span>
     }
 
     @ExceptionHandler(LocationNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public LocationNotFoundException handleLocationNotFoundException(LocationNotFoundException ex){
-<span class="fc" id="L61">        log.error(String.format(&quot;LocationNotFoundException raised:%s&quot;, ex));</span>
-<span class="fc" id="L62">        return ex;</span>
+<span class="nc" id="L61">        log.error(String.format(&quot;LocationNotFoundException raised:%s&quot;, ex));</span>
+<span class="nc" id="L62">        return ex;</span>
     }
 
     @ExceptionHandler(DuplicatedLocationException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public DuplicatedLocationException handleDuplicatedLocationException(DuplicatedLocationException ex){
-<span class="fc" id="L68">        log.error(String.format(&quot;DuplicatedLocationException raised:%s&quot;, ex));</span>
-<span class="fc" id="L69">        return ex;</span>
+<span class="nc" id="L68">        log.error(String.format(&quot;DuplicatedLocationException raised:%s&quot;, ex));</span>
+<span class="nc" id="L69">        return ex;</span>
     }
 
     @ExceptionHandler(TransactionSystemException.class)

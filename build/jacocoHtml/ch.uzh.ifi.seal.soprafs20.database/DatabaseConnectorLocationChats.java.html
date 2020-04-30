@@ -26,12 +26,12 @@ public class DatabaseConnectorLocationChats {
 <span class="nc" id="L26">    public DatabaseConnectorLocationChats() {}</span>
 
     //connection to mongodb on the cloud with credentials of luca locher
-<span class="nc" id="L29">    static MongoClient mongoClient = MongoClients.create(</span>
+<span class="fc" id="L29">    static MongoClient mongoClient = MongoClients.create(</span>
             &quot;mongodb+srv://lknufi:abc@knowyourcity-ijzn3.gcp.mongodb.net/test?retryWrites=true&amp;w=majority&quot;);
     //Establish connection to the Location Database (development purposes only)
-<span class="nc" id="L32">    static MongoDatabase LocationChats = mongoClient.getDatabase(&quot;LocationChats&quot;);</span>
+<span class="fc" id="L32">    static MongoDatabase LocationChats = mongoClient.getDatabase(&quot;LocationChats&quot;);</span>
     //Establish connection to the Fountains Collection (development purposes only)
-<span class="nc" id="L34">    static MongoCollection&lt;Document&gt; chatsCollection = LocationChats.getCollection(&quot;Chats&quot;);</span>
+<span class="fc" id="L34">    static MongoCollection&lt;Document&gt; chatsCollection = LocationChats.getCollection(&quot;Chats&quot;);</span>
 
     // only used for initializing the DB collection. Do not run again
     public static void initialSetup(){
@@ -64,11 +64,11 @@ public class DatabaseConnectorLocationChats {
 
     //creates Entry in the database when a new location is created
     public static void addChatForNewLocation(int id){
-<span class="nc" id="L67">        ArrayList&lt;Document&gt; emptyChat = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L68">        Document doc = new Document(&quot;locationId&quot;, id)</span>
-<span class="nc" id="L69">                .append(&quot;messages&quot;, emptyChat);</span>
-<span class="nc" id="L70">        chatsCollection.insertOne(doc);</span>
-<span class="nc" id="L71">    }</span>
+<span class="fc" id="L67">        ArrayList&lt;Document&gt; emptyChat = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L68">        Document doc = new Document(&quot;locationId&quot;, id)</span>
+<span class="fc" id="L69">                .append(&quot;messages&quot;, emptyChat);</span>
+<span class="fc" id="L70">        chatsCollection.insertOne(doc);</span>
+<span class="fc" id="L71">    }</span>
 
     public static ArrayList&lt;Message&gt; getChat(Integer locationId){
 <span class="nc" id="L74">        FindIterable&lt;Document&gt; request =  chatsCollection.find(eq(&quot;locationId&quot;, locationId));</span>
