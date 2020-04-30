@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="de"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DatabaseConnectorUser.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">soprafs20</a> &gt; <a href="index.source.html" class="el_package">ch.uzh.ifi.seal.soprafs20.database</a> &gt; <span class="el_source">DatabaseConnectorUser.java</span></div><h1>DatabaseConnectorUser.java</h1><pre class="source lang-java linenums">package ch.uzh.ifi.seal.soprafs20.database;
+
+import ch.uzh.ifi.seal.soprafs20.constant.UserStatus;
+import ch.uzh.ifi.seal.soprafs20.entity.Location;
+import ch.uzh.ifi.seal.soprafs20.entity.User;
+import ch.uzh.ifi.seal.soprafs20.exceptions.UserNotFoundException;
+import com.mongodb.client.*;
+import org.bson.Document;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.mongodb.client.model.Filters.and;
+import static com.mongodb.client.model.Filters.eq;
+
+import static com.mongodb.client.model.Updates.*;
+import com.mongodb.client.model.UpdateOptions;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+public class DatabaseConnectorUser {
+<span class="nc" id="L22">    public DatabaseConnectorUser(){}</span>
+
+    //connection to mongodb on the cloud with credentials of luca locher
+<span class="nc" id="L25">    static MongoClient mongoClient = MongoClients.create(</span>
+            &quot;mongodb+srv://lknufi:abc@knowyourcity-ijzn3.gcp.mongodb.net/test?retryWrites=true&amp;w=majority&quot;);
+    //Establish connection to the Users Database (development purposes only)
+<span class="nc" id="L28">    static MongoDatabase usersDevelopment = mongoClient.getDatabase(&quot;UsersDevelopment&quot;);</span>
+    //Establish connection to the Users Collection (development purposes only)
+<span class="nc" id="L30">    static MongoCollection&lt;Document&gt; usersCollection = usersDevelopment.getCollection(&quot;Users&quot;);</span>
+
+    //creates User in the database; called bi createUser() in UserService
+    public static User createUser(User user) {
+<span class="nc" id="L34">        Document doc = new Document(&quot;username&quot;, user.getUsername())</span>
+<span class="nc" id="L35">                .append(&quot;name&quot;, user.getName())</span>
+<span class="nc" id="L36">                .append(&quot;password&quot;, user.getPassword())</span>
+<span class="nc" id="L37">                .append(&quot;creation-date&quot;, user.getCreationDate())</span>
+<span class="nc" id="L38">                .append(&quot;online&quot;, false)</span>
+<span class="nc" id="L39">                .append(&quot;userId&quot;, DatabaseConnectorUser.generateId());</span>
+<span class="nc" id="L40">        usersCollection.insertOne(doc);</span>
+
+        // creates an entry for the new user in the FavoriteLocations DB
+<span class="nc" id="L43">        DatabaseConnectorFavoriteLocations.createEntry(doc.getInteger(&quot;userId&quot;));</span>
+
+<span class="nc" id="L45">        User userToReturn = DatabaseConnectorUser.getUserInfo(doc);</span>
+<span class="nc" id="L46">        return userToReturn;</span>
+    }
+
+    //Checks if user tried to login with valid credentials
+    public static boolean checkIfUserAndPasswordExist(String username, String password){
+<span class="nc" id="L51">        FindIterable&lt;Document&gt; request = usersCollection.find(and(eq(&quot;username&quot;, username), eq(&quot;password&quot;, password)));</span>
+<span class="nc" id="L52">        Document user = request.first();</span>
+<span class="nc bnc" id="L53" title="All 2 branches missed.">        if (user == null){</span>
+<span class="nc" id="L54">            return false;</span>
+        }
+<span class="nc" id="L56">        return true;</span>
+    }
+
+    //checks if user provided a valid username
+    public static boolean checkIfUsernameExists(String username){
+<span class="nc" id="L61">        FindIterable&lt;Document&gt; request = usersCollection.find(eq(&quot;username&quot;, username));</span>
+<span class="nc" id="L62">        Document user = request.first();</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">        if (user == null){</span>
+<span class="nc" id="L64">            return false;</span>
+        }
+<span class="nc" id="L66">        return true;</span>
+    }
+
+    //sets the online status of a user to either true or false
+    public static void setOnlineStatus(User user, boolean b){
+<span class="nc" id="L71">        usersCollection.updateOne(eq(&quot;username&quot;, user.getUsername()),</span>
+<span class="nc" id="L72">                set(&quot;online&quot;, b));</span>
+<span class="nc" id="L73">    }</span>
+
+    //sets the online status of a user to either true or false
+    public static void setOnlineStatusById(int id, boolean b){
+<span class="nc" id="L77">        usersCollection.updateOne(eq(&quot;userId&quot;, id),</span>
+<span class="nc" id="L78">                set(&quot;online&quot;, b));</span>
+<span class="nc" id="L79">    }</span>
+
+
+
+
+    //returns a user with a certain username
+    public static User getUserByUsername(String username){
+<span class="nc" id="L86">        FindIterable&lt;Document&gt; request =  usersCollection.find(eq(&quot;username&quot;, username));</span>
+<span class="nc" id="L87">        Document user = request.first();</span>
+        //create a new user representation
+<span class="nc" id="L89">        User userRepresentation = DatabaseConnectorUser.getUserInfo(user);</span>
+<span class="nc" id="L90">        return userRepresentation;</span>
+    }
+
+    //not finished
+    public static User getUserById(int id){
+<span class="nc" id="L95">        FindIterable&lt;Document&gt; request =  usersCollection.find(eq(&quot;userId&quot;, id)); //Temporary id-field does not exist by now</span>
+<span class="nc" id="L96">        Document user = request.first();</span>
+
+<span class="nc bnc" id="L98" title="All 2 branches missed.">        if (user == null){</span>
+<span class="nc" id="L99">            throw new UserNotFoundException(&quot;This user could not be found&quot;);</span>
+        }
+
+        //create a new user representation
+<span class="nc" id="L103">        User userRepresentation = DatabaseConnectorUser.getUserInfo(user);</span>
+<span class="nc" id="L104">        return userRepresentation;</span>
+    }
+
+    public static String getUsernameById(int id){
+<span class="nc" id="L108">        FindIterable&lt;Document&gt; request =  usersCollection.find(eq(&quot;userId&quot;, id)); //Temporary id-field does not exist by now</span>
+<span class="nc" id="L109">        Document user = request.first();</span>
+
+<span class="nc bnc" id="L111" title="All 2 branches missed.">        if (user == null){</span>
+<span class="nc" id="L112">            throw new UserNotFoundException(&quot;This user could not be found&quot;);</span>
+        }
+
+<span class="nc" id="L115">        return user.getString(&quot;username&quot;);</span>
+    }
+
+    //transforms BSON User into Backend User Representation
+    public static User getUserInfo(Document user){
+<span class="nc" id="L120">        User userRepresentation = new User();</span>
+<span class="nc" id="L121">        userRepresentation.setUsername(user.getString(&quot;username&quot;));</span>
+<span class="nc" id="L122">        userRepresentation.setName(user.getString(&quot;name&quot;));</span>
+<span class="nc" id="L123">        userRepresentation.setPassword(user.getString(&quot;password&quot;));</span>
+<span class="nc" id="L124">        userRepresentation.setCreationDate(user.getString(&quot;creation-date&quot;));</span>
+<span class="nc" id="L125">        userRepresentation.setId(user.getInteger(&quot;userId&quot;, 0)); //if user has no id he gets assigned id: 0, flag that something is not working properly</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">        userRepresentation.setStatus(user.getBoolean(&quot;online&quot;)? UserStatus.ONLINE : UserStatus.OFFLINE);</span>
+
+        /*JSONObject userAsJSON = new JSONObject(user.toJson());
+        JSONArray favoriteLocationsJSON = userAsJSON.getJSONArray(&quot;favoriteLocations&quot;);
+        ArrayList&lt;Integer&gt; favoriteLocations = new ArrayList&lt;&gt;();
+        for (int i = 0; i &lt; favoriteLocationsJSON.length(); i++) {
+            favoriteLocations.add(favoriteLocationsJSON.getInt(i));
+        }
+        userRepresentation.setFavoriteLocations(favoriteLocations);*/
+
+<span class="nc" id="L136">        return userRepresentation;</span>
+    }
+
+    //Helper function which generates a unique user id
+    public static int generateId(){
+<span class="nc" id="L141">        int random = (int) (Math.random() * 100000);</span>
+<span class="nc" id="L142">        FindIterable&lt;Document&gt; request = usersCollection.find(eq(&quot;userId&quot;, random));</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">        if (request.first() != null){random = DatabaseConnectorUser.generateId();};</span>
+<span class="nc" id="L144">        return random;</span>
+    }
+
+    //returns all users represented as User.class
+    public static List&lt;User&gt; getAllUsers(){
+<span class="nc" id="L149">        List&lt;Document&gt; request = usersCollection.find().into(new ArrayList&lt;&gt;());</span>
+<span class="nc" id="L150">        List&lt;User&gt; allUsers = new ArrayList&lt;User&gt;();</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">        for (Document doc : request){</span>
+<span class="nc" id="L152">            User tempUser = DatabaseConnectorUser.getUserInfo(doc);</span>
+<span class="nc" id="L153">            allUsers.add(tempUser);</span>
+<span class="nc" id="L154">        }</span>
+<span class="nc" id="L155">        return allUsers;</span>
+    }
+
+    //updates the name of a user
+    public static void updateName(User userToUpdate){
+<span class="nc" id="L160">        usersCollection.updateOne(eq(&quot;userId&quot;, userToUpdate.getId()),</span>
+<span class="nc" id="L161">                set(&quot;name&quot;, userToUpdate.getName()));</span>
+<span class="nc" id="L162">    }</span>
+
+    //updates the username of a user
+    public static void updateUsername(User userToUpdate){
+<span class="nc" id="L166">        usersCollection.updateOne(eq(&quot;userId&quot;, userToUpdate.getId()),</span>
+<span class="nc" id="L167">                set(&quot;username&quot;, userToUpdate.getUsername()));</span>
+<span class="nc" id="L168">    }</span>
+
+    //updates the username of a user
+    public static void updatePassword(User userToUpdate){
+<span class="nc" id="L172">        usersCollection.updateOne(eq(&quot;userId&quot;, userToUpdate.getId()),</span>
+<span class="nc" id="L173">                set(&quot;password&quot;, userToUpdate.getPassword()));</span>
+<span class="nc" id="L174">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

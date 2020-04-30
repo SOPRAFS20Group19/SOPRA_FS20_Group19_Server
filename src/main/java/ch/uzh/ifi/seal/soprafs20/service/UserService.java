@@ -79,7 +79,7 @@ public class UserService {
 
     }
 
-    // logs out all users
+    // logs out the user
     public void logoutUser(int id){
         DatabaseConnectorUser.setOnlineStatusById(id, false);
     }

@@ -17,9 +17,9 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import javax.servlet.http.HttpServletRequest;
 
 @ControllerAdvice
-<span class="fc" id="L20">public class GlobalExceptionAdvice extends ResponseEntityExceptionHandler {</span>
+<span class="nc" id="L20">public class GlobalExceptionAdvice extends ResponseEntityExceptionHandler {</span>
 
-<span class="fc" id="L22">    private final Logger log = LoggerFactory.getLogger(GlobalExceptionAdvice.class);</span>
+<span class="nc" id="L22">    private final Logger log = LoggerFactory.getLogger(GlobalExceptionAdvice.class);</span>
 
     @ExceptionHandler(value = {IllegalArgumentException.class, IllegalStateException.class})
     protected ResponseEntity&lt;Object&gt; handleConflict(RuntimeException ex, WebRequest request) {

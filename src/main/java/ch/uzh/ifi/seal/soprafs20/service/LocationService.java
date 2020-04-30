@@ -155,10 +155,13 @@ public class LocationService {
     }
 
     public int checkRating(int userId, Integer locationId){
-        int rating = DatabaseConnectorRating.getRating(userId,locationId);
         //implement the function
-        return rating;
+        return DatabaseConnectorRating.getRating(userId,locationId);
 
+    }
+
+    public double checkAverageRating(Integer locationId){
+        return DatabaseConnectorRating.getAverageRating(locationId);
     }
 
 

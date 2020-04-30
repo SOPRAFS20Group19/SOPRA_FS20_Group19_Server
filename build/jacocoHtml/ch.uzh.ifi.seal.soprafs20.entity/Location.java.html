@@ -2,63 +2,179 @@
 
 import ch.uzh.ifi.seal.soprafs20.constant.LocationType;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Location {
 
-    private Long id;
-    private String information;
+    private int id;
     private String address;
-    private String coordinates;
+    private String[] additionalInformation;
+    private double longitude;
+    private double latitude;
+    private double[] coordinates;
     private LocationType locationType;
     private String picture;
+    private int baujahr;
+    private String art_txt;
+    private String brunnenart_txt;
+    private String adresse;
+    private String plz;
+    private String ort;
+    private String metall;
+    private String glas;
+    private String oel;
+    private String ausstattung;
 
-<span class="fc" id="L14">    public Location(){}</span>
-
-    public Long getId() {
-<span class="fc" id="L17">        return id;</span>
+    public String getAusstattung() {
+<span class="fc" id="L30">        return ausstattung;</span>
     }
 
-    public void setId(Long id) {
-<span class="fc" id="L21">        this.id = id;</span>
-<span class="fc" id="L22">    }</span>
+    public void setAusstattung(String ausstattung) {
+<span class="fc" id="L34">        this.ausstattung = ausstattung;</span>
+<span class="fc" id="L35">    }</span>
 
-    public String getInformation() {
-<span class="fc" id="L25">        return information;</span>
+    public String getAdresse() {
+<span class="fc" id="L38">        return adresse;</span>
     }
 
-    public void setInformation(String information) {
-<span class="fc" id="L29">        this.information = information;</span>
-<span class="fc" id="L30">    }</span>
-
-    public String getAddress() {
-<span class="fc" id="L33">        return address;</span>
+    public String getGlas() {
+<span class="fc" id="L42">        return glas;</span>
     }
 
-    public void setAddress(String address) {
-<span class="fc" id="L37">        this.address = address;</span>
-<span class="fc" id="L38">    }</span>
+    public void setAdresse(String adresse) {
+<span class="fc" id="L46">        this.adresse = adresse;</span>
+<span class="fc" id="L47">    }</span>
 
-    public String getCoordinates() {
-<span class="fc" id="L41">        return coordinates;</span>
+    public String getMetall() {
+<span class="fc" id="L50">        return metall;</span>
     }
 
-    public void setCoordinates(String coordinates) {
-<span class="fc" id="L45">        this.coordinates = coordinates;</span>
-<span class="fc" id="L46">    }</span>
+    public String getOel() {
+<span class="fc" id="L54">        return oel;</span>
+    }
+
+    public String getOrt() {
+<span class="fc" id="L58">        return ort;</span>
+    }
+
+    public String getPlz() {
+<span class="fc" id="L62">        return plz;</span>
+    }
+
+    public void setGlas(String glas) {
+<span class="fc" id="L66">        this.glas = glas;</span>
+<span class="fc" id="L67">    }</span>
+
+    public void setPlz(String plz) {
+<span class="fc" id="L70">        this.plz = plz;</span>
+<span class="fc" id="L71">    }</span>
+
+    public void setOrt(String ort) {
+<span class="fc" id="L74">        this.ort = ort;</span>
+<span class="fc" id="L75">    }</span>
+
+    public void setMetall(String metall) {
+<span class="fc" id="L78">        this.metall = metall;</span>
+<span class="fc" id="L79">    }</span>
+
+    public void setOel(String oel) {
+<span class="fc" id="L82">        this.oel = oel;</span>
+<span class="fc" id="L83">    }</span>
+
+<span class="fc" id="L85">    public Location(){}</span>
+
+    public void setBrunnenart_txt(String brunnenart_txt) {
+<span class="fc" id="L88">        this.brunnenart_txt = brunnenart_txt;</span>
+<span class="fc" id="L89">    }</span>
+
+    public void setBaujahr(int baujahr) {
+<span class="fc" id="L92">        this.baujahr = baujahr;</span>
+<span class="fc" id="L93">    }</span>
+
+    public void setArt_txt(String art_txt) {
+<span class="fc" id="L96">        this.art_txt = art_txt;</span>
+<span class="fc" id="L97">    }</span>
+
+    public String getBrunnenart_txt() {
+<span class="fc" id="L100">        return brunnenart_txt;</span>
+    }
+
+    public int getBaujahr() {
+<span class="fc" id="L104">        return baujahr;</span>
+    }
+
+    public String getArt_txt() {
+<span class="fc" id="L108">        return art_txt;</span>
+    }
+
+    public int getId() {
+<span class="fc" id="L112">        return id;</span>
+    }
+
+    public void setId(int id) {
+<span class="fc" id="L116">        this.id = id;</span>
+<span class="fc" id="L117">    }</span>
+
+
+    public String[] getAdditionalInformation() {
+<span class="fc" id="L121">        return additionalInformation;</span>
+    }
+
+    public void setAdditionalInformation(String[] additionalInformation) {
+<span class="fc" id="L125">        this.additionalInformation = additionalInformation;</span>
+<span class="fc" id="L126">    }</span>
+
+    public double getLatitude() {
+<span class="fc" id="L129">        return latitude;</span>
+    }
+
+    public void setLatitude(double latitude) {
+<span class="fc" id="L133">        this.latitude = latitude;</span>
+<span class="fc" id="L134">    }</span>
+
+    public double getLongitude() {
+<span class="fc" id="L137">        return longitude;</span>
+    }
+
+    public void setLongitude(double longitude) {
+<span class="fc" id="L141">        this.longitude = longitude;</span>
+<span class="fc" id="L142">    }</span>
+
+    public double[] getCoordinates() {
+<span class="fc" id="L145">        return coordinates;</span>
+    }
+
+    public void setCoordinates(double[] coordinates) {
+<span class="fc" id="L149">        this.longitude = coordinates[0];</span>
+<span class="fc" id="L150">        this.latitude = coordinates[1];</span>
+<span class="fc" id="L151">        this.coordinates = coordinates;</span>
+<span class="fc" id="L152">    }</span>
+
 
     public LocationType getLocationType() {
-<span class="fc" id="L49">        return locationType;</span>
+<span class="fc" id="L156">        return locationType;</span>
     }
 
     public void setLocationType(LocationType locationType) {
-<span class="fc" id="L53">        this.locationType = locationType;</span>
-<span class="fc" id="L54">    }</span>
+<span class="fc" id="L160">        this.locationType = locationType;</span>
+<span class="fc" id="L161">    }</span>
+
 
     public String getPicture() {
-<span class="fc" id="L57">        return picture;</span>
+<span class="fc" id="L165">        return picture;</span>
     }
 
     public void setPicture(String picture) {
-<span class="fc" id="L61">        this.picture = picture;</span>
-<span class="fc" id="L62">    }</span>
+<span class="nc" id="L169">        this.picture = picture;</span>
+<span class="nc" id="L170">    }</span>
+
+    public String getAddress() {
+<span class="fc" id="L173">        return address;</span>
+    }
+
+    public void setAddress(String address) {
+<span class="fc" id="L177">        this.address = address;</span>
+<span class="fc" id="L178">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

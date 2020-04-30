@@ -1,29 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="de"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LocationService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">soprafs20</a> &gt; <a href="index.source.html" class="el_package">ch.uzh.ifi.seal.soprafs20.service</a> &gt; <span class="el_source">LocationService.java</span></div><h1>LocationService.java</h1><pre class="source lang-java linenums">package ch.uzh.ifi.seal.soprafs20.service;
 
-import ch.uzh.ifi.seal.soprafs20.constant.UserStatus;
-import ch.uzh.ifi.seal.soprafs20.entity.Chat;
+import ch.uzh.ifi.seal.soprafs20.database.DatabaseConnectorFavoriteLocations;
+import ch.uzh.ifi.seal.soprafs20.database.DatabaseConnectorLocation;
+import ch.uzh.ifi.seal.soprafs20.database.DatabaseConnectorLocationChats;
+import ch.uzh.ifi.seal.soprafs20.database.DatabaseConnectorRating;
 import ch.uzh.ifi.seal.soprafs20.entity.Location;
 import ch.uzh.ifi.seal.soprafs20.entity.Message;
-import ch.uzh.ifi.seal.soprafs20.entity.User;
-import ch.uzh.ifi.seal.soprafs20.exceptions.DuplicatedUserException;
-import ch.uzh.ifi.seal.soprafs20.exceptions.InvalidCredentialsException;
-import ch.uzh.ifi.seal.soprafs20.exceptions.SopraServiceException;
-import ch.uzh.ifi.seal.soprafs20.exceptions.UserNotFoundException;
-import ch.uzh.ifi.seal.soprafs20.repository.UserRepository;
-import ch.uzh.ifi.seal.soprafs20.rest.dto.UserPutDTO;
+import ch.uzh.ifi.seal.soprafs20.exceptions.*;
+import ch.uzh.ifi.seal.soprafs20.rest.dto.FilterPostDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
-import java.sql.Timestamp;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+
+import java.text.SimpleDateFormat;
+import java.sql.Timestamp;
 
 /**
  * Location Service
@@ -34,44 +28,151 @@ import java.util.UUID;
 @Transactional
 public class LocationService {
 
-<span class="fc" id="L37">    private final Logger log = LoggerFactory.getLogger(LocationService.class);</span>
+<span class="nc" id="L31">    private final Logger log = LoggerFactory.getLogger(LocationService.class);</span>
 
-<span class="fc" id="L39">    public LocationService(){}</span>
+<span class="nc" id="L33">    public LocationService(){}</span>
 
     public List&lt;Location&gt; getLocations(){
-<span class="nc" id="L42">        List&lt;Location&gt; allLocations = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L43">        return allLocations;</span>
+<span class="nc" id="L36">        List&lt;Location&gt; allLocations = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L37">        List&lt;Location&gt; listFountains = DatabaseConnectorLocation.getFountains();</span>
+<span class="nc" id="L38">        List&lt;Location&gt; listFireplaces = DatabaseConnectorLocation.getFireplaces();</span>
+<span class="nc" id="L39">        List&lt;Location&gt; listRecyclingStations = DatabaseConnectorLocation.getRecyclingStations();</span>
+<span class="nc" id="L40">        List&lt;Location&gt; listUserFountains = DatabaseConnectorLocation.getUserFountains();</span>
+<span class="nc" id="L41">        List&lt;Location&gt; listUserFireplaces = DatabaseConnectorLocation.getUserFireplaces();</span>
+<span class="nc" id="L42">        List&lt;Location&gt; listUserRecycling = DatabaseConnectorLocation.getUserRecycling();</span>
+
+<span class="nc" id="L44">        allLocations.addAll(listFountains);</span>
+<span class="nc" id="L45">        allLocations.addAll(listFireplaces);</span>
+<span class="nc" id="L46">        allLocations.addAll(listRecyclingStations);</span>
+<span class="nc" id="L47">        allLocations.addAll(listUserFountains);</span>
+<span class="nc" id="L48">        allLocations.addAll(listUserFireplaces);</span>
+<span class="nc" id="L49">        allLocations.addAll(listUserRecycling);</span>
+
+<span class="nc" id="L51">        return allLocations;</span>
     }
 
-    public Location getLocation(Long id){
-<span class="nc" id="L47">        Location location = new Location();</span>
-<span class="nc" id="L48">        return location;</span>
+    public List&lt;Location&gt; getFilteredLocations(FilterPostDTO filterPostDTO) {
+<span class="nc" id="L55">        List&lt;Location&gt; filteredLocations = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L56" title="All 2 branches missed.">        if (filterPostDTO.showFountains()){</span>
+<span class="nc" id="L57">            List&lt;Location&gt; listFountains = DatabaseConnectorLocation.getFountains();</span>
+<span class="nc" id="L58">            List&lt;Location&gt; listUserFountains = DatabaseConnectorLocation.getUserFountains();</span>
+<span class="nc" id="L59">            filteredLocations.addAll(listFountains);</span>
+<span class="nc" id="L60">            filteredLocations.addAll(listUserFountains);</span>
+        }
+<span class="nc bnc" id="L62" title="All 2 branches missed.">        if (filterPostDTO.showFireplaces()){</span>
+<span class="nc" id="L63">            List&lt;Location&gt; listFireplaces = DatabaseConnectorLocation.getFireplaces();</span>
+<span class="nc" id="L64">            List&lt;Location&gt; listUserFireplaces = DatabaseConnectorLocation.getUserFireplaces();</span>
+<span class="nc" id="L65">            filteredLocations.addAll(listFireplaces);</span>
+<span class="nc" id="L66">            filteredLocations.addAll(listUserFireplaces);</span>
+
+        }
+<span class="nc bnc" id="L69" title="All 2 branches missed.">        if (filterPostDTO.showRecyclingStations()){</span>
+<span class="nc" id="L70">            List&lt;Location&gt; listRecyclingStations = DatabaseConnectorLocation.getRecyclingStations();</span>
+<span class="nc" id="L71">            List&lt;Location&gt; listUserRecyclingStations = DatabaseConnectorLocation.getUserRecycling();</span>
+<span class="nc" id="L72">            filteredLocations.addAll(listRecyclingStations);</span>
+<span class="nc" id="L73">            filteredLocations.addAll(listUserRecyclingStations);</span>
+
+        }
+
+<span class="nc" id="L77">        return filteredLocations;</span>
+    }
+
+    public Location getLocation(int id){
+<span class="nc" id="L81">        List&lt;Location&gt; allLocations = this.getLocations();</span>
+
+<span class="nc" id="L83">        Location locationToReturn = null;</span>
+
+<span class="nc bnc" id="L85" title="All 2 branches missed.">        for (Location location: allLocations){</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">            if (id == (location.getId())){</span>
+<span class="nc" id="L87">                locationToReturn = location;</span>
+            }
+<span class="nc" id="L89">        }</span>
+
+<span class="nc bnc" id="L91" title="All 2 branches missed.">        if (locationToReturn == null){</span>
+<span class="nc" id="L92">            throw new LocationNotFoundException(&quot;This location could not be found.&quot;);</span>
+        }
+
+<span class="nc" id="L95">        return locationToReturn;</span>
     }
 
     public Location createLocation(Location newLocation){
-<span class="nc" id="L52">        Location location = new Location();</span>
-<span class="nc" id="L53">        return location;</span>
+<span class="nc" id="L99">        int newLocationId = DatabaseConnectorLocation.createLocation(newLocation);</span>
+        //ADD TO CHAT -&gt; IMPORTANT! später die Kommentarfunktion entfernen, LK: auskommentiert am 27.04
+<span class="nc" id="L101">        DatabaseConnectorLocationChats.addChatForNewLocation(newLocationId);</span>
+<span class="nc" id="L102">        Location locationToReturn = this.getLocation(newLocationId);</span>
+<span class="nc" id="L103">        return locationToReturn;</span>
     }
 
     public void updateLocation(Location location){
-<span class="nc" id="L57">    }</span>
+<span class="nc" id="L107">    }</span>
 
-    public Chat getChat(Long id){
-<span class="nc" id="L60">        Chat chat = new Chat();</span>
-<span class="nc" id="L61">        return chat;</span>
+    public ArrayList&lt;Message&gt; getChat(Integer locationId){
+<span class="nc" id="L110">        return DatabaseConnectorLocationChats.getChat(locationId);</span>
     }
 
-    public void postMessage(Long id, Message message){
-<span class="nc" id="L65">    }</span>
+    public void postMessage(Integer locationId, Message message){
+<span class="nc" id="L114">        message.setTimestamp(getCurrentTimestamp());</span>
+<span class="nc" id="L115">        DatabaseConnectorLocationChats.postMessage(locationId, message);</span>
+<span class="nc" id="L116">    }</span>
 
-    public List&lt;Location&gt; getFavoriteLocations(Long userId){
-<span class="nc" id="L68">        List&lt;Location&gt; allLocations = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L69">        return allLocations;</span>
+    // gets a users favorite locations
+    public List&lt;Location&gt; getFavoriteLocations(int userId){
+<span class="nc" id="L120">        ArrayList&lt;Integer&gt; favoriteLocationIds = DatabaseConnectorFavoriteLocations.getFavoriteLocations(userId);</span>
+<span class="nc" id="L121">        List&lt;Location&gt; locationsToReturn = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L122" title="All 2 branches missed.">        for (Integer locationId : favoriteLocationIds){</span>
+<span class="nc" id="L123">            locationsToReturn.add(this.getLocation(locationId));</span>
+<span class="nc" id="L124">        }</span>
+<span class="nc" id="L125">        return locationsToReturn;</span>
     }
 
-    public void updateFavoriteLocations(Long userId, Long locationId){
-<span class="nc" id="L73">    }</span>
+    public void updateFavoriteLocations(int userId, Integer locationId){
+<span class="nc" id="L129">        ArrayList&lt;Integer&gt; favorites = DatabaseConnectorFavoriteLocations.getFavoriteLocations(userId);</span>
+<span class="nc" id="L130">        ArrayList&lt;Integer&gt; newFavorites = new ArrayList&lt;&gt;(favorites);</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">        if (!favorites.contains(locationId)){</span>
+<span class="nc" id="L132">            newFavorites.add(locationId);</span>
+        }
+<span class="nc" id="L134">        DatabaseConnectorFavoriteLocations.updateFavoriteLocations(userId, newFavorites);</span>
+<span class="nc" id="L135">    }</span>
 
-<span class="nc" id="L75">    public void getWebcam(Long locationId){}</span>
+    public void deleteFavoriteLocation(int userId, Integer locationId){
+<span class="nc" id="L138">        ArrayList&lt;Integer&gt; favorites = DatabaseConnectorFavoriteLocations.getFavoriteLocations(userId);</span>
+<span class="nc" id="L139">        ArrayList&lt;Integer&gt; newFavorites = new ArrayList&lt;&gt;(favorites);</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">        if (favorites.contains(locationId)){</span>
+<span class="nc" id="L141">            newFavorites.remove(locationId);</span>
+        }
+<span class="nc" id="L143">        DatabaseConnectorFavoriteLocations.updateFavoriteLocations(userId, newFavorites);</span>
+<span class="nc" id="L144">    }</span>
+
+    public Location checkFavoriteLocations(int userId, Integer locationId){
+<span class="nc" id="L147">        ArrayList&lt;Integer&gt; favoriteLocationIds = DatabaseConnectorFavoriteLocations.getFavoriteLocations(userId);</span>
+<span class="nc" id="L148">        Location locationToReturn = null;</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">        for (Integer locationIdToCheck : favoriteLocationIds){</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">            if (locationId.equals(locationIdToCheck)){</span>
+<span class="nc" id="L151">                locationToReturn = this.getLocation(locationId);</span>
+            }
+<span class="nc" id="L153">        }</span>
+<span class="nc" id="L154">        return locationToReturn;</span>
+    }
+
+    public int checkRating(int userId, Integer locationId){
+        //implement the function
+<span class="nc" id="L159">        return DatabaseConnectorRating.getRating(userId,locationId);</span>
+
+    }
+
+    public double checkAverageRating(Integer locationId){
+<span class="nc" id="L164">        return DatabaseConnectorRating.getAverageRating(locationId);</span>
+    }
+
+
+    public static void updateRating(int userId, Integer locationId, int rating){
+<span class="nc" id="L169">        DatabaseConnectorRating.updateRating(userId, locationId, rating);</span>
+<span class="nc" id="L170">    }</span>
+
+    public String getCurrentTimestamp(){
+<span class="nc" id="L173">        SimpleDateFormat sdf = new SimpleDateFormat(&quot;dd.MM, HH:mm&quot;);</span>
+<span class="nc" id="L174">        Timestamp timestamp = new Timestamp(System.currentTimeMillis());</span>
+<span class="nc" id="L175">        return sdf.format(timestamp);</span>
+    }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

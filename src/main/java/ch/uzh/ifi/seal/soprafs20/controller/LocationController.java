@@ -79,13 +79,6 @@ public class LocationController {
         return DTOMapper.INSTANCE.convertEntityToLocationGetDTO(location);
     }
 
-    @PutMapping("/locations/{locationId}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @ResponseBody
-    public void updateLocation(@PathVariable Long locationId, @RequestBody Location location) {
-        locationService.updateLocation(location);
-    }
-
     @GetMapping("/locations/chats/{locationId}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
@@ -141,6 +134,14 @@ public class LocationController {
     @ResponseBody
     public int checkIncludedInRatings(@PathVariable int userId, @PathVariable Integer locationId) {
         int rating = locationService.checkRating(userId, locationId);
+        return rating;
+    }
+
+    @GetMapping("/locations/rating/{locationId}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public double getRating(@PathVariable Integer locationId) {
+        double rating = locationService.checkAverageRating(locationId);
         return rating;
     }
 

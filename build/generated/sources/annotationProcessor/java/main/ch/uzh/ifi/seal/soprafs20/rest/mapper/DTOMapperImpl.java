@@ -15,8 +15,13 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
+<<<<<<< HEAD
     date = "2020-04-29T10:18:21+0200",
     comments = "version: 1.3.1.Final, compiler: javac, environment: Java 13.0.2 (Oracle Corporation)"
+=======
+    date = "2020-04-29T18:33:04+0200",
+    comments = "version: 1.3.1.Final, compiler: javac, environment: Java 13.0.1 (Oracle Corporation)"
+>>>>>>> b77af729426fb0ab3791fa6b773f073ee2f1fdc7
 )
 public class DTOMapperImpl implements DTOMapper {
 
@@ -108,16 +113,25 @@ public class DTOMapperImpl implements DTOMapper {
         location.setArt_txt( locationPostDTO.getArt_txt() );
         location.setMetall( locationPostDTO.getMetall() );
         location.setAusstattung( locationPostDTO.getAusstattung() );
+        location.setHolz( locationPostDTO.getHolz() );
+        location.setAbfall( locationPostDTO.getAbfall() );
         location.setLatitude( locationPostDTO.getLatitude() );
         location.setGlas( locationPostDTO.getGlas() );
         location.setLocationType( locationPostDTO.getLocationType() );
+        location.setRost( locationPostDTO.getRost() );
+        location.setKinderwagen( locationPostDTO.getKinderwagen() );
         location.setOrt( locationPostDTO.getOrt() );
+        location.setHunde( locationPostDTO.getHunde() );
         location.setOel( locationPostDTO.getOel() );
+        location.setTisch( locationPostDTO.getTisch() );
         location.setAdresse( locationPostDTO.getAdresse() );
         location.setBaujahr( locationPostDTO.getBaujahr() );
+        location.setBaden( locationPostDTO.getBaden() );
+        location.setParkplatz( locationPostDTO.getParkplatz() );
         location.setLongitude( locationPostDTO.getLongitude() );
         location.setBrunnenart_txt( locationPostDTO.getBrunnenart_txt() );
         location.setPlz( locationPostDTO.getPlz() );
+        location.setTrinkwasser( locationPostDTO.getTrinkwasser() );
 
         return location;
     }
