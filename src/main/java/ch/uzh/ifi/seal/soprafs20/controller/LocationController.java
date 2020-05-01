@@ -147,7 +147,7 @@ public class LocationController {
 
 
     @PutMapping("/locations/rating/{userId}/{locationId}/{ratedStars}")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @ResponseBody
     public void updateRating(@PathVariable int userId, @PathVariable Integer locationId, @PathVariable int ratedStars) {
         LocationService.updateRating(userId, locationId, ratedStars);

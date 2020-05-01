@@ -1,32 +1,20 @@
 package ch.uzh.ifi.seal.soprafs20.service;
 
-import ch.uzh.ifi.seal.soprafs20.constant.UserStatus;
-import ch.uzh.ifi.seal.soprafs20.database.DatabaseConnector;
 import ch.uzh.ifi.seal.soprafs20.database.DatabaseConnectorUser;
-import ch.uzh.ifi.seal.soprafs20.entity.Location;
-import ch.uzh.ifi.seal.soprafs20.service.LocationService;
 import ch.uzh.ifi.seal.soprafs20.entity.User;
 import ch.uzh.ifi.seal.soprafs20.exceptions.DuplicatedUserException;
 import ch.uzh.ifi.seal.soprafs20.exceptions.InvalidCredentialsException;
-import ch.uzh.ifi.seal.soprafs20.exceptions.SopraServiceException;
 import ch.uzh.ifi.seal.soprafs20.exceptions.UserNotFoundException;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.UserPutDTO;
-import org.hibernate.dialect.Database;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
-import javax.xml.crypto.Data;
 import java.sql.Timestamp;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.util.*;
 

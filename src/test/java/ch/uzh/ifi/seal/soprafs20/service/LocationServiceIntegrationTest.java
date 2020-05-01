@@ -1,12 +1,6 @@
 package ch.uzh.ifi.seal.soprafs20.service;
 import ch.uzh.ifi.seal.soprafs20.constant.LocationType;
-import ch.uzh.ifi.seal.soprafs20.constant.UserStatus;
-import ch.uzh.ifi.seal.soprafs20.database.DatabaseConnector;
-import ch.uzh.ifi.seal.soprafs20.database.DatabaseConnectorLocation;
 import ch.uzh.ifi.seal.soprafs20.entity.User;
-import ch.uzh.ifi.seal.soprafs20.exceptions.DuplicatedUserException;
-import ch.uzh.ifi.seal.soprafs20.exceptions.InvalidCredentialsException;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,33 +8,18 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import ch.uzh.ifi.seal.soprafs20.constant.UserStatus;
 import ch.uzh.ifi.seal.soprafs20.entity.Location;
-import ch.uzh.ifi.seal.soprafs20.entity.User;
-import ch.uzh.ifi.seal.soprafs20.exceptions.UserNotFoundException;
 import com.mongodb.client.*;
 import org.bson.Document;
 
-import ch.uzh.ifi.seal.soprafs20.database.DatabaseConnectorFavoriteLocations;
-import ch.uzh.ifi.seal.soprafs20.database.DatabaseConnectorLocation;
-import ch.uzh.ifi.seal.soprafs20.database.DatabaseConnectorLocationChats;
-import ch.uzh.ifi.seal.soprafs20.database.DatabaseConnectorRating;
-import ch.uzh.ifi.seal.soprafs20.entity.Location;
 import ch.uzh.ifi.seal.soprafs20.entity.Message;
-import ch.uzh.ifi.seal.soprafs20.exceptions.*;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.FilterPostDTO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
-
-import static com.mongodb.client.model.Updates.*;
 
 /**
  * Test class for the LocationResource REST resource.

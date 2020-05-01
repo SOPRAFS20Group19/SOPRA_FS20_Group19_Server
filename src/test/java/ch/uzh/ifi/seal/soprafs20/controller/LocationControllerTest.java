@@ -10,6 +10,7 @@ import ch.uzh.ifi.seal.soprafs20.rest.dto.UserPostDTO;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.UserPutDTO;
 import ch.uzh.ifi.seal.soprafs20.service.LocationService;
 import ch.uzh.ifi.seal.soprafs20.service.UserService;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
@@ -361,6 +362,44 @@ public class LocationControllerTest {
 
         Assertions.assertEquals(404, response.getResponse().getStatus());
         Assertions.assertEquals("This user could not be found.", response.getResolvedException().getMessage());
+    }
+
+    // Code 200 get /locations/rating/{userId}/{locationId}
+    @Test
+    public void checkIncludedRating_validInput() throws Exception{
+        int finalRating = 4;
+
+        given(locationService.checkRating(Mockito.anyInt(), Mockito.anyInt())).willReturn(finalRating);
+
+        MockHttpServletRequestBuilder getRequest = get("/locations/rating/1/1")
+                .contentType(MediaType.APPLICATION_JSON);
+
+        MvcResult response = mockMvc.perform(getRequest).andReturn();
+
+        Assertions.assertEquals(200, response.getResponse().getStatus());
+        Assertions.assertEquals(String.valueOf(finalRating), response.getResponse().getContentAsString());
+    }
+
+    // Code 200 get /locations/rating/{userId}/{locationId}/{ratedStars}
+    @Test
+    public void getAverageRating_validInput() throws Exception{
+        double finalRating = 3.5;
+
+        given(locationService.checkAverageRating(Mockito.anyInt())).willReturn(finalRating);
+
+        MockHttpServletRequestBuilder getRequest = get("/locations/rating/1")
+                .contentType(MediaType.APPLICATION_JSON);
+
+        MvcResult response = mockMvc.perform(getRequest).andReturn();
+
+        Assertions.assertEquals(200, response.getResponse().getStatus());
+        Assertions.assertEquals(String.valueOf(finalRating), response.getResponse().getContentAsString());
+    }
+
+    // Code 204 put /locations/rating/{locationId}
+    @Test
+    public void updateRating_validInput() throws Exception{
+
     }
 
     /**

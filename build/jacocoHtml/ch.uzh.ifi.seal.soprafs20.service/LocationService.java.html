@@ -28,27 +28,27 @@ import java.sql.Timestamp;
 @Transactional
 public class LocationService {
 
-<span class="fc" id="L31">    private final Logger log = LoggerFactory.getLogger(LocationService.class);</span>
+<span class="nc" id="L31">    private final Logger log = LoggerFactory.getLogger(LocationService.class);</span>
 
-<span class="fc" id="L33">    public LocationService(){}</span>
+<span class="nc" id="L33">    public LocationService(){}</span>
 
     public List&lt;Location&gt; getLocations(){
-<span class="fc" id="L36">        List&lt;Location&gt; allLocations = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L37">        List&lt;Location&gt; listFountains = DatabaseConnectorLocation.getFountains();</span>
-<span class="fc" id="L38">        List&lt;Location&gt; listFireplaces = DatabaseConnectorLocation.getFireplaces();</span>
-<span class="fc" id="L39">        List&lt;Location&gt; listRecyclingStations = DatabaseConnectorLocation.getRecyclingStations();</span>
-<span class="fc" id="L40">        List&lt;Location&gt; listUserFountains = DatabaseConnectorLocation.getUserFountains();</span>
-<span class="fc" id="L41">        List&lt;Location&gt; listUserFireplaces = DatabaseConnectorLocation.getUserFireplaces();</span>
-<span class="fc" id="L42">        List&lt;Location&gt; listUserRecycling = DatabaseConnectorLocation.getUserRecycling();</span>
+<span class="nc" id="L36">        List&lt;Location&gt; allLocations = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L37">        List&lt;Location&gt; listFountains = DatabaseConnectorLocation.getFountains();</span>
+<span class="nc" id="L38">        List&lt;Location&gt; listFireplaces = DatabaseConnectorLocation.getFireplaces();</span>
+<span class="nc" id="L39">        List&lt;Location&gt; listRecyclingStations = DatabaseConnectorLocation.getRecyclingStations();</span>
+<span class="nc" id="L40">        List&lt;Location&gt; listUserFountains = DatabaseConnectorLocation.getUserFountains();</span>
+<span class="nc" id="L41">        List&lt;Location&gt; listUserFireplaces = DatabaseConnectorLocation.getUserFireplaces();</span>
+<span class="nc" id="L42">        List&lt;Location&gt; listUserRecycling = DatabaseConnectorLocation.getUserRecycling();</span>
 
-<span class="fc" id="L44">        allLocations.addAll(listFountains);</span>
-<span class="fc" id="L45">        allLocations.addAll(listFireplaces);</span>
-<span class="fc" id="L46">        allLocations.addAll(listRecyclingStations);</span>
-<span class="fc" id="L47">        allLocations.addAll(listUserFountains);</span>
-<span class="fc" id="L48">        allLocations.addAll(listUserFireplaces);</span>
-<span class="fc" id="L49">        allLocations.addAll(listUserRecycling);</span>
+<span class="nc" id="L44">        allLocations.addAll(listFountains);</span>
+<span class="nc" id="L45">        allLocations.addAll(listFireplaces);</span>
+<span class="nc" id="L46">        allLocations.addAll(listRecyclingStations);</span>
+<span class="nc" id="L47">        allLocations.addAll(listUserFountains);</span>
+<span class="nc" id="L48">        allLocations.addAll(listUserFireplaces);</span>
+<span class="nc" id="L49">        allLocations.addAll(listUserRecycling);</span>
 
-<span class="fc" id="L51">        return allLocations;</span>
+<span class="nc" id="L51">        return allLocations;</span>
     }
 
     public List&lt;Location&gt; getFilteredLocations(FilterPostDTO filterPostDTO) {
@@ -78,29 +78,29 @@ public class LocationService {
     }
 
     public Location getLocation(int id){
-<span class="fc" id="L81">        List&lt;Location&gt; allLocations = this.getLocations();</span>
+<span class="nc" id="L81">        List&lt;Location&gt; allLocations = this.getLocations();</span>
 
-<span class="fc" id="L83">        Location locationToReturn = null;</span>
+<span class="nc" id="L83">        Location locationToReturn = null;</span>
 
-<span class="fc bfc" id="L85" title="All 2 branches covered.">        for (Location location: allLocations){</span>
-<span class="fc bfc" id="L86" title="All 2 branches covered.">            if (id == (location.getId())){</span>
-<span class="fc" id="L87">                locationToReturn = location;</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">        for (Location location: allLocations){</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">            if (id == (location.getId())){</span>
+<span class="nc" id="L87">                locationToReturn = location;</span>
             }
-<span class="fc" id="L89">        }</span>
+<span class="nc" id="L89">        }</span>
 
-<span class="fc bfc" id="L91" title="All 2 branches covered.">        if (locationToReturn == null){</span>
-<span class="fc" id="L92">            throw new LocationNotFoundException(&quot;This location could not be found.&quot;);</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">        if (locationToReturn == null){</span>
+<span class="nc" id="L92">            throw new LocationNotFoundException(&quot;This location could not be found.&quot;);</span>
         }
 
-<span class="fc" id="L95">        return locationToReturn;</span>
+<span class="nc" id="L95">        return locationToReturn;</span>
     }
 
     public Location createLocation(Location newLocation){
-<span class="fc" id="L99">        int newLocationId = DatabaseConnectorLocation.createLocation(newLocation);</span>
+<span class="nc" id="L99">        int newLocationId = DatabaseConnectorLocation.createLocation(newLocation);</span>
         //ADD TO CHAT -&gt; IMPORTANT! später die Kommentarfunktion entfernen, LK: auskommentiert am 27.04
-<span class="fc" id="L101">        DatabaseConnectorLocationChats.addChatForNewLocation(newLocationId);</span>
-<span class="fc" id="L102">        Location locationToReturn = this.getLocation(newLocationId);</span>
-<span class="fc" id="L103">        return locationToReturn;</span>
+<span class="nc" id="L101">        DatabaseConnectorLocationChats.addChatForNewLocation(newLocationId);</span>
+<span class="nc" id="L102">        Location locationToReturn = this.getLocation(newLocationId);</span>
+<span class="nc" id="L103">        return locationToReturn;</span>
     }
 
     public void updateLocation(Location location){

@@ -103,9 +103,6 @@ public class LocationService {
         return locationToReturn;
     }
 
-    public void updateLocation(Location location){
-    }
-
     public ArrayList<Message> getChat(Integer locationId){
         return DatabaseConnectorLocationChats.getChat(locationId);
     }
@@ -163,7 +160,6 @@ public class LocationService {
     public double checkAverageRating(Integer locationId){
         return DatabaseConnectorRating.getAverageRating(locationId);
     }
-
 
     public static void updateRating(int userId, Integer locationId, int rating){
         DatabaseConnectorRating.updateRating(userId, locationId, rating);
