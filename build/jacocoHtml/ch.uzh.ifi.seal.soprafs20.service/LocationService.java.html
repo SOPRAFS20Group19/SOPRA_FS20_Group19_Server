@@ -103,76 +103,72 @@ public class LocationService {
 <span class="nc" id="L103">        return locationToReturn;</span>
     }
 
-    public void updateLocation(Location location){
-<span class="nc" id="L107">    }</span>
-
     public ArrayList&lt;Message&gt; getChat(Integer locationId){
-<span class="nc" id="L110">        return DatabaseConnectorLocationChats.getChat(locationId);</span>
+<span class="nc" id="L107">        return DatabaseConnectorLocationChats.getChat(locationId);</span>
     }
 
     public void postMessage(Integer locationId, Message message){
-<span class="nc" id="L114">        message.setTimestamp(getCurrentTimestamp());</span>
-<span class="nc" id="L115">        DatabaseConnectorLocationChats.postMessage(locationId, message);</span>
-<span class="nc" id="L116">    }</span>
+<span class="nc" id="L111">        message.setTimestamp(getCurrentTimestamp());</span>
+<span class="nc" id="L112">        DatabaseConnectorLocationChats.postMessage(locationId, message);</span>
+<span class="nc" id="L113">    }</span>
 
     // gets a users favorite locations
     public List&lt;Location&gt; getFavoriteLocations(int userId){
-<span class="nc" id="L120">        ArrayList&lt;Integer&gt; favoriteLocationIds = DatabaseConnectorFavoriteLocations.getFavoriteLocations(userId);</span>
-<span class="nc" id="L121">        List&lt;Location&gt; locationsToReturn = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L122" title="All 2 branches missed.">        for (Integer locationId : favoriteLocationIds){</span>
-<span class="nc" id="L123">            locationsToReturn.add(this.getLocation(locationId));</span>
-<span class="nc" id="L124">        }</span>
-<span class="nc" id="L125">        return locationsToReturn;</span>
+<span class="nc" id="L117">        ArrayList&lt;Integer&gt; favoriteLocationIds = DatabaseConnectorFavoriteLocations.getFavoriteLocations(userId);</span>
+<span class="nc" id="L118">        List&lt;Location&gt; locationsToReturn = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">        for (Integer locationId : favoriteLocationIds){</span>
+<span class="nc" id="L120">            locationsToReturn.add(this.getLocation(locationId));</span>
+<span class="nc" id="L121">        }</span>
+<span class="nc" id="L122">        return locationsToReturn;</span>
     }
 
     public void updateFavoriteLocations(int userId, Integer locationId){
-<span class="nc" id="L129">        ArrayList&lt;Integer&gt; favorites = DatabaseConnectorFavoriteLocations.getFavoriteLocations(userId);</span>
-<span class="nc" id="L130">        ArrayList&lt;Integer&gt; newFavorites = new ArrayList&lt;&gt;(favorites);</span>
-<span class="nc bnc" id="L131" title="All 2 branches missed.">        if (!favorites.contains(locationId)){</span>
-<span class="nc" id="L132">            newFavorites.add(locationId);</span>
+<span class="nc" id="L126">        ArrayList&lt;Integer&gt; favorites = DatabaseConnectorFavoriteLocations.getFavoriteLocations(userId);</span>
+<span class="nc" id="L127">        ArrayList&lt;Integer&gt; newFavorites = new ArrayList&lt;&gt;(favorites);</span>
+<span class="nc bnc" id="L128" title="All 2 branches missed.">        if (!favorites.contains(locationId)){</span>
+<span class="nc" id="L129">            newFavorites.add(locationId);</span>
         }
-<span class="nc" id="L134">        DatabaseConnectorFavoriteLocations.updateFavoriteLocations(userId, newFavorites);</span>
-<span class="nc" id="L135">    }</span>
+<span class="nc" id="L131">        DatabaseConnectorFavoriteLocations.updateFavoriteLocations(userId, newFavorites);</span>
+<span class="nc" id="L132">    }</span>
 
     public void deleteFavoriteLocation(int userId, Integer locationId){
-<span class="nc" id="L138">        ArrayList&lt;Integer&gt; favorites = DatabaseConnectorFavoriteLocations.getFavoriteLocations(userId);</span>
-<span class="nc" id="L139">        ArrayList&lt;Integer&gt; newFavorites = new ArrayList&lt;&gt;(favorites);</span>
-<span class="nc bnc" id="L140" title="All 2 branches missed.">        if (favorites.contains(locationId)){</span>
-<span class="nc" id="L141">            newFavorites.remove(locationId);</span>
+<span class="nc" id="L135">        ArrayList&lt;Integer&gt; favorites = DatabaseConnectorFavoriteLocations.getFavoriteLocations(userId);</span>
+<span class="nc" id="L136">        ArrayList&lt;Integer&gt; newFavorites = new ArrayList&lt;&gt;(favorites);</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">        if (favorites.contains(locationId)){</span>
+<span class="nc" id="L138">            newFavorites.remove(locationId);</span>
         }
-<span class="nc" id="L143">        DatabaseConnectorFavoriteLocations.updateFavoriteLocations(userId, newFavorites);</span>
-<span class="nc" id="L144">    }</span>
+<span class="nc" id="L140">        DatabaseConnectorFavoriteLocations.updateFavoriteLocations(userId, newFavorites);</span>
+<span class="nc" id="L141">    }</span>
 
     public Location checkFavoriteLocations(int userId, Integer locationId){
-<span class="nc" id="L147">        ArrayList&lt;Integer&gt; favoriteLocationIds = DatabaseConnectorFavoriteLocations.getFavoriteLocations(userId);</span>
-<span class="nc" id="L148">        Location locationToReturn = null;</span>
-<span class="nc bnc" id="L149" title="All 2 branches missed.">        for (Integer locationIdToCheck : favoriteLocationIds){</span>
-<span class="nc bnc" id="L150" title="All 2 branches missed.">            if (locationId.equals(locationIdToCheck)){</span>
-<span class="nc" id="L151">                locationToReturn = this.getLocation(locationId);</span>
+<span class="nc" id="L144">        ArrayList&lt;Integer&gt; favoriteLocationIds = DatabaseConnectorFavoriteLocations.getFavoriteLocations(userId);</span>
+<span class="nc" id="L145">        Location locationToReturn = null;</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">        for (Integer locationIdToCheck : favoriteLocationIds){</span>
+<span class="nc bnc" id="L147" title="All 2 branches missed.">            if (locationId.equals(locationIdToCheck)){</span>
+<span class="nc" id="L148">                locationToReturn = this.getLocation(locationId);</span>
             }
-<span class="nc" id="L153">        }</span>
-<span class="nc" id="L154">        return locationToReturn;</span>
+<span class="nc" id="L150">        }</span>
+<span class="nc" id="L151">        return locationToReturn;</span>
     }
 
     public int checkRating(int userId, Integer locationId){
         //implement the function
-<span class="nc" id="L159">        return DatabaseConnectorRating.getRating(userId,locationId);</span>
+<span class="nc" id="L156">        return DatabaseConnectorRating.getRating(userId,locationId);</span>
 
     }
 
     public double checkAverageRating(Integer locationId){
-<span class="nc" id="L164">        return DatabaseConnectorRating.getAverageRating(locationId);</span>
+<span class="nc" id="L161">        return DatabaseConnectorRating.getAverageRating(locationId);</span>
     }
 
-
-    public static void updateRating(int userId, Integer locationId, int rating){
-<span class="nc" id="L169">        DatabaseConnectorRating.updateRating(userId, locationId, rating);</span>
-<span class="nc" id="L170">    }</span>
+    public void updateRating(int userId, Integer locationId, int rating){
+<span class="nc" id="L165">        DatabaseConnectorRating.updateRating(userId, locationId, rating);</span>
+<span class="nc" id="L166">    }</span>
 
     public String getCurrentTimestamp(){
-<span class="nc" id="L173">        SimpleDateFormat sdf = new SimpleDateFormat(&quot;dd.MM, HH:mm&quot;);</span>
-<span class="nc" id="L174">        Timestamp timestamp = new Timestamp(System.currentTimeMillis());</span>
-<span class="nc" id="L175">        return sdf.format(timestamp);</span>
+<span class="nc" id="L169">        SimpleDateFormat sdf = new SimpleDateFormat(&quot;dd.MM, HH:mm&quot;);</span>
+<span class="nc" id="L170">        Timestamp timestamp = new Timestamp(System.currentTimeMillis());</span>
+<span class="nc" id="L171">        return sdf.format(timestamp);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

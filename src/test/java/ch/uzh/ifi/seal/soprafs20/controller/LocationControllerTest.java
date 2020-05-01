@@ -399,7 +399,15 @@ public class LocationControllerTest {
     // Code 204 put /locations/rating/{locationId}
     @Test
     public void updateRating_validInput() throws Exception{
+        doNothing().when(locationService).updateRating(Mockito.anyInt(), Mockito.anyInt(), Mockito.anyInt());
 
+        MockHttpServletRequestBuilder putRequest = put("/locations/rating/1/1/5")
+                .contentType(MediaType.APPLICATION_JSON);
+
+        MvcResult response = mockMvc.perform(putRequest).andReturn();
+
+        Assertions.assertEquals(204, response.getResponse().getStatus());
+        Assertions.assertEquals("", response.getResponse().getContentAsString());
     }
 
     /**

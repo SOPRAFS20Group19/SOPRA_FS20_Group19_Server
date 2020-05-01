@@ -150,6 +150,6 @@ public class LocationController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @ResponseBody
     public void updateRating(@PathVariable int userId, @PathVariable Integer locationId, @PathVariable int ratedStars) {
-        LocationService.updateRating(userId, locationId, ratedStars);
+        locationService.updateRating(userId, locationId, ratedStars);
     }
 }

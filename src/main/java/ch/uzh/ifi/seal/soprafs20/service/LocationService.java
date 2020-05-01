@@ -161,7 +161,7 @@ public class LocationService {
         return DatabaseConnectorRating.getAverageRating(locationId);
     }
 
-    public static void updateRating(int userId, Integer locationId, int rating){
+    public void updateRating(int userId, Integer locationId, int rating){
         DatabaseConnectorRating.updateRating(userId, locationId, rating);
     }
 

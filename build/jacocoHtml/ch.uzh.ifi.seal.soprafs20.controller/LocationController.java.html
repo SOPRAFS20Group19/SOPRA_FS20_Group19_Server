@@ -141,16 +141,16 @@ public class LocationController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public double getRating(@PathVariable Integer locationId) {
-<span class="fc" id="L144">        double rating = locationService.checkAverageRating(locationId);</span>
-<span class="fc" id="L145">        return rating;</span>
+<span class="nc" id="L144">        double rating = locationService.checkAverageRating(locationId);</span>
+<span class="nc" id="L145">        return rating;</span>
     }
 
 
     @PutMapping(&quot;/locations/rating/{userId}/{locationId}/{ratedStars}&quot;)
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @ResponseBody
     public void updateRating(@PathVariable int userId, @PathVariable Integer locationId, @PathVariable int ratedStars) {
-<span class="nc" id="L153">        LocationService.updateRating(userId, locationId, ratedStars);</span>
-<span class="nc" id="L154">    }</span>
+<span class="fc" id="L153">        locationService.updateRating(userId, locationId, ratedStars);</span>
+<span class="fc" id="L154">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
