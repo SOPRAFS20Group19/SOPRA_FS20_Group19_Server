@@ -93,11 +93,24 @@ public class LocationServiceIntegrationTest {
         testRecycling.setLocationType(LocationType.RECYCLING_STATION);
         testRecycling.setLongitude(1);
         testRecycling.setLatitude(1);
+        testRecycling.setAdresse("Scheuchzerstrasse");
+        testRecycling.setPlz("8006");
+        testRecycling.setOrt("Zuerich");
 
         Location testFireplace = new Location();
         testFireplace.setLocationType(LocationType.FIREPLACE);
         testFireplace.setLongitude(2);
         testFireplace.setLatitude(2);
+        testFireplace.setHolz("X");
+        testFireplace.setRost("X");
+        testFireplace.setTisch("X");
+        testFireplace.setParkplatz("X");
+        testFireplace.setTrinkwasser("X");
+        testFireplace.setHunde("X");
+        testFireplace.setKinderwagen("X");
+        testFireplace.setBaden("X");
+        testFireplace.setAbfall("X");
+
 
         Location newFountain = locationService.createLocation(testFountain);
         Location newRecycling = locationService.createLocation(testRecycling);
@@ -115,10 +128,13 @@ public class LocationServiceIntegrationTest {
         assertEquals(testFireplace.getLongitude(), newFireplace.getLongitude());
         assertEquals(testFireplace.getLatitude(), newFireplace.getLatitude());
 
+        String id = String.valueOf(newRecycling.getId());
+
         // Deletes the created location for testing in the database
         userFountainsCollection.deleteOne(eq("properties.objectid", newFountain.getId()));
-        userRecyclingCollection.deleteOne(eq("properties.objectid", newRecycling.getId()));
-        userFireplacesCollection.deleteOne(eq("properties.objectid", newFireplace.getId()));
+        userRecyclingCollection.deleteOne(eq("properties.objectid", id));
+        userFireplacesCollection.deleteOne(eq("BarbecuePlace.Id", newFireplace.getId()));
+
 
     }
 
@@ -162,7 +178,7 @@ public class LocationServiceIntegrationTest {
 
 
     @Test
-    public void locationComment(){
+    public void locationComment_success(){
         // Tests the comment box each location has
         Location testFountain = new Location();
         testFountain.setLocationType(LocationType.FOUNTAIN);

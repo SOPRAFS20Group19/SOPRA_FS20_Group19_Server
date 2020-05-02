@@ -104,7 +104,7 @@ public class LocationController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public List&lt;Location&gt; getFavoriteLocations(@PathVariable int userId) {
-<span class="fc" id="L107">        return locationService.getFavoriteLocations(userId);</span>
+<span class="nc" id="L107">        return locationService.getFavoriteLocations(userId);</span>
     }
 
     @PutMapping(&quot;/locations/favorites/{userId}/{locationId}&quot;)
