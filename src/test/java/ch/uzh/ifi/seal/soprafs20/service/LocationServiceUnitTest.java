@@ -105,9 +105,10 @@ public class LocationServiceUnitTest {
         assertTrue(newLocation.getLongitude()==locationService.getLocation(locationId).getLongitude(), "Longitude property doesn't fit! -> GetLocation doesn't work properly.");
         assertTrue(newLocation.getLatitude()==locationService.getLocation(locationId).getLatitude(), "Latitude property doesn't fit! -> GetLocation doesn't work properly.");
 
-        fountainsCollection.deleteOne(eq("closestStreet", "Schwarzbächlistrasse"));
+        //fountainsCollection.deleteOne(eq("closestStreet", "Schwarzbächlistrasse"));
 
         //TODO: WE NEED BETTER DELETION OVER ID!!!!!! Doesnt't Work
+        userFountainsCollection.deleteOne(eq("properties.objectid", newLocation.getId()));
         //FindIterable<Document> request = fountainsCollection.find(eq("properties", Document.parse("{objectid: " + newLocation.getId() + "}")));
         //fountainsCollection.deleteOne(request.first());
 

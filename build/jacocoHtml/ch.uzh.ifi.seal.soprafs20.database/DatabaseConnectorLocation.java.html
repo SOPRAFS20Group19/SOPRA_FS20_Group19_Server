@@ -22,22 +22,22 @@ public class DatabaseConnectorLocation {
 <span class="nc" id="L22">    public DatabaseConnectorLocation(){}</span>
 
     //connection to mongodb on the cloud with credentials of luca locher
-<span class="nc" id="L25">    static MongoClient mongoClient = MongoClients.create(</span>
+<span class="fc" id="L25">    static MongoClient mongoClient = MongoClients.create(</span>
             &quot;mongodb+srv://lknufi:abc@knowyourcity-ijzn3.gcp.mongodb.net/test?retryWrites=true&amp;w=majority&quot;);
     //Establish connection to the Location Database (development purposes only)
-<span class="nc" id="L28">    static MongoDatabase locationStorage = mongoClient.getDatabase(&quot;LocationStorage&quot;);</span>
+<span class="fc" id="L28">    static MongoDatabase locationStorage = mongoClient.getDatabase(&quot;LocationStorage&quot;);</span>
     //Establish connection to the Fountains Collection (development purposes only)
-<span class="nc" id="L30">    static MongoCollection&lt;Document&gt; fountainsCollection = locationStorage.getCollection(&quot;Fountains&quot;);</span>
+<span class="fc" id="L30">    static MongoCollection&lt;Document&gt; fountainsCollection = locationStorage.getCollection(&quot;Fountains&quot;);</span>
     //Establish connection to the Fireplaces Collection (development purposes only)
-<span class="nc" id="L32">    static MongoCollection&lt;Document&gt; fireplacesCollection = locationStorage.getCollection(&quot;Fireplaces&quot;);</span>
+<span class="fc" id="L32">    static MongoCollection&lt;Document&gt; fireplacesCollection = locationStorage.getCollection(&quot;Fireplaces&quot;);</span>
     //Establish connection to the Recycling Collection (development purposes only)
-<span class="nc" id="L34">    static MongoCollection&lt;Document&gt; recyclingCollection = locationStorage.getCollection(&quot;Recycling&quot;);</span>
+<span class="fc" id="L34">    static MongoCollection&lt;Document&gt; recyclingCollection = locationStorage.getCollection(&quot;Recycling&quot;);</span>
 
-<span class="nc" id="L36">    static MongoCollection&lt;Document&gt; userFountainsCollection = locationStorage.getCollection(&quot;UserFountains&quot;);</span>
+<span class="fc" id="L36">    static MongoCollection&lt;Document&gt; userFountainsCollection = locationStorage.getCollection(&quot;UserFountains&quot;);</span>
 
-<span class="nc" id="L38">    static MongoCollection&lt;Document&gt; userFireplacesCollection = locationStorage.getCollection(&quot;UserFireplaces&quot;);</span>
+<span class="fc" id="L38">    static MongoCollection&lt;Document&gt; userFireplacesCollection = locationStorage.getCollection(&quot;UserFireplaces&quot;);</span>
 
-<span class="nc" id="L40">    static MongoCollection&lt;Document&gt; userRecyclingCollection = locationStorage.getCollection(&quot;UserRecycling&quot;);</span>
+<span class="fc" id="L40">    static MongoCollection&lt;Document&gt; userRecyclingCollection = locationStorage.getCollection(&quot;UserRecycling&quot;);</span>
 
 
 
@@ -49,36 +49,36 @@ public class DatabaseConnectorLocation {
 <span class="nc" id="L49">    }</span>
 
     public static void addNewFountainToDatabase(Location location){
-<span class="nc" id="L52">        JSONArray coordinatesAsJSON = new JSONArray();</span>
-<span class="nc" id="L53">        coordinatesAsJSON.put(location.getLongitude());</span>
-<span class="nc" id="L54">        coordinatesAsJSON.put(location.getLatitude());</span>
+<span class="fc" id="L52">        JSONArray coordinatesAsJSON = new JSONArray();</span>
+<span class="fc" id="L53">        coordinatesAsJSON.put(location.getLongitude());</span>
+<span class="fc" id="L54">        coordinatesAsJSON.put(location.getLatitude());</span>
 
 
-<span class="nc" id="L57">        Document coordinates = new Document(&quot;type&quot;, &quot;Point&quot;)</span>
-<span class="nc" id="L58">                .append(&quot;coordinates&quot;, coordinatesAsJSON);</span>
+<span class="fc" id="L57">        Document coordinates = new Document(&quot;type&quot;, &quot;Point&quot;)</span>
+<span class="fc" id="L58">                .append(&quot;coordinates&quot;, coordinatesAsJSON);</span>
 
-<span class="nc" id="L60">        Document properties = new Document(&quot;locationtype&quot;, &quot;fountain&quot;)</span>
-<span class="nc" id="L61">                .append(&quot;objectid&quot;, location.getId())</span>
-<span class="nc" id="L62">                .append(&quot;art_txt&quot;, location.getArt_txt())</span>
-<span class="nc" id="L63">                .append(&quot;brunnenart_txt&quot;, location.getBrunnenart_txt())</span>
-<span class="nc" id="L64">                .append(&quot;historisches_baujahr&quot;, location.getBaujahr())</span>
-<span class="nc" id="L65">                .append(&quot;baujahr&quot;, location.getBaujahr());</span>
+<span class="fc" id="L60">        Document properties = new Document(&quot;locationtype&quot;, &quot;fountain&quot;)</span>
+<span class="fc" id="L61">                .append(&quot;objectid&quot;, location.getId())</span>
+<span class="fc" id="L62">                .append(&quot;art_txt&quot;, location.getArt_txt())</span>
+<span class="fc" id="L63">                .append(&quot;brunnenart_txt&quot;, location.getBrunnenart_txt())</span>
+<span class="fc" id="L64">                .append(&quot;historisches_baujahr&quot;, location.getBaujahr())</span>
+<span class="fc" id="L65">                .append(&quot;baujahr&quot;, location.getBaujahr());</span>
 
 
-<span class="nc" id="L68">        Document doc = new Document(&quot;type&quot;, &quot;Feature&quot;)</span>
-<span class="nc" id="L69">                .append(&quot;geometry&quot;, coordinates)</span>
-<span class="nc" id="L70">                .append(&quot;properties&quot;, properties)</span>
-<span class="nc" id="L71">                .append(&quot;closestStreet&quot;, DatabaseConnectorAddresses.getClosestAddress(location.getId()));</span>
-<span class="nc" id="L72">        userFountainsCollection.insertOne(doc);</span>
+<span class="fc" id="L68">        Document doc = new Document(&quot;type&quot;, &quot;Feature&quot;)</span>
+<span class="fc" id="L69">                .append(&quot;geometry&quot;, coordinates)</span>
+<span class="fc" id="L70">                .append(&quot;properties&quot;, properties)</span>
+<span class="fc" id="L71">                .append(&quot;closestStreet&quot;, DatabaseConnectorAddresses.getClosestAddress(location.getId()));</span>
+<span class="fc" id="L72">        userFountainsCollection.insertOne(doc);</span>
 
         // creates a new entry in the closestAddress DB
-<span class="nc" id="L75">        DatabaseConnectorAddresses.createEntry(location.getId());</span>
+<span class="fc" id="L75">        DatabaseConnectorAddresses.createEntry(location.getId());</span>
 
-<span class="nc" id="L77">        Document updatedDoc = new Document().append(&quot;$set&quot;, new Document()</span>
-<span class="nc" id="L78">                .append(&quot;closestStreet&quot;, DatabaseConnectorAddresses.getClosestAddress(location.getId())));</span>
-<span class="nc" id="L79">        userFountainsCollection.updateOne(eq(&quot;properties.objectid&quot;, location.getId()), updatedDoc);</span>
+<span class="fc" id="L77">        Document updatedDoc = new Document().append(&quot;$set&quot;, new Document()</span>
+<span class="fc" id="L78">                .append(&quot;closestStreet&quot;, DatabaseConnectorAddresses.getClosestAddress(location.getId())));</span>
+<span class="fc" id="L79">        userFountainsCollection.updateOne(eq(&quot;properties.objectid&quot;, location.getId()), updatedDoc);</span>
 
-<span class="nc" id="L81">    }</span>
+<span class="fc" id="L81">    }</span>
 
     public static void addNewFireplaceToDatabase(Location location){
 <span class="nc" id="L84">        JSONArray ausstattungAsJSON = new JSONArray();</span>
@@ -165,12 +165,12 @@ public class DatabaseConnectorLocation {
 
     //Helper function which generates a unique fountain id
     public static int generateFountainId(){
-<span class="nc" id="L168">        int random = (int) (Math.random() * 10000) + 10000000;</span>
-<span class="nc" id="L169">        FindIterable&lt;Document&gt; request = userFountainsCollection.find(eq(&quot;userId&quot;, random));</span>
-<span class="nc" id="L170">        FindIterable&lt;Document&gt; request2 = fountainsCollection.find(eq(&quot;userId&quot;, random));</span>
+<span class="fc" id="L168">        int random = (int) (Math.random() * 10000) + 10000000;</span>
+<span class="fc" id="L169">        FindIterable&lt;Document&gt; request = userFountainsCollection.find(eq(&quot;userId&quot;, random));</span>
+<span class="fc" id="L170">        FindIterable&lt;Document&gt; request2 = fountainsCollection.find(eq(&quot;userId&quot;, random));</span>
 
-<span class="nc bnc" id="L172" title="All 4 branches missed.">        if (request.first() != null || request2.first() != null){random = DatabaseConnectorLocation.generateFountainId();};</span>
-<span class="nc" id="L173">        return  random;</span>
+<span class="pc bpc" id="L172" title="2 of 4 branches missed.">        if (request.first() != null || request2.first() != null){random = DatabaseConnectorLocation.generateFountainId();};</span>
+<span class="fc" id="L173">        return  random;</span>
     }
 
     //Helper function which generates a unique fireplace id
@@ -193,9 +193,9 @@ public class DatabaseConnectorLocation {
 
     public static int createLocation(Location location){
 
-<span class="nc bnc" id="L196" title="All 2 branches missed.">        if (location.getLocationType() == LocationType.FOUNTAIN){</span>
-<span class="nc" id="L197">            location.setId(generateFountainId());</span>
-<span class="nc" id="L198">            addNewFountainToDatabase(location);</span>
+<span class="pc bpc" id="L196" title="1 of 2 branches missed.">        if (location.getLocationType() == LocationType.FOUNTAIN){</span>
+<span class="fc" id="L197">            location.setId(generateFountainId());</span>
+<span class="fc" id="L198">            addNewFountainToDatabase(location);</span>
         }
 
 <span class="nc bnc" id="L201" title="All 2 branches missed.">        else if (location.getLocationType() == LocationType.FIREPLACE){</span>
@@ -210,7 +210,7 @@ public class DatabaseConnectorLocation {
 
         }
 
-<span class="nc" id="L213">        return location.getId();</span>
+<span class="fc" id="L213">        return location.getId();</span>
 
         /*
         else if (location.getLocationType() == LocationType.FIREPLACE){
@@ -225,29 +225,29 @@ public class DatabaseConnectorLocation {
     }
 
     public static List&lt;Location&gt; getUserFountains() throws JSONException {
-<span class="nc" id="L228">        List&lt;Document&gt; fountainsList = userFountainsCollection.find().into(new ArrayList&lt;&gt;());</span>
-<span class="nc" id="L229">        List&lt;Location&gt; fountainsListLocation = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L230" title="All 2 branches missed.">        for (Document fountain : fountainsList) {</span>
-<span class="nc" id="L231">            String fountainAsString = fountain.toJson();</span>
-<span class="nc" id="L232">            JSONObject fountainAsJson = new JSONObject(fountainAsString);</span>
+<span class="fc" id="L228">        List&lt;Document&gt; fountainsList = userFountainsCollection.find().into(new ArrayList&lt;&gt;());</span>
+<span class="fc" id="L229">        List&lt;Location&gt; fountainsListLocation = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L230" title="All 2 branches covered.">        for (Document fountain : fountainsList) {</span>
+<span class="fc" id="L231">            String fountainAsString = fountain.toJson();</span>
+<span class="fc" id="L232">            JSONObject fountainAsJson = new JSONObject(fountainAsString);</span>
             //convert Document to Location
-<span class="nc" id="L234">            Location fountainLocation = fountainToLocation(fountainAsJson);</span>
+<span class="fc" id="L234">            Location fountainLocation = fountainToLocation(fountainAsJson);</span>
             //add Location to List of Locations
-<span class="nc" id="L236">            fountainsListLocation.add(fountainLocation);</span>
-<span class="nc" id="L237">        }</span>
-<span class="nc" id="L238">        return fountainsListLocation;</span>
+<span class="fc" id="L236">            fountainsListLocation.add(fountainLocation);</span>
+<span class="fc" id="L237">        }</span>
+<span class="fc" id="L238">        return fountainsListLocation;</span>
     }
 
     public static List&lt;Location&gt; getUserFireplaces(){
-<span class="nc" id="L242">        List&lt;Document&gt; fireplacesList = userFireplacesCollection.find().into(new ArrayList&lt;&gt;());</span>
-<span class="nc" id="L243">        List&lt;Location&gt; fireplacesListLocation = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L244" title="All 2 branches missed.">        for (Document fireplace: fireplacesList){</span>
-<span class="nc" id="L245">            String fireplaceAsString = fireplace.toJson();</span>
-<span class="nc" id="L246">            JSONObject fireplaceAsJSON = new JSONObject(fireplaceAsString);</span>
+<span class="fc" id="L242">        List&lt;Document&gt; fireplacesList = userFireplacesCollection.find().into(new ArrayList&lt;&gt;());</span>
+<span class="fc" id="L243">        List&lt;Location&gt; fireplacesListLocation = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L244" title="All 2 branches covered.">        for (Document fireplace: fireplacesList){</span>
+<span class="fc" id="L245">            String fireplaceAsString = fireplace.toJson();</span>
+<span class="fc" id="L246">            JSONObject fireplaceAsJSON = new JSONObject(fireplaceAsString);</span>
             //convert Document to Location
-<span class="nc" id="L248">            Location fireplaceLocation = fireplaceToLocation(fireplaceAsJSON);</span>
+<span class="fc" id="L248">            Location fireplaceLocation = fireplaceToLocation(fireplaceAsJSON);</span>
 
-<span class="nc" id="L250">            fireplacesListLocation.add(fireplaceLocation);</span>
+<span class="fc" id="L250">            fireplacesListLocation.add(fireplaceLocation);</span>
 
 
             // check if fireplace is in Zurich
@@ -259,14 +259,14 @@ public class DatabaseConnectorLocation {
             }
 
              */
-<span class="nc" id="L262">        }</span>
-<span class="nc" id="L263">        return fireplacesListLocation;</span>
+<span class="fc" id="L262">        }</span>
+<span class="fc" id="L263">        return fireplacesListLocation;</span>
     }
 
     public static List&lt;Location&gt; getUserRecycling(){
-<span class="nc" id="L267">        List&lt;Document&gt; recyclingList = userRecyclingCollection.find().into(new ArrayList&lt;&gt;());</span>
-<span class="nc" id="L268">        List&lt;Location&gt; recyclingListLocation = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L269" title="All 2 branches missed.">        for (Document recyclingStation: recyclingList){</span>
+<span class="fc" id="L267">        List&lt;Document&gt; recyclingList = userRecyclingCollection.find().into(new ArrayList&lt;&gt;());</span>
+<span class="fc" id="L268">        List&lt;Location&gt; recyclingListLocation = new ArrayList&lt;&gt;();</span>
+<span class="pc bpc" id="L269" title="1 of 2 branches missed.">        for (Document recyclingStation: recyclingList){</span>
 <span class="nc" id="L270">            String recyclingAsString = recyclingStation.toJson();</span>
 <span class="nc" id="L271">            JSONObject recyclingAsJSON = new JSONObject(recyclingAsString);</span>
             //convert Document to Location
@@ -274,96 +274,96 @@ public class DatabaseConnectorLocation {
             //add Location to List of Locations
 <span class="nc" id="L275">            recyclingListLocation.add(recyclingLocation);</span>
 <span class="nc" id="L276">        }</span>
-<span class="nc" id="L277">        return recyclingListLocation;</span>
+<span class="fc" id="L277">        return recyclingListLocation;</span>
     }
 
     public static List&lt;Location&gt; getFountains() throws JSONException {
-<span class="nc" id="L281">        List&lt;Document&gt; fountainsList = fountainsCollection.find().into(new ArrayList&lt;&gt;());</span>
-<span class="nc" id="L282">        List&lt;Location&gt; fountainsListLocation = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L283" title="All 2 branches missed.">        for (Document fountain : fountainsList) {</span>
-<span class="nc" id="L284">            String fountainAsString = fountain.toJson();</span>
-<span class="nc" id="L285">            JSONObject fountainAsJson = new JSONObject(fountainAsString);</span>
+<span class="fc" id="L281">        List&lt;Document&gt; fountainsList = fountainsCollection.find().into(new ArrayList&lt;&gt;());</span>
+<span class="fc" id="L282">        List&lt;Location&gt; fountainsListLocation = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L283" title="All 2 branches covered.">        for (Document fountain : fountainsList) {</span>
+<span class="fc" id="L284">            String fountainAsString = fountain.toJson();</span>
+<span class="fc" id="L285">            JSONObject fountainAsJson = new JSONObject(fountainAsString);</span>
             //convert Document to Location
-<span class="nc" id="L287">            Location fountainLocation = fountainToLocation(fountainAsJson);</span>
+<span class="fc" id="L287">            Location fountainLocation = fountainToLocation(fountainAsJson);</span>
             //add Location to List of Locations
-<span class="nc" id="L289">            fountainsListLocation.add(fountainLocation);</span>
-<span class="nc" id="L290">        }</span>
-<span class="nc" id="L291">        return fountainsListLocation;</span>
+<span class="fc" id="L289">            fountainsListLocation.add(fountainLocation);</span>
+<span class="fc" id="L290">        }</span>
+<span class="fc" id="L291">        return fountainsListLocation;</span>
     }
 
     public static List&lt;Location&gt; getFireplaces(){
-<span class="nc" id="L295">        List&lt;Document&gt; fireplacesList = fireplacesCollection.find().into(new ArrayList&lt;&gt;());</span>
-<span class="nc" id="L296">        List&lt;Location&gt; fireplacesListLocation = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L297" title="All 2 branches missed.">        for (Document fireplace: fireplacesList){</span>
-<span class="nc" id="L298">            String fireplaceAsString = fireplace.toJson();</span>
-<span class="nc" id="L299">            JSONObject fireplaceAsJSON = new JSONObject(fireplaceAsString);</span>
+<span class="fc" id="L295">        List&lt;Document&gt; fireplacesList = fireplacesCollection.find().into(new ArrayList&lt;&gt;());</span>
+<span class="fc" id="L296">        List&lt;Location&gt; fireplacesListLocation = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L297" title="All 2 branches covered.">        for (Document fireplace: fireplacesList){</span>
+<span class="fc" id="L298">            String fireplaceAsString = fireplace.toJson();</span>
+<span class="fc" id="L299">            JSONObject fireplaceAsJSON = new JSONObject(fireplaceAsString);</span>
             //convert Document to Location
-<span class="nc" id="L301">            Location fireplaceLocation = fireplaceToLocation(fireplaceAsJSON);</span>
+<span class="fc" id="L301">            Location fireplaceLocation = fireplaceToLocation(fireplaceAsJSON);</span>
 
             // check if fireplace is in Zurich
-<span class="nc bnc" id="L304" title="All 4 branches missed.">            if (fireplaceLocation.getLongitude() &gt; 8.4680486289 &amp;&amp; fireplaceLocation.getLongitude() &lt; 8.6191027275</span>
-<span class="nc bnc" id="L305" title="All 4 branches missed.">            &amp;&amp; fireplaceLocation.getLatitude() &gt; 47.3232261256 &amp;&amp; fireplaceLocation.getLatitude() &lt; 47.4308197123){</span>
+<span class="fc bfc" id="L304" title="All 4 branches covered.">            if (fireplaceLocation.getLongitude() &gt; 8.4680486289 &amp;&amp; fireplaceLocation.getLongitude() &lt; 8.6191027275</span>
+<span class="fc bfc" id="L305" title="All 4 branches covered.">            &amp;&amp; fireplaceLocation.getLatitude() &gt; 47.3232261256 &amp;&amp; fireplaceLocation.getLatitude() &lt; 47.4308197123){</span>
                 //add Location to List of Locations
-<span class="nc" id="L307">                fireplacesListLocation.add(fireplaceLocation);</span>
+<span class="fc" id="L307">                fireplacesListLocation.add(fireplaceLocation);</span>
             }
-<span class="nc" id="L309">        }</span>
-<span class="nc" id="L310">        return fireplacesListLocation;</span>
+<span class="fc" id="L309">        }</span>
+<span class="fc" id="L310">        return fireplacesListLocation;</span>
     }
 
     public static List&lt;Location&gt; getRecyclingStations(){
-<span class="nc" id="L314">        List&lt;Document&gt; recyclingList = recyclingCollection.find().into(new ArrayList&lt;&gt;());</span>
-<span class="nc" id="L315">        List&lt;Location&gt; recyclingListLocation = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L316" title="All 2 branches missed.">        for (Document recyclingStation: recyclingList){</span>
-<span class="nc" id="L317">            String recyclingAsString = recyclingStation.toJson();</span>
-<span class="nc" id="L318">            JSONObject recyclingAsJSON = new JSONObject(recyclingAsString);</span>
+<span class="fc" id="L314">        List&lt;Document&gt; recyclingList = recyclingCollection.find().into(new ArrayList&lt;&gt;());</span>
+<span class="fc" id="L315">        List&lt;Location&gt; recyclingListLocation = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L316" title="All 2 branches covered.">        for (Document recyclingStation: recyclingList){</span>
+<span class="fc" id="L317">            String recyclingAsString = recyclingStation.toJson();</span>
+<span class="fc" id="L318">            JSONObject recyclingAsJSON = new JSONObject(recyclingAsString);</span>
             //convert Document to Location
-<span class="nc" id="L320">            Location recyclingLocation = recyclingToLocation(recyclingAsJSON);</span>
+<span class="fc" id="L320">            Location recyclingLocation = recyclingToLocation(recyclingAsJSON);</span>
             //add Location to List of Locations
-<span class="nc" id="L322">            recyclingListLocation.add(recyclingLocation);</span>
-<span class="nc" id="L323">        }</span>
-<span class="nc" id="L324">        return recyclingListLocation;</span>
+<span class="fc" id="L322">            recyclingListLocation.add(recyclingLocation);</span>
+<span class="fc" id="L323">        }</span>
+<span class="fc" id="L324">        return recyclingListLocation;</span>
     }
 
     public static Location fountainToLocation(JSONObject fountainAsJson) throws JSONException {
-<span class="nc" id="L328">        Location newLocation = new Location();</span>
+<span class="fc" id="L328">        Location newLocation = new Location();</span>
 
-<span class="nc" id="L330">        JSONObject properties = fountainAsJson.getJSONObject(&quot;properties&quot;);</span>
-<span class="nc" id="L331">        JSONObject geometry = fountainAsJson.getJSONObject(&quot;geometry&quot;);</span>
+<span class="fc" id="L330">        JSONObject properties = fountainAsJson.getJSONObject(&quot;properties&quot;);</span>
+<span class="fc" id="L331">        JSONObject geometry = fountainAsJson.getJSONObject(&quot;geometry&quot;);</span>
 
         // set ID
-<span class="nc" id="L334">        newLocation.setId(properties.getInt(&quot;objectid&quot;));</span>
+<span class="fc" id="L334">        newLocation.setId(properties.getInt(&quot;objectid&quot;));</span>
 
         // set coordinates
-<span class="nc" id="L337">        JSONArray coordinatesAsJSON = (JSONArray) geometry.get(&quot;coordinates&quot;);</span>
-<span class="nc" id="L338">        double lat = coordinatesAsJSON.getDouble(1);</span>
-<span class="nc" id="L339">        newLocation.setLatitude(lat);</span>
-<span class="nc" id="L340">        double lon = coordinatesAsJSON.getDouble(0);</span>
-<span class="nc" id="L341">        newLocation.setLongitude(lon);</span>
-<span class="nc" id="L342">        double[] coordinates = {lon, lat};</span>
-<span class="nc" id="L343">        newLocation.setCoordinates(coordinates);</span>
+<span class="fc" id="L337">        JSONArray coordinatesAsJSON = (JSONArray) geometry.get(&quot;coordinates&quot;);</span>
+<span class="fc" id="L338">        double lat = coordinatesAsJSON.getDouble(1);</span>
+<span class="fc" id="L339">        newLocation.setLatitude(lat);</span>
+<span class="fc" id="L340">        double lon = coordinatesAsJSON.getDouble(0);</span>
+<span class="fc" id="L341">        newLocation.setLongitude(lon);</span>
+<span class="fc" id="L342">        double[] coordinates = {lon, lat};</span>
+<span class="fc" id="L343">        newLocation.setCoordinates(coordinates);</span>
 
         // set address
-<span class="nc" id="L346">        newLocation.setAddress(fountainAsJson.getString(&quot;closestStreet&quot;));</span>
+<span class="fc" id="L346">        newLocation.setAddress(fountainAsJson.getString(&quot;closestStreet&quot;));</span>
 
         // set locationType
-<span class="nc" id="L349">        newLocation.setLocationType(LocationType.FOUNTAIN);</span>
+<span class="fc" id="L349">        newLocation.setLocationType(LocationType.FOUNTAIN);</span>
 
         // retrieve and set additional information
-<span class="nc" id="L352">        ArrayList&lt;String&gt; additionalInformation = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L353" title="All 2 branches missed.">        if (properties.get(&quot;art_txt&quot;).getClass().toString().equals(&quot;class java.lang.String&quot;)){</span>
-<span class="nc" id="L354">            String fountainType = &quot;Fountain type: &quot; + properties.getString(&quot;art_txt&quot;).replace(&quot;Brunnen_&quot;, &quot;&quot;);</span>
-<span class="nc" id="L355">            additionalInformation.add(fountainType);</span>
+<span class="fc" id="L352">        ArrayList&lt;String&gt; additionalInformation = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L353" title="All 2 branches covered.">        if (properties.get(&quot;art_txt&quot;).getClass().toString().equals(&quot;class java.lang.String&quot;)){</span>
+<span class="fc" id="L354">            String fountainType = &quot;Fountain type: &quot; + properties.getString(&quot;art_txt&quot;).replace(&quot;Brunnen_&quot;, &quot;&quot;);</span>
+<span class="fc" id="L355">            additionalInformation.add(fountainType);</span>
         }
         //additionalInformation.append(&quot;Fountain type: &quot;).append(properties.getString(&quot;art_txt&quot;)).append(&quot;\\n&quot;);
-<span class="nc bnc" id="L358" title="All 2 branches missed.">        if (properties.get(&quot;brunnenart_txt&quot;).getClass().toString().equals(&quot;class java.lang.String&quot;)){</span>
-<span class="nc" id="L359">            String access = &quot;Access: &quot; + properties.getString(&quot;brunnenart_txt&quot;);</span>
-<span class="nc" id="L360">            additionalInformation.add(access);</span>
+<span class="fc bfc" id="L358" title="All 2 branches covered.">        if (properties.get(&quot;brunnenart_txt&quot;).getClass().toString().equals(&quot;class java.lang.String&quot;)){</span>
+<span class="fc" id="L359">            String access = &quot;Access: &quot; + properties.getString(&quot;brunnenart_txt&quot;);</span>
+<span class="fc" id="L360">            additionalInformation.add(access);</span>
         }
         //additionalInformation.append(&quot;Access: &quot;).append(properties.getString(&quot;brunnenart_txt&quot;)).append(&quot;\\n&quot;);
-<span class="nc bnc" id="L363" title="All 2 branches missed.">        if (properties.get(&quot;baujahr&quot;).getClass().toString().equals(&quot;class java.lang.Integer&quot;)) {</span>
-<span class="nc bnc" id="L364" title="All 2 branches missed.">            if (properties.getInt(&quot;baujahr&quot;) != 0) {</span>
-<span class="nc" id="L365">                String yOC = &quot;Year of construction: &quot; + properties.get(&quot;baujahr&quot;);</span>
-<span class="nc" id="L366">                additionalInformation.add(yOC);</span>
+<span class="fc bfc" id="L363" title="All 2 branches covered.">        if (properties.get(&quot;baujahr&quot;).getClass().toString().equals(&quot;class java.lang.Integer&quot;)) {</span>
+<span class="fc bfc" id="L364" title="All 2 branches covered.">            if (properties.getInt(&quot;baujahr&quot;) != 0) {</span>
+<span class="fc" id="L365">                String yOC = &quot;Year of construction: &quot; + properties.get(&quot;baujahr&quot;);</span>
+<span class="fc" id="L366">                additionalInformation.add(yOC);</span>
             }
         }
         //additionalInformation.append(&quot;Year of construction: &quot;).append(properties.get(&quot;baujahr&quot;)).append(&quot;\\n&quot;);
@@ -375,97 +375,97 @@ public class DatabaseConnectorLocation {
         }
 
          */
-<span class="nc" id="L378">        newLocation.setAdditionalInformation(additionalInformation.toArray(new String[0]));</span>
+<span class="fc" id="L378">        newLocation.setAdditionalInformation(additionalInformation.toArray(new String[0]));</span>
 
-<span class="nc" id="L380">        return newLocation;</span>
+<span class="fc" id="L380">        return newLocation;</span>
     }
 
     public static Location fireplaceToLocation(JSONObject fireplaceAsJSON){
-<span class="nc" id="L384">        Location newLocation = new Location();</span>
+<span class="fc" id="L384">        Location newLocation = new Location();</span>
 
-<span class="nc" id="L386">        JSONObject barbecuePlace = fireplaceAsJSON.getJSONObject(&quot;BarbecuePlace&quot;);</span>
-<span class="nc" id="L387">        JSONArray features = fireplaceAsJSON.getJSONArray(&quot;Ausstattung&quot;);</span>
+<span class="fc" id="L386">        JSONObject barbecuePlace = fireplaceAsJSON.getJSONObject(&quot;BarbecuePlace&quot;);</span>
+<span class="fc" id="L387">        JSONArray features = fireplaceAsJSON.getJSONArray(&quot;Ausstattung&quot;);</span>
 
         // set ID
-<span class="nc" id="L390">        newLocation.setId(barbecuePlace.getInt(&quot;Id&quot;));</span>
+<span class="fc" id="L390">        newLocation.setId(barbecuePlace.getInt(&quot;Id&quot;));</span>
 
         // set coordinates
-<span class="nc" id="L393">        double lat = barbecuePlace.getDouble(&quot;Latitude&quot;);</span>
-<span class="nc" id="L394">        newLocation.setLatitude(lat);</span>
-<span class="nc" id="L395">        double lon = barbecuePlace.getDouble(&quot;Longitude&quot;);</span>
-<span class="nc" id="L396">        newLocation.setLongitude(lon);</span>
-<span class="nc" id="L397">        double[] coordinates = {lon, lat};</span>
-<span class="nc" id="L398">        newLocation.setCoordinates(coordinates);</span>
+<span class="fc" id="L393">        double lat = barbecuePlace.getDouble(&quot;Latitude&quot;);</span>
+<span class="fc" id="L394">        newLocation.setLatitude(lat);</span>
+<span class="fc" id="L395">        double lon = barbecuePlace.getDouble(&quot;Longitude&quot;);</span>
+<span class="fc" id="L396">        newLocation.setLongitude(lon);</span>
+<span class="fc" id="L397">        double[] coordinates = {lon, lat};</span>
+<span class="fc" id="L398">        newLocation.setCoordinates(coordinates);</span>
 
         // set address if fireplace is in Zurich
-<span class="nc bnc" id="L401" title="All 4 branches missed.">        if (newLocation.getLongitude() &gt; 8.4680486289 &amp;&amp; newLocation.getLongitude() &lt; 8.6191027275</span>
-<span class="nc bnc" id="L402" title="All 4 branches missed.">                &amp;&amp; newLocation.getLatitude() &gt; 47.3232261256 &amp;&amp; newLocation.getLatitude() &lt; 47.4308197123){</span>
-<span class="nc" id="L403">            newLocation.setAddress(DatabaseConnectorAddresses.getClosestAddress(newLocation.getId()));</span>
+<span class="fc bfc" id="L401" title="All 4 branches covered.">        if (newLocation.getLongitude() &gt; 8.4680486289 &amp;&amp; newLocation.getLongitude() &lt; 8.6191027275</span>
+<span class="fc bfc" id="L402" title="All 4 branches covered.">                &amp;&amp; newLocation.getLatitude() &gt; 47.3232261256 &amp;&amp; newLocation.getLatitude() &lt; 47.4308197123){</span>
+<span class="fc" id="L403">            newLocation.setAddress(DatabaseConnectorAddresses.getClosestAddress(newLocation.getId()));</span>
         }
 
 
         // set locationType
-<span class="nc" id="L408">        newLocation.setLocationType(LocationType.FIREPLACE);</span>
+<span class="fc" id="L408">        newLocation.setLocationType(LocationType.FIREPLACE);</span>
 
         // retrieve and set additional information
-<span class="nc" id="L411">        ArrayList&lt;String&gt; additionalInformation = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L412">        additionalInformation.add(&quot;Features and environment:&quot;);</span>
-<span class="nc bnc" id="L413" title="All 2 branches missed.">        for (int i = 0; i &lt; features.length(); i++){</span>
-<span class="nc" id="L414">            String feature = &quot;- &quot; + features.getString(i);</span>
-<span class="nc" id="L415">            additionalInformation.add(feature);</span>
+<span class="fc" id="L411">        ArrayList&lt;String&gt; additionalInformation = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L412">        additionalInformation.add(&quot;Features and environment:&quot;);</span>
+<span class="fc bfc" id="L413" title="All 2 branches covered.">        for (int i = 0; i &lt; features.length(); i++){</span>
+<span class="fc" id="L414">            String feature = &quot;- &quot; + features.getString(i);</span>
+<span class="fc" id="L415">            additionalInformation.add(feature);</span>
         }
-<span class="nc" id="L417">        newLocation.setAdditionalInformation(additionalInformation.toArray(new String[0]));</span>
+<span class="fc" id="L417">        newLocation.setAdditionalInformation(additionalInformation.toArray(new String[0]));</span>
 
-<span class="nc" id="L419">        return newLocation;</span>
+<span class="fc" id="L419">        return newLocation;</span>
     }
 
     public static Location recyclingToLocation(JSONObject recyclingAsJSON){
-<span class="nc" id="L423">        Location newLocation = new Location();</span>
+<span class="fc" id="L423">        Location newLocation = new Location();</span>
 
-<span class="nc" id="L425">        JSONObject properties = recyclingAsJSON.getJSONObject(&quot;properties&quot;);</span>
-<span class="nc" id="L426">        JSONObject geometry = recyclingAsJSON.getJSONObject(&quot;geometry&quot;);</span>
-<span class="nc" id="L427">        JSONArray coordinatesAsJSON = (JSONArray) geometry.get(&quot;coordinates&quot;);</span>
+<span class="fc" id="L425">        JSONObject properties = recyclingAsJSON.getJSONObject(&quot;properties&quot;);</span>
+<span class="fc" id="L426">        JSONObject geometry = recyclingAsJSON.getJSONObject(&quot;geometry&quot;);</span>
+<span class="fc" id="L427">        JSONArray coordinatesAsJSON = (JSONArray) geometry.get(&quot;coordinates&quot;);</span>
 
         // set ID
-<span class="nc" id="L430">        newLocation.setId(Integer.parseInt(properties.getString(&quot;objectid&quot;)));</span>
+<span class="fc" id="L430">        newLocation.setId(Integer.parseInt(properties.getString(&quot;objectid&quot;)));</span>
 
         // set coordinates
-<span class="nc" id="L433">        double lat = coordinatesAsJSON.getDouble(1);</span>
-<span class="nc" id="L434">        newLocation.setLatitude(lat);</span>
-<span class="nc" id="L435">        double lon = coordinatesAsJSON.getDouble(0);</span>
-<span class="nc" id="L436">        newLocation.setLongitude(lon);</span>
-<span class="nc" id="L437">        double[] coordinates = {lon, lat};</span>
-<span class="nc" id="L438">        newLocation.setCoordinates(coordinates);</span>
+<span class="fc" id="L433">        double lat = coordinatesAsJSON.getDouble(1);</span>
+<span class="fc" id="L434">        newLocation.setLatitude(lat);</span>
+<span class="fc" id="L435">        double lon = coordinatesAsJSON.getDouble(0);</span>
+<span class="fc" id="L436">        newLocation.setLongitude(lon);</span>
+<span class="fc" id="L437">        double[] coordinates = {lon, lat};</span>
+<span class="fc" id="L438">        newLocation.setCoordinates(coordinates);</span>
 
         // set address
-<span class="nc" id="L441">        newLocation.setAddress(properties.getString(&quot;adresse&quot;));</span>
+<span class="fc" id="L441">        newLocation.setAddress(properties.getString(&quot;adresse&quot;));</span>
 
         // set locationType
-<span class="nc" id="L444">        newLocation.setLocationType(LocationType.RECYCLING_STATION);</span>
+<span class="fc" id="L444">        newLocation.setLocationType(LocationType.RECYCLING_STATION);</span>
 
         // retrieve and set additional information
-<span class="nc" id="L447">        ArrayList&lt;String&gt; additionalInformation = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L448">        StringBuilder address = new StringBuilder();</span>
-<span class="nc bnc" id="L449" title="All 6 branches missed.">        if (properties.getString(&quot;adresse&quot;) != null &amp;&amp; properties.getString(&quot;plz&quot;) != null &amp;&amp; properties.getString(&quot;ort&quot;) != null){</span>
-<span class="nc" id="L450">            address.append(&quot;Full Address: &quot;).append(properties.getString(&quot;adresse&quot;)).append(&quot;, &quot;)</span>
-<span class="nc" id="L451">                    .append(properties.getString(&quot;plz&quot;)).append(&quot; &quot;).append(properties.getString(&quot;ort&quot;));</span>
-<span class="nc" id="L452">            additionalInformation.add(address.toString());</span>
+<span class="fc" id="L447">        ArrayList&lt;String&gt; additionalInformation = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L448">        StringBuilder address = new StringBuilder();</span>
+<span class="pc bpc" id="L449" title="3 of 6 branches missed.">        if (properties.getString(&quot;adresse&quot;) != null &amp;&amp; properties.getString(&quot;plz&quot;) != null &amp;&amp; properties.getString(&quot;ort&quot;) != null){</span>
+<span class="fc" id="L450">            address.append(&quot;Full Address: &quot;).append(properties.getString(&quot;adresse&quot;)).append(&quot;, &quot;)</span>
+<span class="fc" id="L451">                    .append(properties.getString(&quot;plz&quot;)).append(&quot; &quot;).append(properties.getString(&quot;ort&quot;));</span>
+<span class="fc" id="L452">            additionalInformation.add(address.toString());</span>
         }
 
-<span class="nc" id="L455">        additionalInformation.add(&quot;Disposable at this location:&quot;);</span>
-<span class="nc bnc" id="L456" title="All 2 branches missed.">        if (properties.get(&quot;metall&quot;).getClass().toString().equals(&quot;class java.lang.String&quot;)){</span>
-<span class="nc" id="L457">            additionalInformation.add(&quot;- Metal&quot;);</span>
+<span class="fc" id="L455">        additionalInformation.add(&quot;Disposable at this location:&quot;);</span>
+<span class="fc bfc" id="L456" title="All 2 branches covered.">        if (properties.get(&quot;metall&quot;).getClass().toString().equals(&quot;class java.lang.String&quot;)){</span>
+<span class="fc" id="L457">            additionalInformation.add(&quot;- Metal&quot;);</span>
         }
-<span class="nc bnc" id="L459" title="All 2 branches missed.">        if (properties.get(&quot;glas&quot;).getClass().toString().equals(&quot;class java.lang.String&quot;)){</span>
-<span class="nc" id="L460">            additionalInformation.add(&quot;- Glass&quot;);</span>
+<span class="pc bpc" id="L459" title="1 of 2 branches missed.">        if (properties.get(&quot;glas&quot;).getClass().toString().equals(&quot;class java.lang.String&quot;)){</span>
+<span class="fc" id="L460">            additionalInformation.add(&quot;- Glass&quot;);</span>
         }
-<span class="nc bnc" id="L462" title="All 2 branches missed.">        if (properties.get(&quot;oel&quot;).getClass().toString().equals(&quot;class java.lang.String&quot;)){</span>
-<span class="nc" id="L463">            additionalInformation.add(&quot;- Oil&quot;);</span>
+<span class="fc bfc" id="L462" title="All 2 branches covered.">        if (properties.get(&quot;oel&quot;).getClass().toString().equals(&quot;class java.lang.String&quot;)){</span>
+<span class="fc" id="L463">            additionalInformation.add(&quot;- Oil&quot;);</span>
         }
 
-<span class="nc" id="L466">        newLocation.setAdditionalInformation(additionalInformation.toArray(new String[0]));</span>
+<span class="fc" id="L466">        newLocation.setAdditionalInformation(additionalInformation.toArray(new String[0]));</span>
 
-<span class="nc" id="L468">        return newLocation;</span>
+<span class="fc" id="L468">        return newLocation;</span>
     }
 
     // one time move of address from address DB to location DB for performance reasons, do not use again

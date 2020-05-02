@@ -120,7 +120,7 @@ public class LocationServiceIntegrationTest {
 
         // attention: deletion doesn't work!
         //fountainsCollection.deleteOne(eq("properties", Document.parse("objectid:" + newFountain.getId())));
-        //fountainsCollection.deleteOne(eq("properties.objectid", newRecycling.getId()));
+        userFountainsCollection.deleteOne(eq("properties.objectid", newFountain.getId()));
         //fountainsCollection.deleteOne(eq("properties.objectid", newFireplace.getId()));
 
     }
@@ -196,6 +196,7 @@ public class LocationServiceIntegrationTest {
         }
 
         usersCollection.deleteOne(eq("username", "testUsername"));
+        userFountainsCollection.deleteOne(eq("properties.objectid", newFountain.getId()));
     }
 
 }

@@ -64,6 +64,7 @@ public class UserServiceUnitTest {
     @AfterEach
     public void tearDown(){
         usersCollection.deleteOne(eq("username", "testUsername"));
+        usersCollection.deleteOne(eq("username", "newTestUsername"));
     }
 
     /*@BeforeEach
