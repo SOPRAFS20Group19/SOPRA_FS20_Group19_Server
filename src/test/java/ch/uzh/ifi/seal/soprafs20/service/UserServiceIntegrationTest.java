@@ -160,6 +160,7 @@ public class UserServiceIntegrationTest {
 
     }
 
+    // Checks if the user can not log in if the password is false for the given username
     @Test
     public void checkForLogin_wrongPassword_throwsException() {
         FindIterable<Document> request = usersCollection.find(eq("username", "testUsername"));
@@ -190,6 +191,7 @@ public class UserServiceIntegrationTest {
 
     }
 
+    // Checks if the status of user is OFFLINE if the user logs out
     @Test
     public void checkForLogout_success() {
         FindIterable<Document> request = usersCollection.find(eq("username", "testUsername"));
@@ -218,6 +220,7 @@ public class UserServiceIntegrationTest {
 
     }
 
+    // Checks if the users credentials are updated if the user changes the credentials
     @Test
     public void changeCredentials_validInputs_success() {
         // given

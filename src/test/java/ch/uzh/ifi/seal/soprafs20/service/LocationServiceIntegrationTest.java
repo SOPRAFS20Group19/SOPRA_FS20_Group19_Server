@@ -81,15 +81,13 @@ public class LocationServiceIntegrationTest {
      */
 
     @Test
-    public void getLocation_validInputs_success(){
-        //create location test??
+    public void createLocation_validInputs_success(){
+        // Test create location
 
         Location testFountain = new Location();
         testFountain.setLocationType(LocationType.FOUNTAIN);
         testFountain.setLongitude(0);
         testFountain.setLatitude(0);
-
-        /*
 
         Location testRecycling = new Location();
         testRecycling.setLocationType(LocationType.RECYCLING_STATION);
@@ -99,35 +97,35 @@ public class LocationServiceIntegrationTest {
         Location testFireplace = new Location();
         testFireplace.setLocationType(LocationType.FIREPLACE);
         testFireplace.setLongitude(2);
-        testFireplace.setLatitude(2);*/
+        testFireplace.setLatitude(2);
 
         Location newFountain = locationService.createLocation(testFountain);
-        //Location newRecycling = locationService.createLocation(testRecycling);
-        //Location newFireplace = locationService.createLocation(testFireplace);
+        Location newRecycling = locationService.createLocation(testRecycling);
+        Location newFireplace = locationService.createLocation(testFireplace);
 
         assertEquals(testFountain.getLocationType(), newFountain.getLocationType());
         assertEquals(testFountain.getLongitude(), newFountain.getLongitude());
         assertEquals(testFountain.getLatitude(), newFountain.getLatitude());
 
-        /*
         assertEquals(testRecycling.getLocationType(), newRecycling.getLocationType());
         assertEquals(testRecycling.getLongitude(), newRecycling.getLongitude());
         assertEquals(testRecycling.getLatitude(), newRecycling.getLatitude());
 
         assertEquals(testFireplace.getLocationType(), newFireplace.getLocationType());
         assertEquals(testFireplace.getLongitude(), newFireplace.getLongitude());
-        assertEquals(testFireplace.getLatitude(), newFireplace.getLatitude());*/
+        assertEquals(testFireplace.getLatitude(), newFireplace.getLatitude());
 
-        // attention: deletion doesn't work!
-        //fountainsCollection.deleteOne(eq("properties", Document.parse("objectid:" + newFountain.getId())));
+        // Deletes the created location for testing in the database
         userFountainsCollection.deleteOne(eq("properties.objectid", newFountain.getId()));
-        //fountainsCollection.deleteOne(eq("properties.objectid", newFireplace.getId()));
+        userRecyclingCollection.deleteOne(eq("properties.objectid", newRecycling.getId()));
+        userFireplacesCollection.deleteOne(eq("properties.objectid", newFireplace.getId()));
 
     }
 
+
     @Test
     public void getFilteredLocations_success(){
-        //Test Filter Fountains
+        //Test filter for fountains
         FilterPostDTO filterPostDTO = new FilterPostDTO();
         filterPostDTO.setFountains(true);
         filterPostDTO.setRecyclingStations(false);
@@ -138,7 +136,7 @@ public class LocationServiceIntegrationTest {
             assertEquals(location.getLocationType(), LocationType.FOUNTAIN);
         }
 
-        //Test filter RecyclingStation
+        //Test filter for recycling stations
         FilterPostDTO filterPostDTO2 = new FilterPostDTO();
         filterPostDTO2.setFountains(false);
         filterPostDTO2.setRecyclingStations(true);
@@ -149,7 +147,7 @@ public class LocationServiceIntegrationTest {
             assertEquals(location.getLocationType(), LocationType.RECYCLING_STATION);
         }
 
-        //Test filter Fireplaces
+        //Test filter for fireplaces
         FilterPostDTO filterPostDTO3 = new FilterPostDTO();
         filterPostDTO3.setFountains(false);
         filterPostDTO3.setRecyclingStations(false);
@@ -159,14 +157,13 @@ public class LocationServiceIntegrationTest {
         for(Location location:filteredLocations3){
             assertEquals(location.getLocationType(), LocationType.FIREPLACE);
         }
-        //Noch alle falsch testen
     }
 
-    //Chat??
+
 
     @Test
-    public void locationChat(){
-        // tests the chat
+    public void locationComment(){
+        // Tests the comment box each location has
         Location testFountain = new Location();
         testFountain.setLocationType(LocationType.FOUNTAIN);
         testFountain.setLongitude(0);
