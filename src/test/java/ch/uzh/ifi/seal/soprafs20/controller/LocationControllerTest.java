@@ -267,30 +267,44 @@ public class LocationControllerTest {
     // Code 200 get /locations/favorites/{userId}
     @Test
     public void getFavoritesOfUser_validInput() throws Exception{
-        Location location = new Location();
-        location.setId(1);
-        location.setAddress("Street Nr");
-        location.setCoordinates(new double[]{47.35, 8.5});
-        location.setAdditionalInformation(new String[]{"Infos", "Info2"});
-        location.setLocationType(LocationType.FIREPLACE);
-
+        // create first location
+        Location location1 = new Location();
+        location1.setId(1);
+        location1.setAddress("Street Nr");
+        location1.setCoordinates(new double[]{47.35, 8.5});
+        location1.setAdditionalInformation(new String[]{"Infos", "Info2"});
+        location1.setLocationType(LocationType.FIREPLACE);
+        // create second location
+        Location location2 = new Location();
+        location2.setId(2);
+        location2.setAddress("Street2 Nr2");
+        location2.setCoordinates(new double[]{47.4, 8.6});
+        location2.setAdditionalInformation(new String[]{"Infos", "Info2"});
+        location2.setLocationType(LocationType.RECYCLING_STATION);
+        // add locations to list
         List<Location> favoriteLocations = new ArrayList<>();
-        favoriteLocations.add(location);
-
+        favoriteLocations.add(location1);
+        favoriteLocations.add(location2);
+        // mock the get request
         given(locationService.getFavoriteLocations(1)).willReturn(favoriteLocations);
-
         MockHttpServletRequestBuilder getRequest = get("/locations/favorites/1").contentType(MediaType.APPLICATION_JSON);
-
         MvcResult response = mockMvc.perform(getRequest).andReturn();
         String responseAsString = response.getResponse().getContentAsString();
-
-        Assertions.assertEquals(location.getId(), (Integer) JsonPath.parse(responseAsString).read("$[0].id"));
-        Assertions.assertEquals(location.getAddress(), JsonPath.parse(responseAsString).read("$[0].address"));
-        Assertions.assertEquals(location.getLongitude(), JsonPath.parse(responseAsString).read("$[0].longitude"));
-        Assertions.assertEquals(location.getLatitude(), JsonPath.parse(responseAsString).read("$[0].latitude"));
-        Assertions.assertEquals(location.getAdditionalInformation()[0], JsonPath.parse(responseAsString).read("$[0].additionalInformation.[0]"));
-        Assertions.assertEquals(location.getAdditionalInformation()[1], JsonPath.parse(responseAsString).read("$[0].additionalInformation.[1]"));
-        Assertions.assertEquals(location.getLocationType().toString(), JsonPath.parse(responseAsString).read("$[0].locationType"));
+        // assert that the result equals the given locations
+        Assertions.assertEquals(location1.getId(), (Integer) JsonPath.parse(responseAsString).read("$[0].id"));
+        Assertions.assertEquals(location1.getAddress(), JsonPath.parse(responseAsString).read("$[0].address"));
+        Assertions.assertEquals(location1.getLongitude(), JsonPath.parse(responseAsString).read("$[0].longitude"));
+        Assertions.assertEquals(location1.getLatitude(), JsonPath.parse(responseAsString).read("$[0].latitude"));
+        Assertions.assertEquals(location1.getAdditionalInformation()[0], JsonPath.parse(responseAsString).read("$[0].additionalInformation.[0]"));
+        Assertions.assertEquals(location1.getAdditionalInformation()[1], JsonPath.parse(responseAsString).read("$[0].additionalInformation.[1]"));
+        Assertions.assertEquals(location1.getLocationType().toString(), JsonPath.parse(responseAsString).read("$[0].locationType"));
+        Assertions.assertEquals(location2.getId(), (Integer) JsonPath.parse(responseAsString).read("$[1].id"));
+        Assertions.assertEquals(location2.getAddress(), JsonPath.parse(responseAsString).read("$[1].address"));
+        Assertions.assertEquals(location2.getLongitude(), JsonPath.parse(responseAsString).read("$[1].longitude"));
+        Assertions.assertEquals(location2.getLatitude(), JsonPath.parse(responseAsString).read("$[1].latitude"));
+        Assertions.assertEquals(location2.getAdditionalInformation()[0], JsonPath.parse(responseAsString).read("$[1].additionalInformation.[0]"));
+        Assertions.assertEquals(location2.getAdditionalInformation()[1], JsonPath.parse(responseAsString).read("$[1].additionalInformation.[1]"));
+        Assertions.assertEquals(location2.getLocationType().toString(), JsonPath.parse(responseAsString).read("$[1].locationType"));
         Assertions.assertEquals(200, response.getResponse().getStatus());
     }
 
