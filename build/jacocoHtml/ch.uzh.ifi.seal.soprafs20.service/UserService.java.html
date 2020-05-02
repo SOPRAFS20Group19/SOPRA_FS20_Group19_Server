@@ -39,33 +39,33 @@ import java.util.*;
 
     // updates a user with the updated name, username and password
     public void updateUser(int userId, UserPutDTO userWithNewData) {
-<span class="nc" id="L42">        User userToUpdate = DatabaseConnectorUser.getUserById(userId);</span>
+<span class="fc" id="L42">        User userToUpdate = DatabaseConnectorUser.getUserById(userId);</span>
 
-<span class="nc bnc" id="L44" title="All 2 branches missed.">        if (userToUpdate == null){</span>
+<span class="pc bpc" id="L44" title="1 of 2 branches missed.">        if (userToUpdate == null){</span>
 <span class="nc" id="L45">            throw new UserNotFoundException(&quot;This user could not be found.&quot;);</span>
         }
 
-<span class="nc bnc" id="L48" title="All 2 branches missed.">        if (userWithNewData.getName() != null){</span>
-<span class="nc" id="L49">            userToUpdate.setName(userWithNewData.getName());</span>
-<span class="nc" id="L50">            DatabaseConnectorUser.updateName(userToUpdate);</span>
+<span class="pc bpc" id="L48" title="1 of 2 branches missed.">        if (userWithNewData.getName() != null){</span>
+<span class="fc" id="L49">            userToUpdate.setName(userWithNewData.getName());</span>
+<span class="fc" id="L50">            DatabaseConnectorUser.updateName(userToUpdate);</span>
         }
 
-<span class="nc bnc" id="L53" title="All 2 branches missed.">        if (userWithNewData.getUsername() != null){</span>
-<span class="nc" id="L54">            userToUpdate.setUsername(userWithNewData.getUsername());</span>
-<span class="nc" id="L55">            DatabaseConnectorUser.updateUsername(userToUpdate);</span>
+<span class="pc bpc" id="L53" title="1 of 2 branches missed.">        if (userWithNewData.getUsername() != null){</span>
+<span class="fc" id="L54">            userToUpdate.setUsername(userWithNewData.getUsername());</span>
+<span class="fc" id="L55">            DatabaseConnectorUser.updateUsername(userToUpdate);</span>
         }
 
-<span class="nc bnc" id="L58" title="All 2 branches missed.">        if (userWithNewData.getPassword() != null){</span>
-<span class="nc" id="L59">            userToUpdate.setPassword(userWithNewData.getPassword());</span>
-<span class="nc" id="L60">            DatabaseConnectorUser.updatePassword(userToUpdate);</span>
+<span class="pc bpc" id="L58" title="1 of 2 branches missed.">        if (userWithNewData.getPassword() != null){</span>
+<span class="fc" id="L59">            userToUpdate.setPassword(userWithNewData.getPassword());</span>
+<span class="fc" id="L60">            DatabaseConnectorUser.updatePassword(userToUpdate);</span>
         }
 
-<span class="nc bnc" id="L63" title="All 2 branches missed.">        if (userWithNewData.getAvatarNr() != 0){</span>
-<span class="nc" id="L64">            userToUpdate.setAvatarNr(userWithNewData.getAvatarNr());</span>
-<span class="nc" id="L65">            DatabaseConnectorUser.updateAvatarNr(userToUpdate);</span>
+<span class="pc bpc" id="L63" title="1 of 2 branches missed.">        if (userWithNewData.getAvatarNr() != 0){</span>
+<span class="fc" id="L64">            userToUpdate.setAvatarNr(userWithNewData.getAvatarNr());</span>
+<span class="fc" id="L65">            DatabaseConnectorUser.updateAvatarNr(userToUpdate);</span>
         }
 
-<span class="nc" id="L68">    }</span>
+<span class="fc" id="L68">    }</span>
 
     // logs out the user
     public void logoutUser(int id){
@@ -95,29 +95,29 @@ import java.util.*;
 
     // creates a new user in the user repository
     public User createUser(User newUser) {
-<span class="nc" id="L98">        newUser.setCreationDate(UserService.getCurrentDate());</span>
-<span class="nc" id="L99">        newUser.setFavoriteLocations(new ArrayList&lt;Integer&gt;());</span>
+<span class="fc" id="L98">        newUser.setCreationDate(UserService.getCurrentDate());</span>
+<span class="fc" id="L99">        newUser.setFavoriteLocations(new ArrayList&lt;Integer&gt;());</span>
         //Checks whether username is already taken
-<span class="nc bnc" id="L101" title="All 2 branches missed.">        if (DatabaseConnectorUser.checkIfUsernameExists(newUser.getUsername())){</span>
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">        if (DatabaseConnectorUser.checkIfUsernameExists(newUser.getUsername())){</span>
 <span class="nc" id="L102">            throw new DuplicatedUserException(&quot;The provided username is already taken. Please try a new one.&quot;);</span>
         }
         //If the username is not already taken create a new User in the database
-<span class="nc" id="L105">        User userToReturn = DatabaseConnectorUser.createUser(newUser);</span>
+<span class="fc" id="L105">        User userToReturn = DatabaseConnectorUser.createUser(newUser);</span>
 
-<span class="nc" id="L107">        log.debug(&quot;Created Information for User: {}&quot;, newUser);</span>
+<span class="fc" id="L107">        log.debug(&quot;Created Information for User: {}&quot;, newUser);</span>
 
-<span class="nc" id="L109">        return userToReturn;</span>
+<span class="fc" id="L109">        return userToReturn;</span>
     }
 
     // creates a timestamp of the current date for the creation date during the registration
     public static String getCurrentDate(){
 
-<span class="nc" id="L115">        Date datenow = Calendar.getInstance().getTime();</span>
-<span class="nc" id="L116">        DateFormat dateFormat = new SimpleDateFormat(&quot;dd.MM.yyyy&quot;);</span>
-<span class="nc" id="L117">        Timestamp timestamp = new Timestamp(System.currentTimeMillis());</span>
-<span class="nc" id="L118">        LocalDate date = LocalDate.now();</span>
+<span class="fc" id="L115">        Date datenow = Calendar.getInstance().getTime();</span>
+<span class="fc" id="L116">        DateFormat dateFormat = new SimpleDateFormat(&quot;dd.MM.yyyy&quot;);</span>
+<span class="fc" id="L117">        Timestamp timestamp = new Timestamp(System.currentTimeMillis());</span>
+<span class="fc" id="L118">        LocalDate date = LocalDate.now();</span>
         //return date.toString();
-<span class="nc" id="L120">        return dateFormat.format(datenow);</span>
+<span class="fc" id="L120">        return dateFormat.format(datenow);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

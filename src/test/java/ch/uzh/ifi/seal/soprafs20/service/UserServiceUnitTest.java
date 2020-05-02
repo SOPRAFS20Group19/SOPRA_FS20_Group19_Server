@@ -46,7 +46,6 @@ public class UserServiceUnitTest {
 
     @BeforeEach
     public void setUp(){
-        // given
         FindIterable<Document> request = usersCollection.find(eq("username", "testUsername"));
         Document user = request.first();
         assertNull(user);
@@ -57,7 +56,6 @@ public class UserServiceUnitTest {
         testUser.setPassword("password");
         testUser.setId(1000000);
 
-        // when
         userService.createUser(testUser);
     }
 
@@ -116,7 +114,6 @@ public class UserServiceUnitTest {
      * This method is used to test if method updateUser works properly
      */
 
-
     @Test
     public void testUpdateUser(){
         //find user by username
@@ -126,26 +123,35 @@ public class UserServiceUnitTest {
         User userRepresentation = DatabaseConnectorUser.getUserInfo(user);
         int userId = userRepresentation.getId();
 
+        //test that correct user was found
         assertTrue(userRepresentation.getName().equals("testName"), "Name of user before change was wrong.");
         assertTrue(userRepresentation.getUsername().equals("testUsername"), "Username of user before change was wrong.");
         assertTrue(userRepresentation.getPassword().equals("password"), "Password of user before change was wrong.");
+        assertTrue(userRepresentation.getAvatarNr() ==(0), "Avatar of user before change was wrong.");
 
+        //here the "real" testing starts
+        //create userPutDTO, change Username, Name and Password
         UserPutDTO userPutDTO = new UserPutDTO();
         userPutDTO.setUsername("newTestUsername");
         userPutDTO.setName("newTestName");
         userPutDTO.setPassword("newPassword");
+        userPutDTO.setAvatarId(6);
 
+        //call the method which is to be tested. the updated properties of the user are stored in the userPutDTO
         userService.updateUser(userId, userPutDTO);
 
         //find updated user by Id
         FindIterable<Document> request2 =  usersCollection.find(eq("userId", userId));
         Document user2 = request2.first();
+
         //create a new user representation
         User updatedUserRepresentation = DatabaseConnectorUser.getUserInfo(user2);
 
+        //test that user was updated properly
         assertTrue(updatedUserRepresentation.getName().equals("newTestName"), "Name of user after change was wrong.");
         assertTrue(updatedUserRepresentation.getUsername().equals("newTestUsername"), "Username of user after change was wrong.");
         assertTrue(updatedUserRepresentation.getPassword().equals("newPassword"), "Password of user after change was wrong.");
+        assertTrue(updatedUserRepresentation.getAvatarNr() == 6, "Avatar of user after change was wrong.");
     }
 
     /**
