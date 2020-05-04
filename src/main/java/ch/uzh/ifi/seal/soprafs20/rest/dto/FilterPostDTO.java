@@ -7,6 +7,30 @@ public class FilterPostDTO {
 
     private boolean recyclingStations;
 
+    private boolean toilets;
+    private boolean tableTennis;
+    private boolean bench;
+
+    public void setBench(boolean bench) {
+        this.bench = bench;
+    }
+
+    public void setTableTennis(boolean tableTennis) {
+        this.tableTennis = tableTennis;
+    }
+
+    public void setToilets(boolean toilets) {
+        this.toilets = toilets;
+    }
+
+    public boolean showToilets() {
+        return toilets;
+    }
+    public boolean showTableTennis(){return  tableTennis;}
+    public boolean showBenches(){return  bench;}
+
+
+
     public boolean showFireplaces() {
         return fireplaces;
     }

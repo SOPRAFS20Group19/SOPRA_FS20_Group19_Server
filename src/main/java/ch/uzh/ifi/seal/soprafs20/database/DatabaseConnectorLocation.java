@@ -39,7 +39,13 @@ public class DatabaseConnectorLocation {
 
     static MongoCollection<Document> userRecyclingCollection = locationStorage.getCollection("UserRecycling");
 
+    static MongoCollection<Document> toiletsCollection = locationStorage.getCollection("WC");
 
+    static MongoCollection<Document> userToiletsCollection = locationStorage.getCollection("UserWC");
+
+    static MongoCollection<Document> userTableTennisCollection = locationStorage.getCollection("UserTableTennis");
+
+    static MongoCollection<Document> userBenchCollection = locationStorage.getCollection("UserBench");
 
     public static void getFountainById(int id){
         Document fountainOne = fountainsCollection.find().first();
@@ -162,32 +168,111 @@ public class DatabaseConnectorLocation {
         userRecyclingCollection.insertOne(doc);
     }
 
+    public static void addNewToiletToDatabase(Location location){
+        Document doc = new Document()
+                .append("latitude", location.getLatitude())
+                .append("longitude", location.getLongitude())
+                .append("objectid", location.getId())
+                .append("adresse", location.getAdresse())
+                .append("ort", location.getOrt())
+                .append("plz", location.getPlz())
+                .append("openinghours", location.getOpeningHours())
+                .append("cost", location.getCost())
+                .append("category", location.getCategory());
+        userToiletsCollection.insertOne(doc);
+    }
+
+    public static void addNewTableTennisToDatabase(Location location){
+        Document doc = new Document()
+                .append("objectId", location.getId())
+                .append("latitude", location.getLatitude())
+                .append("longitude", location.getLongitude())
+                .append("slabQuality", location.getSlabQuality())
+                .append("net", location.getNet())
+                .append("closestStreet", DatabaseConnectorAddresses.getClosestAddress(location.getId()));
+        userTableTennisCollection.insertOne(doc);
+
+        // creates a new entry in the closestAddress DB
+        DatabaseConnectorAddresses.createEntry(location.getId());
+
+        Document updatedDoc = new Document().append("$set", new Document()
+                .append("closestStreet", DatabaseConnectorAddresses.getClosestAddress(location.getId())));
+        userTableTennisCollection.updateOne(eq("objectId", location.getId()), updatedDoc);
+    }
+
+    public static void addNewBenchToDatabase(Location location){
+        Document doc = new Document()
+                .append("objectId", location.getId())
+                .append("latitude", location.getLatitude())
+                .append("longitude", location.getLongitude())
+                .append("view", location.getView())
+                .append("peace", location.getPeace())
+                .append("romantics", location.getRomantics())
+                .append("comfort", location.getComfort())
+                .append("closestStreet", DatabaseConnectorAddresses.getClosestAddress(location.getId()));
+        userBenchCollection.insertOne(doc);
+
+        // creates a new entry in the closestAddress DB
+        DatabaseConnectorAddresses.createEntry(location.getId());
+
+        Document updatedDoc = new Document().append("$set", new Document()
+                .append("closestStreet", DatabaseConnectorAddresses.getClosestAddress(location.getId())));
+        userBenchCollection.updateOne(eq("objectId", location.getId()), updatedDoc);
+    }
+
+    //Helper function which generates a unique table tennis id
+    public static int generateBenchId(){
+        int random = (int) (Math.random() * 10000) + 60000000;
+        FindIterable<Document> request = userBenchCollection.find(eq("objectid", random));
+
+        if (request.first() != null){DatabaseConnectorLocation.generateBenchId();};
+        return  random;
+    }
+
+    //Helper function which generates a unique table tennis id
+    public static int generateTableTennisId(){
+        int random = (int) (Math.random() * 10000) + 50000000;
+        FindIterable<Document> request = userTableTennisCollection.find(eq("objectid", random));
+
+        if (request.first() != null){DatabaseConnectorLocation.generateTableTennisId();};
+        return  random;
+    }
+
+    //Helper function which generates a unique toilet id
+    public static int generateToiletId(){
+        int random = (int) (Math.random() * 10000) + 40000000;
+        FindIterable<Document> request = toiletsCollection.find(eq("objectid", random));
+        FindIterable<Document> request2 = userToiletsCollection.find(eq("objectid", random));
+
+        if (request.first() != null || request2.first() != null){DatabaseConnectorLocation.generateToiletId();};
+        return  random;
+    }
 
     //Helper function which generates a unique fountain id
     public static int generateFountainId(){
         int random = (int) (Math.random() * 10000) + 10000000;
-        FindIterable<Document> request = userFountainsCollection.find(eq("userId", random));
-        FindIterable<Document> request2 = fountainsCollection.find(eq("userId", random));
+        FindIterable<Document> request = userFountainsCollection.find(eq("properties.objectid", random));
+        FindIterable<Document> request2 = fountainsCollection.find(eq("properties.objectid", random));
 
-        if (request.first() != null || request2.first() != null){random = DatabaseConnectorLocation.generateFountainId();};
+        if (request.first() != null || request2.first() != null){DatabaseConnectorLocation.generateFountainId();};
         return  random;
     }
 
     //Helper function which generates a unique fireplace id
     public static int generateFireplaceId(){
         int random = (int) (Math.random() * 10000) + 20000000;
-        FindIterable<Document> request = userFireplacesCollection.find(eq("userId", random));
-        FindIterable<Document> request2 = fireplacesCollection.find(eq("userId", random));
-        if (request.first() != null || request2.first() != null){random = DatabaseConnectorLocation.generateFireplaceId();};
+        FindIterable<Document> request = userFireplacesCollection.find(eq("BarbecuePlace.Id", random));
+        FindIterable<Document> request2 = fireplacesCollection.find(eq("BarbecuePlace.Id", random));
+        if (request.first() != null || request2.first() != null){DatabaseConnectorLocation.generateFireplaceId();};
         return  random;
     }
 
     //Helper function which generates a unique fireplace id
     public static int generateRecyclingId(){
         int random = (int) (Math.random() * 10000) + 30000000;
-        FindIterable<Document> request = userRecyclingCollection.find(eq("userId", random));
-        FindIterable<Document> request2 = recyclingCollection.find(eq("userId", random));
-        if (request.first() != null || request2.first() != null){random = DatabaseConnectorLocation.generateRecyclingId();};
+        FindIterable<Document> request = userRecyclingCollection.find(eq("properties.objectid", Integer.toString(random)));
+        FindIterable<Document> request2 = recyclingCollection.find(eq("properties.objectid", Integer.toString(random)));
+        if (request.first() != null || request2.first() != null){DatabaseConnectorLocation.generateRecyclingId();};
         return  random;
     }
 
@@ -210,19 +295,23 @@ public class DatabaseConnectorLocation {
 
         }
 
+        else if (location.getLocationType() == LocationType.TOILET){
+            location.setId(generateToiletId());
+            addNewToiletToDatabase(location);
+        }
+
+        else if (location.getLocationType() == LocationType.TABLE_TENNIS){
+            location.setId(generateTableTennisId());
+            addNewTableTennisToDatabase(location);
+        }
+
+        else if (location.getLocationType() == LocationType.BENCH){
+            location.setId(generateBenchId());
+            addNewBenchToDatabase(location);
+        }
         return location.getId();
-
-        /*
-        else if (location.getLocationType() == LocationType.FIREPLACE){
-            fireplacesCollection.insertOne(doc);
-        }
-        else {
-            recyclingCollection.insertOne(doc);
-        }
-
-         */
-
     }
+
 
     public static List<Location> getUserFountains() throws JSONException {
         List<Document> fountainsList = userFountainsCollection.find().into(new ArrayList<>());
@@ -277,6 +366,63 @@ public class DatabaseConnectorLocation {
         return recyclingListLocation;
     }
 
+    public static List<Location> getUserToilets(){
+        List<Document> toiletsList = userToiletsCollection.find().into(new ArrayList<>());
+        List<Location> toiletsListLocation = new ArrayList<>();
+        for (Document toilet: toiletsList){
+            String toiletAsString = toilet.toJson();
+            JSONObject toiletAsJSON = new JSONObject(toiletAsString);
+            //convert Document to Location
+            Location toiletLocation = toiletToLocation(toiletAsJSON);
+            //add Location to List of Locations
+            toiletsListLocation.add(toiletLocation);
+        }
+        return toiletsListLocation;
+    }
+
+    public static List<Location> getUserTableTennis(){
+        List<Document> tableTennisList = userTableTennisCollection.find().into(new ArrayList<>());
+        List<Location> tableTennisListLocation = new ArrayList<>();
+        for (Document tableTennis: tableTennisList){
+            String tableTennisAsString = tableTennis.toJson();
+            JSONObject tableTennisAsJSON = new JSONObject(tableTennisAsString);
+            //convert Document to Location
+            Location tableTennisLocation = tableTennisToLocation(tableTennisAsJSON);
+            //add Location to List of Locations
+            tableTennisListLocation.add(tableTennisLocation);
+        }
+        return tableTennisListLocation;
+    }
+
+    public static List<Location> getUserBench(){
+        List<Document> benchList = userBenchCollection.find().into(new ArrayList<>());
+        List<Location> benchListLocation = new ArrayList<>();
+        for (Document bench: benchList){
+            String benchAsString = bench.toJson();
+            JSONObject benchAsJSON = new JSONObject(benchAsString);
+            //convert Document to Location
+            Location benchLocation = benchToLocation(benchAsJSON);
+            //add Location to List of Locations
+            benchListLocation.add(benchLocation);
+        }
+        return benchListLocation;
+    }
+
+    public static List<Location> getToilets(){
+        List<Document> toiletsList = toiletsCollection.find().into(new ArrayList<>());
+        List<Location> toiletsListLocation = new ArrayList<>();
+        for (Document toilet: toiletsList){
+            String toiletAsString = toilet.toJson();
+            JSONObject toiletAsJSON = new JSONObject(toiletAsString);
+            //convert Document to Location
+            Location toiletLocation = toiletToLocation(toiletAsJSON);
+            //add Location to List of Locations
+            toiletsListLocation.add(toiletLocation);
+        }
+        return toiletsListLocation;
+    }
+
+
     public static List<Location> getFountains() throws JSONException {
         List<Document> fountainsList = fountainsCollection.find().into(new ArrayList<>());
         List<Location> fountainsListLocation = new ArrayList<>();
@@ -322,6 +468,128 @@ public class DatabaseConnectorLocation {
             recyclingListLocation.add(recyclingLocation);
         }
         return recyclingListLocation;
+    }
+
+    public static Location benchToLocation(JSONObject benchAsJSON) throws JSONException {
+        Location newLocation = new Location();
+
+        // set coordinates
+        double[] coordinates = {benchAsJSON.getDouble("longitude"), benchAsJSON.getDouble("latitude")};
+        newLocation.setCoordinates(coordinates);
+
+        newLocation.setId(benchAsJSON.getInt("objectId"));
+        newLocation.setLatitude(benchAsJSON.getDouble("latitude"));
+        newLocation.setLongitude(benchAsJSON.getDouble("longitude"));
+        newLocation.setAddress(benchAsJSON.getString("closestStreet"));
+
+
+
+        // set locationType
+        newLocation.setLocationType(LocationType.BENCH);
+
+        // retrieve and set additional information
+        // retrieve and set additional information
+        ArrayList<String> additionalInformation = new ArrayList<>();
+
+        if (benchAsJSON.get("view").getClass().toString().equals("class java.lang.Integer")){
+            additionalInformation.add("View: " + benchAsJSON.get("view") + "/5");
+        }
+        if (benchAsJSON.get("peace").getClass().toString().equals("class java.lang.Integer")){
+            additionalInformation.add("Peace: " + benchAsJSON.get("peace") + "/5");
+        }
+        if (benchAsJSON.get("romantics").getClass().toString().equals("class java.lang.Integer")){
+            additionalInformation.add("Romantics: " + benchAsJSON.get("romantics") + "/5");
+        }
+        if (benchAsJSON.get("comfort").getClass().toString().equals("class java.lang.Integer")){
+            additionalInformation.add("Comfort: " + benchAsJSON.get("comfort") + "/5");
+        }
+
+        newLocation.setAdditionalInformation(additionalInformation.toArray(new String[0]));
+
+
+        return newLocation;
+    }
+
+    public static Location tableTennisToLocation(JSONObject tableTennisAsJson) throws JSONException {
+        Location newLocation = new Location();
+
+        // set coordinates
+        double[] coordinates = {tableTennisAsJson.getDouble("longitude"), tableTennisAsJson.getDouble("latitude")};
+        newLocation.setCoordinates(coordinates);
+
+        newLocation.setId(tableTennisAsJson.getInt("objectId"));
+        newLocation.setLatitude(tableTennisAsJson.getDouble("latitude"));
+        newLocation.setLongitude(tableTennisAsJson.getDouble("longitude"));
+        newLocation.setAddress(tableTennisAsJson.getString("closestStreet"));
+
+
+        // set locationType
+        newLocation.setLocationType(LocationType.TABLE_TENNIS);
+
+        // retrieve and set additional information
+        // retrieve and set additional information
+        ArrayList<String> additionalInformation = new ArrayList<>();
+
+        if (tableTennisAsJson.get("slabQuality").getClass().toString().equals("class java.lang.Integer")){
+            additionalInformation.add("Quality of table-top: " + tableTennisAsJson.get("slabQuality") + "/5");
+        }
+
+        if (tableTennisAsJson.get("net").getClass().toString().equals("class java.lang.String")){
+            additionalInformation.add("Permanent net: " + tableTennisAsJson.getString("net"));
+        }
+
+        newLocation.setAdditionalInformation(additionalInformation.toArray(new String[0]));
+
+        return newLocation;
+    }
+
+    public static Location toiletToLocation(JSONObject toiletAsJson) throws JSONException {
+        Location newLocation = new Location();
+
+        newLocation.setLatitude(toiletAsJson.getDouble("latitude"));
+        newLocation.setLongitude(toiletAsJson.getDouble("longitude"));
+        newLocation.setId(toiletAsJson.getInt("objectid"));
+        newLocation.setAddress(toiletAsJson.getString("adresse"));
+
+        // set coordinates
+        double[] coordinates = {toiletAsJson.getDouble("longitude"), toiletAsJson.getDouble("latitude")};
+        newLocation.setCoordinates(coordinates);
+
+        // set locationType
+        newLocation.setLocationType(LocationType.TOILET);
+
+        // retrieve and set additional information
+        ArrayList<String> additionalInformation = new ArrayList<>();
+        StringBuilder address = new StringBuilder();
+        if (toiletAsJson.getString("adresse") != null && toiletAsJson.getString("plz") != null && toiletAsJson.getString("ort") != null){
+            address.append("Full Address: ").append(toiletAsJson.getString("adresse")).append(", ")
+                    .append(toiletAsJson.getString("plz")).append(" ").append(toiletAsJson.getString("ort"));
+            additionalInformation.add(address.toString());
+        }
+        if (toiletAsJson.get("openinghours").getClass().toString().equals("class java.lang.String")){
+            String openingHours = "Opening hours: " + toiletAsJson.getString("openinghours");
+            additionalInformation.add(openingHours);
+        }
+        if (toiletAsJson.get("cost").getClass().toString().equals("class java.lang.String")){
+            String cost = "Cost: " + toiletAsJson.getString("cost");
+            additionalInformation.add(cost);
+        }
+        if (toiletAsJson.get("category").getClass().toString().equals("class java.lang.String")){
+            if (toiletAsJson.getString("category").equals("WC (nicht rollstuhlgängig)")) {
+                String cost = "Suitable for disabled people: No";
+                additionalInformation.add(cost);
+
+            }
+            if (toiletAsJson.getString("category").equals("WC (rollstuhlgängig)")) {
+                String cost = "Suitable for disabled people: Yes";
+                additionalInformation.add(cost);
+
+            }
+        }
+
+        newLocation.setAdditionalInformation(additionalInformation.toArray(new String[0]));
+
+        return newLocation;
     }
 
     public static Location fountainToLocation(JSONObject fountainAsJson) throws JSONException {

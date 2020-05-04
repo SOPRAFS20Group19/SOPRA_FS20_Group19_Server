@@ -40,6 +40,11 @@ public class LocationService {
         List<Location> listUserFountains = DatabaseConnectorLocation.getUserFountains();
         List<Location> listUserFireplaces = DatabaseConnectorLocation.getUserFireplaces();
         List<Location> listUserRecycling = DatabaseConnectorLocation.getUserRecycling();
+        List<Location> listToilets = DatabaseConnectorLocation.getToilets();
+        List<Location> listUserToilets = DatabaseConnectorLocation.getUserToilets();
+        List<Location> listUserBench = DatabaseConnectorLocation.getUserBench();
+        List<Location> listUserTableTennis = DatabaseConnectorLocation.getUserTableTennis();
+
 
         allLocations.addAll(listFountains);
         allLocations.addAll(listFireplaces);
@@ -47,6 +52,11 @@ public class LocationService {
         allLocations.addAll(listUserFountains);
         allLocations.addAll(listUserFireplaces);
         allLocations.addAll(listUserRecycling);
+        allLocations.addAll(listToilets);
+        allLocations.addAll(listUserToilets);
+        allLocations.addAll(listUserBench);
+        allLocations.addAll(listUserTableTennis);
+
 
         return allLocations;
     }
@@ -72,6 +82,20 @@ public class LocationService {
             filteredLocations.addAll(listRecyclingStations);
             filteredLocations.addAll(listUserRecyclingStations);
 
+        }
+        if (filterPostDTO.showToilets()){
+            List<Location> listToilets = DatabaseConnectorLocation.getToilets();
+            List<Location> listUserToilets = DatabaseConnectorLocation.getUserToilets();
+            filteredLocations.addAll(listToilets);
+            filteredLocations.addAll(listUserToilets);
+        }
+        if (filterPostDTO.showTableTennis()){
+            List<Location> listUserTableTennis = DatabaseConnectorLocation.getUserTableTennis();
+            filteredLocations.addAll(listUserTableTennis);
+        }
+        if (filterPostDTO.showBenches()){
+            List<Location> listUserBenches = DatabaseConnectorLocation.getUserBench();
+            filteredLocations.addAll(listUserBenches);
         }
 
         return filteredLocations;

@@ -71,6 +71,15 @@ public interface DTOMapper {
     @Mapping(source = "baden", target = "baden")
     @Mapping(source = "hunde", target = "hunde")
     @Mapping(source = "kinderwagen", target = "kinderwagen")
+    @Mapping(source = "openingHours", target = "openingHours")
+    @Mapping(source = "cost", target = "cost")
+    @Mapping(source = "category", target = "category")
+    @Mapping(source = "slabQuality", target = "slabQuality")
+    @Mapping(source = "net", target = "net")
+    @Mapping(source = "view", target = "view")
+    @Mapping(source = "peace", target = "peace")
+    @Mapping(source = "romantics", target = "romantics")
+    @Mapping(source = "comfort", target = "comfort")
     Location convertLocationPostDTOtoEntity(LocationPostDTO locationPostDTO);
 
     @Mapping(source = "senderId", target = "senderId")

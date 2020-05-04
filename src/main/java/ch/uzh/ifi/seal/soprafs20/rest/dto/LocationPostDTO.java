@@ -29,6 +29,87 @@ public class LocationPostDTO {
     private String baden;
     private String hunde;
     private String kinderwagen;
+    private String openingHours;
+    private String cost;
+    private String category;
+    private int slabQuality;
+    private String net;
+    private int view;
+    private int peace;
+    private int romantics;
+    private int comfort;
+
+    public int getComfort() {
+        return comfort;
+    }
+
+    public int getPeace() {
+        return peace;
+    }
+
+    public int getRomantics() {
+        return romantics;
+    }
+
+    public int getView() {
+        return view;
+    }
+
+    public void setComfort(int comfort) {
+        this.comfort = comfort;
+    }
+
+    public void setPeace(int peace) {
+        this.peace = peace;
+    }
+
+    public void setRomantics(int romantics) {
+        this.romantics = romantics;
+    }
+
+    public void setView(int view) {
+        this.view = view;
+    }
+
+    public int getSlabQuality() {
+        return slabQuality;
+    }
+
+    public String getNet() {
+        return net;
+    }
+
+    public void setNet(String net) {
+        this.net = net;
+    }
+
+    public void setSlabQuality(int slabQuality) {
+        this.slabQuality = slabQuality;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public String getCost() {
+        return cost;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public void setCost(String cost) {
+        this.cost = cost;
+    }
+
+    public String getOpeningHours() {
+        return openingHours;
+    }
+
+    public void setOpeningHours(String openingHours) {
+        this.openingHours = openingHours;
+    }
 
     public String getAbfall() {
         return abfall;

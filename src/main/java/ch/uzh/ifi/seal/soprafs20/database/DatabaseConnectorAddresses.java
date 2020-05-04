@@ -113,6 +113,10 @@ public class DatabaseConnectorAddresses {
         List<Location> listUserFountains = DatabaseConnectorLocation.getUserFountains();
         List<Location> listUserFireplaces = DatabaseConnectorLocation.getUserFireplaces();
         List<Location> listUserRecycling = DatabaseConnectorLocation.getUserRecycling();
+        List<Location> listToilets = DatabaseConnectorLocation.getToilets();
+        List<Location> listUserToilets = DatabaseConnectorLocation.getUserToilets();
+        List<Location> listUserTableTennis = DatabaseConnectorLocation.getUserTableTennis();
+        List<Location> listUserBench = DatabaseConnectorLocation.getUserBench();
 
         allLocations.addAll(listFountains);
         allLocations.addAll(listFireplaces);
@@ -120,6 +124,10 @@ public class DatabaseConnectorAddresses {
         allLocations.addAll(listUserFountains);
         allLocations.addAll(listUserFireplaces);
         allLocations.addAll(listUserRecycling);
+        allLocations.addAll(listToilets);
+        allLocations.addAll(listUserToilets);
+        allLocations.addAll(listUserTableTennis);
+        allLocations.addAll(listUserBench);
 
         Location locationToReturn = null;
 

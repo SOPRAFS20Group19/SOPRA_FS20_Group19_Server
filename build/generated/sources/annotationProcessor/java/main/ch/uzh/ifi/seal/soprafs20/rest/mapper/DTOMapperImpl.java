@@ -15,11 +15,7 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-<<<<<<< HEAD
-    date = "2020-05-02T14:43:03+0200",
-=======
-    date = "2020-05-02T16:59:52+0200",
->>>>>>> 12fe236df1ef91d2c5502d2dfd7f7c4e148be33c
+    date = "2020-05-04T11:53:38+0200",
     comments = "version: 1.3.1.Final, compiler: javac, environment: Java 13.0.2 (Oracle Corporation)"
 )
 public class DTOMapperImpl implements DTOMapper {
@@ -112,23 +108,32 @@ public class DTOMapperImpl implements DTOMapper {
         location.setArt_txt( locationPostDTO.getArt_txt() );
         location.setMetall( locationPostDTO.getMetall() );
         location.setAusstattung( locationPostDTO.getAusstattung() );
-        location.setHolz( locationPostDTO.getHolz() );
         location.setAbfall( locationPostDTO.getAbfall() );
         location.setLatitude( locationPostDTO.getLatitude() );
-        location.setGlas( locationPostDTO.getGlas() );
+        location.setSlabQuality( locationPostDTO.getSlabQuality() );
         location.setLocationType( locationPostDTO.getLocationType() );
-        location.setRost( locationPostDTO.getRost() );
         location.setKinderwagen( locationPostDTO.getKinderwagen() );
-        location.setOrt( locationPostDTO.getOrt() );
-        location.setHunde( locationPostDTO.getHunde() );
+        location.setRomantics( locationPostDTO.getRomantics() );
+        location.setView( locationPostDTO.getView() );
         location.setOel( locationPostDTO.getOel() );
         location.setTisch( locationPostDTO.getTisch() );
-        location.setAdresse( locationPostDTO.getAdresse() );
         location.setBaujahr( locationPostDTO.getBaujahr() );
-        location.setBaden( locationPostDTO.getBaden() );
-        location.setParkplatz( locationPostDTO.getParkplatz() );
+        location.setNet( locationPostDTO.getNet() );
         location.setLongitude( locationPostDTO.getLongitude() );
         location.setBrunnenart_txt( locationPostDTO.getBrunnenart_txt() );
+        location.setCost( locationPostDTO.getCost() );
+        location.setHolz( locationPostDTO.getHolz() );
+        location.setGlas( locationPostDTO.getGlas() );
+        location.setRost( locationPostDTO.getRost() );
+        location.setComfort( locationPostDTO.getComfort() );
+        location.setOrt( locationPostDTO.getOrt() );
+        location.setHunde( locationPostDTO.getHunde() );
+        location.setPeace( locationPostDTO.getPeace() );
+        location.setAdresse( locationPostDTO.getAdresse() );
+        location.setOpeningHours( locationPostDTO.getOpeningHours() );
+        location.setBaden( locationPostDTO.getBaden() );
+        location.setCategory( locationPostDTO.getCategory() );
+        location.setParkplatz( locationPostDTO.getParkplatz() );
         location.setPlz( locationPostDTO.getPlz() );
         location.setTrinkwasser( locationPostDTO.getTrinkwasser() );
 

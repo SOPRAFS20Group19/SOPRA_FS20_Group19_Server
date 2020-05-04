@@ -1,5 +1,5 @@
 package ch.uzh.ifi.seal.soprafs20.constant;
 
 public enum  LocationType {
-    RECYCLING_STATION, FIREPLACE, FOUNTAIN;
+    RECYCLING_STATION, FIREPLACE, FOUNTAIN, TOILET, TABLE_TENNIS, BENCH;
 }
