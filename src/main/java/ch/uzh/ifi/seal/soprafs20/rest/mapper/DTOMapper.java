@@ -86,7 +86,8 @@ public interface DTOMapper {
     @Mapping(source = "content", target = "content")
     Message convertMessagePostDTOToEntity(MessagePostDTO messagePostDTO);
 
-    @Mapping(source = "senderUsername", target = "senderId")
+    @Mapping(source = "senderId", target = "senderId")
+    @Mapping(source = "senderUsername", target = "senderUsername")
     @Mapping(source = "content", target = "content")
     @Mapping(source = "timestamp", target = "timestamp")
     @Mapping(source = "messageId", target = "messageId")

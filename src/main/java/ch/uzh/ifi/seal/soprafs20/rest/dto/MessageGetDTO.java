@@ -2,16 +2,17 @@ package ch.uzh.ifi.seal.soprafs20.rest.dto;
 
 public class MessageGetDTO {
 
-    private String senderId;
+    private int senderId;
     private String content;
     private String timestamp;
     private int messageId;
+    private String senderUsername;
 
-    public String getSenderId() {
+    public int getSenderId() {
         return senderId;
     }
 
-    public void setSenderId(String senderId) {
+    public void setSenderId(int senderId) {
         this.senderId = senderId;
     }
 
@@ -37,5 +38,13 @@ public class MessageGetDTO {
 
     public int getMessageId() {
         return messageId;
+    }
+
+    public void setSenderUsername(String senderUsername) {
+        this.senderUsername = senderUsername;
+    }
+
+    public String getSenderUsername() {
+        return senderUsername;
     }
 }
