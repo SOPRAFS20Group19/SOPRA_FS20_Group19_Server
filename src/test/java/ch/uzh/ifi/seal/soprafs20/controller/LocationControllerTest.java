@@ -203,7 +203,7 @@ public class LocationControllerTest {
         String responseAsString = response.getResponse().getContentAsString();
 
         Assertions.assertEquals(messages.get(0).getContent(), JsonPath.parse(responseAsString).read("$.[0].content"));
-        Assertions.assertEquals(messages.get(0).getSenderUsername(), JsonPath.parse(responseAsString).read("$.[0].senderId"));
+        Assertions.assertEquals(messages.get(0).getSenderUsername(), JsonPath.parse(responseAsString).read("$.[0].senderUsername"));
         Assertions.assertEquals(messages.get(0).getTimestamp(), JsonPath.parse(responseAsString).read("$.[0].timestamp"));
         Assertions.assertEquals(200, response.getResponse().getStatus());
 

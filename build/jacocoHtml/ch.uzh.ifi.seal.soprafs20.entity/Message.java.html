@@ -6,39 +6,48 @@ public class Message {
     private String senderUsername;
     private int senderId;
     private String timestamp;
+    private int messageId;
 
-<span class="nc" id="L10">    public Message(){}</span>
+<span class="fc" id="L11">    public Message(){}</span>
 
     public String getContent() {
-<span class="nc" id="L13">        return content;</span>
+<span class="fc" id="L14">        return content;</span>
     }
 
     public void setContent(String content) {
-<span class="nc" id="L17">        this.content = content;</span>
-<span class="nc" id="L18">    }</span>
+<span class="fc" id="L18">        this.content = content;</span>
+<span class="fc" id="L19">    }</span>
+
+    public int getMessageId() {
+<span class="fc" id="L22">        return messageId;</span>
+    }
+
+    public void setMessageId(int messageId) {
+<span class="fc" id="L26">        this.messageId = messageId;</span>
+<span class="fc" id="L27">    }</span>
 
     public int getSenderId() {
-<span class="nc" id="L21">        return senderId;</span>
+<span class="fc" id="L30">        return senderId;</span>
     }
 
     public void setSenderId(int senderId) {
-<span class="nc" id="L25">        this.senderId = senderId;</span>
-<span class="nc" id="L26">    }</span>
+<span class="fc" id="L34">        this.senderId = senderId;</span>
+<span class="fc" id="L35">    }</span>
 
     public String getTimestamp() {
-<span class="nc" id="L29">        return timestamp;</span>
+<span class="fc" id="L38">        return timestamp;</span>
     }
 
     public void setTimestamp(String timestamp) {
-<span class="nc" id="L33">        this.timestamp = timestamp;</span>
-<span class="nc" id="L34">    }</span>
+<span class="fc" id="L42">        this.timestamp = timestamp;</span>
+<span class="fc" id="L43">    }</span>
 
     public String getSenderUsername() {
-<span class="nc" id="L37">        return senderUsername;</span>
+<span class="fc" id="L46">        return senderUsername;</span>
     }
 
     public void setSenderUsername(String senderUsername) {
-<span class="nc" id="L41">        this.senderUsername = senderUsername;</span>
-<span class="nc" id="L42">    }</span>
+<span class="fc" id="L50">        this.senderUsername = senderUsername;</span>
+<span class="fc" id="L51">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

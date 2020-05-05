@@ -1,34 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="de"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FilterPostDTO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">soprafs20</a> &gt; <a href="index.source.html" class="el_package">ch.uzh.ifi.seal.soprafs20.rest.dto</a> &gt; <span class="el_source">FilterPostDTO.java</span></div><h1>FilterPostDTO.java</h1><pre class="source lang-java linenums">package ch.uzh.ifi.seal.soprafs20.rest.dto;
 
-<span class="nc" id="L3">public class FilterPostDTO {</span>
+<span class="fc" id="L3">public class FilterPostDTO {</span>
     private boolean fountains;
 
     private boolean fireplaces;
 
     private boolean recyclingStations;
 
+    private boolean toilets;
+    private boolean tableTennis;
+    private boolean bench;
+
+    public void setBench(boolean bench) {
+<span class="nc" id="L15">        this.bench = bench;</span>
+<span class="nc" id="L16">    }</span>
+
+    public void setTableTennis(boolean tableTennis) {
+<span class="nc" id="L19">        this.tableTennis = tableTennis;</span>
+<span class="nc" id="L20">    }</span>
+
+    public void setToilets(boolean toilets) {
+<span class="nc" id="L23">        this.toilets = toilets;</span>
+<span class="nc" id="L24">    }</span>
+
+    public boolean showToilets() {
+<span class="fc" id="L27">        return toilets;</span>
+    }
+<span class="fc" id="L29">    public boolean showTableTennis(){return  tableTennis;}</span>
+<span class="fc" id="L30">    public boolean showBenches(){return  bench;}</span>
+
+
+
     public boolean showFireplaces() {
-<span class="nc" id="L11">        return fireplaces;</span>
+<span class="fc" id="L35">        return fireplaces;</span>
     }
 
     public boolean showFountains() {
-<span class="nc" id="L15">        return fountains;</span>
+<span class="fc" id="L39">        return fountains;</span>
     }
 
     public boolean showRecyclingStations() {
-<span class="nc" id="L19">        return recyclingStations;</span>
+<span class="fc" id="L43">        return recyclingStations;</span>
     }
 
     public void setFountains(boolean fountains) {
-<span class="nc" id="L23">        this.fountains = fountains;</span>
-<span class="nc" id="L24">    }</span>
+<span class="fc" id="L47">        this.fountains = fountains;</span>
+<span class="fc" id="L48">    }</span>
 
     public void setFireplaces(boolean fireplaces) {
-<span class="nc" id="L27">        this.fireplaces = fireplaces;</span>
-<span class="nc" id="L28">    }</span>
+<span class="fc" id="L51">        this.fireplaces = fireplaces;</span>
+<span class="fc" id="L52">    }</span>
 
     public void setRecyclingStations(boolean recyclingStations) {
-<span class="nc" id="L31">        this.recyclingStations = recyclingStations;</span>
-<span class="nc" id="L32">    }</span>
+<span class="fc" id="L55">        this.recyclingStations = recyclingStations;</span>
+<span class="fc" id="L56">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

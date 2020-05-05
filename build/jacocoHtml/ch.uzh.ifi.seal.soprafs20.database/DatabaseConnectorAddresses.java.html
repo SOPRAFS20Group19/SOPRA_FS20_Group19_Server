@@ -89,14 +89,14 @@ public class DatabaseConnectorAddresses {
 
     public static double calculateDistance(double x1, double y1, double x2, double y2){
 <span class="fc" id="L91">        var R = 6371e3; // metres</span>
-<span class="fc" id="L92">        var Ï†1 = Math.toRadians(x1);</span>
-<span class="fc" id="L93">        var Ï†2 = Math.toRadians(x2);</span>
-<span class="fc" id="L94">        var Î”Ï† = Math.toRadians(x2-x1);</span>
-<span class="fc" id="L95">        var Î”Î» = Math.toRadians(y2-y1);</span>
+<span class="fc" id="L92">        var φ1 = Math.toRadians(x1);</span>
+<span class="fc" id="L93">        var φ2 = Math.toRadians(x2);</span>
+<span class="fc" id="L94">        var Δφ = Math.toRadians(x2-x1);</span>
+<span class="fc" id="L95">        var Δλ = Math.toRadians(y2-y1);</span>
 
-<span class="fc" id="L97">        var a = Math.sin(Î”Ï†/2) * Math.sin(Î”Ï†/2) +</span>
-<span class="fc" id="L98">                Math.cos(Ï†1) * Math.cos(Ï†2) *</span>
-<span class="fc" id="L99">                        Math.sin(Î”Î»/2) * Math.sin(Î”Î»/2);</span>
+<span class="fc" id="L97">        var a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +</span>
+<span class="fc" id="L98">                Math.cos(φ1) * Math.cos(φ2) *</span>
+<span class="fc" id="L99">                        Math.sin(Δλ/2) * Math.sin(Δλ/2);</span>
 <span class="fc" id="L100">        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));</span>
 
 <span class="fc" id="L102">        return R * c;</span>
@@ -113,95 +113,103 @@ public class DatabaseConnectorAddresses {
 <span class="fc" id="L113">        List&lt;Location&gt; listUserFountains = DatabaseConnectorLocation.getUserFountains();</span>
 <span class="fc" id="L114">        List&lt;Location&gt; listUserFireplaces = DatabaseConnectorLocation.getUserFireplaces();</span>
 <span class="fc" id="L115">        List&lt;Location&gt; listUserRecycling = DatabaseConnectorLocation.getUserRecycling();</span>
+<span class="fc" id="L116">        List&lt;Location&gt; listToilets = DatabaseConnectorLocation.getToilets();</span>
+<span class="fc" id="L117">        List&lt;Location&gt; listUserToilets = DatabaseConnectorLocation.getUserToilets();</span>
+<span class="fc" id="L118">        List&lt;Location&gt; listUserTableTennis = DatabaseConnectorLocation.getUserTableTennis();</span>
+<span class="fc" id="L119">        List&lt;Location&gt; listUserBench = DatabaseConnectorLocation.getUserBench();</span>
 
-<span class="fc" id="L117">        allLocations.addAll(listFountains);</span>
-<span class="fc" id="L118">        allLocations.addAll(listFireplaces);</span>
-<span class="fc" id="L119">        allLocations.addAll(listRecyclingStations);</span>
-<span class="fc" id="L120">        allLocations.addAll(listUserFountains);</span>
-<span class="fc" id="L121">        allLocations.addAll(listUserFireplaces);</span>
-<span class="fc" id="L122">        allLocations.addAll(listUserRecycling);</span>
+<span class="fc" id="L121">        allLocations.addAll(listFountains);</span>
+<span class="fc" id="L122">        allLocations.addAll(listFireplaces);</span>
+<span class="fc" id="L123">        allLocations.addAll(listRecyclingStations);</span>
+<span class="fc" id="L124">        allLocations.addAll(listUserFountains);</span>
+<span class="fc" id="L125">        allLocations.addAll(listUserFireplaces);</span>
+<span class="fc" id="L126">        allLocations.addAll(listUserRecycling);</span>
+<span class="fc" id="L127">        allLocations.addAll(listToilets);</span>
+<span class="fc" id="L128">        allLocations.addAll(listUserToilets);</span>
+<span class="fc" id="L129">        allLocations.addAll(listUserTableTennis);</span>
+<span class="fc" id="L130">        allLocations.addAll(listUserBench);</span>
 
-<span class="fc" id="L124">        Location locationToReturn = null;</span>
+<span class="fc" id="L132">        Location locationToReturn = null;</span>
 
-<span class="fc bfc" id="L126" title="All 2 branches covered.">        for (Location location: allLocations){</span>
-<span class="fc bfc" id="L127" title="All 2 branches covered.">            if (locationId == (location.getId())){</span>
-<span class="fc" id="L128">                locationToReturn = location;</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">        for (Location location: allLocations){</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">            if (locationId == (location.getId())){</span>
+<span class="fc" id="L136">                locationToReturn = location;</span>
             }
-<span class="fc" id="L130">        }</span>
+<span class="fc" id="L138">        }</span>
 
-<span class="pc bpc" id="L132" title="1 of 2 branches missed.">        if (locationToReturn == null){</span>
-<span class="nc" id="L133">            throw new LocationNotFoundException(&quot;This location could not be found.&quot;);</span>
+<span class="pc bpc" id="L140" title="1 of 2 branches missed.">        if (locationToReturn == null){</span>
+<span class="nc" id="L141">            throw new LocationNotFoundException(&quot;This location could not be found.&quot;);</span>
         }
 
-<span class="fc" id="L136">        return locationToReturn;</span>
+<span class="fc" id="L144">        return locationToReturn;</span>
     }
 
     public static String calculateClosestAddressStreet(Integer locationId){
-<span class="fc" id="L140">        ArrayList&lt;Address&gt; addresses = getAddresses();</span>
-<span class="fc" id="L141">        Location location = getLocationById(locationId);</span>
+<span class="fc" id="L148">        ArrayList&lt;Address&gt; addresses = getAddresses();</span>
+<span class="fc" id="L149">        Location location = getLocationById(locationId);</span>
 
-<span class="fc" id="L143">        Address closestAddress = addresses.get(0);</span>
-<span class="fc" id="L144">        double closestDistance = calculateDistance(location.getLatitude(), location.getLongitude(), closestAddress.getLatitude(), closestAddress.getLongitude());</span>
+<span class="fc" id="L151">        Address closestAddress = addresses.get(0);</span>
+<span class="fc" id="L152">        double closestDistance = calculateDistance(location.getLatitude(), location.getLongitude(), closestAddress.getLatitude(), closestAddress.getLongitude());</span>
 
-<span class="fc bfc" id="L146" title="All 2 branches covered.">        for (Address address : addresses){</span>
-<span class="fc" id="L147">            double distance = calculateDistance(location.getLatitude(), location.getLongitude(), address.getLatitude(), address.getLongitude());</span>
+<span class="fc bfc" id="L154" title="All 2 branches covered.">        for (Address address : addresses){</span>
+<span class="fc" id="L155">            double distance = calculateDistance(location.getLatitude(), location.getLongitude(), address.getLatitude(), address.getLongitude());</span>
 
-<span class="fc bfc" id="L149" title="All 2 branches covered.">            if (distance &lt; closestDistance){</span>
-<span class="fc" id="L150">                closestAddress = address;</span>
-<span class="fc" id="L151">                closestDistance = distance;</span>
+<span class="fc bfc" id="L157" title="All 2 branches covered.">            if (distance &lt; closestDistance){</span>
+<span class="fc" id="L158">                closestAddress = address;</span>
+<span class="fc" id="L159">                closestDistance = distance;</span>
             }
-<span class="fc" id="L153">        }</span>
+<span class="fc" id="L161">        }</span>
 
-<span class="fc" id="L155">        return closestAddress.getStreet();</span>
+<span class="fc" id="L163">        return closestAddress.getStreet();</span>
     }
 
     // initial setup for closest address collection, do not run again
     public static void setupClosestAddressCollection(){
-<span class="nc" id="L160">        List&lt;Location&gt; allLocations = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L161">        List&lt;Location&gt; listFountains = DatabaseConnectorLocation.getFountains();</span>
-<span class="nc" id="L162">        List&lt;Location&gt; listFireplaces = DatabaseConnectorLocation.getFireplaces();</span>
-<span class="nc" id="L163">        List&lt;Location&gt; listRecyclingStations = DatabaseConnectorLocation.getRecyclingStations();</span>
-<span class="nc" id="L164">        List&lt;Location&gt; listUserFountains = DatabaseConnectorLocation.getUserFountains();</span>
-<span class="nc" id="L165">        List&lt;Location&gt; listUserFireplaces = DatabaseConnectorLocation.getUserFireplaces();</span>
-<span class="nc" id="L166">        List&lt;Location&gt; listUserRecycling = DatabaseConnectorLocation.getUserRecycling();</span>
+<span class="nc" id="L168">        List&lt;Location&gt; allLocations = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L169">        List&lt;Location&gt; listFountains = DatabaseConnectorLocation.getFountains();</span>
+<span class="nc" id="L170">        List&lt;Location&gt; listFireplaces = DatabaseConnectorLocation.getFireplaces();</span>
+<span class="nc" id="L171">        List&lt;Location&gt; listRecyclingStations = DatabaseConnectorLocation.getRecyclingStations();</span>
+<span class="nc" id="L172">        List&lt;Location&gt; listUserFountains = DatabaseConnectorLocation.getUserFountains();</span>
+<span class="nc" id="L173">        List&lt;Location&gt; listUserFireplaces = DatabaseConnectorLocation.getUserFireplaces();</span>
+<span class="nc" id="L174">        List&lt;Location&gt; listUserRecycling = DatabaseConnectorLocation.getUserRecycling();</span>
 
-<span class="nc" id="L168">        allLocations.addAll(listFountains);</span>
-<span class="nc" id="L169">        allLocations.addAll(listFireplaces);</span>
-<span class="nc" id="L170">        allLocations.addAll(listRecyclingStations);</span>
-<span class="nc" id="L171">        allLocations.addAll(listUserFountains);</span>
-<span class="nc" id="L172">        allLocations.addAll(listUserFireplaces);</span>
-<span class="nc" id="L173">        allLocations.addAll(listUserRecycling);</span>
+<span class="nc" id="L176">        allLocations.addAll(listFountains);</span>
+<span class="nc" id="L177">        allLocations.addAll(listFireplaces);</span>
+<span class="nc" id="L178">        allLocations.addAll(listRecyclingStations);</span>
+<span class="nc" id="L179">        allLocations.addAll(listUserFountains);</span>
+<span class="nc" id="L180">        allLocations.addAll(listUserFireplaces);</span>
+<span class="nc" id="L181">        allLocations.addAll(listUserRecycling);</span>
 
-<span class="nc bnc" id="L175" title="All 2 branches missed.">        for (Location location : allLocations){</span>
-<span class="nc" id="L176">            FindIterable&lt;Document&gt; request =  closestAddressCollection.find(eq(&quot;locationId&quot;, location.getId()));</span>
-<span class="nc" id="L177">            Document existingDoc = request.first();</span>
-<span class="nc bnc" id="L178" title="All 2 branches missed.">            if (existingDoc == null){</span>
-<span class="nc" id="L179">                Document doc = new Document(&quot;locationId&quot;, location.getId())</span>
-<span class="nc" id="L180">                        .append(&quot;closestStreet&quot;, calculateClosestAddressStreet(location.getId()));</span>
-<span class="nc" id="L181">                closestAddressCollection.insertOne(doc);</span>
+<span class="nc bnc" id="L183" title="All 2 branches missed.">        for (Location location : allLocations){</span>
+<span class="nc" id="L184">            FindIterable&lt;Document&gt; request =  closestAddressCollection.find(eq(&quot;locationId&quot;, location.getId()));</span>
+<span class="nc" id="L185">            Document existingDoc = request.first();</span>
+<span class="nc bnc" id="L186" title="All 2 branches missed.">            if (existingDoc == null){</span>
+<span class="nc" id="L187">                Document doc = new Document(&quot;locationId&quot;, location.getId())</span>
+<span class="nc" id="L188">                        .append(&quot;closestStreet&quot;, calculateClosestAddressStreet(location.getId()));</span>
+<span class="nc" id="L189">                closestAddressCollection.insertOne(doc);</span>
             }
-<span class="nc" id="L183">        }</span>
-<span class="nc" id="L184">    }</span>
+<span class="nc" id="L191">        }</span>
+<span class="nc" id="L192">    }</span>
 
     public static String getClosestAddress(Integer locationId){
-<span class="fc" id="L187">        FindIterable&lt;Document&gt; request =  closestAddressCollection.find(eq(&quot;locationId&quot;, locationId));</span>
-<span class="fc" id="L188">        Document doc = request.first();</span>
-<span class="fc bfc" id="L189" title="All 2 branches covered.">        if (doc == null){</span>
-<span class="fc" id="L190">            return &quot; &quot;;</span>
+<span class="fc" id="L195">        FindIterable&lt;Document&gt; request =  closestAddressCollection.find(eq(&quot;locationId&quot;, locationId));</span>
+<span class="fc" id="L196">        Document doc = request.first();</span>
+<span class="fc bfc" id="L197" title="All 2 branches covered.">        if (doc == null){</span>
+<span class="fc" id="L198">            return &quot; &quot;;</span>
         }
-<span class="fc" id="L192">        return doc.getString(&quot;closestStreet&quot;);</span>
+<span class="fc" id="L200">        return doc.getString(&quot;closestStreet&quot;);</span>
     }
 
     // adds an entry in the collection for added locations
     public static void createEntry(Integer locationId){
-<span class="fc" id="L197">        Document doc = new Document(&quot;locationId&quot;, locationId)</span>
-<span class="fc" id="L198">                .append(&quot;closestStreet&quot;, calculateClosestAddressStreet(locationId));</span>
-<span class="fc" id="L199">        closestAddressCollection.insertOne(doc);</span>
-<span class="fc" id="L200">    }</span>
+<span class="fc" id="L205">        Document doc = new Document(&quot;locationId&quot;, locationId)</span>
+<span class="fc" id="L206">                .append(&quot;closestStreet&quot;, calculateClosestAddressStreet(locationId));</span>
+<span class="fc" id="L207">        closestAddressCollection.insertOne(doc);</span>
+<span class="fc" id="L208">    }</span>
 
     public static void testFieldAdding(Integer locationId){
-<span class="nc" id="L203">        Document updatedDoc = new Document().append(&quot;$set&quot;, new Document().append(&quot;secondAddress&quot;, getClosestAddress(locationId)));</span>
-<span class="nc" id="L204">        closestAddressCollection.updateOne(eq(&quot;locationId&quot;, locationId), updatedDoc);</span>
-<span class="nc" id="L205">    }</span>
+<span class="nc" id="L211">        Document updatedDoc = new Document().append(&quot;$set&quot;, new Document().append(&quot;secondAddress&quot;, getClosestAddress(locationId)));</span>
+<span class="nc" id="L212">        closestAddressCollection.updateOne(eq(&quot;locationId&quot;, locationId), updatedDoc);</span>
+<span class="nc" id="L213">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

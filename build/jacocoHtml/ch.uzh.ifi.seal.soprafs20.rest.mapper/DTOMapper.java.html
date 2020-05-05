@@ -18,7 +18,7 @@ import org.mapstruct.factory.Mappers;
 @Mapper
 public interface DTOMapper {
 
-<span class="nc" id="L21">    DTOMapper INSTANCE = Mappers.getMapper(DTOMapper.class);</span>
+<span class="fc" id="L21">    DTOMapper INSTANCE = Mappers.getMapper(DTOMapper.class);</span>
 
     @Mapping(source = &quot;name&quot;, target = &quot;name&quot;)
     @Mapping(source = &quot;username&quot;, target = &quot;username&quot;)
@@ -71,15 +71,26 @@ public interface DTOMapper {
     @Mapping(source = &quot;baden&quot;, target = &quot;baden&quot;)
     @Mapping(source = &quot;hunde&quot;, target = &quot;hunde&quot;)
     @Mapping(source = &quot;kinderwagen&quot;, target = &quot;kinderwagen&quot;)
+    @Mapping(source = &quot;openingHours&quot;, target = &quot;openingHours&quot;)
+    @Mapping(source = &quot;cost&quot;, target = &quot;cost&quot;)
+    @Mapping(source = &quot;category&quot;, target = &quot;category&quot;)
+    @Mapping(source = &quot;slabQuality&quot;, target = &quot;slabQuality&quot;)
+    @Mapping(source = &quot;net&quot;, target = &quot;net&quot;)
+    @Mapping(source = &quot;view&quot;, target = &quot;view&quot;)
+    @Mapping(source = &quot;peace&quot;, target = &quot;peace&quot;)
+    @Mapping(source = &quot;romantics&quot;, target = &quot;romantics&quot;)
+    @Mapping(source = &quot;comfort&quot;, target = &quot;comfort&quot;)
     Location convertLocationPostDTOtoEntity(LocationPostDTO locationPostDTO);
 
     @Mapping(source = &quot;senderId&quot;, target = &quot;senderId&quot;)
     @Mapping(source = &quot;content&quot;, target = &quot;content&quot;)
     Message convertMessagePostDTOToEntity(MessagePostDTO messagePostDTO);
 
-    @Mapping(source = &quot;senderUsername&quot;, target = &quot;senderId&quot;)
+    @Mapping(source = &quot;senderId&quot;, target = &quot;senderId&quot;)
+    @Mapping(source = &quot;senderUsername&quot;, target = &quot;senderUsername&quot;)
     @Mapping(source = &quot;content&quot;, target = &quot;content&quot;)
     @Mapping(source = &quot;timestamp&quot;, target = &quot;timestamp&quot;)
+    @Mapping(source = &quot;messageId&quot;, target = &quot;messageId&quot;)
     MessageGetDTO convertEntityToMessageGetDTO(Message message);
 
 }

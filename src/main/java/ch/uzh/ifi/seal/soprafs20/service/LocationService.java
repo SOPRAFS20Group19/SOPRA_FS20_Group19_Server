@@ -195,7 +195,7 @@ public class LocationService {
 
     public String getCurrentTimestamp(){
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM, HH:mm");
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis() + 1000 * 60 * 60 * 2);
         return sdf.format(timestamp);
     }
 }

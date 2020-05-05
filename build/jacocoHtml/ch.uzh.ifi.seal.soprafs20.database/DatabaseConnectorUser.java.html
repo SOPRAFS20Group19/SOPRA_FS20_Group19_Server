@@ -49,44 +49,44 @@ public class DatabaseConnectorUser {
 
     //Checks if user tried to login with valid credentials
     public static boolean checkIfUserAndPasswordExist(String username, String password){
-<span class="nc" id="L52">        FindIterable&lt;Document&gt; request = usersCollection.find(and(eq(&quot;username&quot;, username), eq(&quot;password&quot;, password)));</span>
-<span class="nc" id="L53">        Document user = request.first();</span>
-<span class="nc bnc" id="L54" title="All 2 branches missed.">        if (user == null){</span>
-<span class="nc" id="L55">            return false;</span>
+<span class="fc" id="L52">        FindIterable&lt;Document&gt; request = usersCollection.find(and(eq(&quot;username&quot;, username), eq(&quot;password&quot;, password)));</span>
+<span class="fc" id="L53">        Document user = request.first();</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">        if (user == null){</span>
+<span class="fc" id="L55">            return false;</span>
         }
-<span class="nc" id="L57">        return true;</span>
+<span class="fc" id="L57">        return true;</span>
     }
 
     //checks if user provided a valid username
     public static boolean checkIfUsernameExists(String username){
 <span class="fc" id="L62">        FindIterable&lt;Document&gt; request = usersCollection.find(eq(&quot;username&quot;, username));</span>
 <span class="fc" id="L63">        Document user = request.first();</span>
-<span class="pc bpc" id="L64" title="1 of 2 branches missed.">        if (user == null){</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">        if (user == null){</span>
 <span class="fc" id="L65">            return false;</span>
         }
-<span class="nc" id="L67">        return true;</span>
+<span class="fc" id="L67">        return true;</span>
     }
 
     //sets the online status of a user to either true or false
     public static void setOnlineStatus(User user, boolean b){
-<span class="nc" id="L72">        usersCollection.updateOne(eq(&quot;username&quot;, user.getUsername()),</span>
-<span class="nc" id="L73">                set(&quot;online&quot;, b));</span>
-<span class="nc" id="L74">    }</span>
+<span class="fc" id="L72">        usersCollection.updateOne(eq(&quot;username&quot;, user.getUsername()),</span>
+<span class="fc" id="L73">                set(&quot;online&quot;, b));</span>
+<span class="fc" id="L74">    }</span>
 
     //sets the online status of a user to either true or false
     public static void setOnlineStatusById(int id, boolean b){
-<span class="nc" id="L78">        usersCollection.updateOne(eq(&quot;userId&quot;, id),</span>
-<span class="nc" id="L79">                set(&quot;online&quot;, b));</span>
-<span class="nc" id="L80">    }</span>
+<span class="fc" id="L78">        usersCollection.updateOne(eq(&quot;userId&quot;, id),</span>
+<span class="fc" id="L79">                set(&quot;online&quot;, b));</span>
+<span class="fc" id="L80">    }</span>
 
 
     //returns a user with a certain username
     public static User getUserByUsername(String username){
-<span class="nc" id="L85">        FindIterable&lt;Document&gt; request =  usersCollection.find(eq(&quot;username&quot;, username));</span>
-<span class="nc" id="L86">        Document user = request.first();</span>
+<span class="fc" id="L85">        FindIterable&lt;Document&gt; request =  usersCollection.find(eq(&quot;username&quot;, username));</span>
+<span class="fc" id="L86">        Document user = request.first();</span>
         //create a new user representation
-<span class="nc" id="L88">        User userRepresentation = DatabaseConnectorUser.getUserInfo(user);</span>
-<span class="nc" id="L89">        return userRepresentation;</span>
+<span class="fc" id="L88">        User userRepresentation = DatabaseConnectorUser.getUserInfo(user);</span>
+<span class="fc" id="L89">        return userRepresentation;</span>
     }
 
     //not finished
@@ -94,8 +94,8 @@ public class DatabaseConnectorUser {
 <span class="fc" id="L94">        FindIterable&lt;Document&gt; request =  usersCollection.find(eq(&quot;userId&quot;, id)); //Temporary id-field does not exist by now</span>
 <span class="fc" id="L95">        Document user = request.first();</span>
 
-<span class="pc bpc" id="L97" title="1 of 2 branches missed.">        if (user == null){</span>
-<span class="nc" id="L98">            throw new UserNotFoundException(&quot;This user could not be found&quot;);</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">        if (user == null){</span>
+<span class="fc" id="L98">            throw new UserNotFoundException(&quot;This user could not be found&quot;);</span>
         }
 
         //create a new user representation
@@ -104,14 +104,14 @@ public class DatabaseConnectorUser {
     }
 
     public static String getUsernameById(int id){
-<span class="nc" id="L107">        FindIterable&lt;Document&gt; request =  usersCollection.find(eq(&quot;userId&quot;, id)); //Temporary id-field does not exist by now</span>
-<span class="nc" id="L108">        Document user = request.first();</span>
+<span class="fc" id="L107">        FindIterable&lt;Document&gt; request =  usersCollection.find(eq(&quot;userId&quot;, id)); //Temporary id-field does not exist by now</span>
+<span class="fc" id="L108">        Document user = request.first();</span>
 
-<span class="nc bnc" id="L110" title="All 2 branches missed.">        if (user == null){</span>
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">        if (user == null){</span>
 <span class="nc" id="L111">            throw new UserNotFoundException(&quot;This user could not be found&quot;);</span>
         }
 
-<span class="nc" id="L114">        return user.getString(&quot;username&quot;);</span>
+<span class="fc" id="L114">        return user.getString(&quot;username&quot;);</span>
     }
 
     //transforms BSON User into Backend User Representation
@@ -122,7 +122,7 @@ public class DatabaseConnectorUser {
 <span class="fc" id="L122">        userRepresentation.setPassword(user.getString(&quot;password&quot;));</span>
 <span class="fc" id="L123">        userRepresentation.setCreationDate(user.getString(&quot;creation-date&quot;));</span>
 <span class="fc" id="L124">        userRepresentation.setId(user.getInteger(&quot;userId&quot;, 0)); //if user has no id he gets assigned id: 0, flag that something is not working properly</span>
-<span class="pc bpc" id="L125" title="1 of 2 branches missed.">        userRepresentation.setStatus(user.getBoolean(&quot;online&quot;)? UserStatus.ONLINE : UserStatus.OFFLINE);</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">        userRepresentation.setStatus(user.getBoolean(&quot;online&quot;)? UserStatus.ONLINE : UserStatus.OFFLINE);</span>
 <span class="fc" id="L126">        userRepresentation.setAvatarNr(user.getInteger( &quot;avatarNr&quot;, 0)); //if user has no avatar chosen he gets the default value 0</span>
 
 <span class="fc" id="L128">        return userRepresentation;</span>
