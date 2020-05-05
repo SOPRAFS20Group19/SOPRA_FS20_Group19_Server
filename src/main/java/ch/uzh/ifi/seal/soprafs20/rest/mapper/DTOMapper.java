@@ -89,6 +89,7 @@ public interface DTOMapper {
     @Mapping(source = "senderUsername", target = "senderId")
     @Mapping(source = "content", target = "content")
     @Mapping(source = "timestamp", target = "timestamp")
+    @Mapping(source = "messageId", target = "messageId")
     MessageGetDTO convertEntityToMessageGetDTO(Message message);
 
 }

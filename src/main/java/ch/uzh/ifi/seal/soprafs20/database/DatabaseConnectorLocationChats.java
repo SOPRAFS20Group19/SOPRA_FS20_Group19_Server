@@ -14,11 +14,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.print.Doc;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.mongodb.client.model.Filters.all;
-import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Filters.*;
 import static com.mongodb.client.model.Updates.set;
 
 
@@ -96,22 +96,68 @@ public class DatabaseConnectorLocationChats {
     public static void postMessage(Integer locationId, Message message){
         Document doc = new Document("senderId", message.getSenderId())
                 .append("content", message.getContent())
-                .append("timestamp", message.getTimestamp());
+                .append("timestamp", message.getTimestamp())
+                .append("messageId", generateId(locationId));
 
         chatsCollection.updateOne(eq("locationId", locationId), Updates.addToSet("messages", doc));
+    }
+
+    //Helper function which generates a unique message id that is not taken yet by a message for this location chat
+    public static int generateId(int locationId){
+        FindIterable<Document> request = chatsCollection.find(eq("locationId", locationId));
+        Document chatDoc = request.first();
+        JSONObject chatAsJSON = new JSONObject(chatDoc.toJson());
+        JSONArray messagesJSON = chatAsJSON.getJSONArray("messages");
+
+        int random = (int) (Math.random() * 100000);
+
+        for (int i = 0; i < messagesJSON.length(); i++) {
+            JSONObject messageJSON = messagesJSON.getJSONObject(i);
+            if (messageJSON.getInt("messageId") == random){
+                random = generateId(locationId);
+            }
+        }
+
+        return random;
+    }
+
+    public static void deleteMessage(Integer locationId, int messageId){
+        FindIterable<Document> request =  chatsCollection.find(eq("locationId", locationId));
+        Document chatDoc = request.first();
+        JSONObject chatAsJSON = new JSONObject(chatDoc.toJson());
+        JSONArray messagesJSON = chatAsJSON.getJSONArray("messages");
+
+        Message messageToRemove = new Message();
+
+        for (int i = 0; i < messagesJSON.length(); i++) {
+            JSONObject messageJSON = messagesJSON.getJSONObject(i);
+            if (messageJSON.getInt("messageId") == messageId){
+                messageToRemove = convertMessageJSONToEntity(messageJSON);
+            }
+        }
+
+        chatsCollection.updateOne(eq("locationId", locationId),
+                Updates.pull("messages", convertEntityToDocument(messageToRemove)));
     }
 
     public static Message convertMessageJSONToEntity(JSONObject messageJSON){
         Message message = new Message();
 
         int userId = messageJSON.getInt("senderId");
-        User sender = DatabaseConnectorUser.getUserById(messageJSON.getInt("senderId"));
-        String usernameSender = sender.getUsername();
 
         message.setSenderUsername(DatabaseConnectorUser.getUsernameById(userId));
+        message.setSenderId(userId);
         message.setContent(messageJSON.getString("content"));
         message.setTimestamp(messageJSON.getString("timestamp"));
+        message.setMessageId(messageJSON.getInt("messageId"));
 
         return message;
+    }
+
+    public static Document convertEntityToDocument(Message message){
+        return new Document("senderId", message.getSenderId())
+                .append("content", message.getContent())
+                .append("timestamp", message.getTimestamp())
+                .append("messageId", message.getMessageId());
     }
 }

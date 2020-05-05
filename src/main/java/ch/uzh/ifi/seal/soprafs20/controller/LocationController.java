@@ -100,6 +100,13 @@ public class LocationController {
         locationService.postMessage(locationId, DTOMapper.INSTANCE.convertMessagePostDTOToEntity(messagePostDTO));
     }
 
+    @DeleteMapping("/locations/chats/{locationId}/{messageId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseBody
+    public void deleteMessage(@PathVariable Integer locationId, @PathVariable int messageId) {
+        locationService.deleteMessage(locationId, messageId);
+    }
+
     @GetMapping("/locations/favorites/{userId}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody

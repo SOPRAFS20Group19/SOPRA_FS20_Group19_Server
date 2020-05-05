@@ -136,6 +136,10 @@ public class LocationService {
         DatabaseConnectorLocationChats.postMessage(locationId, message);
     }
 
+    public void deleteMessage(Integer locationId, int messageId){
+        DatabaseConnectorLocationChats.deleteMessage(locationId, messageId);
+    }
+
     // gets a users favorite locations
     public List<Location> getFavoriteLocations(int userId){
         ArrayList<Integer> favoriteLocationIds = DatabaseConnectorFavoriteLocations.getFavoriteLocations(userId);

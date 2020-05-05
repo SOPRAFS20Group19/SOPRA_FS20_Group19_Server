@@ -6,6 +6,7 @@ public class Message {
     private String senderUsername;
     private int senderId;
     private String timestamp;
+    private int messageId;
 
     public Message(){}
 
@@ -15,6 +16,14 @@ public class Message {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public int getMessageId() {
+        return messageId;
+    }
+
+    public void setMessageId(int messageId) {
+        this.messageId = messageId;
     }
 
     public int getSenderId() {
