@@ -137,9 +137,9 @@ public class DatabaseConnectorUser {
     }
 
     //returns all users represented as User.class
-    public static List<User> getAllUsers(){
+    public static ArrayList<User> getAllUsers(){
         List<Document> request = usersCollection.find().into(new ArrayList<>());
-        List<User> allUsers = new ArrayList<User>();
+        ArrayList<User> allUsers = new ArrayList<>();
         for (Document doc : request){
             User tempUser = DatabaseConnectorUser.getUserInfo(doc);
             allUsers.add(tempUser);

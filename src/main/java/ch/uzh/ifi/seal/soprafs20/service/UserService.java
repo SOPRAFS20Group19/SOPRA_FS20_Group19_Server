@@ -1,5 +1,6 @@
 package ch.uzh.ifi.seal.soprafs20.service;
 
+import ch.uzh.ifi.seal.soprafs20.database.DatabaseConnectorLocation;
 import ch.uzh.ifi.seal.soprafs20.database.DatabaseConnectorUser;
 import ch.uzh.ifi.seal.soprafs20.entity.User;
 import ch.uzh.ifi.seal.soprafs20.exceptions.DuplicatedUserException;
@@ -29,6 +30,10 @@ public class UserService {
 
     private final Logger log = LoggerFactory.getLogger(UserService.class);
 
+    //returns all users in the database
+    public ArrayList<User> getAllUsers(){
+        return DatabaseConnectorUser.getAllUsers();
+    }
 
     // returns a user in the repository identified by his ID
     public User getUserById(int id){

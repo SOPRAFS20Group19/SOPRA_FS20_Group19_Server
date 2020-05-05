@@ -28,6 +28,20 @@ public class UserController {
         this.userService = userService;
     }
 
+    @GetMapping("/users")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public List<UserGetDTO> getAllUsers() {
+        // get the users
+        ArrayList<User> users = userService.getAllUsers();
+        ArrayList<UserGetDTO> usersGetDTO = new ArrayList<>();
+        // convert the users to the API representation
+        for (User user : users){
+            usersGetDTO.add(DTOMapper.INSTANCE.convertEntityToUserGetDTO(user));
+        }
+        return usersGetDTO;
+    }
+
     @GetMapping("/users/{userId}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
