@@ -37,7 +37,6 @@ public class UserService {
 
     // returns a user in the repository identified by his ID
     public User getUserById(int id){
-        //Not yet implemented
         User userToReturn = DatabaseConnectorUser.getUserById(id);
         return  userToReturn;
     }
@@ -56,6 +55,9 @@ public class UserService {
         }
 
         if (userWithNewData.getUsername() != null){
+            if (DatabaseConnectorUser.checkIfUsernameExists(userWithNewData.getUsername())){
+                throw new DuplicatedUserException("The provided username is already taken. Please try a new one.");
+            }
             userToUpdate.setUsername(userWithNewData.getUsername());
             DatabaseConnectorUser.updateUsername(userToUpdate);
         }
@@ -102,6 +104,7 @@ public class UserService {
     public User createUser(User newUser) {
         newUser.setCreationDate(UserService.getCurrentDate());
         newUser.setFavoriteLocations(new ArrayList<Integer>());
+        newUser.setFriendsList(new ArrayList<Integer>());
         //Checks whether username is already taken
         if (DatabaseConnectorUser.checkIfUsernameExists(newUser.getUsername())){
             throw new DuplicatedUserException("The provided username is already taken. Please try a new one.");
@@ -112,6 +115,41 @@ public class UserService {
         log.debug("Created Information for User: {}", newUser);
 
         return userToReturn;
+    }
+
+    public void deleteFriend(int deletingUserId, int toBeDeletedUserId){
+        DatabaseConnectorUser.deleteFriend(deletingUserId, toBeDeletedUserId);
+    }
+
+    public void addFriend(int addingUserId, int toBeAddedUserId){
+        // check if user exists
+        DatabaseConnectorUser.getUserById(toBeAddedUserId);
+        // add user to friends list if userIds are not the same
+        if (addingUserId != toBeAddedUserId){
+            DatabaseConnectorUser.addFriend(addingUserId, toBeAddedUserId);
+        }
+
+    }
+
+    public boolean checkFriend(int userId, int friendId){
+        ArrayList<Integer> friendsIds = DatabaseConnectorUser.getFriends(userId);
+        if (friendsIds.contains(friendId)){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public ArrayList<User> getFriends(int userId){
+        ArrayList<Integer> friendIds = DatabaseConnectorUser.getFriends(userId);
+        ArrayList<User> friendsAsUsers = new ArrayList<>();
+
+        for (Integer friendId : friendIds){
+            friendsAsUsers.add(getUserById(friendId));
+        }
+
+        return friendsAsUsers;
     }
 
     // creates a timestamp of the current date for the creation date during the registration

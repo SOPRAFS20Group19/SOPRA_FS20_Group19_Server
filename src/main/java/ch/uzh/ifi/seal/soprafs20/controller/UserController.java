@@ -94,6 +94,42 @@ public class UserController {
     public void logoutUser(@PathVariable int userId){
         //log out user with given User id
         userService.logoutUser(userId);
+    }
 
+    @GetMapping("/users/friends/{userId}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public List<UserGetDTO> getFriendsOfUser(@PathVariable int userId) {
+        // get the friends corresponding to the given ID
+        ArrayList<User> allFriends = userService.getFriends(userId);
+        List<UserGetDTO> allFriendsGetDTO = new ArrayList<>();
+
+        // convert the friends to the API representation
+        for (User friend : allFriends){
+            allFriendsGetDTO.add(DTOMapper.INSTANCE.convertEntityToUserGetDTO(friend));
+        }
+
+        return allFriendsGetDTO;
+    }
+
+    @PutMapping("/users/friends/{userId}/{friendId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseBody
+    public void addFriend(@PathVariable int userId, @PathVariable int friendId){
+        userService.addFriend(userId, friendId);
+    }
+
+    @DeleteMapping("/users/friends/{userId}/{friendId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseBody
+    public void deleteFriend(@PathVariable int userId, @PathVariable int friendId){
+        userService.deleteFriend(userId, friendId);
+    }
+
+    @GetMapping("/users/friends/{userId}/{friendId}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public boolean checkIfFriend(@PathVariable int userId, @PathVariable int friendId){
+        return userService.checkFriend(userId, friendId);
     }
 }

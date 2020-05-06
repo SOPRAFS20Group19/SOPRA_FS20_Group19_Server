@@ -32,6 +32,8 @@ public class User {
 
 	private ArrayList favoriteLocations;
 
+	private ArrayList<Integer> friendsList;
+
 
 	public int getId() {
 		return id;
@@ -105,5 +107,13 @@ public class User {
 
 	public void setAvatarNr(int avatarNr) {
 		this.avatarNr = avatarNr;
+	}
+
+	public ArrayList<Integer> getFriendsList() {
+		return friendsList;
+	}
+
+	public void setFriendsList(ArrayList<Integer> friendsList) {
+		this.friendsList = friendsList;
 	}
 }

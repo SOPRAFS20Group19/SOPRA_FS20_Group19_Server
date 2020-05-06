@@ -10,12 +10,13 @@ import ch.uzh.ifi.seal.soprafs20.rest.dto.MessagePostDTO;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.UserGetDTO;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.UserPostDTO;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.UserPutDTO;
+import java.util.ArrayList;
 import java.util.Arrays;
 import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-05-05T17:42:24+0200",
+    date = "2020-05-06T14:36:46+0200",
     comments = "version: 1.3.1.Final, compiler: javac, environment: Java 13.0.1 (Oracle Corporation)"
 )
 public class DTOMapperImpl implements DTOMapper {
@@ -62,6 +63,10 @@ public class DTOMapperImpl implements DTOMapper {
         UserGetDTO userGetDTO = new UserGetDTO();
 
         userGetDTO.setPassword( user.getPassword() );
+        ArrayList<Integer> arrayList = user.getFriendsList();
+        if ( arrayList != null ) {
+            userGetDTO.setFriendsList( new ArrayList<Integer>( arrayList ) );
+        }
         userGetDTO.setName( user.getName() );
         userGetDTO.setAvatarNr( user.getAvatarNr() );
         userGetDTO.setId( user.getId() );

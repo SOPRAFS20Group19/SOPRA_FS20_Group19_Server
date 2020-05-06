@@ -2,6 +2,8 @@ package ch.uzh.ifi.seal.soprafs20.rest.dto;
 
 import ch.uzh.ifi.seal.soprafs20.constant.UserStatus;
 
+import java.util.ArrayList;
+
 public class UserGetDTO {
 
     private int id;
@@ -11,6 +13,7 @@ public class UserGetDTO {
     private UserStatus status;
     private String creationDate;
     private int avatarNr;
+    private ArrayList<Integer> friendsList;
 
     public int getId() {
         return id;
@@ -60,5 +63,13 @@ public class UserGetDTO {
 
     public void setAvatarNr(int avatarNr){
         this.avatarNr = avatarNr;
+    }
+
+    public void setFriendsList(ArrayList<Integer> friendsList) {
+        this.friendsList = friendsList;
+    }
+
+    public ArrayList<Integer> getFriendsList() {
+        return friendsList;
     }
 }

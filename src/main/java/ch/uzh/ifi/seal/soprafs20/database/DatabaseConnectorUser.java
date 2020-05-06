@@ -5,6 +5,7 @@ import ch.uzh.ifi.seal.soprafs20.entity.Location;
 import ch.uzh.ifi.seal.soprafs20.entity.User;
 import ch.uzh.ifi.seal.soprafs20.exceptions.UserNotFoundException;
 import com.mongodb.client.*;
+import com.mongodb.client.model.Updates;
 import org.bson.Document;
 
 import java.util.ArrayList;
@@ -31,13 +32,15 @@ public class DatabaseConnectorUser {
 
     //creates User in the database; called bi createUser() in UserService
     public static User createUser(User user) {
+        ArrayList<Integer> emptyFriendsList = new ArrayList<>();
         Document doc = new Document("username", user.getUsername())
                 .append("name", user.getName())
                 .append("password", user.getPassword())
                 .append("creation-date", user.getCreationDate())
                 .append("online", false)
                 .append("userId", DatabaseConnectorUser.generateId())
-                .append("avatarNr", 0);
+                .append("avatarNr", 0)
+                .append("friendsList", emptyFriendsList);
         usersCollection.insertOne(doc);
 
         // creates an entry for the new user in the FavoriteLocations DB
@@ -124,6 +127,7 @@ public class DatabaseConnectorUser {
         userRepresentation.setId(user.getInteger("userId", 0)); //if user has no id he gets assigned id: 0, flag that something is not working properly
         userRepresentation.setStatus(user.getBoolean("online")? UserStatus.ONLINE : UserStatus.OFFLINE);
         userRepresentation.setAvatarNr(user.getInteger( "avatarNr", 0)); //if user has no avatar chosen he gets the default value 0
+        userRepresentation.setFriendsList(getFriends(userRepresentation.getId()));
 
         return userRepresentation;
     }
@@ -169,6 +173,59 @@ public class DatabaseConnectorUser {
     public static void updateAvatarNr(User userToUpdate){
         usersCollection.updateOne(eq("userId", userToUpdate.getId()),
                 set("avatarNr", userToUpdate.getAvatarNr()));
+    }
+
+    public static void addFriend(int addingUserId, int toBeAddedUserId){
+        ArrayList<Integer> currentFriends = getFriends(addingUserId);
+        boolean shouldAdd = true;
+        // check if friend to be added is already included in list
+        for (Integer friendId : currentFriends){
+            if (friendId == toBeAddedUserId) {
+                shouldAdd = false;
+                break;
+            }
+        }
+        if (shouldAdd){
+            usersCollection.updateOne(eq("userId", addingUserId), Updates.addToSet("friendsList", toBeAddedUserId));
+        }
+    }
+
+    public static void deleteFriend(int deletingUserId, int toBeDeletedUserId){
+        usersCollection.updateOne(eq("userId", deletingUserId),
+                Updates.pull("friendsList", toBeDeletedUserId));
+    }
+
+    public static ArrayList<Integer> getFriends(int userId){
+        FindIterable<Document> request =  usersCollection.find(eq("userId", userId));
+        Document user = request.first();
+
+        String userAsString = user.toJson();
+        JSONObject userAsJson = new JSONObject(userAsString);
+
+        if (userAsJson.getJSONArray("friendsList") == null){
+
+        }
+        JSONArray friendsListJson = userAsJson.getJSONArray("friendsList");
+        ArrayList<Integer> friendsList = new ArrayList<>();
+
+        for (int i = 0; i < friendsListJson.length(); i++){
+            friendsList.add(friendsListJson.getInt(i));
+        }
+
+        return friendsList;
+    }
+
+    // initial setup to give all existing users an empty friends List
+    public static void friendsListSetup(){
+        ArrayList<User> allUsers = getAllUsers();
+
+        for (User user : allUsers){
+            ArrayList<Integer> emptyFriendsList = new ArrayList<>();
+            Document updatedDoc = new Document().append("$set", new Document()
+                    .append("friendsList", emptyFriendsList));
+
+            usersCollection.updateOne(eq("userId", user.getId()), updatedDoc);
+        }
     }
 
 }
