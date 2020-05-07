@@ -260,6 +260,54 @@ public class UserServiceIntegrationTest {
         usersCollection.deleteOne(eq("username", "testUsernamenew"));
     }
 
+    // Checks if the user can add and delete a friend
+    @Test
+    public void addFriend_success() {
+        FindIterable<Document> request = usersCollection.find(eq("username", "testUsername"));
+        Document user = request.first();
+        assertNull(user);
+
+        FindIterable<Document> request2 = usersCollection.find(eq("username", "testUsername1"));
+        Document user2 = request.first();
+        assertNull(user2);
+
+        User testUser = new User();
+        testUser.setName("testName");
+        testUser.setUsername("testUsername");
+        testUser.setPassword("password");
+        User userWantsToAddFriend = userService.createUser(testUser);
+
+
+        User testUser2 = new User();
+        testUser2.setName("testName1");
+        testUser2.setUsername("testUsername1");
+        testUser2.setPassword("password1");
+        User addedUser = userService.createUser(testUser2);
+
+
+        // Adds the User 'addedUser' to the Friends List of the User'userWantsToAddFriend'
+        userService.addFriend(userWantsToAddFriend.getId(), addedUser.getId());
+
+        boolean friends;
+
+        friends = userService.checkFriend(userWantsToAddFriend.getId(), addedUser.getId());
+
+        assertTrue(friends);
+
+        // Deletes the User 'addedUser' of the Friends List of the User'userWantsToAddFriend'
+        userService.deleteFriend(userWantsToAddFriend.getId(), addedUser.getId());
+
+        boolean friends1;
+
+        friends1 = userService.checkFriend(userWantsToAddFriend.getId(), addedUser.getId());
+
+        assertFalse(friends1);
+
+        usersCollection.deleteOne(eq("username", "testUsername"));
+        usersCollection.deleteOne(eq("username", "testUsername1"));
+
+
+    }
 
 
 

@@ -172,5 +172,7 @@ public class UserServiceUnitTest {
         fail("UserNotFoundException expected");
     }
 
+
+
 }
 

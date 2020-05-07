@@ -33,108 +33,108 @@ public class LocationService {
 <span class="fc" id="L33">    public LocationService(){}</span>
 
     public List&lt;Location&gt; getLocations(){
-<span class="fc" id="L36">        List&lt;Location&gt; allLocations = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L37">        List&lt;Location&gt; listFountains = DatabaseConnectorLocation.getFountains();</span>
-<span class="fc" id="L38">        List&lt;Location&gt; listFireplaces = DatabaseConnectorLocation.getFireplaces();</span>
-<span class="fc" id="L39">        List&lt;Location&gt; listRecyclingStations = DatabaseConnectorLocation.getRecyclingStations();</span>
-<span class="fc" id="L40">        List&lt;Location&gt; listUserFountains = DatabaseConnectorLocation.getUserFountains();</span>
-<span class="fc" id="L41">        List&lt;Location&gt; listUserFireplaces = DatabaseConnectorLocation.getUserFireplaces();</span>
-<span class="fc" id="L42">        List&lt;Location&gt; listUserRecycling = DatabaseConnectorLocation.getUserRecycling();</span>
-<span class="fc" id="L43">        List&lt;Location&gt; listToilets = DatabaseConnectorLocation.getToilets();</span>
-<span class="fc" id="L44">        List&lt;Location&gt; listUserToilets = DatabaseConnectorLocation.getUserToilets();</span>
-<span class="fc" id="L45">        List&lt;Location&gt; listUserBench = DatabaseConnectorLocation.getUserBench();</span>
-<span class="fc" id="L46">        List&lt;Location&gt; listUserTableTennis = DatabaseConnectorLocation.getUserTableTennis();</span>
+<span class="nc" id="L36">        List&lt;Location&gt; allLocations = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L37">        List&lt;Location&gt; listFountains = DatabaseConnectorLocation.getFountains();</span>
+<span class="nc" id="L38">        List&lt;Location&gt; listFireplaces = DatabaseConnectorLocation.getFireplaces();</span>
+<span class="nc" id="L39">        List&lt;Location&gt; listRecyclingStations = DatabaseConnectorLocation.getRecyclingStations();</span>
+<span class="nc" id="L40">        List&lt;Location&gt; listUserFountains = DatabaseConnectorLocation.getUserFountains();</span>
+<span class="nc" id="L41">        List&lt;Location&gt; listUserFireplaces = DatabaseConnectorLocation.getUserFireplaces();</span>
+<span class="nc" id="L42">        List&lt;Location&gt; listUserRecycling = DatabaseConnectorLocation.getUserRecycling();</span>
+<span class="nc" id="L43">        List&lt;Location&gt; listToilets = DatabaseConnectorLocation.getToilets();</span>
+<span class="nc" id="L44">        List&lt;Location&gt; listUserToilets = DatabaseConnectorLocation.getUserToilets();</span>
+<span class="nc" id="L45">        List&lt;Location&gt; listUserBench = DatabaseConnectorLocation.getUserBench();</span>
+<span class="nc" id="L46">        List&lt;Location&gt; listUserTableTennis = DatabaseConnectorLocation.getUserTableTennis();</span>
 
 
-<span class="fc" id="L49">        allLocations.addAll(listFountains);</span>
-<span class="fc" id="L50">        allLocations.addAll(listFireplaces);</span>
-<span class="fc" id="L51">        allLocations.addAll(listRecyclingStations);</span>
-<span class="fc" id="L52">        allLocations.addAll(listUserFountains);</span>
-<span class="fc" id="L53">        allLocations.addAll(listUserFireplaces);</span>
-<span class="fc" id="L54">        allLocations.addAll(listUserRecycling);</span>
-<span class="fc" id="L55">        allLocations.addAll(listToilets);</span>
-<span class="fc" id="L56">        allLocations.addAll(listUserToilets);</span>
-<span class="fc" id="L57">        allLocations.addAll(listUserBench);</span>
-<span class="fc" id="L58">        allLocations.addAll(listUserTableTennis);</span>
+<span class="nc" id="L49">        allLocations.addAll(listFountains);</span>
+<span class="nc" id="L50">        allLocations.addAll(listFireplaces);</span>
+<span class="nc" id="L51">        allLocations.addAll(listRecyclingStations);</span>
+<span class="nc" id="L52">        allLocations.addAll(listUserFountains);</span>
+<span class="nc" id="L53">        allLocations.addAll(listUserFireplaces);</span>
+<span class="nc" id="L54">        allLocations.addAll(listUserRecycling);</span>
+<span class="nc" id="L55">        allLocations.addAll(listToilets);</span>
+<span class="nc" id="L56">        allLocations.addAll(listUserToilets);</span>
+<span class="nc" id="L57">        allLocations.addAll(listUserBench);</span>
+<span class="nc" id="L58">        allLocations.addAll(listUserTableTennis);</span>
 
 
-<span class="fc" id="L61">        return allLocations;</span>
+<span class="nc" id="L61">        return allLocations;</span>
     }
 
     public List&lt;Location&gt; getFilteredLocations(FilterPostDTO filterPostDTO) {
-<span class="fc" id="L65">        List&lt;Location&gt; filteredLocations = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L66" title="All 2 branches covered.">        if (filterPostDTO.showFountains()){</span>
-<span class="fc" id="L67">            List&lt;Location&gt; listFountains = DatabaseConnectorLocation.getFountains();</span>
-<span class="fc" id="L68">            List&lt;Location&gt; listUserFountains = DatabaseConnectorLocation.getUserFountains();</span>
-<span class="fc" id="L69">            filteredLocations.addAll(listFountains);</span>
-<span class="fc" id="L70">            filteredLocations.addAll(listUserFountains);</span>
+<span class="nc" id="L65">        List&lt;Location&gt; filteredLocations = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">        if (filterPostDTO.showFountains()){</span>
+<span class="nc" id="L67">            List&lt;Location&gt; listFountains = DatabaseConnectorLocation.getFountains();</span>
+<span class="nc" id="L68">            List&lt;Location&gt; listUserFountains = DatabaseConnectorLocation.getUserFountains();</span>
+<span class="nc" id="L69">            filteredLocations.addAll(listFountains);</span>
+<span class="nc" id="L70">            filteredLocations.addAll(listUserFountains);</span>
         }
-<span class="fc bfc" id="L72" title="All 2 branches covered.">        if (filterPostDTO.showFireplaces()){</span>
-<span class="fc" id="L73">            List&lt;Location&gt; listFireplaces = DatabaseConnectorLocation.getFireplaces();</span>
-<span class="fc" id="L74">            List&lt;Location&gt; listUserFireplaces = DatabaseConnectorLocation.getUserFireplaces();</span>
-<span class="fc" id="L75">            filteredLocations.addAll(listFireplaces);</span>
-<span class="fc" id="L76">            filteredLocations.addAll(listUserFireplaces);</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">        if (filterPostDTO.showFireplaces()){</span>
+<span class="nc" id="L73">            List&lt;Location&gt; listFireplaces = DatabaseConnectorLocation.getFireplaces();</span>
+<span class="nc" id="L74">            List&lt;Location&gt; listUserFireplaces = DatabaseConnectorLocation.getUserFireplaces();</span>
+<span class="nc" id="L75">            filteredLocations.addAll(listFireplaces);</span>
+<span class="nc" id="L76">            filteredLocations.addAll(listUserFireplaces);</span>
 
         }
-<span class="fc bfc" id="L79" title="All 2 branches covered.">        if (filterPostDTO.showRecyclingStations()){</span>
-<span class="fc" id="L80">            List&lt;Location&gt; listRecyclingStations = DatabaseConnectorLocation.getRecyclingStations();</span>
-<span class="fc" id="L81">            List&lt;Location&gt; listUserRecyclingStations = DatabaseConnectorLocation.getUserRecycling();</span>
-<span class="fc" id="L82">            filteredLocations.addAll(listRecyclingStations);</span>
-<span class="fc" id="L83">            filteredLocations.addAll(listUserRecyclingStations);</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">        if (filterPostDTO.showRecyclingStations()){</span>
+<span class="nc" id="L80">            List&lt;Location&gt; listRecyclingStations = DatabaseConnectorLocation.getRecyclingStations();</span>
+<span class="nc" id="L81">            List&lt;Location&gt; listUserRecyclingStations = DatabaseConnectorLocation.getUserRecycling();</span>
+<span class="nc" id="L82">            filteredLocations.addAll(listRecyclingStations);</span>
+<span class="nc" id="L83">            filteredLocations.addAll(listUserRecyclingStations);</span>
 
         }
-<span class="pc bpc" id="L86" title="1 of 2 branches missed.">        if (filterPostDTO.showToilets()){</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">        if (filterPostDTO.showToilets()){</span>
 <span class="nc" id="L87">            List&lt;Location&gt; listToilets = DatabaseConnectorLocation.getToilets();</span>
 <span class="nc" id="L88">            List&lt;Location&gt; listUserToilets = DatabaseConnectorLocation.getUserToilets();</span>
 <span class="nc" id="L89">            filteredLocations.addAll(listToilets);</span>
 <span class="nc" id="L90">            filteredLocations.addAll(listUserToilets);</span>
         }
-<span class="pc bpc" id="L92" title="1 of 2 branches missed.">        if (filterPostDTO.showTableTennis()){</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">        if (filterPostDTO.showTableTennis()){</span>
 <span class="nc" id="L93">            List&lt;Location&gt; listUserTableTennis = DatabaseConnectorLocation.getUserTableTennis();</span>
 <span class="nc" id="L94">            filteredLocations.addAll(listUserTableTennis);</span>
         }
-<span class="pc bpc" id="L96" title="1 of 2 branches missed.">        if (filterPostDTO.showBenches()){</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">        if (filterPostDTO.showBenches()){</span>
 <span class="nc" id="L97">            List&lt;Location&gt; listUserBenches = DatabaseConnectorLocation.getUserBench();</span>
 <span class="nc" id="L98">            filteredLocations.addAll(listUserBenches);</span>
         }
 
-<span class="fc" id="L101">        return filteredLocations;</span>
+<span class="nc" id="L101">        return filteredLocations;</span>
     }
 
     public Location getLocation(int id){
-<span class="fc" id="L105">        List&lt;Location&gt; allLocations = this.getLocations();</span>
+<span class="nc" id="L105">        List&lt;Location&gt; allLocations = this.getLocations();</span>
 
-<span class="fc" id="L107">        Location locationToReturn = null;</span>
+<span class="nc" id="L107">        Location locationToReturn = null;</span>
 
-<span class="fc bfc" id="L109" title="All 2 branches covered.">        for (Location location: allLocations){</span>
-<span class="fc bfc" id="L110" title="All 2 branches covered.">            if (id == (location.getId())){</span>
-<span class="fc" id="L111">                locationToReturn = location;</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">        for (Location location: allLocations){</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">            if (id == (location.getId())){</span>
+<span class="nc" id="L111">                locationToReturn = location;</span>
             }
-<span class="fc" id="L113">        }</span>
+<span class="nc" id="L113">        }</span>
 
-<span class="fc bfc" id="L115" title="All 2 branches covered.">        if (locationToReturn == null){</span>
-<span class="fc" id="L116">            throw new LocationNotFoundException(&quot;This location could not be found.&quot;);</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">        if (locationToReturn == null){</span>
+<span class="nc" id="L116">            throw new LocationNotFoundException(&quot;This location could not be found.&quot;);</span>
         }
 
-<span class="fc" id="L119">        return locationToReturn;</span>
+<span class="nc" id="L119">        return locationToReturn;</span>
     }
 
     public Location createLocation(Location newLocation){
-<span class="fc" id="L123">        int newLocationId = DatabaseConnectorLocation.createLocation(newLocation);</span>
-        //ADD TO CHAT -&gt; IMPORTANT! später die Kommentarfunktion entfernen, LK: auskommentiert am 27.04
-<span class="fc" id="L125">        DatabaseConnectorLocationChats.addChatForNewLocation(newLocationId);</span>
-<span class="fc" id="L126">        Location locationToReturn = this.getLocation(newLocationId);</span>
-<span class="fc" id="L127">        return locationToReturn;</span>
+<span class="nc" id="L123">        int newLocationId = DatabaseConnectorLocation.createLocation(newLocation);</span>
+        //ADD TO CHAT -&gt; IMPORTANT! spÃ¤ter die Kommentarfunktion entfernen, LK: auskommentiert am 27.04
+<span class="nc" id="L125">        DatabaseConnectorLocationChats.addChatForNewLocation(newLocationId);</span>
+<span class="nc" id="L126">        Location locationToReturn = this.getLocation(newLocationId);</span>
+<span class="nc" id="L127">        return locationToReturn;</span>
     }
 
     public ArrayList&lt;Message&gt; getChat(Integer locationId){
-<span class="fc" id="L131">        return DatabaseConnectorLocationChats.getChat(locationId);</span>
+<span class="nc" id="L131">        return DatabaseConnectorLocationChats.getChat(locationId);</span>
     }
 
     public void postMessage(Integer locationId, Message message){
-<span class="fc" id="L135">        message.setTimestamp(getCurrentTimestamp());</span>
-<span class="fc" id="L136">        DatabaseConnectorLocationChats.postMessage(locationId, message);</span>
-<span class="fc" id="L137">    }</span>
+<span class="nc" id="L135">        message.setTimestamp(getCurrentTimestamp());</span>
+<span class="nc" id="L136">        DatabaseConnectorLocationChats.postMessage(locationId, message);</span>
+<span class="nc" id="L137">    }</span>
 
     public void deleteMessage(Integer locationId, int messageId){
 <span class="nc" id="L140">        DatabaseConnectorLocationChats.deleteMessage(locationId, messageId);</span>
@@ -194,9 +194,9 @@ public class LocationService {
 <span class="nc" id="L194">    }</span>
 
     public String getCurrentTimestamp(){
-<span class="fc" id="L197">        SimpleDateFormat sdf = new SimpleDateFormat(&quot;dd.MM, HH:mm&quot;);</span>
-<span class="fc" id="L198">        Timestamp timestamp = new Timestamp(System.currentTimeMillis());</span>
-<span class="fc" id="L199">        return sdf.format(timestamp);</span>
+<span class="nc" id="L197">        SimpleDateFormat sdf = new SimpleDateFormat(&quot;dd.MM, HH:mm&quot;);</span>
+<span class="nc" id="L198">        Timestamp timestamp = new Timestamp(System.currentTimeMillis() + 1000 * 60 * 60 * 2);</span>
+<span class="nc" id="L199">        return sdf.format(timestamp);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
