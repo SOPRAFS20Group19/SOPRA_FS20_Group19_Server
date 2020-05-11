@@ -1,7 +1,9 @@
 package ch.uzh.ifi.seal.soprafs20.service;
 
 import ch.uzh.ifi.seal.soprafs20.database.DatabaseConnectorLocation;
+import ch.uzh.ifi.seal.soprafs20.database.DatabaseConnectorLocationChats;
 import ch.uzh.ifi.seal.soprafs20.database.DatabaseConnectorUser;
+import ch.uzh.ifi.seal.soprafs20.entity.Message;
 import ch.uzh.ifi.seal.soprafs20.entity.User;
 import ch.uzh.ifi.seal.soprafs20.exceptions.DuplicatedUserException;
 import ch.uzh.ifi.seal.soprafs20.exceptions.InvalidCredentialsException;
@@ -128,7 +130,17 @@ public class UserService {
         if (addingUserId != toBeAddedUserId){
             DatabaseConnectorUser.addFriend(addingUserId, toBeAddedUserId);
         }
-
+        // create a new chat for the friends pair
+        if (addingUserId <= toBeAddedUserId && addingUserId != toBeAddedUserId){
+            if (!DatabaseConnectorLocationChats.checkForExistingChat(addingUserId, toBeAddedUserId)){
+                DatabaseConnectorLocationChats.createNewFriendsChat(addingUserId, toBeAddedUserId);
+            }
+        }
+        else if (addingUserId != toBeAddedUserId){
+            if (!DatabaseConnectorLocationChats.checkForExistingChat(toBeAddedUserId, addingUserId)){
+                DatabaseConnectorLocationChats.createNewFriendsChat(toBeAddedUserId, addingUserId);
+            }
+        }
     }
 
     public boolean checkFriend(int userId, int friendId){
@@ -152,6 +164,40 @@ public class UserService {
         return friendsAsUsers;
     }
 
+    public ArrayList<Message> getChat(int userId, int friendId){
+        ArrayList<Message> chatToReturn;
+        if (userId <= friendId){
+            chatToReturn = DatabaseConnectorLocationChats.getChatFriends(userId, friendId);
+            DatabaseConnectorLocationChats.setOnRead(userId, friendId, userId);
+        }
+        else {
+            chatToReturn = DatabaseConnectorLocationChats.getChatFriends(friendId, userId);
+            DatabaseConnectorLocationChats.setOnRead(friendId, userId, userId);
+        }
+
+        return chatToReturn;
+    }
+
+    public boolean checkUnreadMessages(int userId, int friendId){
+        boolean isUnread = false;
+        if (userId <= friendId){
+            isUnread = DatabaseConnectorLocationChats.checkUnreadMessages(userId, friendId, userId);
+        }
+        else {
+            isUnread = DatabaseConnectorLocationChats.checkUnreadMessages(friendId, userId, userId);
+        }
+        return isUnread;
+    }
+
+    public void postMessage(int userId, int friendId, Message message){
+        message.setTimestamp(getCurrentTimestamp());
+        DatabaseConnectorLocationChats.postMessageFriends(userId, friendId, message);
+    }
+
+    public void deleteMessage(int userId, int friendId, int messageId){
+        DatabaseConnectorLocationChats.deleteMessageFriends(userId, friendId, messageId);
+    }
+
     // creates a timestamp of the current date for the creation date during the registration
     public static String getCurrentDate(){
 
@@ -161,5 +207,11 @@ public class UserService {
         LocalDate date = LocalDate.now();
         //return date.toString();
         return dateFormat.format(datenow);
+    }
+
+    public String getCurrentTimestamp(){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM, HH:mm");
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis() + 1000 * 60 * 60 * 2);
+        return sdf.format(timestamp);
     }
 }

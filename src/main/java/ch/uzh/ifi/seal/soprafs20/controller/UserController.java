@@ -1,10 +1,9 @@
 package ch.uzh.ifi.seal.soprafs20.controller;
 
 import ch.uzh.ifi.seal.soprafs20.entity.Location;
+import ch.uzh.ifi.seal.soprafs20.entity.Message;
 import ch.uzh.ifi.seal.soprafs20.entity.User;
-import ch.uzh.ifi.seal.soprafs20.rest.dto.UserGetDTO;
-import ch.uzh.ifi.seal.soprafs20.rest.dto.UserPostDTO;
-import ch.uzh.ifi.seal.soprafs20.rest.dto.UserPutDTO;
+import ch.uzh.ifi.seal.soprafs20.rest.dto.*;
 import ch.uzh.ifi.seal.soprafs20.rest.mapper.DTOMapper;
 import ch.uzh.ifi.seal.soprafs20.service.LocationService;
 import ch.uzh.ifi.seal.soprafs20.service.UserService;
@@ -132,4 +131,40 @@ public class UserController {
     public boolean checkIfFriend(@PathVariable int userId, @PathVariable int friendId){
         return userService.checkFriend(userId, friendId);
     }
+
+    @GetMapping("/users/chats/{userId}/{friendId}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public ArrayList<MessageGetDTO> getChat(@PathVariable int userId, @PathVariable int friendId){
+        ArrayList<Message> chat = userService.getChat(userId, friendId);
+        ArrayList<MessageGetDTO> chatDTO = new ArrayList<>();
+
+        for (Message message : chat){
+            chatDTO.add(DTOMapper.INSTANCE.convertEntityToMessageGetDTO(message));
+        }
+
+        return chatDTO;
+    }
+
+    @GetMapping("/users/chats/news/{userId}/{friendId}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public boolean checkUnreadMessages(@PathVariable int userId, @PathVariable int friendId){
+        return userService.checkUnreadMessages(userId, friendId);
+    }
+
+    @PutMapping("/users/chats/{userId}/{friendId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseBody
+    public void postMessageToFriend(@PathVariable int userId, @PathVariable int friendId, @RequestBody MessagePostDTO messagePostDTO){
+        userService.postMessage(userId, friendId, DTOMapper.INSTANCE.convertMessagePostDTOToEntity(messagePostDTO));
+    }
+
+    @DeleteMapping("/users/chats/{userId}/{friendId}/{messageId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseBody
+    public void deleteMessage(@PathVariable Integer userId, @PathVariable Integer friendId, @PathVariable int messageId) {
+        userService.deleteMessage(userId, friendId, messageId);
+    }
+
 }

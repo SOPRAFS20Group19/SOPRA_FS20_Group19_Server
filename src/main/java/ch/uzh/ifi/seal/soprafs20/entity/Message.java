@@ -4,9 +4,9 @@ public class Message {
 
     private String content;
     private String senderUsername;
-    private int senderId;
+    private Integer senderId;
     private String timestamp;
-    private int messageId;
+    private Integer messageId;
 
     public Message(){}
 
@@ -18,19 +18,19 @@ public class Message {
         this.content = content;
     }
 
-    public int getMessageId() {
+    public Integer getMessageId() {
         return messageId;
     }
 
-    public void setMessageId(int messageId) {
+    public void setMessageId(Integer messageId) {
         this.messageId = messageId;
     }
 
-    public int getSenderId() {
+    public Integer getSenderId() {
         return senderId;
     }
 
-    public void setSenderId(int senderId) {
+    public void setSenderId(Integer senderId) {
         this.senderId = senderId;
     }
 

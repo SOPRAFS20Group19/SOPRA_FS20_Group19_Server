@@ -128,16 +128,16 @@ public class LocationService {
     }
 
     public ArrayList<Message> getChat(Integer locationId){
-        return DatabaseConnectorLocationChats.getChat(locationId);
+        return DatabaseConnectorLocationChats.getChatLocations(locationId);
     }
 
     public void postMessage(Integer locationId, Message message){
         message.setTimestamp(getCurrentTimestamp());
-        DatabaseConnectorLocationChats.postMessage(locationId, message);
+        DatabaseConnectorLocationChats.postMessageLocations(locationId, message);
     }
 
     public void deleteMessage(Integer locationId, int messageId){
-        DatabaseConnectorLocationChats.deleteMessage(locationId, messageId);
+        DatabaseConnectorLocationChats.deleteMessageLocations(locationId, messageId);
     }
 
     // gets a users favorite locations

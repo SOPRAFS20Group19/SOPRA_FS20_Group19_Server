@@ -199,12 +199,10 @@ public class DatabaseConnectorUser {
         FindIterable<Document> request =  usersCollection.find(eq("userId", userId));
         Document user = request.first();
 
+        assert user != null;
         String userAsString = user.toJson();
         JSONObject userAsJson = new JSONObject(userAsString);
 
-        if (userAsJson.getJSONArray("friendsList") == null){
-
-        }
         JSONArray friendsListJson = userAsJson.getJSONArray("friendsList");
         ArrayList<Integer> friendsList = new ArrayList<>();
 
