@@ -1,164 +1,341 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="de"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DatabaseConnectorLocationChats.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">soprafs20</a> &gt; <a href="index.source.html" class="el_package">ch.uzh.ifi.seal.soprafs20.database</a> &gt; <span class="el_source">DatabaseConnectorLocationChats.java</span></div><h1>DatabaseConnectorLocationChats.java</h1><pre class="source lang-java linenums">package ch.uzh.ifi.seal.soprafs20.database;
-import ch.uzh.ifi.seal.soprafs20.constant.LocationType;
 import ch.uzh.ifi.seal.soprafs20.entity.Location;
 import ch.uzh.ifi.seal.soprafs20.entity.Message;
-import ch.uzh.ifi.seal.soprafs20.entity.User;
 import ch.uzh.ifi.seal.soprafs20.exceptions.LocationNotFoundException;
 import ch.uzh.ifi.seal.soprafs20.exceptions.UserNotFoundException;
-import ch.uzh.ifi.seal.soprafs20.service.LocationService;
 import com.mongodb.client.*;
 import com.mongodb.client.model.Updates;
 import org.bson.Document;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.print.Doc;
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.mongodb.client.model.Filters.*;
-import static com.mongodb.client.model.Updates.set;
 
 
 public class DatabaseConnectorLocationChats {
-<span class="nc" id="L26">    public DatabaseConnectorLocationChats() {}</span>
+<span class="nc" id="L19">    public DatabaseConnectorLocationChats() {}</span>
 
     //connection to mongodb on the cloud with credentials of luca locher
-<span class="nc" id="L29">    static MongoClient mongoClient = MongoClients.create(</span>
+<span class="fc" id="L22">    static MongoClient mongoClient = MongoClients.create(</span>
             &quot;mongodb+srv://lknufi:abc@knowyourcity-ijzn3.gcp.mongodb.net/test?retryWrites=true&amp;w=majority&quot;);
     //Establish connection to the Location Database (development purposes only)
-<span class="nc" id="L32">    static MongoDatabase LocationChats = mongoClient.getDatabase(&quot;LocationChats&quot;);</span>
+<span class="fc" id="L25">    static MongoDatabase LocationChats = mongoClient.getDatabase(&quot;LocationChats&quot;);</span>
     //Establish connection to the Fountains Collection (development purposes only)
-<span class="nc" id="L34">    static MongoCollection&lt;Document&gt; chatsCollection = LocationChats.getCollection(&quot;Chats&quot;);</span>
+<span class="fc" id="L27">    static MongoCollection&lt;Document&gt; chatsCollection = LocationChats.getCollection(&quot;Chats&quot;);</span>
+<span class="fc" id="L28">    static MongoCollection&lt;Document&gt; friendsChatsCollection = LocationChats.getCollection(&quot;FriendsChats&quot;);</span>
 
     // only used for initializing the DB collection. Do not run again
     public static void initialSetup(){
         // set up array for locationIds
-<span class="nc" id="L39">        ArrayList&lt;Integer&gt; locationIds = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L33">        ArrayList&lt;Integer&gt; locationIds = new ArrayList&lt;&gt;();</span>
 
         // get all locations
-<span class="nc" id="L42">        List&lt;Location&gt; allLocations = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L43">        List&lt;Location&gt; listFountains = DatabaseConnectorLocation.getFountains();</span>
-<span class="nc" id="L44">        List&lt;Location&gt; listFireplaces = DatabaseConnectorLocation.getFireplaces();</span>
-<span class="nc" id="L45">        List&lt;Location&gt; listRecyclingStations = DatabaseConnectorLocation.getRecyclingStations();</span>
+<span class="nc" id="L36">        List&lt;Location&gt; allLocations = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L37">        List&lt;Location&gt; listFountains = DatabaseConnectorLocation.getFountains();</span>
+<span class="nc" id="L38">        List&lt;Location&gt; listFireplaces = DatabaseConnectorLocation.getFireplaces();</span>
+<span class="nc" id="L39">        List&lt;Location&gt; listRecyclingStations = DatabaseConnectorLocation.getRecyclingStations();</span>
 
-<span class="nc" id="L47">        allLocations.addAll(listFountains);</span>
-<span class="nc" id="L48">        allLocations.addAll(listFireplaces);</span>
-<span class="nc" id="L49">        allLocations.addAll(listRecyclingStations);</span>
+<span class="nc" id="L41">        allLocations.addAll(listFountains);</span>
+<span class="nc" id="L42">        allLocations.addAll(listFireplaces);</span>
+<span class="nc" id="L43">        allLocations.addAll(listRecyclingStations);</span>
 
         // add all locationsIds to the array
-<span class="nc bnc" id="L52" title="All 2 branches missed.">        for (Location location : allLocations){</span>
-<span class="nc" id="L53">            locationIds.add(location.getId());</span>
-<span class="nc" id="L54">        }</span>
+<span class="nc bnc" id="L46" title="All 2 branches missed.">        for (Location location : allLocations){</span>
+<span class="nc" id="L47">            locationIds.add(location.getId());</span>
+<span class="nc" id="L48">        }</span>
 
         // insert a doc with an empty chat for each location
-<span class="nc bnc" id="L57" title="All 2 branches missed.">        for (Integer id : locationIds){</span>
-<span class="nc" id="L58">            ArrayList&lt;Document&gt; emptyChat = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L59">            Document doc = new Document(&quot;locationId&quot;, id)</span>
-<span class="nc" id="L60">                    .append(&quot;messages&quot;, emptyChat);</span>
-<span class="nc" id="L61">            chatsCollection.insertOne(doc);</span>
-<span class="nc" id="L62">        }</span>
-<span class="nc" id="L63">    }</span>
+<span class="nc bnc" id="L51" title="All 2 branches missed.">        for (Integer id : locationIds){</span>
+<span class="nc" id="L52">            ArrayList&lt;Document&gt; emptyChat = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L53">            Document doc = new Document(&quot;locationId&quot;, id)</span>
+<span class="nc" id="L54">                    .append(&quot;messages&quot;, emptyChat);</span>
+<span class="nc" id="L55">            chatsCollection.insertOne(doc);</span>
+<span class="nc" id="L56">        }</span>
+<span class="nc" id="L57">    }</span>
+
+    public static void createNewFriendsChat(Integer userId1, Integer userId2){
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">        if (userId1 &gt; userId2){</span>
+<span class="nc" id="L61">            Integer temp = userId1;</span>
+<span class="nc" id="L62">            userId1 = userId2;</span>
+<span class="nc" id="L63">            userId2 = temp;</span>
+        }
+
+<span class="fc" id="L66">        ArrayList&lt;Document&gt; emptyChat = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L67">        Document doc = new Document(&quot;userId1&quot;, userId1.toString())</span>
+<span class="fc" id="L68">                .append(&quot;userId2&quot;, userId2.toString())</span>
+<span class="fc" id="L69">                .append(&quot;readUser1&quot;, true)</span>
+<span class="fc" id="L70">                .append(&quot;readUser2&quot;, true)</span>
+<span class="fc" id="L71">                .append(&quot;messages&quot;, emptyChat);</span>
+<span class="fc" id="L72">        friendsChatsCollection.insertOne(doc);</span>
+<span class="fc" id="L73">    }</span>
+
+    public static ArrayList&lt;Message&gt; getChatFriends(Integer userId1, Integer userId2){
+<span class="nc" id="L76">        FindIterable&lt;Document&gt; request =  friendsChatsCollection.find(and(eq(&quot;userId1&quot;, userId1.toString()), eq(&quot;userId2&quot;, userId2.toString())));</span>
+<span class="nc" id="L77">        Document chatDoc = request.first();</span>
+
+<span class="nc bnc" id="L79" title="All 2 branches missed.">        if (chatDoc == null){</span>
+<span class="nc" id="L80">            throw new UserNotFoundException(&quot;This user-friend pair could not be found&quot;);</span>
+        }
+
+<span class="nc" id="L83">        JSONObject chatAsJSON = new JSONObject(chatDoc.toJson());</span>
+<span class="nc" id="L84">        JSONArray messagesJSON = chatAsJSON.getJSONArray(&quot;messages&quot;);</span>
+<span class="nc" id="L85">        ArrayList&lt;Message&gt; chat = new ArrayList&lt;&gt;();</span>
+
+        // iterate through all message objects in the chat object
+<span class="nc bnc" id="L88" title="All 2 branches missed.">        for (int i = 0; i &lt; messagesJSON.length(); i++) {</span>
+<span class="nc" id="L89">            JSONObject messageJSON = messagesJSON.getJSONObject(i);</span>
+            // convert the messageJSON to the Message entity type
+<span class="nc" id="L91">            chat.add(convertMessageJSONToEntityFriends(messageJSON));</span>
+        }
+
+<span class="nc" id="L94">        return chat;</span>
+    }
+
+    public static boolean checkForExistingChat(Integer userId1, Integer userId2){
+<span class="fc" id="L98">        FindIterable&lt;Document&gt; request =  friendsChatsCollection.find(and(eq(&quot;userId1&quot;, userId1.toString()), eq(&quot;userId2&quot;, userId2.toString())));</span>
+<span class="fc" id="L99">        Document chatDoc = request.first();</span>
+
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">        return chatDoc != null;</span>
+    }
+
+    public static void setOnRead(Integer userId1, Integer userId2, Integer readerId){
+<span class="nc bnc" id="L105" title="All 2 branches missed.">        if (userId1.equals(readerId)){</span>
+<span class="nc" id="L106">            friendsChatsCollection.updateOne(and(eq(&quot;userId1&quot;, userId1.toString()), eq(&quot;userId2&quot;, userId2.toString())), Updates.set(&quot;readUser1&quot;, true));</span>
+        }
+        else {
+<span class="nc" id="L109">            friendsChatsCollection.updateOne(and(eq(&quot;userId1&quot;, userId1.toString()), eq(&quot;userId2&quot;, userId2.toString())), Updates.set(&quot;readUser2&quot;, true));</span>
+        }
+<span class="nc" id="L111">    }</span>
+
+    public static void setOnUnread(Integer userId1, Integer userId2, Integer unreadId){
+<span class="nc bnc" id="L114" title="All 2 branches missed.">        if (userId1.equals(unreadId)){</span>
+<span class="nc" id="L115">            friendsChatsCollection.updateOne(and(eq(&quot;userId1&quot;, userId1.toString()), eq(&quot;userId2&quot;, userId2.toString())), Updates.set(&quot;readUser1&quot;, false));</span>
+        }
+        else {
+<span class="nc" id="L118">            friendsChatsCollection.updateOne(and(eq(&quot;userId1&quot;, userId1.toString()), eq(&quot;userId2&quot;, userId2.toString())), Updates.set(&quot;readUser2&quot;, false));</span>
+        }
+<span class="nc" id="L120">    }</span>
+
+    public static boolean checkUnreadMessages(Integer userId1, Integer userId2, int checkId){
+<span class="nc" id="L123">        FindIterable&lt;Document&gt; request =  friendsChatsCollection.find(and(eq(&quot;userId1&quot;, userId1.toString()), eq(&quot;userId2&quot;, userId2.toString())));</span>
+<span class="nc" id="L124">        Document chatDoc = request.first();</span>
+
+<span class="nc bnc" id="L126" title="All 2 branches missed.">        if (chatDoc == null){</span>
+<span class="nc" id="L127">            throw new UserNotFoundException(&quot;This user-friend pair could not be found&quot;);</span>
+        }
+
+<span class="nc" id="L130">        JSONObject chatAsJSON = new JSONObject(chatDoc.toJson());</span>
+        boolean isReadByCheckingUser;
+<span class="nc bnc" id="L132" title="All 2 branches missed.">        if (userId1.equals(checkId)){</span>
+<span class="nc" id="L133">            isReadByCheckingUser = chatAsJSON.getBoolean(&quot;readUser1&quot;);</span>
+        }
+        else {
+<span class="nc" id="L136">            isReadByCheckingUser = chatAsJSON.getBoolean(&quot;readUser2&quot;);</span>
+        }
+
+<span class="nc bnc" id="L139" title="All 2 branches missed.">        return !isReadByCheckingUser;</span>
+    }
+
+    public static void postMessageFriends(Integer senderId, Integer recipientId, Message message){
+        Integer userId1;
+        Integer userId2;
+<span class="nc bnc" id="L145" title="All 2 branches missed.">        if (senderId &lt;= recipientId){</span>
+<span class="nc" id="L146">            userId1 = senderId;</span>
+<span class="nc" id="L147">            userId2 = recipientId;</span>
+        }
+        else {
+<span class="nc" id="L150">            userId1 = recipientId;</span>
+<span class="nc" id="L151">            userId2 = senderId;</span>
+        }
+
+
+<span class="nc" id="L155">        Document doc = new Document(&quot;senderId&quot;, message.getSenderId().toString())</span>
+<span class="nc" id="L156">                .append(&quot;content&quot;, message.getContent())</span>
+<span class="nc" id="L157">                .append(&quot;timestamp&quot;, message.getTimestamp())</span>
+<span class="nc" id="L158">                .append(&quot;messageId&quot;, generateMessageIdFriends(userId1, userId2).toString());</span>
+
+<span class="nc" id="L160">        friendsChatsCollection.updateOne(and(eq(&quot;userId1&quot;, userId1.toString()), eq(&quot;userId2&quot;, userId2.toString())), Updates.addToSet(&quot;messages&quot;, doc));</span>
+<span class="nc" id="L161">        setOnUnread(userId1, userId2, recipientId);</span>
+<span class="nc" id="L162">    }</span>
+
+    public static void deleteMessageFriends(Integer deletingId, Integer friendId, int messageId){
+        Integer userId1;
+        Integer userId2;
+<span class="nc bnc" id="L167" title="All 2 branches missed.">        if (deletingId &lt;= friendId){</span>
+<span class="nc" id="L168">            userId1 = deletingId;</span>
+<span class="nc" id="L169">            userId2 = friendId;</span>
+        }
+        else {
+<span class="nc" id="L172">            userId1 = friendId;</span>
+<span class="nc" id="L173">            userId2 = deletingId;</span>
+        }
+<span class="nc" id="L175">        FindIterable&lt;Document&gt; request =  friendsChatsCollection.find(and(eq(&quot;userId1&quot;, userId1.toString()), eq(&quot;userId2&quot;, userId2.toString())));</span>
+<span class="nc" id="L176">        Document chatDoc = request.first();</span>
+
+<span class="nc bnc" id="L178" title="All 2 branches missed.">        if (chatDoc == null){</span>
+<span class="nc" id="L179">            throw new UserNotFoundException(&quot;This user-friend pair could not be found&quot;);</span>
+        }
+
+<span class="nc" id="L182">        JSONObject chatAsJSON = new JSONObject(chatDoc.toJson());</span>
+<span class="nc" id="L183">        JSONArray messagesJSON = chatAsJSON.getJSONArray(&quot;messages&quot;);</span>
+
+<span class="nc" id="L185">        Message messageToRemove = new Message();</span>
+
+<span class="nc bnc" id="L187" title="All 2 branches missed.">        for (int i = 0; i &lt; messagesJSON.length(); i++) {</span>
+<span class="nc" id="L188">            JSONObject messageJSON = messagesJSON.getJSONObject(i);</span>
+<span class="nc bnc" id="L189" title="All 2 branches missed.">            if (Integer.parseInt(messageJSON.getString(&quot;messageId&quot;)) == messageId){</span>
+<span class="nc" id="L190">                messageToRemove = convertMessageJSONToEntityFriends(messageJSON);</span>
+            }
+        }
+
+<span class="nc" id="L194">        friendsChatsCollection.updateOne(and(eq(&quot;userId1&quot;, userId1.toString()), eq(&quot;userId2&quot;, userId2.toString())),</span>
+<span class="nc" id="L195">                Updates.pull(&quot;messages&quot;, convertEntityToDocumentFriends(messageToRemove)));</span>
+<span class="nc" id="L196">    }</span>
+
+    public static Integer generateMessageIdFriends(Integer userId1, Integer userId2){
+<span class="nc" id="L199">        FindIterable&lt;Document&gt; request =  friendsChatsCollection.find(and(eq(&quot;userId1&quot;, userId1.toString()), eq(&quot;userId2&quot;, userId2.toString())));</span>
+<span class="nc" id="L200">        Document chatDoc = request.first();</span>
+
+<span class="nc bnc" id="L202" title="All 2 branches missed.">        if (chatDoc == null){</span>
+<span class="nc" id="L203">            throw new UserNotFoundException(&quot;This user-friend pair could not be found&quot;);</span>
+        }
+
+<span class="nc" id="L206">        JSONObject chatAsJSON = new JSONObject(chatDoc.toJson());</span>
+<span class="nc" id="L207">        JSONArray messagesJSON = chatAsJSON.getJSONArray(&quot;messages&quot;);</span>
+
+<span class="nc" id="L209">        Integer random = (int) (Math.random() * 100000);</span>
+
+<span class="nc bnc" id="L211" title="All 2 branches missed.">        for (int i = 0; i &lt; messagesJSON.length(); i++) {</span>
+<span class="nc" id="L212">            JSONObject messageJSON = messagesJSON.getJSONObject(i);</span>
+<span class="nc bnc" id="L213" title="All 2 branches missed.">            if (messageJSON.getInt(&quot;messageId&quot;) == random){</span>
+<span class="nc" id="L214">                random = generateMessageIdFriends(userId1, userId2);</span>
+            }
+        }
+
+<span class="nc" id="L218">        return random;</span>
+    }
+
+    public static Message convertMessageJSONToEntityFriends(JSONObject messageJSON){
+<span class="nc" id="L222">        Message message = new Message();</span>
+
+<span class="nc" id="L224">        Integer userId = Integer.parseInt(messageJSON.getString(&quot;senderId&quot;));</span>
+
+<span class="nc" id="L226">        message.setSenderUsername(DatabaseConnectorUser.getUsernameById(userId));</span>
+<span class="nc" id="L227">        message.setSenderId(userId);</span>
+<span class="nc" id="L228">        message.setContent(messageJSON.getString(&quot;content&quot;));</span>
+<span class="nc" id="L229">        message.setTimestamp(messageJSON.getString(&quot;timestamp&quot;));</span>
+<span class="nc" id="L230">        message.setMessageId(messageJSON.getInt(&quot;messageId&quot;));</span>
+
+<span class="nc" id="L232">        return message;</span>
+    }
+
+    public static Document convertEntityToDocumentFriends(Message message){
+<span class="nc" id="L236">        return new Document(&quot;senderId&quot;, message.getSenderId().toString())</span>
+<span class="nc" id="L237">                .append(&quot;content&quot;, message.getContent())</span>
+<span class="nc" id="L238">                .append(&quot;timestamp&quot;, message.getTimestamp())</span>
+<span class="nc" id="L239">                .append(&quot;messageId&quot;, message.getMessageId().toString());</span>
+    }
 
     //creates Entry in the database when a new location is created
     public static void addChatForNewLocation(int id){
-<span class="nc" id="L67">        ArrayList&lt;Document&gt; emptyChat = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L68">        Document doc = new Document(&quot;locationId&quot;, id)</span>
-<span class="nc" id="L69">                .append(&quot;messages&quot;, emptyChat);</span>
-<span class="nc" id="L70">        chatsCollection.insertOne(doc);</span>
-<span class="nc" id="L71">    }</span>
+<span class="fc" id="L244">        ArrayList&lt;Document&gt; emptyChat = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L245">        Document doc = new Document(&quot;locationId&quot;, id)</span>
+<span class="fc" id="L246">                .append(&quot;messages&quot;, emptyChat);</span>
+<span class="fc" id="L247">        chatsCollection.insertOne(doc);</span>
+<span class="fc" id="L248">    }</span>
 
-    public static ArrayList&lt;Message&gt; getChat(Integer locationId){
-<span class="nc" id="L74">        FindIterable&lt;Document&gt; request =  chatsCollection.find(eq(&quot;locationId&quot;, locationId));</span>
-<span class="nc" id="L75">        Document chatDoc = request.first();</span>
+    public static ArrayList&lt;Message&gt; getChatLocations(Integer locationId){
+<span class="fc" id="L251">        FindIterable&lt;Document&gt; request =  chatsCollection.find(eq(&quot;locationId&quot;, locationId));</span>
+<span class="fc" id="L252">        Document chatDoc = request.first();</span>
 
         // throw exception if there is no chat for the given location
-<span class="nc bnc" id="L78" title="All 2 branches missed.">        if (chatDoc == null){</span>
-<span class="nc" id="L79">            throw new LocationNotFoundException(&quot;This location could not be found&quot;);</span>
+<span class="pc bpc" id="L255" title="1 of 2 branches missed.">        if (chatDoc == null){</span>
+<span class="nc" id="L256">            throw new LocationNotFoundException(&quot;This location could not be found&quot;);</span>
         }
 
-<span class="nc" id="L82">        JSONObject chatAsJSON = new JSONObject(chatDoc.toJson());</span>
-<span class="nc" id="L83">        JSONArray messagesJSON = chatAsJSON.getJSONArray(&quot;messages&quot;);</span>
-<span class="nc" id="L84">        ArrayList&lt;Message&gt; chat = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L259">        JSONObject chatAsJSON = new JSONObject(chatDoc.toJson());</span>
+<span class="fc" id="L260">        JSONArray messagesJSON = chatAsJSON.getJSONArray(&quot;messages&quot;);</span>
+<span class="fc" id="L261">        ArrayList&lt;Message&gt; chat = new ArrayList&lt;&gt;();</span>
 
         // iterate through all message objects in the chat object
-<span class="nc bnc" id="L87" title="All 2 branches missed.">        for (int i = 0; i &lt; messagesJSON.length(); i++) {</span>
-<span class="nc" id="L88">            JSONObject messageJSON = messagesJSON.getJSONObject(i);</span>
+<span class="fc bfc" id="L264" title="All 2 branches covered.">        for (int i = 0; i &lt; messagesJSON.length(); i++) {</span>
+<span class="fc" id="L265">            JSONObject messageJSON = messagesJSON.getJSONObject(i);</span>
             // convert the messageJSON to the Message entity type
-<span class="nc" id="L90">            chat.add(convertMessageJSONToEntity(messageJSON));</span>
+<span class="fc" id="L267">            chat.add(convertMessageJSONToEntityLocations(messageJSON));</span>
         }
 
-<span class="nc" id="L93">        return chat;</span>
+<span class="fc" id="L270">        return chat;</span>
     }
 
-    public static void postMessage(Integer locationId, Message message){
-<span class="nc" id="L97">        Document doc = new Document(&quot;senderId&quot;, message.getSenderId())</span>
-<span class="nc" id="L98">                .append(&quot;content&quot;, message.getContent())</span>
-<span class="nc" id="L99">                .append(&quot;timestamp&quot;, message.getTimestamp())</span>
-<span class="nc" id="L100">                .append(&quot;messageId&quot;, generateId(locationId));</span>
+    public static void postMessageLocations(Integer locationId, Message message){
+<span class="fc" id="L274">        Document doc = new Document(&quot;senderId&quot;, message.getSenderId())</span>
+<span class="fc" id="L275">                .append(&quot;content&quot;, message.getContent())</span>
+<span class="fc" id="L276">                .append(&quot;timestamp&quot;, message.getTimestamp())</span>
+<span class="fc" id="L277">                .append(&quot;messageId&quot;, generateIdLocations(locationId));</span>
 
-<span class="nc" id="L102">        chatsCollection.updateOne(eq(&quot;locationId&quot;, locationId), Updates.addToSet(&quot;messages&quot;, doc));</span>
-<span class="nc" id="L103">    }</span>
+<span class="fc" id="L279">        chatsCollection.updateOne(eq(&quot;locationId&quot;, locationId), Updates.addToSet(&quot;messages&quot;, doc));</span>
+<span class="fc" id="L280">    }</span>
 
     //Helper function which generates a unique message id that is not taken yet by a message for this location chat
-    public static int generateId(int locationId){
-<span class="nc" id="L107">        FindIterable&lt;Document&gt; request = chatsCollection.find(eq(&quot;locationId&quot;, locationId));</span>
-<span class="nc" id="L108">        Document chatDoc = request.first();</span>
-<span class="nc" id="L109">        JSONObject chatAsJSON = new JSONObject(chatDoc.toJson());</span>
-<span class="nc" id="L110">        JSONArray messagesJSON = chatAsJSON.getJSONArray(&quot;messages&quot;);</span>
+    public static int generateIdLocations(int locationId){
+<span class="fc" id="L284">        FindIterable&lt;Document&gt; request = chatsCollection.find(eq(&quot;locationId&quot;, locationId));</span>
+<span class="fc" id="L285">        Document chatDoc = request.first();</span>
+<span class="fc" id="L286">        JSONObject chatAsJSON = new JSONObject(chatDoc.toJson());</span>
+<span class="fc" id="L287">        JSONArray messagesJSON = chatAsJSON.getJSONArray(&quot;messages&quot;);</span>
 
-<span class="nc" id="L112">        int random = (int) (Math.random() * 100000);</span>
+<span class="fc" id="L289">        int random = (int) (Math.random() * 100000);</span>
 
-<span class="nc bnc" id="L114" title="All 2 branches missed.">        for (int i = 0; i &lt; messagesJSON.length(); i++) {</span>
-<span class="nc" id="L115">            JSONObject messageJSON = messagesJSON.getJSONObject(i);</span>
-<span class="nc bnc" id="L116" title="All 2 branches missed.">            if (messageJSON.getInt(&quot;messageId&quot;) == random){</span>
-<span class="nc" id="L117">                random = generateId(locationId);</span>
+<span class="pc bpc" id="L291" title="1 of 2 branches missed.">        for (int i = 0; i &lt; messagesJSON.length(); i++) {</span>
+<span class="nc" id="L292">            JSONObject messageJSON = messagesJSON.getJSONObject(i);</span>
+<span class="nc bnc" id="L293" title="All 2 branches missed.">            if (messageJSON.getInt(&quot;messageId&quot;) == random){</span>
+<span class="nc" id="L294">                random = generateIdLocations(locationId);</span>
             }
         }
 
-<span class="nc" id="L121">        return random;</span>
+<span class="fc" id="L298">        return random;</span>
     }
 
-    public static void deleteMessage(Integer locationId, int messageId){
-<span class="nc" id="L125">        FindIterable&lt;Document&gt; request =  chatsCollection.find(eq(&quot;locationId&quot;, locationId));</span>
-<span class="nc" id="L126">        Document chatDoc = request.first();</span>
-<span class="nc" id="L127">        JSONObject chatAsJSON = new JSONObject(chatDoc.toJson());</span>
-<span class="nc" id="L128">        JSONArray messagesJSON = chatAsJSON.getJSONArray(&quot;messages&quot;);</span>
+    public static void deleteMessageLocations(Integer locationId, int messageId){
+<span class="nc" id="L302">        FindIterable&lt;Document&gt; request =  chatsCollection.find(eq(&quot;locationId&quot;, locationId));</span>
+<span class="nc" id="L303">        Document chatDoc = request.first();</span>
+<span class="nc" id="L304">        JSONObject chatAsJSON = new JSONObject(chatDoc.toJson());</span>
+<span class="nc" id="L305">        JSONArray messagesJSON = chatAsJSON.getJSONArray(&quot;messages&quot;);</span>
 
-<span class="nc" id="L130">        Message messageToRemove = new Message();</span>
+<span class="nc" id="L307">        Message messageToRemove = new Message();</span>
 
-<span class="nc bnc" id="L132" title="All 2 branches missed.">        for (int i = 0; i &lt; messagesJSON.length(); i++) {</span>
-<span class="nc" id="L133">            JSONObject messageJSON = messagesJSON.getJSONObject(i);</span>
-<span class="nc bnc" id="L134" title="All 2 branches missed.">            if (messageJSON.getInt(&quot;messageId&quot;) == messageId){</span>
-<span class="nc" id="L135">                messageToRemove = convertMessageJSONToEntity(messageJSON);</span>
+<span class="nc bnc" id="L309" title="All 2 branches missed.">        for (int i = 0; i &lt; messagesJSON.length(); i++) {</span>
+<span class="nc" id="L310">            JSONObject messageJSON = messagesJSON.getJSONObject(i);</span>
+<span class="nc bnc" id="L311" title="All 2 branches missed.">            if (messageJSON.getInt(&quot;messageId&quot;) == messageId){</span>
+<span class="nc" id="L312">                messageToRemove = convertMessageJSONToEntityLocations(messageJSON);</span>
             }
         }
 
-<span class="nc" id="L139">        chatsCollection.updateOne(eq(&quot;locationId&quot;, locationId),</span>
-<span class="nc" id="L140">                Updates.pull(&quot;messages&quot;, convertEntityToDocument(messageToRemove)));</span>
-<span class="nc" id="L141">    }</span>
+<span class="nc" id="L316">        chatsCollection.updateOne(eq(&quot;locationId&quot;, locationId),</span>
+<span class="nc" id="L317">                Updates.pull(&quot;messages&quot;, convertEntityToDocumentLocations(messageToRemove)));</span>
+<span class="nc" id="L318">    }</span>
 
-    public static Message convertMessageJSONToEntity(JSONObject messageJSON){
-<span class="nc" id="L144">        Message message = new Message();</span>
+    public static Message convertMessageJSONToEntityLocations(JSONObject messageJSON){
+<span class="fc" id="L321">        Message message = new Message();</span>
 
-<span class="nc" id="L146">        int userId = messageJSON.getInt(&quot;senderId&quot;);</span>
+<span class="fc" id="L323">        int userId = messageJSON.getInt(&quot;senderId&quot;);</span>
 
-<span class="nc" id="L148">        message.setSenderUsername(DatabaseConnectorUser.getUsernameById(userId));</span>
-<span class="nc" id="L149">        message.setSenderId(userId);</span>
-<span class="nc" id="L150">        message.setContent(messageJSON.getString(&quot;content&quot;));</span>
-<span class="nc" id="L151">        message.setTimestamp(messageJSON.getString(&quot;timestamp&quot;));</span>
-<span class="nc" id="L152">        message.setMessageId(messageJSON.getInt(&quot;messageId&quot;));</span>
+<span class="fc" id="L325">        message.setSenderUsername(DatabaseConnectorUser.getUsernameById(userId));</span>
+<span class="fc" id="L326">        message.setSenderId(userId);</span>
+<span class="fc" id="L327">        message.setContent(messageJSON.getString(&quot;content&quot;));</span>
+<span class="fc" id="L328">        message.setTimestamp(messageJSON.getString(&quot;timestamp&quot;));</span>
+<span class="fc" id="L329">        message.setMessageId(messageJSON.getInt(&quot;messageId&quot;));</span>
 
-<span class="nc" id="L154">        return message;</span>
+<span class="fc" id="L331">        return message;</span>
     }
 
-    public static Document convertEntityToDocument(Message message){
-<span class="nc" id="L158">        return new Document(&quot;senderId&quot;, message.getSenderId())</span>
-<span class="nc" id="L159">                .append(&quot;content&quot;, message.getContent())</span>
-<span class="nc" id="L160">                .append(&quot;timestamp&quot;, message.getTimestamp())</span>
-<span class="nc" id="L161">                .append(&quot;messageId&quot;, message.getMessageId());</span>
+    public static Document convertEntityToDocumentLocations(Message message){
+<span class="nc" id="L335">        return new Document(&quot;senderId&quot;, message.getSenderId())</span>
+<span class="nc" id="L336">                .append(&quot;content&quot;, message.getContent())</span>
+<span class="nc" id="L337">                .append(&quot;timestamp&quot;, message.getTimestamp())</span>
+<span class="nc" id="L338">                .append(&quot;messageId&quot;, message.getMessageId());</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
