@@ -179,7 +179,7 @@ public class UserService {
     }
 
     public boolean checkUnreadMessages(int userId, int friendId){
-        boolean isUnread = false;
+        boolean isUnread;
         if (userId <= friendId){
             isUnread = DatabaseConnectorLocationChats.checkUnreadMessages(userId, friendId, userId);
         }

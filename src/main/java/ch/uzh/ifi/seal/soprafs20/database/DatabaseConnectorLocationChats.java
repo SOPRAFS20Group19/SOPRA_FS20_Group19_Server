@@ -56,6 +56,28 @@ public class DatabaseConnectorLocationChats {
         }
     }
 
+    // only used for initializing the DB collection. Do not run again
+    public static void initialSetupToilets(){
+        // set up array for locationIds
+        ArrayList<Integer> locationIds = new ArrayList<>();
+
+        // get all locations
+        List<Location> listToilets = DatabaseConnectorLocation.getToilets();
+
+        // add all locationsIds to the array
+        for (Location location : listToilets){
+            locationIds.add(location.getId());
+        }
+
+        // insert a doc with an empty chat for each location
+        for (Integer id : locationIds){
+            ArrayList<Document> emptyChat = new ArrayList<>();
+            Document doc = new Document("locationId", id)
+                    .append("messages", emptyChat);
+            chatsCollection.insertOne(doc);
+        }
+    }
+
     public static void createNewFriendsChat(Integer userId1, Integer userId2){
         if (userId1 > userId2){
             Integer temp = userId1;
