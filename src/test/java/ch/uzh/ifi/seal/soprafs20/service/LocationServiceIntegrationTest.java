@@ -48,6 +48,9 @@ public class LocationServiceIntegrationTest {
     static MongoCollection<Document> recyclingCollection = locationStorage.getCollection("Recycling");
 
     @Autowired
+    static MongoCollection<Document> toiletsCollection = locationStorage.getCollection("WC");
+
+    @Autowired
     static MongoCollection<Document> userFountainsCollection = locationStorage.getCollection("UserFountains");
 
     @Autowired
@@ -55,6 +58,9 @@ public class LocationServiceIntegrationTest {
 
     @Autowired
     static MongoCollection<Document> userRecyclingCollection = locationStorage.getCollection("UserRecycling");
+
+    @Autowired
+    static MongoCollection<Document> userToiletsCollection = locationStorage.getCollection("UserWC");
 
     @Autowired
     //Establish connection to the Users Database (development purposes only)
@@ -81,7 +87,7 @@ public class LocationServiceIntegrationTest {
      */
 
     @Test
-    public void createLocation_validInputs_success(){
+    public void createLocation_Fountain_validInputs_success(){
         // Test create location
 
         Location testFountain = new Location();
@@ -89,13 +95,45 @@ public class LocationServiceIntegrationTest {
         testFountain.setLongitude(0);
         testFountain.setLatitude(0);
 
+        Location newFountain = locationService.createLocation(testFountain);
+
+        assertEquals(testFountain.getLocationType(), newFountain.getLocationType());
+        assertEquals(testFountain.getLongitude(), newFountain.getLongitude());
+        assertEquals(testFountain.getLatitude(), newFountain.getLatitude());
+
+        // Deletes the created location for testing in the database
+        userFountainsCollection.deleteOne(eq("properties.objectid", newFountain.getId()));
+
+    }
+
+    @Test
+    public void createLocation_Recycling_validInputs_success(){
+        // Test create location
+
         Location testRecycling = new Location();
         testRecycling.setLocationType(LocationType.RECYCLING_STATION);
-        testRecycling.setLongitude(1);
-        testRecycling.setLatitude(1);
+        testRecycling.setLongitude(0);
+        testRecycling.setLatitude(0);
         testRecycling.setAdresse("Scheuchzerstrasse");
         testRecycling.setPlz("8006");
         testRecycling.setOrt("Zuerich");
+
+        Location newRecycling = locationService.createLocation(testRecycling);
+
+        assertEquals(testRecycling.getLocationType(), newRecycling.getLocationType());
+        assertEquals(testRecycling.getLongitude(), newRecycling.getLongitude());
+        assertEquals(testRecycling.getLatitude(), newRecycling.getLatitude());
+
+        String id = String.valueOf(newRecycling.getId());
+
+        // Deletes the created location for testing in the database
+        userRecyclingCollection.deleteOne(eq("properties.objectid", id));
+
+    }
+
+    @Test
+    public void createLocation_Fireplace_validInputs_success(){
+        // Test create location
 
         Location testFireplace = new Location();
         testFireplace.setLocationType(LocationType.FIREPLACE);
@@ -111,30 +149,36 @@ public class LocationServiceIntegrationTest {
         testFireplace.setBaden("X");
         testFireplace.setAbfall("X");
 
-
-        Location newFountain = locationService.createLocation(testFountain);
-        Location newRecycling = locationService.createLocation(testRecycling);
         Location newFireplace = locationService.createLocation(testFireplace);
-
-        assertEquals(testFountain.getLocationType(), newFountain.getLocationType());
-        assertEquals(testFountain.getLongitude(), newFountain.getLongitude());
-        assertEquals(testFountain.getLatitude(), newFountain.getLatitude());
-
-        assertEquals(testRecycling.getLocationType(), newRecycling.getLocationType());
-        assertEquals(testRecycling.getLongitude(), newRecycling.getLongitude());
-        assertEquals(testRecycling.getLatitude(), newRecycling.getLatitude());
 
         assertEquals(testFireplace.getLocationType(), newFireplace.getLocationType());
         assertEquals(testFireplace.getLongitude(), newFireplace.getLongitude());
         assertEquals(testFireplace.getLatitude(), newFireplace.getLatitude());
 
-        String id = String.valueOf(newRecycling.getId());
+        // Deletes the created location for testing in the database
+        userFireplacesCollection.deleteOne(eq("BarbecuePlace.Id", newFireplace.getId()));
+    }
+    @Test
+    public void createLocation_Toilets_validInputs_success(){
+        // Test create location
+
+        Location testToilet = new Location();
+        testToilet.setLocationType(LocationType.TOILET);
+        testToilet.setLongitude(0);
+        testToilet.setLatitude(0);
+        testToilet.setAdresse("Scheuchzerstrasse");
+        testToilet.setPlz("8006");
+        testToilet.setOrt("Zuerich");
+
+
+        Location newToilet = locationService.createLocation(testToilet);
+
+        assertEquals(testToilet.getLocationType(), newToilet.getLocationType());
+        assertEquals(testToilet.getLongitude(), newToilet.getLongitude());
+        assertEquals(testToilet.getLatitude(), newToilet.getLatitude());
 
         // Deletes the created location for testing in the database
-        userFountainsCollection.deleteOne(eq("properties.objectid", newFountain.getId()));
-        userRecyclingCollection.deleteOne(eq("properties.objectid", id));
-        userFireplacesCollection.deleteOne(eq("BarbecuePlace.Id", newFireplace.getId()));
-
+        userFountainsCollection.deleteOne(eq("properties.objectid", newToilet.getId()));
 
     }
 

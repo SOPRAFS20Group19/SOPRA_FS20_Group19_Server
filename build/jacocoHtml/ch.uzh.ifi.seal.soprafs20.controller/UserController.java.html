@@ -46,9 +46,9 @@ public class UserController {
     @ResponseBody
     public UserGetDTO getUserById(@PathVariable int userId) {
         // get the user corresponding to the given ID
-<span class="fc" id="L49">        User user = userService.getUserById(userId);</span>
+<span class="nc" id="L49">        User user = userService.getUserById(userId);</span>
         // convert the user to the API representation
-<span class="fc" id="L51">        return DTOMapper.INSTANCE.convertEntityToUserGetDTO(user);</span>
+<span class="nc" id="L51">        return DTOMapper.INSTANCE.convertEntityToUserGetDTO(user);</span>
     }
 
     @PutMapping (&quot;/users/{userId}&quot;)
@@ -56,21 +56,21 @@ public class UserController {
     @ResponseBody
     public void updateUser(@PathVariable int userId, @RequestBody UserPutDTO userPutDTO) {
         // updates the user identified by the given ID with the given data by the client
-<span class="fc" id="L59">        userService.updateUser(userId, userPutDTO);</span>
-<span class="fc" id="L60">    }</span>
+<span class="nc" id="L59">        userService.updateUser(userId, userPutDTO);</span>
+<span class="nc" id="L60">    }</span>
 
     @PostMapping(&quot;/users&quot;)
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public UserGetDTO createUser(@RequestBody UserPostDTO userPostDTO) {
         // convert API user to internal representation
-<span class="fc" id="L67">        User userInput = DTOMapper.INSTANCE.convertUserPostDTOtoEntity(userPostDTO);</span>
+<span class="nc" id="L67">        User userInput = DTOMapper.INSTANCE.convertUserPostDTOtoEntity(userPostDTO);</span>
 
         // create user
-<span class="fc" id="L70">        User createdUser = userService.createUser(userInput);</span>
+<span class="nc" id="L70">        User createdUser = userService.createUser(userInput);</span>
 
         // convert internal representation of user back to API
-<span class="fc" id="L73">        return DTOMapper.INSTANCE.convertEntityToUserGetDTO(createdUser);</span>
+<span class="nc" id="L73">        return DTOMapper.INSTANCE.convertEntityToUserGetDTO(createdUser);</span>
     }
 
     @PutMapping(&quot;/login&quot;)
@@ -78,13 +78,13 @@ public class UserController {
     @ResponseBody
     public UserGetDTO loginUser(@RequestBody UserPutDTO userPutDTO) {
         // convert API user to internal representation
-<span class="fc" id="L81">        User userInput = DTOMapper.INSTANCE.convertUserPutDTOtoEntity(userPutDTO);</span>
+<span class="nc" id="L81">        User userInput = DTOMapper.INSTANCE.convertUserPutDTOtoEntity(userPutDTO);</span>
 
         // login user
-<span class="fc" id="L84">        User loggedInUser = userService.checkForLogin(userInput);</span>
+<span class="nc" id="L84">        User loggedInUser = userService.checkForLogin(userInput);</span>
 
         // convert internal representation of user back to API
-<span class="fc" id="L87">        return DTOMapper.INSTANCE.convertEntityToUserGetDTO(loggedInUser);</span>
+<span class="nc" id="L87">        return DTOMapper.INSTANCE.convertEntityToUserGetDTO(loggedInUser);</span>
     }
 
     @PutMapping(&quot;/logout/{userId}&quot;)

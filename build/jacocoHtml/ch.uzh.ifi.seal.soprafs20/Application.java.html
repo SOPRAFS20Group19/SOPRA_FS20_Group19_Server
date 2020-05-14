@@ -26,23 +26,22 @@ import java.util.List;
 
     public static void main(String[] args) {
 <span class="nc" id="L28">        SpringApplication.run(Application.class, args);</span>
-<span class="nc" id="L29">        DatabaseConnectorLocationChats.initialSetupToilets();</span>
-<span class="nc" id="L30">    }</span>
+<span class="nc" id="L29">    }</span>
 
     @GetMapping(value = &quot;/&quot;, produces = MediaType.TEXT_PLAIN_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public String helloWorld() {
-<span class="nc" id="L36">        return &quot;The application is running.&quot;;</span>
+<span class="nc" id="L35">        return &quot;The application is running.&quot;;</span>
     }
 
     @Bean
     public WebMvcConfigurer corsConfigurer() {
-<span class="fc" id="L41">        return new WebMvcConfigurer() {</span>
+<span class="fc" id="L40">        return new WebMvcConfigurer() {</span>
             @Override
             public void addCorsMappings(CorsRegistry registry){
-<span class="fc" id="L44">                registry.addMapping(&quot;/**&quot;).allowedOrigins(&quot;*&quot;).allowedMethods(&quot;*&quot;);</span>
-<span class="fc" id="L45">            }</span>
+<span class="fc" id="L43">                registry.addMapping(&quot;/**&quot;).allowedOrigins(&quot;*&quot;).allowedMethods(&quot;*&quot;);</span>
+<span class="fc" id="L44">            }</span>
         };
     }
 }

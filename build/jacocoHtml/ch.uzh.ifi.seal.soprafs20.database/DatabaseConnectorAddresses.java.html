@@ -34,13 +34,13 @@ public class DatabaseConnectorAddresses {
 <span class="nc" id="L34">    public DatabaseConnectorAddresses(){}</span>
 
     //connection to mongodb on the cloud with credentials of luca locher
-<span class="nc" id="L37">    static MongoClient mongoClient = MongoClients.create(</span>
+<span class="fc" id="L37">    static MongoClient mongoClient = MongoClients.create(</span>
             &quot;mongodb+srv://lknufi:abc@knowyourcity-ijzn3.gcp.mongodb.net/test?retryWrites=true&amp;w=majority&quot;);
     //Establish connection to the Location Database (development purposes only)
-<span class="nc" id="L40">    static MongoDatabase AddressZurich = mongoClient.getDatabase(&quot;AddressZurich&quot;);</span>
+<span class="fc" id="L40">    static MongoDatabase AddressZurich = mongoClient.getDatabase(&quot;AddressZurich&quot;);</span>
     //Establish connection to the Fountains Collection (development purposes only)
-<span class="nc" id="L42">    static MongoCollection&lt;Document&gt; addressCollection = AddressZurich.getCollection(&quot;Address&quot;);</span>
-<span class="nc" id="L43">    static MongoCollection&lt;Document&gt; closestAddressCollection = AddressZurich.getCollection(&quot;ClosestAddress&quot;);</span>
+<span class="fc" id="L42">    static MongoCollection&lt;Document&gt; addressCollection = AddressZurich.getCollection(&quot;Address&quot;);</span>
+<span class="fc" id="L43">    static MongoCollection&lt;Document&gt; closestAddressCollection = AddressZurich.getCollection(&quot;ClosestAddress&quot;);</span>
 
     // only used for initializing the address collection. Do not run again
     public static void initialSetup() throws IOException, ParseException {
@@ -89,14 +89,14 @@ public class DatabaseConnectorAddresses {
 
     public static double calculateDistance(double x1, double y1, double x2, double y2){
 <span class="nc" id="L91">        var R = 6371e3; // metres</span>
-<span class="nc" id="L92">        var φ1 = Math.toRadians(x1);</span>
-<span class="nc" id="L93">        var φ2 = Math.toRadians(x2);</span>
-<span class="nc" id="L94">        var Δφ = Math.toRadians(x2-x1);</span>
-<span class="nc" id="L95">        var Δλ = Math.toRadians(y2-y1);</span>
+<span class="nc" id="L92">        var Ï†1 = Math.toRadians(x1);</span>
+<span class="nc" id="L93">        var Ï†2 = Math.toRadians(x2);</span>
+<span class="nc" id="L94">        var Î”Ï† = Math.toRadians(x2-x1);</span>
+<span class="nc" id="L95">        var Î”Î» = Math.toRadians(y2-y1);</span>
 
-<span class="nc" id="L97">        var a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +</span>
-<span class="nc" id="L98">                Math.cos(φ1) * Math.cos(φ2) *</span>
-<span class="nc" id="L99">                        Math.sin(Δλ/2) * Math.sin(Δλ/2);</span>
+<span class="nc" id="L97">        var a = Math.sin(Î”Ï†/2) * Math.sin(Î”Ï†/2) +</span>
+<span class="nc" id="L98">                Math.cos(Ï†1) * Math.cos(Ï†2) *</span>
+<span class="nc" id="L99">                        Math.sin(Î”Î»/2) * Math.sin(Î”Î»/2);</span>
 <span class="nc" id="L100">        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));</span>
 
 <span class="nc" id="L102">        return R * c;</span>
@@ -192,12 +192,12 @@ public class DatabaseConnectorAddresses {
 <span class="nc" id="L192">    }</span>
 
     public static String getClosestAddress(Integer locationId){
-<span class="nc" id="L195">        FindIterable&lt;Document&gt; request =  closestAddressCollection.find(eq(&quot;locationId&quot;, locationId));</span>
-<span class="nc" id="L196">        Document doc = request.first();</span>
-<span class="nc bnc" id="L197" title="All 2 branches missed.">        if (doc == null){</span>
+<span class="fc" id="L195">        FindIterable&lt;Document&gt; request =  closestAddressCollection.find(eq(&quot;locationId&quot;, locationId));</span>
+<span class="fc" id="L196">        Document doc = request.first();</span>
+<span class="pc bpc" id="L197" title="1 of 2 branches missed.">        if (doc == null){</span>
 <span class="nc" id="L198">            return &quot; &quot;;</span>
         }
-<span class="nc" id="L200">        return doc.getString(&quot;closestStreet&quot;);</span>
+<span class="fc" id="L200">        return doc.getString(&quot;closestStreet&quot;);</span>
     }
 
     // adds an entry in the collection for added locations

@@ -28,9 +28,9 @@ import java.util.*;
  */
 @Service
 @Transactional
-<span class="nc" id="L31">public class UserService {</span>
+<span class="fc" id="L31">public class UserService {</span>
 
-<span class="nc" id="L33">    private final Logger log = LoggerFactory.getLogger(UserService.class);</span>
+<span class="fc" id="L33">    private final Logger log = LoggerFactory.getLogger(UserService.class);</span>
 
     //returns all users in the database
     public ArrayList&lt;User&gt; getAllUsers(){
@@ -179,7 +179,7 @@ import java.util.*;
     }
 
     public boolean checkUnreadMessages(int userId, int friendId){
-<span class="nc" id="L182">        boolean isUnread = false;</span>
+        boolean isUnread;
 <span class="nc bnc" id="L183" title="All 2 branches missed.">        if (userId &lt;= friendId){</span>
 <span class="nc" id="L184">            isUnread = DatabaseConnectorLocationChats.checkUnreadMessages(userId, friendId, userId);</span>
         }
