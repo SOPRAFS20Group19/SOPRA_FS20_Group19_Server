@@ -55,39 +55,39 @@ public class DatabaseConnectorLocation {
 <span class="nc" id="L55">    }</span>
 
     public static void addNewFountainToDatabase(Location location){
-<span class="nc" id="L58">        JSONArray coordinatesAsJSON = new JSONArray();</span>
-<span class="nc" id="L59">        coordinatesAsJSON.put(location.getLongitude());</span>
-<span class="nc" id="L60">        coordinatesAsJSON.put(location.getLatitude());</span>
+<span class="fc" id="L58">        JSONArray coordinatesAsJSON = new JSONArray();</span>
+<span class="fc" id="L59">        coordinatesAsJSON.put(location.getLongitude());</span>
+<span class="fc" id="L60">        coordinatesAsJSON.put(location.getLatitude());</span>
 
 
-<span class="nc" id="L63">        Document coordinates = new Document(&quot;type&quot;, &quot;Point&quot;)</span>
-<span class="nc" id="L64">                .append(&quot;coordinates&quot;, coordinatesAsJSON);</span>
+<span class="fc" id="L63">        Document coordinates = new Document(&quot;type&quot;, &quot;Point&quot;)</span>
+<span class="fc" id="L64">                .append(&quot;coordinates&quot;, coordinatesAsJSON);</span>
 
-<span class="nc" id="L66">        Document properties = new Document(&quot;locationtype&quot;, &quot;fountain&quot;)</span>
-<span class="nc" id="L67">                .append(&quot;objectid&quot;, location.getId())</span>
-<span class="nc" id="L68">                .append(&quot;art_txt&quot;, location.getArt_txt())</span>
-<span class="nc" id="L69">                .append(&quot;brunnenart_txt&quot;, location.getBrunnenart_txt())</span>
-<span class="nc" id="L70">                .append(&quot;historisches_baujahr&quot;, location.getBaujahr())</span>
-<span class="nc" id="L71">                .append(&quot;baujahr&quot;, location.getBaujahr());</span>
+<span class="fc" id="L66">        Document properties = new Document(&quot;locationtype&quot;, &quot;fountain&quot;)</span>
+<span class="fc" id="L67">                .append(&quot;objectid&quot;, location.getId())</span>
+<span class="fc" id="L68">                .append(&quot;art_txt&quot;, location.getArt_txt())</span>
+<span class="fc" id="L69">                .append(&quot;brunnenart_txt&quot;, location.getBrunnenart_txt())</span>
+<span class="fc" id="L70">                .append(&quot;historisches_baujahr&quot;, location.getBaujahr())</span>
+<span class="fc" id="L71">                .append(&quot;baujahr&quot;, location.getBaujahr());</span>
 
 
-<span class="nc" id="L74">        Document doc = new Document(&quot;type&quot;, &quot;Feature&quot;)</span>
-<span class="nc" id="L75">                .append(&quot;geometry&quot;, coordinates)</span>
-<span class="nc" id="L76">                .append(&quot;properties&quot;, properties)</span>
-<span class="nc" id="L77">                .append(&quot;closestStreet&quot;, DatabaseConnectorAddresses.getClosestAddress(location.getId()));</span>
-<span class="nc" id="L78">        userFountainsCollection.insertOne(doc);</span>
+<span class="fc" id="L74">        Document doc = new Document(&quot;type&quot;, &quot;Feature&quot;)</span>
+<span class="fc" id="L75">                .append(&quot;geometry&quot;, coordinates)</span>
+<span class="fc" id="L76">                .append(&quot;properties&quot;, properties)</span>
+<span class="fc" id="L77">                .append(&quot;closestStreet&quot;, DatabaseConnectorAddresses.getClosestAddress(location.getId()));</span>
+<span class="fc" id="L78">        userFountainsCollection.insertOne(doc);</span>
 
         // creates a new entry in the closestAddress DB
-<span class="nc" id="L81">        DatabaseConnectorAddresses.createEntry(location.getId());</span>
+<span class="fc" id="L81">        DatabaseConnectorAddresses.createEntry(location.getId());</span>
 
-<span class="nc" id="L83">        Document updatedDoc = new Document().append(&quot;$set&quot;, new Document()</span>
-<span class="nc" id="L84">                .append(&quot;closestStreet&quot;, DatabaseConnectorAddresses.getClosestAddress(location.getId())));</span>
-<span class="nc" id="L85">        userFountainsCollection.updateOne(eq(&quot;properties.objectid&quot;, location.getId()), updatedDoc);</span>
+<span class="fc" id="L83">        Document updatedDoc = new Document().append(&quot;$set&quot;, new Document()</span>
+<span class="fc" id="L84">                .append(&quot;closestStreet&quot;, DatabaseConnectorAddresses.getClosestAddress(location.getId())));</span>
+<span class="fc" id="L85">        userFountainsCollection.updateOne(eq(&quot;properties.objectid&quot;, location.getId()), updatedDoc);</span>
 
-<span class="nc" id="L87">    }</span>
+<span class="fc" id="L87">    }</span>
 
     public static void addNewFireplaceToDatabase(Location location){
-<span class="nc" id="L90">        JSONArray ausstattungAsJSON = new JSONArray();</span>
+<span class="fc" id="L90">        JSONArray ausstattungAsJSON = new JSONArray();</span>
         /*
         String ausstattung = location.getAusstattung();
         ArrayList&lt;String&gt; ausstattungList = new ArrayList&lt;&gt;(Arrays.asList(ausstattung.split(&quot;,&quot;)));
@@ -96,77 +96,77 @@ public class DatabaseConnectorLocation {
         }
 
          */
-<span class="nc bnc" id="L99" title="All 2 branches missed.">        if (location.getHolz().equals(&quot;X&quot;)){</span>
-<span class="nc" id="L100">            ausstattungAsJSON.put(&quot;Holz&quot;);</span>
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">        if (location.getHolz().equals(&quot;X&quot;)){</span>
+<span class="fc" id="L100">            ausstattungAsJSON.put(&quot;Holz&quot;);</span>
         }
-<span class="nc bnc" id="L102" title="All 2 branches missed.">        if (location.getRost().equals(&quot;X&quot;)){</span>
-<span class="nc" id="L103">            ausstattungAsJSON.put(&quot;Rost&quot;);</span>
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">        if (location.getRost().equals(&quot;X&quot;)){</span>
+<span class="fc" id="L103">            ausstattungAsJSON.put(&quot;Rost&quot;);</span>
         }
-<span class="nc bnc" id="L105" title="All 2 branches missed.">        if (location.getTisch().equals(&quot;X&quot;)){</span>
-<span class="nc" id="L106">            ausstattungAsJSON.put(&quot;Tisch&quot;);</span>
+<span class="pc bpc" id="L105" title="1 of 2 branches missed.">        if (location.getTisch().equals(&quot;X&quot;)){</span>
+<span class="fc" id="L106">            ausstattungAsJSON.put(&quot;Tisch&quot;);</span>
         }
-<span class="nc bnc" id="L108" title="All 2 branches missed.">        if (location.getBaden().equals(&quot;X&quot;)){</span>
-<span class="nc" id="L109">            ausstattungAsJSON.put(&quot;Baden&quot;);</span>
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">        if (location.getBaden().equals(&quot;X&quot;)){</span>
+<span class="fc" id="L109">            ausstattungAsJSON.put(&quot;Baden&quot;);</span>
         }
-<span class="nc bnc" id="L111" title="All 2 branches missed.">        if (location.getTrinkwasser().equals(&quot;X&quot;)){</span>
-<span class="nc" id="L112">            ausstattungAsJSON.put(&quot;Trinkwasser&quot;);</span>
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">        if (location.getTrinkwasser().equals(&quot;X&quot;)){</span>
+<span class="fc" id="L112">            ausstattungAsJSON.put(&quot;Trinkwasser&quot;);</span>
         }
-<span class="nc bnc" id="L114" title="All 2 branches missed.">        if (location.getAbfall().equals(&quot;X&quot;)){</span>
-<span class="nc" id="L115">            ausstattungAsJSON.put(&quot;Abfall&quot;);</span>
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">        if (location.getAbfall().equals(&quot;X&quot;)){</span>
+<span class="fc" id="L115">            ausstattungAsJSON.put(&quot;Abfall&quot;);</span>
         }
-<span class="nc bnc" id="L117" title="All 2 branches missed.">        if (location.getParkplatz().equals(&quot;X&quot;)){</span>
-<span class="nc" id="L118">            ausstattungAsJSON.put(&quot;Parkplatz&quot;);</span>
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">        if (location.getParkplatz().equals(&quot;X&quot;)){</span>
+<span class="fc" id="L118">            ausstattungAsJSON.put(&quot;Parkplatz&quot;);</span>
         }
-<span class="nc bnc" id="L120" title="All 2 branches missed.">        if (location.getHunde().equals(&quot;X&quot;)){</span>
-<span class="nc" id="L121">            ausstattungAsJSON.put(&quot;Hunde&quot;);</span>
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">        if (location.getHunde().equals(&quot;X&quot;)){</span>
+<span class="fc" id="L121">            ausstattungAsJSON.put(&quot;Hunde&quot;);</span>
         }
-<span class="nc bnc" id="L123" title="All 2 branches missed.">        if (location.getKinderwagen().equals(&quot;X&quot;)){</span>
-<span class="nc" id="L124">            ausstattungAsJSON.put(&quot;Kinderwagen&quot;);</span>
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">        if (location.getKinderwagen().equals(&quot;X&quot;)){</span>
+<span class="fc" id="L124">            ausstattungAsJSON.put(&quot;Kinderwagen&quot;);</span>
         }
 
-<span class="nc" id="L127">        Document idAndCoordinates = new Document(&quot;locationtype&quot;, &quot;fireplace&quot;)</span>
-<span class="nc" id="L128">                .append(&quot;Latitude&quot;, location.getLatitude())</span>
-<span class="nc" id="L129">                .append(&quot;Longitude&quot;, location.getLongitude())</span>
-<span class="nc" id="L130">                .append(&quot;Id&quot;, location.getId())</span>
+<span class="fc" id="L127">        Document idAndCoordinates = new Document(&quot;locationtype&quot;, &quot;fireplace&quot;)</span>
+<span class="fc" id="L128">                .append(&quot;Latitude&quot;, location.getLatitude())</span>
+<span class="fc" id="L129">                .append(&quot;Longitude&quot;, location.getLongitude())</span>
+<span class="fc" id="L130">                .append(&quot;Id&quot;, location.getId())</span>
                 ;
 
-<span class="nc" id="L133">        Document doc = new Document(&quot;IconUrl&quot;, &quot;/Content/images/fire-icon.png&quot;)</span>
-<span class="nc" id="L134">                .append(&quot;BarbecuePlace&quot;, idAndCoordinates)</span>
-<span class="nc" id="L135">                .append(&quot;Ausstattung&quot;, ausstattungAsJSON)</span>
-<span class="nc" id="L136">                .append(&quot;closestStreet&quot;, DatabaseConnectorAddresses.getClosestAddress(location.getId()));</span>
-<span class="nc" id="L137">        userFireplacesCollection.insertOne(doc);</span>
+<span class="fc" id="L133">        Document doc = new Document(&quot;IconUrl&quot;, &quot;/Content/images/fire-icon.png&quot;)</span>
+<span class="fc" id="L134">                .append(&quot;BarbecuePlace&quot;, idAndCoordinates)</span>
+<span class="fc" id="L135">                .append(&quot;Ausstattung&quot;, ausstattungAsJSON)</span>
+<span class="fc" id="L136">                .append(&quot;closestStreet&quot;, DatabaseConnectorAddresses.getClosestAddress(location.getId()));</span>
+<span class="fc" id="L137">        userFireplacesCollection.insertOne(doc);</span>
 
         // creates a new entry in the closestAddress DB
-<span class="nc" id="L140">        DatabaseConnectorAddresses.createEntry(location.getId());</span>
+<span class="fc" id="L140">        DatabaseConnectorAddresses.createEntry(location.getId());</span>
 
-<span class="nc" id="L142">        Document updatedDoc = new Document().append(&quot;$set&quot;, new Document()</span>
-<span class="nc" id="L143">                .append(&quot;closestStreet&quot;, DatabaseConnectorAddresses.getClosestAddress(location.getId())));</span>
-<span class="nc" id="L144">        userFireplacesCollection.updateOne(eq(&quot;BarbecuePlace.Id&quot;, location.getId()), updatedDoc);</span>
+<span class="fc" id="L142">        Document updatedDoc = new Document().append(&quot;$set&quot;, new Document()</span>
+<span class="fc" id="L143">                .append(&quot;closestStreet&quot;, DatabaseConnectorAddresses.getClosestAddress(location.getId())));</span>
+<span class="fc" id="L144">        userFireplacesCollection.updateOne(eq(&quot;BarbecuePlace.Id&quot;, location.getId()), updatedDoc);</span>
 
-<span class="nc" id="L146">    }</span>
+<span class="fc" id="L146">    }</span>
 
     public static void addNewRecyclingStationToDatabase(Location location){
-<span class="nc" id="L149">        JSONArray coordinatesAsJSON = new JSONArray();</span>
-<span class="nc" id="L150">        coordinatesAsJSON.put(location.getLongitude());</span>
-<span class="nc" id="L151">        coordinatesAsJSON.put(location.getLatitude());</span>
+<span class="fc" id="L149">        JSONArray coordinatesAsJSON = new JSONArray();</span>
+<span class="fc" id="L150">        coordinatesAsJSON.put(location.getLongitude());</span>
+<span class="fc" id="L151">        coordinatesAsJSON.put(location.getLatitude());</span>
 
-<span class="nc" id="L153">        Document coordinates = new Document(&quot;type&quot;, &quot;Point&quot;)</span>
-<span class="nc" id="L154">                .append(&quot;coordinates&quot;, coordinatesAsJSON);</span>
+<span class="fc" id="L153">        Document coordinates = new Document(&quot;type&quot;, &quot;Point&quot;)</span>
+<span class="fc" id="L154">                .append(&quot;coordinates&quot;, coordinatesAsJSON);</span>
 
-<span class="nc" id="L156">        Document properties = new Document(&quot;locationtype&quot;, &quot;recycling&quot;)</span>
-<span class="nc" id="L157">                .append(&quot;objectid&quot;, Integer.toString(location.getId()))</span>
-<span class="nc" id="L158">                .append(&quot;adresse&quot;, location.getAdresse())</span>
-<span class="nc" id="L159">                .append(&quot;plz&quot;, location.getPlz())</span>
-<span class="nc" id="L160">                .append(&quot;ort&quot;, location.getOrt())</span>
-<span class="nc" id="L161">                .append(&quot;metall&quot;, location.getMetall())</span>
-<span class="nc" id="L162">                .append(&quot;glas&quot;, location.getGlas())</span>
-<span class="nc" id="L163">                .append(&quot;oel&quot;, location.getOel());</span>
+<span class="fc" id="L156">        Document properties = new Document(&quot;locationtype&quot;, &quot;recycling&quot;)</span>
+<span class="fc" id="L157">                .append(&quot;objectid&quot;, Integer.toString(location.getId()))</span>
+<span class="fc" id="L158">                .append(&quot;adresse&quot;, location.getAdresse())</span>
+<span class="fc" id="L159">                .append(&quot;plz&quot;, location.getPlz())</span>
+<span class="fc" id="L160">                .append(&quot;ort&quot;, location.getOrt())</span>
+<span class="fc" id="L161">                .append(&quot;metall&quot;, location.getMetall())</span>
+<span class="fc" id="L162">                .append(&quot;glas&quot;, location.getGlas())</span>
+<span class="fc" id="L163">                .append(&quot;oel&quot;, location.getOel());</span>
 
-<span class="nc" id="L165">        Document doc = new Document(&quot;type&quot;, &quot;Feature&quot;)</span>
-<span class="nc" id="L166">                .append(&quot;geometry&quot;, coordinates)</span>
-<span class="nc" id="L167">                .append(&quot;properties&quot;, properties);</span>
-<span class="nc" id="L168">        userRecyclingCollection.insertOne(doc);</span>
-<span class="nc" id="L169">    }</span>
+<span class="fc" id="L165">        Document doc = new Document(&quot;type&quot;, &quot;Feature&quot;)</span>
+<span class="fc" id="L166">                .append(&quot;geometry&quot;, coordinates)</span>
+<span class="fc" id="L167">                .append(&quot;properties&quot;, properties);</span>
+<span class="fc" id="L168">        userRecyclingCollection.insertOne(doc);</span>
+<span class="fc" id="L169">    }</span>
 
     public static void addNewToiletToDatabase(Location location){
 <span class="fc" id="L172">        Document doc = new Document()</span>
@@ -183,59 +183,59 @@ public class DatabaseConnectorLocation {
 <span class="fc" id="L183">    }</span>
 
     public static void addNewTableTennisToDatabase(Location location){
-<span class="nc" id="L186">        Document doc = new Document()</span>
-<span class="nc" id="L187">                .append(&quot;objectId&quot;, location.getId())</span>
-<span class="nc" id="L188">                .append(&quot;latitude&quot;, location.getLatitude())</span>
-<span class="nc" id="L189">                .append(&quot;longitude&quot;, location.getLongitude())</span>
-<span class="nc" id="L190">                .append(&quot;slabQuality&quot;, location.getSlabQuality())</span>
-<span class="nc" id="L191">                .append(&quot;net&quot;, location.getNet())</span>
-<span class="nc" id="L192">                .append(&quot;closestStreet&quot;, DatabaseConnectorAddresses.getClosestAddress(location.getId()));</span>
-<span class="nc" id="L193">        userTableTennisCollection.insertOne(doc);</span>
+<span class="fc" id="L186">        Document doc = new Document()</span>
+<span class="fc" id="L187">                .append(&quot;objectId&quot;, location.getId())</span>
+<span class="fc" id="L188">                .append(&quot;latitude&quot;, location.getLatitude())</span>
+<span class="fc" id="L189">                .append(&quot;longitude&quot;, location.getLongitude())</span>
+<span class="fc" id="L190">                .append(&quot;slabQuality&quot;, location.getSlabQuality())</span>
+<span class="fc" id="L191">                .append(&quot;net&quot;, location.getNet())</span>
+<span class="fc" id="L192">                .append(&quot;closestStreet&quot;, DatabaseConnectorAddresses.getClosestAddress(location.getId()));</span>
+<span class="fc" id="L193">        userTableTennisCollection.insertOne(doc);</span>
 
         // creates a new entry in the closestAddress DB
-<span class="nc" id="L196">        DatabaseConnectorAddresses.createEntry(location.getId());</span>
+<span class="fc" id="L196">        DatabaseConnectorAddresses.createEntry(location.getId());</span>
 
-<span class="nc" id="L198">        Document updatedDoc = new Document().append(&quot;$set&quot;, new Document()</span>
-<span class="nc" id="L199">                .append(&quot;closestStreet&quot;, DatabaseConnectorAddresses.getClosestAddress(location.getId())));</span>
-<span class="nc" id="L200">        userTableTennisCollection.updateOne(eq(&quot;objectId&quot;, location.getId()), updatedDoc);</span>
-<span class="nc" id="L201">    }</span>
+<span class="fc" id="L198">        Document updatedDoc = new Document().append(&quot;$set&quot;, new Document()</span>
+<span class="fc" id="L199">                .append(&quot;closestStreet&quot;, DatabaseConnectorAddresses.getClosestAddress(location.getId())));</span>
+<span class="fc" id="L200">        userTableTennisCollection.updateOne(eq(&quot;objectId&quot;, location.getId()), updatedDoc);</span>
+<span class="fc" id="L201">    }</span>
 
     public static void addNewBenchToDatabase(Location location){
-<span class="nc" id="L204">        Document doc = new Document()</span>
-<span class="nc" id="L205">                .append(&quot;objectId&quot;, location.getId())</span>
-<span class="nc" id="L206">                .append(&quot;latitude&quot;, location.getLatitude())</span>
-<span class="nc" id="L207">                .append(&quot;longitude&quot;, location.getLongitude())</span>
-<span class="nc" id="L208">                .append(&quot;view&quot;, location.getView())</span>
-<span class="nc" id="L209">                .append(&quot;peace&quot;, location.getPeace())</span>
-<span class="nc" id="L210">                .append(&quot;romantics&quot;, location.getRomantics())</span>
-<span class="nc" id="L211">                .append(&quot;comfort&quot;, location.getComfort())</span>
-<span class="nc" id="L212">                .append(&quot;closestStreet&quot;, DatabaseConnectorAddresses.getClosestAddress(location.getId()));</span>
-<span class="nc" id="L213">        userBenchCollection.insertOne(doc);</span>
+<span class="fc" id="L204">        Document doc = new Document()</span>
+<span class="fc" id="L205">                .append(&quot;objectId&quot;, location.getId())</span>
+<span class="fc" id="L206">                .append(&quot;latitude&quot;, location.getLatitude())</span>
+<span class="fc" id="L207">                .append(&quot;longitude&quot;, location.getLongitude())</span>
+<span class="fc" id="L208">                .append(&quot;view&quot;, location.getView())</span>
+<span class="fc" id="L209">                .append(&quot;peace&quot;, location.getPeace())</span>
+<span class="fc" id="L210">                .append(&quot;romantics&quot;, location.getRomantics())</span>
+<span class="fc" id="L211">                .append(&quot;comfort&quot;, location.getComfort())</span>
+<span class="fc" id="L212">                .append(&quot;closestStreet&quot;, DatabaseConnectorAddresses.getClosestAddress(location.getId()));</span>
+<span class="fc" id="L213">        userBenchCollection.insertOne(doc);</span>
 
         // creates a new entry in the closestAddress DB
-<span class="nc" id="L216">        DatabaseConnectorAddresses.createEntry(location.getId());</span>
+<span class="fc" id="L216">        DatabaseConnectorAddresses.createEntry(location.getId());</span>
 
-<span class="nc" id="L218">        Document updatedDoc = new Document().append(&quot;$set&quot;, new Document()</span>
-<span class="nc" id="L219">                .append(&quot;closestStreet&quot;, DatabaseConnectorAddresses.getClosestAddress(location.getId())));</span>
-<span class="nc" id="L220">        userBenchCollection.updateOne(eq(&quot;objectId&quot;, location.getId()), updatedDoc);</span>
-<span class="nc" id="L221">    }</span>
+<span class="fc" id="L218">        Document updatedDoc = new Document().append(&quot;$set&quot;, new Document()</span>
+<span class="fc" id="L219">                .append(&quot;closestStreet&quot;, DatabaseConnectorAddresses.getClosestAddress(location.getId())));</span>
+<span class="fc" id="L220">        userBenchCollection.updateOne(eq(&quot;objectId&quot;, location.getId()), updatedDoc);</span>
+<span class="fc" id="L221">    }</span>
 
     //Helper function which generates a unique table tennis id
     public static int generateBenchId(){
-<span class="nc" id="L225">        int random = (int) (Math.random() * 10000) + 60000000;</span>
-<span class="nc" id="L226">        FindIterable&lt;Document&gt; request = userBenchCollection.find(eq(&quot;objectid&quot;, random));</span>
+<span class="fc" id="L225">        int random = (int) (Math.random() * 10000) + 60000000;</span>
+<span class="fc" id="L226">        FindIterable&lt;Document&gt; request = userBenchCollection.find(eq(&quot;objectid&quot;, random));</span>
 
-<span class="nc bnc" id="L228" title="All 2 branches missed.">        if (request.first() != null){DatabaseConnectorLocation.generateBenchId();};</span>
-<span class="nc" id="L229">        return  random;</span>
+<span class="pc bpc" id="L228" title="1 of 2 branches missed.">        if (request.first() != null){DatabaseConnectorLocation.generateBenchId();};</span>
+<span class="fc" id="L229">        return  random;</span>
     }
 
     //Helper function which generates a unique table tennis id
     public static int generateTableTennisId(){
-<span class="nc" id="L234">        int random = (int) (Math.random() * 10000) + 50000000;</span>
-<span class="nc" id="L235">        FindIterable&lt;Document&gt; request = userTableTennisCollection.find(eq(&quot;objectid&quot;, random));</span>
+<span class="fc" id="L234">        int random = (int) (Math.random() * 10000) + 50000000;</span>
+<span class="fc" id="L235">        FindIterable&lt;Document&gt; request = userTableTennisCollection.find(eq(&quot;objectid&quot;, random));</span>
 
-<span class="nc bnc" id="L237" title="All 2 branches missed.">        if (request.first() != null){DatabaseConnectorLocation.generateTableTennisId();};</span>
-<span class="nc" id="L238">        return  random;</span>
+<span class="pc bpc" id="L237" title="1 of 2 branches missed.">        if (request.first() != null){DatabaseConnectorLocation.generateTableTennisId();};</span>
+<span class="fc" id="L238">        return  random;</span>
     }
 
     //Helper function which generates a unique toilet id
@@ -250,64 +250,64 @@ public class DatabaseConnectorLocation {
 
     //Helper function which generates a unique fountain id
     public static int generateFountainId(){
-<span class="nc" id="L253">        int random = (int) (Math.random() * 10000) + 10000000;</span>
-<span class="nc" id="L254">        FindIterable&lt;Document&gt; request = userFountainsCollection.find(eq(&quot;properties.objectid&quot;, random));</span>
-<span class="nc" id="L255">        FindIterable&lt;Document&gt; request2 = fountainsCollection.find(eq(&quot;properties.objectid&quot;, random));</span>
+<span class="fc" id="L253">        int random = (int) (Math.random() * 10000) + 10000000;</span>
+<span class="fc" id="L254">        FindIterable&lt;Document&gt; request = userFountainsCollection.find(eq(&quot;properties.objectid&quot;, random));</span>
+<span class="fc" id="L255">        FindIterable&lt;Document&gt; request2 = fountainsCollection.find(eq(&quot;properties.objectid&quot;, random));</span>
 
-<span class="nc bnc" id="L257" title="All 4 branches missed.">        if (request.first() != null || request2.first() != null){DatabaseConnectorLocation.generateFountainId();};</span>
-<span class="nc" id="L258">        return  random;</span>
+<span class="pc bpc" id="L257" title="2 of 4 branches missed.">        if (request.first() != null || request2.first() != null){DatabaseConnectorLocation.generateFountainId();};</span>
+<span class="fc" id="L258">        return  random;</span>
     }
 
     //Helper function which generates a unique fireplace id
     public static int generateFireplaceId(){
-<span class="nc" id="L263">        int random = (int) (Math.random() * 10000) + 20000000;</span>
-<span class="nc" id="L264">        FindIterable&lt;Document&gt; request = userFireplacesCollection.find(eq(&quot;BarbecuePlace.Id&quot;, random));</span>
-<span class="nc" id="L265">        FindIterable&lt;Document&gt; request2 = fireplacesCollection.find(eq(&quot;BarbecuePlace.Id&quot;, random));</span>
-<span class="nc bnc" id="L266" title="All 4 branches missed.">        if (request.first() != null || request2.first() != null){DatabaseConnectorLocation.generateFireplaceId();};</span>
-<span class="nc" id="L267">        return  random;</span>
+<span class="fc" id="L263">        int random = (int) (Math.random() * 10000) + 20000000;</span>
+<span class="fc" id="L264">        FindIterable&lt;Document&gt; request = userFireplacesCollection.find(eq(&quot;BarbecuePlace.Id&quot;, random));</span>
+<span class="fc" id="L265">        FindIterable&lt;Document&gt; request2 = fireplacesCollection.find(eq(&quot;BarbecuePlace.Id&quot;, random));</span>
+<span class="pc bpc" id="L266" title="2 of 4 branches missed.">        if (request.first() != null || request2.first() != null){DatabaseConnectorLocation.generateFireplaceId();};</span>
+<span class="fc" id="L267">        return  random;</span>
     }
 
     //Helper function which generates a unique fireplace id
     public static int generateRecyclingId(){
-<span class="nc" id="L272">        int random = (int) (Math.random() * 10000) + 30000000;</span>
-<span class="nc" id="L273">        FindIterable&lt;Document&gt; request = userRecyclingCollection.find(eq(&quot;properties.objectid&quot;, Integer.toString(random)));</span>
-<span class="nc" id="L274">        FindIterable&lt;Document&gt; request2 = recyclingCollection.find(eq(&quot;properties.objectid&quot;, Integer.toString(random)));</span>
-<span class="nc bnc" id="L275" title="All 4 branches missed.">        if (request.first() != null || request2.first() != null){DatabaseConnectorLocation.generateRecyclingId();};</span>
-<span class="nc" id="L276">        return  random;</span>
+<span class="fc" id="L272">        int random = (int) (Math.random() * 10000) + 30000000;</span>
+<span class="fc" id="L273">        FindIterable&lt;Document&gt; request = userRecyclingCollection.find(eq(&quot;properties.objectid&quot;, Integer.toString(random)));</span>
+<span class="fc" id="L274">        FindIterable&lt;Document&gt; request2 = recyclingCollection.find(eq(&quot;properties.objectid&quot;, Integer.toString(random)));</span>
+<span class="pc bpc" id="L275" title="2 of 4 branches missed.">        if (request.first() != null || request2.first() != null){DatabaseConnectorLocation.generateRecyclingId();};</span>
+<span class="fc" id="L276">        return  random;</span>
     }
 
     public static int createLocation(Location location){
 
-<span class="pc bpc" id="L281" title="1 of 2 branches missed.">        if (location.getLocationType() == LocationType.FOUNTAIN){</span>
-<span class="nc" id="L282">            location.setId(generateFountainId());</span>
-<span class="nc" id="L283">            addNewFountainToDatabase(location);</span>
+<span class="fc bfc" id="L281" title="All 2 branches covered.">        if (location.getLocationType() == LocationType.FOUNTAIN){</span>
+<span class="fc" id="L282">            location.setId(generateFountainId());</span>
+<span class="fc" id="L283">            addNewFountainToDatabase(location);</span>
         }
 
-<span class="pc bpc" id="L286" title="1 of 2 branches missed.">        else if (location.getLocationType() == LocationType.FIREPLACE){</span>
-<span class="nc" id="L287">            location.setId(generateFireplaceId());</span>
-<span class="nc" id="L288">            addNewFireplaceToDatabase(location);</span>
-
-        }
-
-<span class="pc bpc" id="L292" title="1 of 2 branches missed.">        else if (location.getLocationType() == LocationType.RECYCLING_STATION){</span>
-<span class="nc" id="L293">            location.setId(generateRecyclingId());</span>
-<span class="nc" id="L294">            addNewRecyclingStationToDatabase(location);</span>
+<span class="fc bfc" id="L286" title="All 2 branches covered.">        else if (location.getLocationType() == LocationType.FIREPLACE){</span>
+<span class="fc" id="L287">            location.setId(generateFireplaceId());</span>
+<span class="fc" id="L288">            addNewFireplaceToDatabase(location);</span>
 
         }
 
-<span class="pc bpc" id="L298" title="1 of 2 branches missed.">        else if (location.getLocationType() == LocationType.TOILET){</span>
+<span class="fc bfc" id="L292" title="All 2 branches covered.">        else if (location.getLocationType() == LocationType.RECYCLING_STATION){</span>
+<span class="fc" id="L293">            location.setId(generateRecyclingId());</span>
+<span class="fc" id="L294">            addNewRecyclingStationToDatabase(location);</span>
+
+        }
+
+<span class="fc bfc" id="L298" title="All 2 branches covered.">        else if (location.getLocationType() == LocationType.TOILET){</span>
 <span class="fc" id="L299">            location.setId(generateToiletId());</span>
 <span class="fc" id="L300">            addNewToiletToDatabase(location);</span>
         }
 
-<span class="nc bnc" id="L303" title="All 2 branches missed.">        else if (location.getLocationType() == LocationType.TABLE_TENNIS){</span>
-<span class="nc" id="L304">            location.setId(generateTableTennisId());</span>
-<span class="nc" id="L305">            addNewTableTennisToDatabase(location);</span>
+<span class="fc bfc" id="L303" title="All 2 branches covered.">        else if (location.getLocationType() == LocationType.TABLE_TENNIS){</span>
+<span class="fc" id="L304">            location.setId(generateTableTennisId());</span>
+<span class="fc" id="L305">            addNewTableTennisToDatabase(location);</span>
         }
 
-<span class="nc bnc" id="L308" title="All 2 branches missed.">        else if (location.getLocationType() == LocationType.BENCH){</span>
-<span class="nc" id="L309">            location.setId(generateBenchId());</span>
-<span class="nc" id="L310">            addNewBenchToDatabase(location);</span>
+<span class="pc bpc" id="L308" title="1 of 2 branches missed.">        else if (location.getLocationType() == LocationType.BENCH){</span>
+<span class="fc" id="L309">            location.setId(generateBenchId());</span>
+<span class="fc" id="L310">            addNewBenchToDatabase(location);</span>
         }
 <span class="fc" id="L312">        return location.getId();</span>
     }
@@ -355,14 +355,14 @@ public class DatabaseConnectorLocation {
     public static List&lt;Location&gt; getUserRecycling(){
 <span class="fc" id="L356">        List&lt;Document&gt; recyclingList = userRecyclingCollection.find().into(new ArrayList&lt;&gt;());</span>
 <span class="fc" id="L357">        List&lt;Location&gt; recyclingListLocation = new ArrayList&lt;&gt;();</span>
-<span class="pc bpc" id="L358" title="1 of 2 branches missed.">        for (Document recyclingStation: recyclingList){</span>
-<span class="nc" id="L359">            String recyclingAsString = recyclingStation.toJson();</span>
-<span class="nc" id="L360">            JSONObject recyclingAsJSON = new JSONObject(recyclingAsString);</span>
+<span class="fc bfc" id="L358" title="All 2 branches covered.">        for (Document recyclingStation: recyclingList){</span>
+<span class="fc" id="L359">            String recyclingAsString = recyclingStation.toJson();</span>
+<span class="fc" id="L360">            JSONObject recyclingAsJSON = new JSONObject(recyclingAsString);</span>
             //convert Document to Location
-<span class="nc" id="L362">            Location recyclingLocation = recyclingToLocation(recyclingAsJSON);</span>
+<span class="fc" id="L362">            Location recyclingLocation = recyclingToLocation(recyclingAsJSON);</span>
             //add Location to List of Locations
-<span class="nc" id="L364">            recyclingListLocation.add(recyclingLocation);</span>
-<span class="nc" id="L365">        }</span>
+<span class="fc" id="L364">            recyclingListLocation.add(recyclingLocation);</span>
+<span class="fc" id="L365">        }</span>
 <span class="fc" id="L366">        return recyclingListLocation;</span>
     }
 
@@ -534,7 +534,7 @@ public class DatabaseConnectorLocation {
 <span class="fc" id="L534">            additionalInformation.add(&quot;Quality of table-top: &quot; + tableTennisAsJson.get(&quot;slabQuality&quot;) + &quot;/5&quot;);</span>
         }
 
-<span class="pc bpc" id="L537" title="1 of 2 branches missed.">        if (tableTennisAsJson.get(&quot;net&quot;).getClass().toString().equals(&quot;class java.lang.String&quot;)){</span>
+<span class="fc bfc" id="L537" title="All 2 branches covered.">        if (tableTennisAsJson.get(&quot;net&quot;).getClass().toString().equals(&quot;class java.lang.String&quot;)){</span>
 <span class="fc" id="L538">            additionalInformation.add(&quot;Permanent net: &quot; + tableTennisAsJson.getString(&quot;net&quot;));</span>
         }
 
@@ -724,7 +724,7 @@ public class DatabaseConnectorLocation {
 <span class="fc bfc" id="L724" title="All 2 branches covered.">        if (properties.get(&quot;metall&quot;).getClass().toString().equals(&quot;class java.lang.String&quot;)){</span>
 <span class="fc" id="L725">            additionalInformation.add(&quot;- Metal&quot;);</span>
         }
-<span class="pc bpc" id="L727" title="1 of 2 branches missed.">        if (properties.get(&quot;glas&quot;).getClass().toString().equals(&quot;class java.lang.String&quot;)){</span>
+<span class="fc bfc" id="L727" title="All 2 branches covered.">        if (properties.get(&quot;glas&quot;).getClass().toString().equals(&quot;class java.lang.String&quot;)){</span>
 <span class="fc" id="L728">            additionalInformation.add(&quot;- Glass&quot;);</span>
         }
 <span class="fc bfc" id="L730" title="All 2 branches covered.">        if (properties.get(&quot;oel&quot;).getClass().toString().equals(&quot;class java.lang.String&quot;)){</span>

@@ -270,54 +270,54 @@ public class DatabaseConnectorLocationChats {
 <span class="fc" id="L270">    }</span>
 
     public static ArrayList&lt;Message&gt; getChatLocations(Integer locationId){
-<span class="nc" id="L273">        FindIterable&lt;Document&gt; request =  chatsCollection.find(eq(&quot;locationId&quot;, locationId));</span>
-<span class="nc" id="L274">        Document chatDoc = request.first();</span>
+<span class="fc" id="L273">        FindIterable&lt;Document&gt; request =  chatsCollection.find(eq(&quot;locationId&quot;, locationId));</span>
+<span class="fc" id="L274">        Document chatDoc = request.first();</span>
 
         // throw exception if there is no chat for the given location
-<span class="nc bnc" id="L277" title="All 2 branches missed.">        if (chatDoc == null){</span>
+<span class="pc bpc" id="L277" title="1 of 2 branches missed.">        if (chatDoc == null){</span>
 <span class="nc" id="L278">            throw new LocationNotFoundException(&quot;This location could not be found&quot;);</span>
         }
 
-<span class="nc" id="L281">        JSONObject chatAsJSON = new JSONObject(chatDoc.toJson());</span>
-<span class="nc" id="L282">        JSONArray messagesJSON = chatAsJSON.getJSONArray(&quot;messages&quot;);</span>
-<span class="nc" id="L283">        ArrayList&lt;Message&gt; chat = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L281">        JSONObject chatAsJSON = new JSONObject(chatDoc.toJson());</span>
+<span class="fc" id="L282">        JSONArray messagesJSON = chatAsJSON.getJSONArray(&quot;messages&quot;);</span>
+<span class="fc" id="L283">        ArrayList&lt;Message&gt; chat = new ArrayList&lt;&gt;();</span>
 
         // iterate through all message objects in the chat object
-<span class="nc bnc" id="L286" title="All 2 branches missed.">        for (int i = 0; i &lt; messagesJSON.length(); i++) {</span>
-<span class="nc" id="L287">            JSONObject messageJSON = messagesJSON.getJSONObject(i);</span>
+<span class="fc bfc" id="L286" title="All 2 branches covered.">        for (int i = 0; i &lt; messagesJSON.length(); i++) {</span>
+<span class="fc" id="L287">            JSONObject messageJSON = messagesJSON.getJSONObject(i);</span>
             // convert the messageJSON to the Message entity type
-<span class="nc" id="L289">            chat.add(convertMessageJSONToEntityLocations(messageJSON));</span>
+<span class="fc" id="L289">            chat.add(convertMessageJSONToEntityLocations(messageJSON));</span>
         }
 
-<span class="nc" id="L292">        return chat;</span>
+<span class="fc" id="L292">        return chat;</span>
     }
 
     public static void postMessageLocations(Integer locationId, Message message){
-<span class="nc" id="L296">        Document doc = new Document(&quot;senderId&quot;, message.getSenderId())</span>
-<span class="nc" id="L297">                .append(&quot;content&quot;, message.getContent())</span>
-<span class="nc" id="L298">                .append(&quot;timestamp&quot;, message.getTimestamp())</span>
-<span class="nc" id="L299">                .append(&quot;messageId&quot;, generateIdLocations(locationId));</span>
+<span class="fc" id="L296">        Document doc = new Document(&quot;senderId&quot;, message.getSenderId())</span>
+<span class="fc" id="L297">                .append(&quot;content&quot;, message.getContent())</span>
+<span class="fc" id="L298">                .append(&quot;timestamp&quot;, message.getTimestamp())</span>
+<span class="fc" id="L299">                .append(&quot;messageId&quot;, generateIdLocations(locationId));</span>
 
-<span class="nc" id="L301">        chatsCollection.updateOne(eq(&quot;locationId&quot;, locationId), Updates.addToSet(&quot;messages&quot;, doc));</span>
-<span class="nc" id="L302">    }</span>
+<span class="fc" id="L301">        chatsCollection.updateOne(eq(&quot;locationId&quot;, locationId), Updates.addToSet(&quot;messages&quot;, doc));</span>
+<span class="fc" id="L302">    }</span>
 
     //Helper function which generates a unique message id that is not taken yet by a message for this location chat
     public static int generateIdLocations(int locationId){
-<span class="nc" id="L306">        FindIterable&lt;Document&gt; request = chatsCollection.find(eq(&quot;locationId&quot;, locationId));</span>
-<span class="nc" id="L307">        Document chatDoc = request.first();</span>
-<span class="nc" id="L308">        JSONObject chatAsJSON = new JSONObject(chatDoc.toJson());</span>
-<span class="nc" id="L309">        JSONArray messagesJSON = chatAsJSON.getJSONArray(&quot;messages&quot;);</span>
+<span class="fc" id="L306">        FindIterable&lt;Document&gt; request = chatsCollection.find(eq(&quot;locationId&quot;, locationId));</span>
+<span class="fc" id="L307">        Document chatDoc = request.first();</span>
+<span class="fc" id="L308">        JSONObject chatAsJSON = new JSONObject(chatDoc.toJson());</span>
+<span class="fc" id="L309">        JSONArray messagesJSON = chatAsJSON.getJSONArray(&quot;messages&quot;);</span>
 
-<span class="nc" id="L311">        int random = (int) (Math.random() * 100000);</span>
+<span class="fc" id="L311">        int random = (int) (Math.random() * 100000);</span>
 
-<span class="nc bnc" id="L313" title="All 2 branches missed.">        for (int i = 0; i &lt; messagesJSON.length(); i++) {</span>
+<span class="pc bpc" id="L313" title="1 of 2 branches missed.">        for (int i = 0; i &lt; messagesJSON.length(); i++) {</span>
 <span class="nc" id="L314">            JSONObject messageJSON = messagesJSON.getJSONObject(i);</span>
 <span class="nc bnc" id="L315" title="All 2 branches missed.">            if (messageJSON.getInt(&quot;messageId&quot;) == random){</span>
 <span class="nc" id="L316">                random = generateIdLocations(locationId);</span>
             }
         }
 
-<span class="nc" id="L320">        return random;</span>
+<span class="fc" id="L320">        return random;</span>
     }
 
     public static void deleteMessageLocations(Integer locationId, int messageId){
@@ -340,17 +340,17 @@ public class DatabaseConnectorLocationChats {
 <span class="nc" id="L340">    }</span>
 
     public static Message convertMessageJSONToEntityLocations(JSONObject messageJSON){
-<span class="nc" id="L343">        Message message = new Message();</span>
+<span class="fc" id="L343">        Message message = new Message();</span>
 
-<span class="nc" id="L345">        int userId = messageJSON.getInt(&quot;senderId&quot;);</span>
+<span class="fc" id="L345">        int userId = messageJSON.getInt(&quot;senderId&quot;);</span>
 
-<span class="nc" id="L347">        message.setSenderUsername(DatabaseConnectorUser.getUsernameById(userId));</span>
-<span class="nc" id="L348">        message.setSenderId(userId);</span>
-<span class="nc" id="L349">        message.setContent(messageJSON.getString(&quot;content&quot;));</span>
-<span class="nc" id="L350">        message.setTimestamp(messageJSON.getString(&quot;timestamp&quot;));</span>
-<span class="nc" id="L351">        message.setMessageId(messageJSON.getInt(&quot;messageId&quot;));</span>
+<span class="fc" id="L347">        message.setSenderUsername(DatabaseConnectorUser.getUsernameById(userId));</span>
+<span class="fc" id="L348">        message.setSenderId(userId);</span>
+<span class="fc" id="L349">        message.setContent(messageJSON.getString(&quot;content&quot;));</span>
+<span class="fc" id="L350">        message.setTimestamp(messageJSON.getString(&quot;timestamp&quot;));</span>
+<span class="fc" id="L351">        message.setMessageId(messageJSON.getInt(&quot;messageId&quot;));</span>
 
-<span class="nc" id="L353">        return message;</span>
+<span class="fc" id="L353">        return message;</span>
     }
 
     public static Document convertEntityToDocumentLocations(Message message){

@@ -62,43 +62,43 @@ public class LocationService {
     }
 
     public List&lt;Location&gt; getFilteredLocations(FilterPostDTO filterPostDTO) {
-<span class="nc" id="L65">        List&lt;Location&gt; filteredLocations = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L66" title="All 2 branches missed.">        if (filterPostDTO.showFountains()){</span>
-<span class="nc" id="L67">            List&lt;Location&gt; listFountains = DatabaseConnectorLocation.getFountains();</span>
-<span class="nc" id="L68">            List&lt;Location&gt; listUserFountains = DatabaseConnectorLocation.getUserFountains();</span>
-<span class="nc" id="L69">            filteredLocations.addAll(listFountains);</span>
-<span class="nc" id="L70">            filteredLocations.addAll(listUserFountains);</span>
+<span class="fc" id="L65">        List&lt;Location&gt; filteredLocations = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">        if (filterPostDTO.showFountains()){</span>
+<span class="fc" id="L67">            List&lt;Location&gt; listFountains = DatabaseConnectorLocation.getFountains();</span>
+<span class="fc" id="L68">            List&lt;Location&gt; listUserFountains = DatabaseConnectorLocation.getUserFountains();</span>
+<span class="fc" id="L69">            filteredLocations.addAll(listFountains);</span>
+<span class="fc" id="L70">            filteredLocations.addAll(listUserFountains);</span>
         }
-<span class="nc bnc" id="L72" title="All 2 branches missed.">        if (filterPostDTO.showFireplaces()){</span>
-<span class="nc" id="L73">            List&lt;Location&gt; listFireplaces = DatabaseConnectorLocation.getFireplaces();</span>
-<span class="nc" id="L74">            List&lt;Location&gt; listUserFireplaces = DatabaseConnectorLocation.getUserFireplaces();</span>
-<span class="nc" id="L75">            filteredLocations.addAll(listFireplaces);</span>
-<span class="nc" id="L76">            filteredLocations.addAll(listUserFireplaces);</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">        if (filterPostDTO.showFireplaces()){</span>
+<span class="fc" id="L73">            List&lt;Location&gt; listFireplaces = DatabaseConnectorLocation.getFireplaces();</span>
+<span class="fc" id="L74">            List&lt;Location&gt; listUserFireplaces = DatabaseConnectorLocation.getUserFireplaces();</span>
+<span class="fc" id="L75">            filteredLocations.addAll(listFireplaces);</span>
+<span class="fc" id="L76">            filteredLocations.addAll(listUserFireplaces);</span>
 
         }
-<span class="nc bnc" id="L79" title="All 2 branches missed.">        if (filterPostDTO.showRecyclingStations()){</span>
-<span class="nc" id="L80">            List&lt;Location&gt; listRecyclingStations = DatabaseConnectorLocation.getRecyclingStations();</span>
-<span class="nc" id="L81">            List&lt;Location&gt; listUserRecyclingStations = DatabaseConnectorLocation.getUserRecycling();</span>
-<span class="nc" id="L82">            filteredLocations.addAll(listRecyclingStations);</span>
-<span class="nc" id="L83">            filteredLocations.addAll(listUserRecyclingStations);</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">        if (filterPostDTO.showRecyclingStations()){</span>
+<span class="fc" id="L80">            List&lt;Location&gt; listRecyclingStations = DatabaseConnectorLocation.getRecyclingStations();</span>
+<span class="fc" id="L81">            List&lt;Location&gt; listUserRecyclingStations = DatabaseConnectorLocation.getUserRecycling();</span>
+<span class="fc" id="L82">            filteredLocations.addAll(listRecyclingStations);</span>
+<span class="fc" id="L83">            filteredLocations.addAll(listUserRecyclingStations);</span>
 
         }
-<span class="nc bnc" id="L86" title="All 2 branches missed.">        if (filterPostDTO.showToilets()){</span>
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">        if (filterPostDTO.showToilets()){</span>
 <span class="nc" id="L87">            List&lt;Location&gt; listToilets = DatabaseConnectorLocation.getToilets();</span>
 <span class="nc" id="L88">            List&lt;Location&gt; listUserToilets = DatabaseConnectorLocation.getUserToilets();</span>
 <span class="nc" id="L89">            filteredLocations.addAll(listToilets);</span>
 <span class="nc" id="L90">            filteredLocations.addAll(listUserToilets);</span>
         }
-<span class="nc bnc" id="L92" title="All 2 branches missed.">        if (filterPostDTO.showTableTennis()){</span>
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">        if (filterPostDTO.showTableTennis()){</span>
 <span class="nc" id="L93">            List&lt;Location&gt; listUserTableTennis = DatabaseConnectorLocation.getUserTableTennis();</span>
 <span class="nc" id="L94">            filteredLocations.addAll(listUserTableTennis);</span>
         }
-<span class="nc bnc" id="L96" title="All 2 branches missed.">        if (filterPostDTO.showBenches()){</span>
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">        if (filterPostDTO.showBenches()){</span>
 <span class="nc" id="L97">            List&lt;Location&gt; listUserBenches = DatabaseConnectorLocation.getUserBench();</span>
 <span class="nc" id="L98">            filteredLocations.addAll(listUserBenches);</span>
         }
 
-<span class="nc" id="L101">        return filteredLocations;</span>
+<span class="fc" id="L101">        return filteredLocations;</span>
     }
 
     public Location getLocation(int id){
@@ -128,13 +128,13 @@ public class LocationService {
     }
 
     public ArrayList&lt;Message&gt; getChat(Integer locationId){
-<span class="nc" id="L131">        return DatabaseConnectorLocationChats.getChatLocations(locationId);</span>
+<span class="fc" id="L131">        return DatabaseConnectorLocationChats.getChatLocations(locationId);</span>
     }
 
     public void postMessage(Integer locationId, Message message){
-<span class="nc" id="L135">        message.setTimestamp(getCurrentTimestamp());</span>
-<span class="nc" id="L136">        DatabaseConnectorLocationChats.postMessageLocations(locationId, message);</span>
-<span class="nc" id="L137">    }</span>
+<span class="fc" id="L135">        message.setTimestamp(getCurrentTimestamp());</span>
+<span class="fc" id="L136">        DatabaseConnectorLocationChats.postMessageLocations(locationId, message);</span>
+<span class="fc" id="L137">    }</span>
 
     public void deleteMessage(Integer locationId, int messageId){
 <span class="nc" id="L140">        DatabaseConnectorLocationChats.deleteMessageLocations(locationId, messageId);</span>
@@ -194,9 +194,9 @@ public class LocationService {
 <span class="nc" id="L194">    }</span>
 
     public String getCurrentTimestamp(){
-<span class="nc" id="L197">        SimpleDateFormat sdf = new SimpleDateFormat(&quot;dd.MM, HH:mm&quot;);</span>
-<span class="nc" id="L198">        Timestamp timestamp = new Timestamp(System.currentTimeMillis() + 1000 * 60 * 60 * 2);</span>
-<span class="nc" id="L199">        return sdf.format(timestamp);</span>
+<span class="fc" id="L197">        SimpleDateFormat sdf = new SimpleDateFormat(&quot;dd.MM, HH:mm&quot;);</span>
+<span class="fc" id="L198">        Timestamp timestamp = new Timestamp(System.currentTimeMillis() + 1000 * 60 * 60 * 2);</span>
+<span class="fc" id="L199">        return sdf.format(timestamp);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

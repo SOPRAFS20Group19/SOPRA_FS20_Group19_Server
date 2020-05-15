@@ -63,6 +63,13 @@ public class LocationServiceIntegrationTest {
     static MongoCollection<Document> userToiletsCollection = locationStorage.getCollection("UserWC");
 
     @Autowired
+    static MongoCollection<Document> userTableTennisCollection = locationStorage.getCollection("UserTableTennis");
+
+    @Autowired
+    static MongoCollection<Document> userBenchesCollection = locationStorage.getCollection("UserBench");
+
+
+    @Autowired
     //Establish connection to the Users Database (development purposes only)
     static MongoDatabase usersDevelopment = mongoClient.getDatabase("UsersDevelopment");
 
@@ -178,7 +185,55 @@ public class LocationServiceIntegrationTest {
         assertEquals(testToilet.getLatitude(), newToilet.getLatitude());
 
         // Deletes the created location for testing in the database
-        userFountainsCollection.deleteOne(eq("properties.objectid", newToilet.getId()));
+        userToiletsCollection.deleteOne(eq("objectid", newToilet.getId()));
+
+    }
+
+    @Test
+    public void createLocation_Benches_validInputs_success(){
+        // Test create location
+
+        Location testBench = new Location();
+        testBench.setLocationType(LocationType.BENCH);
+        testBench.setLongitude(0);
+        testBench.setLatitude(0);
+        testBench.setAdresse("Scheuchzerstrasse");
+        testBench.setPlz("8006");
+        testBench.setOrt("Zuerich");
+
+
+        Location newBench = locationService.createLocation(testBench);
+
+        assertEquals(testBench.getLocationType(), newBench.getLocationType());
+        assertEquals(testBench.getLongitude(), newBench.getLongitude());
+        assertEquals(testBench.getLatitude(), newBench.getLatitude());
+
+        // Deletes the created location for testing in the database
+        userBenchesCollection.deleteOne(eq("objectId", newBench.getId()));
+
+    }
+
+    @Test
+    public void createLocation_TableTennis_validInputs_success(){
+        // Test create location
+
+        Location testTableTennis = new Location();
+        testTableTennis.setLocationType(LocationType.TABLE_TENNIS);
+        testTableTennis.setLongitude(0);
+        testTableTennis.setLatitude(0);
+        testTableTennis.setAdresse("Scheuchzerstrasse");
+        testTableTennis.setPlz("8006");
+        testTableTennis.setOrt("Zuerich");
+
+
+        Location newTableTennis = locationService.createLocation(testTableTennis);
+
+        assertEquals(testTableTennis.getLocationType(), newTableTennis.getLocationType());
+        assertEquals(testTableTennis.getLongitude(), newTableTennis.getLongitude());
+        assertEquals(testTableTennis.getLatitude(), newTableTennis.getLatitude());
+
+        // Deletes the created location for testing in the database
+        userTableTennisCollection.deleteOne(eq("objectId", newTableTennis.getId()));
 
     }
 
