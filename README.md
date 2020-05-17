@@ -53,18 +53,20 @@ Client:
 
 ## Launch & Deployment
 
-As a new developer, for your local development environment 
+As a new developer, we recommend you the following steps:
 
-## Setup this Template with your IDE of choice
+### Setup this Template with your IDE of choice
 
 Download your IDE of choice: (e.g., [Eclipse](http://www.eclipse.org/downloads/), [IntelliJ](https://www.jetbrains.com/idea/download/)) and make sure Java 13 is installed on your system.
 
-1. File -> Open... -> SoPra Server Template
+Zip download or git clone our server repository.
+
+1. File -> Open... -> SoPra_FS20_Group19_Server
 2. Accept to import the project as a `gradle project`
 
 To build right click the `build.gradle` file and choose `Run Build`
 
-## Building with Gradle
+### Building with Gradle
 
 You can use the local Gradle Wrapper to build the application.
 
@@ -76,25 +78,25 @@ Plattform-Prefix:
 
 More Information about [Gradle Wrapper](https://docs.gradle.org/current/userguide/gradle_wrapper.html) and [Gradle](https://gradle.org/docs/).
 
-### Build
+#### Build
 
 ```bash
 ./gradlew build
 ```
 
-### Run
+#### Run
 
 ```bash
 ./gradlew bootRun
 ```
 
-### Test
+#### Test
 
 ```bash
 ./gradlew test
 ```
 
-### Development Mode
+#### Development Mode
 
 You can start the backend in development mode, this will automatically trigger a new build and reload the application
 once the content of a file has been changed and you save the file.
@@ -111,13 +113,13 @@ If you want to avoid running all tests with every change, use the following comm
 
 `./gradlew build --continuous -xtest`
 
-## API Endpoint Testing
+### API Endpoint Testing
 
-### Postman
+#### Postman
 
 -   We highly recommend to use [Postman](https://www.getpostman.com) in order to test your API Endpoints.
 
-## Debugging
+### Debugging
 
 If something is not working and/or you don't know what is going on. We highly recommend that you use a debugger and step
 through the process step-by-step.
@@ -132,9 +134,7 @@ do the following:
 5. Set breakpoints in the application where you need it
 6. Step through the process one step at a time
 
-## Testing
-
-Have a look here: https://www.baeldung.com/spring-boot-testing
+### Deployment and new Release
 
 Every push to the master branch automatically redeploys the heroku application and thus is "going live". If you don't want that you have to push to another branch because every push to the master is automatically a new release.
 
