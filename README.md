@@ -43,10 +43,13 @@ Client:
 
 ## High-level components
 
-- [Map](https://github.com/SOPRAFS20Group19/SOPRA_FS20_Group19_Client/blob/master/src/components/map/Map.js) controls the most important component of the application: the map. It handles the current position of the user and stores the chosen filters if the user wants to see just some specific location types.
-- [MapService](https://github.com/SOPRAFS20Group19/SOPRA_FS20_Group19_Client/blob/master/src/components/map/MapService.js) is called by Map and renders the map itself by accessing the Google Maps API and our MongoDB database to get coordinates and informations about our locations which it shows to the user with the help of Map Markers and Popups after clicking on such a Marker.
-- [AppRouter](https://github.com/SOPRAFS20Group19/SOPRA_FS20_Group19_Client/blob/master/src/components/shared/routers/AppRouter.js) controls which components are rendered for each specific URL path. Like that it handles a crucial part of the logic of the application. For example it calls [MapRouter](https://github.com/SOPRAFS20Group19/SOPRA_FS20_Group19_Client/blob/master/src/components/shared/routers/MapRouter.js) if the map should be displayed. MapRouter then controls which components are rendered for each specific URL path in connection with the map.
-- [App](https://github.com/SOPRAFS20Group19/SOPRA_FS20_Group19_Client/blob/master/src/App.js) is the main class of the file, rendering AppRouter. 
+- [Application](https://github.com/SOPRAFS20Group19/SOPRA_FS20_Group19_Server/blob/master/src/main/java/ch/uzh/ifi/seal/soprafs20/Application.java) hosts the main method of the project. To run the whole server, you have to run this class including the main method.
+
+- [UserController](https://github.com/SOPRAFS20Group19/SOPRA_FS20_Group19_Server/blob/master/src/main/java/ch/uzh/ifi/seal/soprafs20/controller/UserController.java) and [LocationController](https://github.com/SOPRAFS20Group19/SOPRA_FS20_Group19_Server/blob/master/src/main/java/ch/uzh/ifi/seal/soprafs20/controller/LocationController.java) are crucial because they handle the REST requests from the client or Postman. They then delegate the execution to [UserService](https://github.com/SOPRAFS20Group19/SOPRA_FS20_Group19_Server/blob/master/src/main/java/ch/uzh/ifi/seal/soprafs20/service/UserService.java) and [LocationService](https://github.com/SOPRAFS20Group19/SOPRA_FS20_Group19_Server/blob/master/src/main/java/ch/uzh/ifi/seal/soprafs20/service/LocationService.java).
+
+- [UserService](https://github.com/SOPRAFS20Group19/SOPRA_FS20_Group19_Server/blob/master/src/main/java/ch/uzh/ifi/seal/soprafs20/service/UserService.java) and [LocationService](https://github.com/SOPRAFS20Group19/SOPRA_FS20_Group19_Server/blob/master/src/main/java/ch/uzh/ifi/seal/soprafs20/service/LocationService.java) handle the functionality related to user and location respectively. They call the important Database Connector classes.
+
+- These classes like [DatabaseConnectorUser](https://github.com/SOPRAFS20Group19/SOPRA_FS20_Group19_Server/blob/master/src/main/java/ch/uzh/ifi/seal/soprafs20/database/DatabaseConnectorUser.java) or [DatabaseConnectorLocation](https://github.com/SOPRAFS20Group19/SOPRA_FS20_Group19_Server/blob/master/src/main/java/ch/uzh/ifi/seal/soprafs20/database/DatabaseConnectorLocation.java) access the online MongoDB database and make the necessary changes.
 
 ## Launch & Deployment
 
