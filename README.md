@@ -53,67 +53,7 @@ Client:
 
 ## Launch & Deployment
 
-As a new developer, for your local development environment you'll need Node.js >= 8.10. You can download it [here](https://nodejs.org). All other dependencies including React get installed with:
-
-### `npm install`
-
-This has to be done before starting the application for the first time (only once).
-
-### `npm run dev`
-
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console. It is recommended to use Google Chrome.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-The build is minified and the filenames include the hashes.<br>
-
-Every push to the master branch automatically redeploys the heroku application and thus is "going live". If you don't want that you have to push to another branch because every push to the master is automatically a new release.
-
-## Roadmap 
-
-As a new developer you could add the following functionalities: 
-
-- Users could upload pictures of the locations for a better understanding of how this place looks.
-
-- The database could be extended to bigger regions than just the city of Zurich.
-
-- Users could filter for their favorite locations on the map.
-
-
-## Authors and acknowledgement
-
-KNOW YOUR CITY was built as a SoPra Project at the University of Zurich in FS20.
-
-Idea and realization by group 19: Lena, Luca, Luis, Maximilian, Tim.
-
-Contact: knowyourcity@gmx.ch
-
-We thank the whole SoPra team for their tipps and tricks, especially our tutor Anja.
-
-Thanks to grillstelle.ch for providing us the fireplace database.
-
-Thanks to Stadt Zürich for the free and public data access of fountains, recycling stations and toilets databases.
-
-Thanks to Lucas Pelloni for the template.
-
-## License 
-
-This project is licensed under the Apache 2.0 License - see the [License.md](LICENSE) file for details.
-
-# SoPra RESTful Service Template FS20
-
-## Getting started with Spring Boot
-
--   Documentation: https://docs.spring.io/spring-boot/docs/current/reference/html/index.html
--   Guides: http://spring.io/guides
-    -   Building a RESTful Web Service: http://spring.io/guides/gs/rest-service/
-    -   Building REST services with Spring: http://spring.io/guides/tutorials/bookmarks/
+As a new developer, for your local development environment 
 
 ## Setup this Template with your IDE of choice
 
@@ -195,3 +135,37 @@ do the following:
 ## Testing
 
 Have a look here: https://www.baeldung.com/spring-boot-testing
+
+Every push to the master branch automatically redeploys the heroku application and thus is "going live". If you don't want that you have to push to another branch because every push to the master is automatically a new release.
+
+## Roadmap 
+
+As a new developer you could add the following functionalities: 
+
+- Users could upload pictures of the locations for a better understanding of how this place looks.
+
+- The database could be extended to bigger regions than just the city of Zurich.
+
+- Users could filter for their favorite locations on the map.
+
+
+## Authors and acknowledgement
+
+KNOW YOUR CITY was built as a SoPra Project at the University of Zurich in FS20.
+
+Idea and realization by group 19: Lena, Luca, Luis, Maximilian, Tim.
+
+Contact: knowyourcity@gmx.ch
+
+We thank the whole SoPra team for their tipps and tricks, especially our tutor Anja.
+
+Thanks to grillstelle.ch for providing us the fireplace database.
+
+Thanks to Stadt Zürich for the free and public data access of fountains, recycling stations and toilets databases.
+
+Thanks to Lucas Pelloni for the template.
+
+## License 
+
+This project is licensed under the Apache 2.0 License - see the [License.md](LICENSE) file for details.
+
