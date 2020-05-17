@@ -246,6 +246,21 @@ public class LocationControllerTest {
         Assertions.assertEquals("This location could not be found.", response.getResolvedException().getMessage());
     }
 
+    // Code 204 delete /locations/chats/{locationId}
+    @Test
+    public void deleteMessageFromLocation_validInput() throws Exception{
+        doNothing().when(locationService).deleteMessage(1, 12345);
+
+        MockHttpServletRequestBuilder putRequest = delete("/locations/chats/1/12345")
+                .contentType(MediaType.APPLICATION_JSON);
+
+        MvcResult response = mockMvc.perform(putRequest).andReturn();
+
+        Assertions.assertEquals(204, response.getResponse().getStatus());
+        Assertions.assertEquals("", response.getResponse().getContentAsString());
+
+    }
+
     // Code 200 get /locations/favorites/{userId}
     @Test
     public void getFavoritesOfUser_validInput() throws Exception{

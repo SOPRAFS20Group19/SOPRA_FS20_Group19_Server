@@ -39,21 +39,27 @@ public class UserConnectorUnitTest {
 
     @Test
     public void setOnlineStatusTest(){
-        FindIterable<Document> request = usersCollection.find();
-        Document user = request.first();
+        FindIterable<Document> request1 = usersCollection.find();
+        Document user1 = request1.first();
 
         //create a new user representation
-        User userRepresentation = DatabaseConnectorUser.getUserInfo(user);
+        User userRepresentation1 = DatabaseConnectorUser.getUserInfo(user1);
 
-        DatabaseConnectorUser.setOnlineStatus(userRepresentation, true);
-        User userRepresentation1= DatabaseConnectorUser.getUserInfo(user);
+        DatabaseConnectorUser.setOnlineStatus(userRepresentation1, true);
 
-        assertEquals(UserStatus.ONLINE, userRepresentation1.getStatus());
+        FindIterable<Document> request2 = usersCollection.find();
+        Document user2 = request2.first();
+        User userRepresentation2= DatabaseConnectorUser.getUserInfo(user2);
 
-        DatabaseConnectorUser.setOnlineStatus(userRepresentation, false);
-        User userRepresentation2= DatabaseConnectorUser.getUserInfo(user);
+        assertEquals(UserStatus.ONLINE, userRepresentation2.getStatus());
 
-        assertEquals(UserStatus.OFFLINE, userRepresentation2.getStatus());
+        DatabaseConnectorUser.setOnlineStatus(userRepresentation2, false);
+
+        FindIterable<Document> request3 = usersCollection.find();
+        Document user3 = request3.first();
+        User userRepresentation3= DatabaseConnectorUser.getUserInfo(user3);
+
+        assertEquals(UserStatus.OFFLINE, userRepresentation3.getStatus());
 
     }
 

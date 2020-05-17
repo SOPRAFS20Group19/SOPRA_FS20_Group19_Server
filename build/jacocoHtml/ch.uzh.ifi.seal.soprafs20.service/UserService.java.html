@@ -28,9 +28,9 @@ import java.util.*;
  */
 @Service
 @Transactional
-<span class="fc" id="L31">public class UserService {</span>
+<span class="nc" id="L31">public class UserService {</span>
 
-<span class="fc" id="L33">    private final Logger log = LoggerFactory.getLogger(UserService.class);</span>
+<span class="nc" id="L33">    private final Logger log = LoggerFactory.getLogger(UserService.class);</span>
 
     //returns all users in the database
     public ArrayList&lt;User&gt; getAllUsers(){
@@ -104,19 +104,19 @@ import java.util.*;
 
     // creates a new user in the user repository
     public User createUser(User newUser) {
-<span class="fc" id="L107">        newUser.setCreationDate(UserService.getCurrentDate());</span>
-<span class="fc" id="L108">        newUser.setFavoriteLocations(new ArrayList&lt;Integer&gt;());</span>
-<span class="fc" id="L109">        newUser.setFriendsList(new ArrayList&lt;Integer&gt;());</span>
+<span class="nc" id="L107">        newUser.setCreationDate(UserService.getCurrentDate());</span>
+<span class="nc" id="L108">        newUser.setFavoriteLocations(new ArrayList&lt;Integer&gt;());</span>
+<span class="nc" id="L109">        newUser.setFriendsList(new ArrayList&lt;Integer&gt;());</span>
         //Checks whether username is already taken
-<span class="pc bpc" id="L111" title="1 of 2 branches missed.">        if (DatabaseConnectorUser.checkIfUsernameExists(newUser.getUsername())){</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">        if (DatabaseConnectorUser.checkIfUsernameExists(newUser.getUsername())){</span>
 <span class="nc" id="L112">            throw new DuplicatedUserException(&quot;The provided username is already taken. Please try a new one.&quot;);</span>
         }
         //If the username is not already taken create a new User in the database
-<span class="fc" id="L115">        User userToReturn = DatabaseConnectorUser.createUser(newUser);</span>
+<span class="nc" id="L115">        User userToReturn = DatabaseConnectorUser.createUser(newUser);</span>
 
-<span class="fc" id="L117">        log.debug(&quot;Created Information for User: {}&quot;, newUser);</span>
+<span class="nc" id="L117">        log.debug(&quot;Created Information for User: {}&quot;, newUser);</span>
 
-<span class="fc" id="L119">        return userToReturn;</span>
+<span class="nc" id="L119">        return userToReturn;</span>
     }
 
     public void deleteFriend(int deletingUserId, int toBeDeletedUserId){
@@ -201,12 +201,12 @@ import java.util.*;
     // creates a timestamp of the current date for the creation date during the registration
     public static String getCurrentDate(){
 
-<span class="fc" id="L204">        Date datenow = Calendar.getInstance().getTime();</span>
-<span class="fc" id="L205">        DateFormat dateFormat = new SimpleDateFormat(&quot;dd.MM.yyyy&quot;);</span>
-<span class="fc" id="L206">        Timestamp timestamp = new Timestamp(System.currentTimeMillis());</span>
-<span class="fc" id="L207">        LocalDate date = LocalDate.now();</span>
+<span class="nc" id="L204">        Date datenow = Calendar.getInstance().getTime();</span>
+<span class="nc" id="L205">        DateFormat dateFormat = new SimpleDateFormat(&quot;dd.MM.yyyy&quot;);</span>
+<span class="nc" id="L206">        Timestamp timestamp = new Timestamp(System.currentTimeMillis());</span>
+<span class="nc" id="L207">        LocalDate date = LocalDate.now();</span>
         //return date.toString();
-<span class="fc" id="L209">        return dateFormat.format(datenow);</span>
+<span class="nc" id="L209">        return dateFormat.format(datenow);</span>
     }
 
     public String getCurrentTimestamp(){

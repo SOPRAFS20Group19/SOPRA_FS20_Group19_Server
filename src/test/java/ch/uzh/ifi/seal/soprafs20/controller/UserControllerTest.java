@@ -1,11 +1,11 @@
 package ch.uzh.ifi.seal.soprafs20.controller;
 
+import ch.uzh.ifi.seal.soprafs20.constant.LocationType;
 import ch.uzh.ifi.seal.soprafs20.constant.UserStatus;
+import ch.uzh.ifi.seal.soprafs20.entity.Location;
+import ch.uzh.ifi.seal.soprafs20.entity.Message;
 import ch.uzh.ifi.seal.soprafs20.entity.User;
-import ch.uzh.ifi.seal.soprafs20.exceptions.DuplicatedUserException;
-import ch.uzh.ifi.seal.soprafs20.exceptions.InvalidCredentialsException;
-import ch.uzh.ifi.seal.soprafs20.exceptions.SopraServiceException;
-import ch.uzh.ifi.seal.soprafs20.exceptions.UserNotFoundException;
+import ch.uzh.ifi.seal.soprafs20.exceptions.*;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.UserGetDTO;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.UserPostDTO;
 import ch.uzh.ifi.seal.soprafs20.rest.dto.UserPutDTO;
@@ -41,9 +41,7 @@ import static org.mockito.ArgumentMatchers.refEq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -256,6 +254,262 @@ public class UserControllerTest {
         Assertions.assertEquals("This user could not be found.", response.getResolvedException().getMessage());
     }
 
+    // Code 200 get /users/friends/{userId}
+    @Test
+    public void getAllFriends_validInput() throws Exception {
+        // given
+        User user = new User();
+        user.setName("Firstname Lastname");
+        user.setUsername("firstname@lastname");
+        user.setPassword("password");
+        user.setCreationDate("2020-03-04 13:54:14.474");
+        user.setBirthDate("05.07.1999");
+        user.setStatus(UserStatus.OFFLINE);
+        user.setId(1);
+
+        ArrayList<User> allFriends = new ArrayList<>();
+        allFriends.add(user);
+
+        given(userService.getFriends(5)).willReturn(allFriends);
+
+        MockHttpServletRequestBuilder getRequest = get("/users/friends/5").contentType(MediaType.APPLICATION_JSON);
+
+        MvcResult response = mockMvc.perform(getRequest).andReturn();
+        String responseAsString = response.getResponse().getContentAsString();
+
+        Assertions.assertEquals(user.getName(), JsonPath.parse(responseAsString).read("$.[0].name"));
+        Assertions.assertEquals(user.getPassword(), JsonPath.parse(responseAsString).read("$.[0].password"));
+        Assertions.assertEquals(user.getUsername(), JsonPath.parse(responseAsString).read("$.[0].username"));
+        Assertions.assertEquals(user.getStatus().toString(), JsonPath.parse(responseAsString).read("$.[0].status"));
+        Assertions.assertEquals(user.getCreationDate(), JsonPath.parse(responseAsString).read("$.[0].creationDate"));
+        Assertions.assertEquals(200, response.getResponse().getStatus());
+    }
+
+    // Code 204 put /users/friends/{userId}/{friendId}
+    @Test
+    public void addFriend_validInput() throws Exception{
+        doNothing().when(userService).addFriend(1, 5);
+
+        MockHttpServletRequestBuilder putRequest = put("/users/friends/1/5")
+                .contentType(MediaType.APPLICATION_JSON);
+
+        MvcResult response = mockMvc.perform(putRequest).andReturn();
+
+        Assertions.assertEquals(204, response.getResponse().getStatus());
+        Assertions.assertEquals("", response.getResponse().getContentAsString());
+    }
+
+    // Code 204 delete /users/friends/{userId}/{friendId}
+    @Test
+    public void deleteFriend_validInput() throws Exception{
+        doNothing().when(userService).deleteFriend(1, 5);
+
+        MockHttpServletRequestBuilder putRequest = delete("/users/friends/1/5")
+                .contentType(MediaType.APPLICATION_JSON);
+
+        MvcResult response = mockMvc.perform(putRequest).andReturn();
+
+        Assertions.assertEquals(204, response.getResponse().getStatus());
+        Assertions.assertEquals("", response.getResponse().getContentAsString());
+    }
+
+    // Code 200 get /users/friends/{userId}/{friendId}
+    @Test
+    public void checkFriend_validInput() throws Exception{
+        given(userService.checkFriend(Mockito.anyInt(), Mockito.anyInt())).willReturn(true);
+
+        MockHttpServletRequestBuilder getRequest = get("/users/friends/1/5")
+                .contentType(MediaType.APPLICATION_JSON);
+
+        MvcResult response = mockMvc.perform(getRequest).andReturn();
+
+        Assertions.assertEquals(200, response.getResponse().getStatus());
+        Assertions.assertEquals("true", response.getResponse().getContentAsString());
+    }
+
+    // Code 200 get /users/friends/{userId}/{friendId}
+    @Test
+    public void checkFriend_invalidInput() throws Exception{
+        doThrow(new UserNotFoundException("This user could not be found.")).when(userService).checkFriend(Mockito.anyInt(), Mockito.anyInt());
+
+
+        MockHttpServletRequestBuilder getRequest = get("/users/friends/1/5")
+                .contentType(MediaType.APPLICATION_JSON);
+
+        MvcResult response = mockMvc.perform(getRequest).andReturn();
+
+        Assertions.assertEquals(404, response.getResponse().getStatus());
+        Assertions.assertEquals("This user could not be found.", response.getResolvedException().getMessage());
+    }
+
+    // Code 200 get /users
+    @Test
+    public void getAllUsers_validInput() throws Exception {
+        // given
+        User user = new User();
+        user.setName("Firstname Lastname");
+        user.setUsername("firstname@lastname");
+        user.setPassword("password");
+        user.setCreationDate("2020-03-04 13:54:14.474");
+        user.setBirthDate("05.07.1999");
+        user.setStatus(UserStatus.OFFLINE);
+        user.setId(1);
+
+        ArrayList<User> allUsers = new ArrayList<>();
+        allUsers.add(user);
+
+        given(userService.getAllUsers()).willReturn(allUsers);
+
+        MockHttpServletRequestBuilder getRequest = get("/users/").contentType(MediaType.APPLICATION_JSON);
+
+        MvcResult response = mockMvc.perform(getRequest).andReturn();
+        String responseAsString = response.getResponse().getContentAsString();
+
+        Assertions.assertEquals(user.getName(), JsonPath.parse(responseAsString).read("$.[0].name"));
+        Assertions.assertEquals(user.getPassword(), JsonPath.parse(responseAsString).read("$.[0].password"));
+        Assertions.assertEquals(user.getUsername(), JsonPath.parse(responseAsString).read("$.[0].username"));
+        Assertions.assertEquals(user.getStatus().toString(), JsonPath.parse(responseAsString).read("$.[0].status"));
+        Assertions.assertEquals(user.getCreationDate(), JsonPath.parse(responseAsString).read("$.[0].creationDate"));
+        Assertions.assertEquals(200, response.getResponse().getStatus());
+    }
+
+    // Code 200 get /users/chats/{userId}/{friendId}
+    @Test
+    public void getFriendsChat_validInput() throws Exception {
+        // given
+        Message message = new Message();
+        message.setContent("Hello");
+        message.setSenderId(1);
+        message.setSenderUsername("Username");
+        message.setTimestamp("29.04, 19:55");
+        ArrayList<Message> messages = new ArrayList<>();
+        messages.add(message);
+
+        given(userService.getChat(1, 2)).willReturn(messages);
+
+        MockHttpServletRequestBuilder getRequest = get("/users/chats/1/2").contentType(MediaType.APPLICATION_JSON);
+
+        MvcResult response = mockMvc.perform(getRequest).andReturn();
+        String responseAsString = response.getResponse().getContentAsString();
+
+        Assertions.assertEquals(messages.get(0).getContent(), JsonPath.parse(responseAsString).read("$.[0].content"));
+        Assertions.assertEquals(messages.get(0).getSenderUsername(), JsonPath.parse(responseAsString).read("$.[0].senderUsername"));
+        Assertions.assertEquals(messages.get(0).getTimestamp(), JsonPath.parse(responseAsString).read("$.[0].timestamp"));
+        Assertions.assertEquals(200, response.getResponse().getStatus());
+    }
+
+    // Code 200 get /users/chats/{userId}/{friendId}
+    @Test
+    public void getFriendsChat_invalidInput() throws Exception{
+        given(userService.getChat(Mockito.anyInt(), Mockito.anyInt())).willThrow(new UserNotFoundException("This user-friend pair could not be found"));
+
+        MockHttpServletRequestBuilder getRequest = get("/users/chats/1/2")
+                .contentType(MediaType.APPLICATION_JSON);
+
+        MvcResult response = mockMvc.perform(getRequest).andReturn();
+
+        Assertions.assertEquals(404, response.getResponse().getStatus());
+        Assertions.assertEquals("This user-friend pair could not be found", response.getResolvedException().getMessage());
+    }
+
+    // Code 204 put /users/chats/{userId}/{friendId}
+    @Test
+    public void postMessageFriend_validInput() throws Exception{
+        Message message = new Message();
+        message.setContent("Hello");
+        message.setSenderId(1);
+        message.setTimestamp("29.04, 19:55");
+
+        doNothing().when(userService).postMessage(1, 2, message);
+
+        MockHttpServletRequestBuilder putRequest = put("/users/chats/1/2")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(message));
+
+        MvcResult response = mockMvc.perform(putRequest).andReturn();
+
+        Assertions.assertEquals(204, response.getResponse().getStatus());
+        Assertions.assertEquals("", response.getResponse().getContentAsString());
+
+    }
+
+    // Code 204 put /users/chats/{userId}/{friendId}
+    @Test
+    public void postMessageFriend_invalidInput() throws Exception{
+        Message message = new Message();
+        message.setContent("Hello");
+        message.setSenderId(1);
+        message.setTimestamp("19:55");
+
+        doThrow(new UserNotFoundException("This user-friend pair could not be found")).when(userService).postMessage(Mockito.anyInt(), Mockito.anyInt(), Mockito.any());
+
+        MockHttpServletRequestBuilder putRequest = put("/users/chats/1/2")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(message));
+
+        MvcResult response = mockMvc.perform(putRequest).andReturn();
+
+        Assertions.assertEquals(404, response.getResponse().getStatus());
+        Assertions.assertEquals("This user-friend pair could not be found", response.getResolvedException().getMessage());
+    }
+
+    // Code 204 delete /locations/chats/{locationId}
+    @Test
+    public void deleteMessageFriend_validInput() throws Exception{
+        doNothing().when(userService).deleteMessage(1, 2,12345);
+
+        MockHttpServletRequestBuilder putRequest = delete("/users/chats/1/2/12345")
+                .contentType(MediaType.APPLICATION_JSON);
+
+        MvcResult response = mockMvc.perform(putRequest).andReturn();
+
+        Assertions.assertEquals(204, response.getResponse().getStatus());
+        Assertions.assertEquals("", response.getResponse().getContentAsString());
+
+    }
+
+    // Code 404 delete /locations/chats/{locationId}
+    @Test
+    public void deleteMessageFriend_invalidInput() throws Exception{
+        doThrow(new UserNotFoundException("This user-friend pair could not be found")).when(userService).deleteMessage(Mockito.anyInt(), Mockito.anyInt(), Mockito.anyInt());
+
+        MockHttpServletRequestBuilder putRequest = delete("/users/chats/1/2/12345")
+                .contentType(MediaType.APPLICATION_JSON);
+
+        MvcResult response = mockMvc.perform(putRequest).andReturn();
+
+        Assertions.assertEquals(404, response.getResponse().getStatus());
+        Assertions.assertEquals("This user-friend pair could not be found", response.getResolvedException().getMessage());
+    }
+
+    // Code 200 get /users/chats/news/{userId}/{friendId}
+    @Test
+    public void checkUnreadMessage_validInput() throws Exception{
+        given(userService.checkUnreadMessages(Mockito.anyInt(), Mockito.anyInt())).willReturn(true);
+
+        MockHttpServletRequestBuilder getRequest = get("/users/chats/news/1/5")
+                .contentType(MediaType.APPLICATION_JSON);
+
+        MvcResult response = mockMvc.perform(getRequest).andReturn();
+
+        Assertions.assertEquals(200, response.getResponse().getStatus());
+        Assertions.assertEquals("true", response.getResponse().getContentAsString());
+    }
+
+    // Code 404 get /users/chats/news/{userId}/{friendId}
+    @Test
+    public void checkUnreadMessage_invalidInput() throws Exception{
+        doThrow(new UserNotFoundException("This user-friend pair could not be found")).when(userService).checkUnreadMessages(Mockito.anyInt(), Mockito.anyInt());
+
+
+        MockHttpServletRequestBuilder getRequest = get("/users/chats/news/1/5")
+                .contentType(MediaType.APPLICATION_JSON);
+
+        MvcResult response = mockMvc.perform(getRequest).andReturn();
+
+        Assertions.assertEquals(404, response.getResponse().getStatus());
+        Assertions.assertEquals("This user-friend pair could not be found", response.getResolvedException().getMessage());
+    }
 
     /**
      * Helper Method to convert userPostDTO into a JSON string such that the input can be processed
