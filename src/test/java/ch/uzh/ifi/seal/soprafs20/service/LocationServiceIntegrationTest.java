@@ -1,6 +1,8 @@
 package ch.uzh.ifi.seal.soprafs20.service;
 import ch.uzh.ifi.seal.soprafs20.constant.LocationType;
 import ch.uzh.ifi.seal.soprafs20.entity.User;
+import ch.uzh.ifi.seal.soprafs20.exceptions.DuplicatedUserException;
+import ch.uzh.ifi.seal.soprafs20.exceptions.LocationNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -68,11 +70,21 @@ public class LocationServiceIntegrationTest {
     @Autowired
     static MongoCollection<Document> userBenchesCollection = locationStorage.getCollection("UserBench");
 
+    @Autowired
+    static MongoDatabase ratingLocation = mongoClient.getDatabase("RatingLocation");
+
+    @Autowired
+    static MongoCollection<Document> ratingsCollection = ratingLocation.getCollection("Ratings");
+
+    @Autowired
+    static MongoDatabase locationChats = mongoClient.getDatabase("LocationChats");
+
+    @Autowired
+    static MongoCollection<Document> chatsCollection = locationChats.getCollection("Chats");
 
     @Autowired
     //Establish connection to the Users Database (development purposes only)
     static MongoDatabase usersDevelopment = mongoClient.getDatabase("UsersDevelopment");
-
 
     @Autowired
     //Establish connection to the Users Collection (development purposes only)
@@ -83,15 +95,6 @@ public class LocationServiceIntegrationTest {
 
     @Autowired
     UserService userService;
-
-
-
-    /*@BeforeEach
-    public void setup() {
-        userRepository.deleteAll();
-    }
-
-     */
 
     @Test
     public void createLocation_Fountain_validInputs_success(){
@@ -165,6 +168,7 @@ public class LocationServiceIntegrationTest {
         // Deletes the created location for testing in the database
         userFireplacesCollection.deleteOne(eq("BarbecuePlace.Id", newFireplace.getId()));
     }
+
     @Test
     public void createLocation_Toilets_validInputs_success(){
         // Test create location
@@ -237,7 +241,6 @@ public class LocationServiceIntegrationTest {
 
     }
 
-
     @Test
     public void getFilteredLocations_success(){
         //Test filter for fountains
@@ -274,10 +277,8 @@ public class LocationServiceIntegrationTest {
         }
     }
 
-
-
     @Test
-    public void locationComment_success(){
+    public void postLocationMessage_success(){
         // Tests the comment box each location has
         Location testFountain = new Location();
         testFountain.setLocationType(LocationType.FOUNTAIN);
@@ -290,7 +291,6 @@ public class LocationServiceIntegrationTest {
         testUser.setUsername("testUsername");
         testUser.setPassword("password");
 
-        // when
         User createdUser = userService.createUser(testUser);
 
         Message message = new Message();
@@ -307,7 +307,164 @@ public class LocationServiceIntegrationTest {
             assertEquals(message1.getSenderUsername(), message.getSenderUsername());
         }
 
+        chatsCollection.deleteOne(eq("locationId", newFountain.getId()));
         usersCollection.deleteOne(eq("username", "testUsername"));
+        userFountainsCollection.deleteOne(eq("properties.objectid", newFountain.getId()));
+    }
+
+    @Test
+    public void deleteLocationMessage_success(){
+        // Tests the deletion of messages in locations
+        Location testFountain = new Location();
+        testFountain.setLocationType(LocationType.FOUNTAIN);
+        testFountain.setLongitude(0);
+        testFountain.setLatitude(0);
+        Location newFountain = locationService.createLocation(testFountain);
+
+        User testUser = new User();
+        testUser.setName("testName");
+        testUser.setUsername("testUsername");
+        testUser.setPassword("password");
+
+        User createdUser = userService.createUser(testUser);
+
+        Message message = new Message();
+        message.setSenderId(createdUser.getId());
+        message.setContent("TestMessage");
+        message.setSenderUsername(createdUser.getUsername());
+
+        // post a message and assert success
+        locationService.postMessage(newFountain.getId(), message);
+
+        ArrayList<Message> messages = locationService.getChat(newFountain.getId());
+
+        int messageIdToBeDeleted = 0;
+        
+        for (Message message1: messages){
+            assertEquals(message1.getContent(), message.getContent());
+            assertEquals(message1.getSenderUsername(), message.getSenderUsername());
+            messageIdToBeDeleted = message1.getMessageId();
+        }
+
+        // delete message and assert empty chat
+        locationService.deleteMessage(newFountain.getId(), messageIdToBeDeleted);
+
+        ArrayList<Message> messagesAfterDeletion = locationService.getChat(newFountain.getId());
+        assertEquals(0, messagesAfterDeletion.size());
+
+        chatsCollection.deleteOne(eq("locationId", newFountain.getId()));
+        usersCollection.deleteOne(eq("username", "testUsername"));
+        userFountainsCollection.deleteOne(eq("properties.objectid", newFountain.getId()));
+    }
+
+    @Test
+    public void getLocationChat_locationDoesNotExist(){
+        // tests that an error is thrown if the chat for a non-existing location is requested
+        String exceptionMessage = "This location could not be found";
+        LocationNotFoundException exception = assertThrows(LocationNotFoundException.class, () -> locationService.getChat(1), exceptionMessage);
+        assertEquals(exceptionMessage, exception.getMessage());
+    }
+
+    @Test
+    public void updateAndRetrieveRating_noExistingRating(){
+        // Tests updating a rating for a location if a user has not previously rated the location
+        Location testFountain = new Location();
+        testFountain.setLocationType(LocationType.FOUNTAIN);
+        testFountain.setLongitude(0);
+        testFountain.setLatitude(0);
+        Location newFountain = locationService.createLocation(testFountain);
+
+        User testUser = new User();
+        testUser.setName("testName");
+        testUser.setUsername("testUsername");
+        testUser.setPassword("password");
+        User createdUser = userService.createUser(testUser);
+
+        locationService.updateRating(createdUser.getId(), newFountain.getId(), 5);
+
+        assertEquals(5, locationService.checkRating(createdUser.getId(), newFountain.getId()));
+
+        ratingsCollection.deleteOne(and(eq("userId", createdUser.getId()), (eq("locationId", newFountain.getId()))));
+        usersCollection.deleteOne(eq("username", "testUsername"));
+        userFountainsCollection.deleteOne(eq("properties.objectid", newFountain.getId()));
+    }
+
+    @Test
+    public void updateAndRetrieveRating_preexistingRating(){
+        // Tests updating a rating for a location if a user has not previously rated the location
+        Location testFountain = new Location();
+        testFountain.setLocationType(LocationType.FOUNTAIN);
+        testFountain.setLongitude(0);
+        testFountain.setLatitude(0);
+        Location newFountain = locationService.createLocation(testFountain);
+
+        User testUser = new User();
+        testUser.setName("testName");
+        testUser.setUsername("testUsername");
+        testUser.setPassword("password");
+        User createdUser = userService.createUser(testUser);
+
+        // set initial rating and assert success
+        locationService.updateRating(createdUser.getId(), newFountain.getId(), 5);
+
+        assertEquals(5, locationService.checkRating(createdUser.getId(), newFountain.getId()));
+
+        // overwrite rating and assert success
+        locationService.updateRating(createdUser.getId(), newFountain.getId(), 3);
+
+        assertEquals(3, locationService.checkRating(createdUser.getId(), newFountain.getId()));
+
+        ratingsCollection.deleteOne(and(eq("userId", createdUser.getId()), (eq("locationId", newFountain.getId()))));
+        usersCollection.deleteOne(eq("username", "testUsername"));
+        userFountainsCollection.deleteOne(eq("properties.objectid", newFountain.getId()));
+    }
+
+    @Test
+    public void getAverageRating_preexistingRatings(){
+        // Tests updating a rating for a location if a user has not previously rated the location
+        Location testFountain = new Location();
+        testFountain.setLocationType(LocationType.FOUNTAIN);
+        testFountain.setLongitude(0);
+        testFountain.setLatitude(0);
+        Location newFountain = locationService.createLocation(testFountain);
+
+        User testUser = new User();
+        testUser.setName("testName");
+        testUser.setUsername("testUsername");
+        testUser.setPassword("password");
+        User createdUser = userService.createUser(testUser);
+
+        User testUser2 = new User();
+        testUser2.setName("testName2");
+        testUser2.setUsername("testUsername2");
+        testUser2.setPassword("password");
+        User createdUser2 = userService.createUser(testUser2);
+
+        // set ratings and assert correct average
+        locationService.updateRating(createdUser.getId(), newFountain.getId(), 5);
+        locationService.updateRating(createdUser2.getId(), newFountain.getId(), 3);
+
+        assertEquals(4, locationService.checkAverageRating(newFountain.getId()));
+
+
+        ratingsCollection.deleteOne(and(eq("userId", createdUser.getId()), (eq("locationId", newFountain.getId()))));
+        ratingsCollection.deleteOne(and(eq("userId", createdUser2.getId()), (eq("locationId", newFountain.getId()))));
+        usersCollection.deleteOne(eq("username", "testUsername"));
+        usersCollection.deleteOne(eq("username", "testUsername2"));
+        userFountainsCollection.deleteOne(eq("properties.objectid", newFountain.getId()));
+    }
+
+    @Test
+    public void getAverageRating_noExistingRatings(){
+        // Tests updating a rating for a location if a user has not previously rated the location
+        Location testFountain = new Location();
+        testFountain.setLocationType(LocationType.FOUNTAIN);
+        testFountain.setLongitude(0);
+        testFountain.setLatitude(0);
+        Location newFountain = locationService.createLocation(testFountain);
+
+        assertEquals(0, locationService.checkAverageRating(newFountain.getId()));
+
         userFountainsCollection.deleteOne(eq("properties.objectid", newFountain.getId()));
     }
 

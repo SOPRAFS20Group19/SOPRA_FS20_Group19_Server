@@ -28,9 +28,9 @@ import java.util.*;
  */
 @Service
 @Transactional
-<span class="nc" id="L31">public class UserService {</span>
+<span class="fc" id="L31">public class UserService {</span>
 
-<span class="nc" id="L33">    private final Logger log = LoggerFactory.getLogger(UserService.class);</span>
+<span class="fc" id="L33">    private final Logger log = LoggerFactory.getLogger(UserService.class);</span>
 
     //returns all users in the database
     public ArrayList&lt;User&gt; getAllUsers(){
@@ -45,111 +45,111 @@ import java.util.*;
 
     // updates a user with the updated name, username and password
     public void updateUser(int userId, UserPutDTO userWithNewData) {
-<span class="nc" id="L48">        User userToUpdate = DatabaseConnectorUser.getUserById(userId);</span>
+<span class="fc" id="L48">        User userToUpdate = DatabaseConnectorUser.getUserById(userId);</span>
 
-<span class="nc bnc" id="L50" title="All 2 branches missed.">        if (userToUpdate == null){</span>
+<span class="pc bpc" id="L50" title="1 of 2 branches missed.">        if (userToUpdate == null){</span>
 <span class="nc" id="L51">            throw new UserNotFoundException(&quot;This user could not be found.&quot;);</span>
         }
 
-<span class="nc bnc" id="L54" title="All 2 branches missed.">        if (userWithNewData.getName() != null){</span>
-<span class="nc" id="L55">            userToUpdate.setName(userWithNewData.getName());</span>
-<span class="nc" id="L56">            DatabaseConnectorUser.updateName(userToUpdate);</span>
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">        if (userWithNewData.getName() != null){</span>
+<span class="fc" id="L55">            userToUpdate.setName(userWithNewData.getName());</span>
+<span class="fc" id="L56">            DatabaseConnectorUser.updateName(userToUpdate);</span>
         }
 
-<span class="nc bnc" id="L59" title="All 2 branches missed.">        if (userWithNewData.getUsername() != null){</span>
-<span class="nc bnc" id="L60" title="All 2 branches missed.">            if (DatabaseConnectorUser.checkIfUsernameExists(userWithNewData.getUsername())){</span>
+<span class="pc bpc" id="L59" title="1 of 2 branches missed.">        if (userWithNewData.getUsername() != null){</span>
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">            if (DatabaseConnectorUser.checkIfUsernameExists(userWithNewData.getUsername())){</span>
 <span class="nc" id="L61">                throw new DuplicatedUserException(&quot;The provided username is already taken. Please try a new one.&quot;);</span>
             }
-<span class="nc" id="L63">            userToUpdate.setUsername(userWithNewData.getUsername());</span>
-<span class="nc" id="L64">            DatabaseConnectorUser.updateUsername(userToUpdate);</span>
+<span class="fc" id="L63">            userToUpdate.setUsername(userWithNewData.getUsername());</span>
+<span class="fc" id="L64">            DatabaseConnectorUser.updateUsername(userToUpdate);</span>
         }
 
-<span class="nc bnc" id="L67" title="All 2 branches missed.">        if (userWithNewData.getPassword() != null){</span>
-<span class="nc" id="L68">            userToUpdate.setPassword(userWithNewData.getPassword());</span>
-<span class="nc" id="L69">            DatabaseConnectorUser.updatePassword(userToUpdate);</span>
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">        if (userWithNewData.getPassword() != null){</span>
+<span class="fc" id="L68">            userToUpdate.setPassword(userWithNewData.getPassword());</span>
+<span class="fc" id="L69">            DatabaseConnectorUser.updatePassword(userToUpdate);</span>
         }
 
-<span class="nc bnc" id="L72" title="All 2 branches missed.">        if (userWithNewData.getAvatarNr() != 0){</span>
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">        if (userWithNewData.getAvatarNr() != 0){</span>
 <span class="nc" id="L73">            userToUpdate.setAvatarNr(userWithNewData.getAvatarNr());</span>
 <span class="nc" id="L74">            DatabaseConnectorUser.updateAvatarNr(userToUpdate);</span>
         }
 
-<span class="nc" id="L77">    }</span>
+<span class="fc" id="L77">    }</span>
 
     // logs out the user
     public void logoutUser(int id){
-<span class="nc" id="L81">        DatabaseConnectorUser.setOnlineStatusById(id, false);</span>
-<span class="nc" id="L82">    }</span>
+<span class="fc" id="L81">        DatabaseConnectorUser.setOnlineStatusById(id, false);</span>
+<span class="fc" id="L82">    }</span>
 
     // checks if the user that is attempting a login has the correct credentials
     public User checkForLogin(User userToBeLoggedIn) {
 
-<span class="nc" id="L87">        boolean validCredentials = DatabaseConnectorUser.checkIfUserAndPasswordExist(userToBeLoggedIn.getUsername(), userToBeLoggedIn.getPassword());</span>
+<span class="fc" id="L87">        boolean validCredentials = DatabaseConnectorUser.checkIfUserAndPasswordExist(userToBeLoggedIn.getUsername(), userToBeLoggedIn.getPassword());</span>
 
         //Check if user is allowed to log in
-<span class="nc bnc" id="L90" title="All 2 branches missed.">        if (!validCredentials) { //case that the credentials are invalid</span>
-<span class="nc" id="L91">            boolean validUsername = DatabaseConnectorUser.checkIfUsernameExists(userToBeLoggedIn.getUsername());</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">        if (!validCredentials) { //case that the credentials are invalid</span>
+<span class="fc" id="L91">            boolean validUsername = DatabaseConnectorUser.checkIfUsernameExists(userToBeLoggedIn.getUsername());</span>
             //check if the username is valid, if yes, the password must be false
-<span class="nc bnc" id="L93" title="All 2 branches missed.">            String message = validUsername ? &quot;Wrong password, please try again.&quot; : &quot;This username does not exist, please register first.&quot;;</span>
-<span class="nc" id="L94">            throw new InvalidCredentialsException(message);</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">            String message = validUsername ? &quot;Wrong password, please try again.&quot; : &quot;This username does not exist, please register first.&quot;;</span>
+<span class="fc" id="L94">            throw new InvalidCredentialsException(message);</span>
         }
 
         //If credentials are valid set the user status to online, since the user will be logged in
-<span class="nc" id="L98">        DatabaseConnectorUser.setOnlineStatus(userToBeLoggedIn, true);</span>
+<span class="fc" id="L98">        DatabaseConnectorUser.setOnlineStatus(userToBeLoggedIn, true);</span>
         //return new user representation
-<span class="nc" id="L100">        User user = DatabaseConnectorUser.getUserByUsername(userToBeLoggedIn.getUsername());</span>
+<span class="fc" id="L100">        User user = DatabaseConnectorUser.getUserByUsername(userToBeLoggedIn.getUsername());</span>
 
-<span class="nc" id="L102">        return user;</span>
+<span class="fc" id="L102">        return user;</span>
     }
 
     // creates a new user in the user repository
     public User createUser(User newUser) {
-<span class="nc" id="L107">        newUser.setCreationDate(UserService.getCurrentDate());</span>
-<span class="nc" id="L108">        newUser.setFavoriteLocations(new ArrayList&lt;Integer&gt;());</span>
-<span class="nc" id="L109">        newUser.setFriendsList(new ArrayList&lt;Integer&gt;());</span>
+<span class="fc" id="L107">        newUser.setCreationDate(UserService.getCurrentDate());</span>
+<span class="fc" id="L108">        newUser.setFavoriteLocations(new ArrayList&lt;Integer&gt;());</span>
+<span class="fc" id="L109">        newUser.setFriendsList(new ArrayList&lt;Integer&gt;());</span>
         //Checks whether username is already taken
-<span class="nc bnc" id="L111" title="All 2 branches missed.">        if (DatabaseConnectorUser.checkIfUsernameExists(newUser.getUsername())){</span>
-<span class="nc" id="L112">            throw new DuplicatedUserException(&quot;The provided username is already taken. Please try a new one.&quot;);</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">        if (DatabaseConnectorUser.checkIfUsernameExists(newUser.getUsername())){</span>
+<span class="fc" id="L112">            throw new DuplicatedUserException(&quot;The provided username is already taken. Please try a new one.&quot;);</span>
         }
         //If the username is not already taken create a new User in the database
-<span class="nc" id="L115">        User userToReturn = DatabaseConnectorUser.createUser(newUser);</span>
+<span class="fc" id="L115">        User userToReturn = DatabaseConnectorUser.createUser(newUser);</span>
 
-<span class="nc" id="L117">        log.debug(&quot;Created Information for User: {}&quot;, newUser);</span>
+<span class="fc" id="L117">        log.debug(&quot;Created Information for User: {}&quot;, newUser);</span>
 
-<span class="nc" id="L119">        return userToReturn;</span>
+<span class="fc" id="L119">        return userToReturn;</span>
     }
 
     public void deleteFriend(int deletingUserId, int toBeDeletedUserId){
-<span class="nc" id="L123">        DatabaseConnectorUser.deleteFriend(deletingUserId, toBeDeletedUserId);</span>
-<span class="nc" id="L124">    }</span>
+<span class="fc" id="L123">        DatabaseConnectorUser.deleteFriend(deletingUserId, toBeDeletedUserId);</span>
+<span class="fc" id="L124">    }</span>
 
     public void addFriend(int addingUserId, int toBeAddedUserId){
         // check if user exists
-<span class="nc" id="L128">        DatabaseConnectorUser.getUserById(toBeAddedUserId);</span>
+<span class="fc" id="L128">        DatabaseConnectorUser.getUserById(toBeAddedUserId);</span>
         // add user to friends list if userIds are not the same
-<span class="nc bnc" id="L130" title="All 2 branches missed.">        if (addingUserId != toBeAddedUserId){</span>
-<span class="nc" id="L131">            DatabaseConnectorUser.addFriend(addingUserId, toBeAddedUserId);</span>
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">        if (addingUserId != toBeAddedUserId){</span>
+<span class="fc" id="L131">            DatabaseConnectorUser.addFriend(addingUserId, toBeAddedUserId);</span>
         }
         // create a new chat for the friends pair
-<span class="nc bnc" id="L134" title="All 4 branches missed.">        if (addingUserId &lt;= toBeAddedUserId &amp;&amp; addingUserId != toBeAddedUserId){</span>
-<span class="nc bnc" id="L135" title="All 2 branches missed.">            if (!DatabaseConnectorLocationChats.checkForExistingChat(addingUserId, toBeAddedUserId)){</span>
-<span class="nc" id="L136">                DatabaseConnectorLocationChats.createNewFriendsChat(addingUserId, toBeAddedUserId);</span>
+<span class="pc bpc" id="L134" title="1 of 4 branches missed.">        if (addingUserId &lt;= toBeAddedUserId &amp;&amp; addingUserId != toBeAddedUserId){</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">            if (!DatabaseConnectorLocationChats.checkForExistingChat(addingUserId, toBeAddedUserId)){</span>
+<span class="fc" id="L136">                DatabaseConnectorLocationChats.createNewFriendsChat(addingUserId, toBeAddedUserId);</span>
             }
         }
-<span class="nc bnc" id="L139" title="All 2 branches missed.">        else if (addingUserId != toBeAddedUserId){</span>
-<span class="nc bnc" id="L140" title="All 2 branches missed.">            if (!DatabaseConnectorLocationChats.checkForExistingChat(toBeAddedUserId, addingUserId)){</span>
-<span class="nc" id="L141">                DatabaseConnectorLocationChats.createNewFriendsChat(toBeAddedUserId, addingUserId);</span>
+<span class="pc bpc" id="L139" title="1 of 2 branches missed.">        else if (addingUserId != toBeAddedUserId){</span>
+<span class="pc bpc" id="L140" title="1 of 2 branches missed.">            if (!DatabaseConnectorLocationChats.checkForExistingChat(toBeAddedUserId, addingUserId)){</span>
+<span class="fc" id="L141">                DatabaseConnectorLocationChats.createNewFriendsChat(toBeAddedUserId, addingUserId);</span>
             }
         }
-<span class="nc" id="L144">    }</span>
+<span class="fc" id="L144">    }</span>
 
     public boolean checkFriend(int userId, int friendId){
-<span class="nc" id="L147">        ArrayList&lt;Integer&gt; friendsIds = DatabaseConnectorUser.getFriends(userId);</span>
-<span class="nc bnc" id="L148" title="All 2 branches missed.">        if (friendsIds.contains(friendId)){</span>
-<span class="nc" id="L149">            return true;</span>
+<span class="fc" id="L147">        ArrayList&lt;Integer&gt; friendsIds = DatabaseConnectorUser.getFriends(userId);</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">        if (friendsIds.contains(friendId)){</span>
+<span class="fc" id="L149">            return true;</span>
         }
         else {
-<span class="nc" id="L152">            return false;</span>
+<span class="fc" id="L152">            return false;</span>
         }
     }
 
@@ -166,53 +166,53 @@ import java.util.*;
 
     public ArrayList&lt;Message&gt; getChat(int userId, int friendId){
         ArrayList&lt;Message&gt; chatToReturn;
-<span class="nc bnc" id="L169" title="All 2 branches missed.">        if (userId &lt;= friendId){</span>
-<span class="nc" id="L170">            chatToReturn = DatabaseConnectorLocationChats.getChatFriends(userId, friendId);</span>
-<span class="nc" id="L171">            DatabaseConnectorLocationChats.setOnRead(userId, friendId, userId);</span>
+<span class="fc bfc" id="L169" title="All 2 branches covered.">        if (userId &lt;= friendId){</span>
+<span class="fc" id="L170">            chatToReturn = DatabaseConnectorLocationChats.getChatFriends(userId, friendId);</span>
+<span class="fc" id="L171">            DatabaseConnectorLocationChats.setOnRead(userId, friendId, userId);</span>
         }
         else {
-<span class="nc" id="L174">            chatToReturn = DatabaseConnectorLocationChats.getChatFriends(friendId, userId);</span>
-<span class="nc" id="L175">            DatabaseConnectorLocationChats.setOnRead(friendId, userId, userId);</span>
+<span class="fc" id="L174">            chatToReturn = DatabaseConnectorLocationChats.getChatFriends(friendId, userId);</span>
+<span class="fc" id="L175">            DatabaseConnectorLocationChats.setOnRead(friendId, userId, userId);</span>
         }
 
-<span class="nc" id="L178">        return chatToReturn;</span>
+<span class="fc" id="L178">        return chatToReturn;</span>
     }
 
     public boolean checkUnreadMessages(int userId, int friendId){
         boolean isUnread;
-<span class="nc bnc" id="L183" title="All 2 branches missed.">        if (userId &lt;= friendId){</span>
-<span class="nc" id="L184">            isUnread = DatabaseConnectorLocationChats.checkUnreadMessages(userId, friendId, userId);</span>
+<span class="fc bfc" id="L183" title="All 2 branches covered.">        if (userId &lt;= friendId){</span>
+<span class="fc" id="L184">            isUnread = DatabaseConnectorLocationChats.checkUnreadMessages(userId, friendId, userId);</span>
         }
         else {
-<span class="nc" id="L187">            isUnread = DatabaseConnectorLocationChats.checkUnreadMessages(friendId, userId, userId);</span>
+<span class="fc" id="L187">            isUnread = DatabaseConnectorLocationChats.checkUnreadMessages(friendId, userId, userId);</span>
         }
-<span class="nc" id="L189">        return isUnread;</span>
+<span class="fc" id="L189">        return isUnread;</span>
     }
 
     public void postMessage(int userId, int friendId, Message message){
-<span class="nc" id="L193">        message.setTimestamp(getCurrentTimestamp());</span>
-<span class="nc" id="L194">        DatabaseConnectorLocationChats.postMessageFriends(userId, friendId, message);</span>
-<span class="nc" id="L195">    }</span>
+<span class="fc" id="L193">        message.setTimestamp(getCurrentTimestamp());</span>
+<span class="fc" id="L194">        DatabaseConnectorLocationChats.postMessageFriends(userId, friendId, message);</span>
+<span class="fc" id="L195">    }</span>
 
     public void deleteMessage(int userId, int friendId, int messageId){
-<span class="nc" id="L198">        DatabaseConnectorLocationChats.deleteMessageFriends(userId, friendId, messageId);</span>
-<span class="nc" id="L199">    }</span>
+<span class="fc" id="L198">        DatabaseConnectorLocationChats.deleteMessageFriends(userId, friendId, messageId);</span>
+<span class="fc" id="L199">    }</span>
 
     // creates a timestamp of the current date for the creation date during the registration
     public static String getCurrentDate(){
 
-<span class="nc" id="L204">        Date datenow = Calendar.getInstance().getTime();</span>
-<span class="nc" id="L205">        DateFormat dateFormat = new SimpleDateFormat(&quot;dd.MM.yyyy&quot;);</span>
-<span class="nc" id="L206">        Timestamp timestamp = new Timestamp(System.currentTimeMillis());</span>
-<span class="nc" id="L207">        LocalDate date = LocalDate.now();</span>
+<span class="fc" id="L204">        Date datenow = Calendar.getInstance().getTime();</span>
+<span class="fc" id="L205">        DateFormat dateFormat = new SimpleDateFormat(&quot;dd.MM.yyyy&quot;);</span>
+<span class="fc" id="L206">        Timestamp timestamp = new Timestamp(System.currentTimeMillis());</span>
+<span class="fc" id="L207">        LocalDate date = LocalDate.now();</span>
         //return date.toString();
-<span class="nc" id="L209">        return dateFormat.format(datenow);</span>
+<span class="fc" id="L209">        return dateFormat.format(datenow);</span>
     }
 
     public String getCurrentTimestamp(){
-<span class="nc" id="L213">        SimpleDateFormat sdf = new SimpleDateFormat(&quot;dd.MM, HH:mm&quot;);</span>
-<span class="nc" id="L214">        Timestamp timestamp = new Timestamp(System.currentTimeMillis() + 1000 * 60 * 60 * 2);</span>
-<span class="nc" id="L215">        return sdf.format(timestamp);</span>
+<span class="fc" id="L213">        SimpleDateFormat sdf = new SimpleDateFormat(&quot;dd.MM, HH:mm&quot;);</span>
+<span class="fc" id="L214">        Timestamp timestamp = new Timestamp(System.currentTimeMillis() + 1000 * 60 * 60 * 2);</span>
+<span class="fc" id="L215">        return sdf.format(timestamp);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

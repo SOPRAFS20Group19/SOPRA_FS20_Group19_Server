@@ -1,7 +1,10 @@
 package ch.uzh.ifi.seal.soprafs20.service;
 
+import ch.uzh.ifi.seal.soprafs20.constant.LocationType;
 import ch.uzh.ifi.seal.soprafs20.constant.UserStatus;
 import ch.uzh.ifi.seal.soprafs20.database.DatabaseConnectorUser;
+import ch.uzh.ifi.seal.soprafs20.entity.Location;
+import ch.uzh.ifi.seal.soprafs20.entity.Message;
 import ch.uzh.ifi.seal.soprafs20.entity.User;
 import ch.uzh.ifi.seal.soprafs20.exceptions.DuplicatedUserException;
 import ch.uzh.ifi.seal.soprafs20.exceptions.InvalidCredentialsException;
@@ -12,14 +15,14 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import ch.uzh.ifi.seal.soprafs20.rest.dto.UserPutDTO;
 
+import static com.mongodb.client.model.Filters.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.mongodb.client.*;
 import org.bson.Document;
 
 
-import static com.mongodb.client.model.Filters.and;
-import static com.mongodb.client.model.Filters.eq;
+import java.util.ArrayList;
 
 /**
  * Test class for the UserResource REST resource.
@@ -40,6 +43,12 @@ public class UserServiceIntegrationTest {
     @Autowired
     //Establish connection to the Users Collection (development purposes only)
     static MongoCollection<Document> usersCollection = usersDevelopment.getCollection("Users");
+
+    @Autowired
+    static MongoDatabase locationChats = mongoClient.getDatabase("LocationChats");
+
+    @Autowired
+    static MongoCollection<Document> friendsChatsCollection = locationChats.getCollection("FriendsChats");
 
     @Autowired
     private UserService userService;
@@ -262,13 +271,13 @@ public class UserServiceIntegrationTest {
 
     // Checks if the user can add and delete a friend
     @Test
-    public void addFriend_success() {
+    public void addFriendAndDeleteFriend_success() {
         FindIterable<Document> request = usersCollection.find(eq("username", "testUsername"));
         Document user = request.first();
         assertNull(user);
 
         FindIterable<Document> request2 = usersCollection.find(eq("username", "testUsername1"));
-        Document user2 = request.first();
+        Document user2 = request2.first();
         assertNull(user2);
 
         User testUser = new User();
@@ -303,12 +312,101 @@ public class UserServiceIntegrationTest {
 
         assertFalse(friends1);
 
+        friendsChatsCollection.deleteOne(or(eq("userId1", userWantsToAddFriend.getId()), eq("userId2", userWantsToAddFriend.getId())));
         usersCollection.deleteOne(eq("username", "testUsername"));
         usersCollection.deleteOne(eq("username", "testUsername1"));
-
-
     }
 
+    @Test
+    public void friendsPostAndDeleteMessage_success(){
+        User testUser = new User();
+        testUser.setName("testName");
+        testUser.setUsername("testUsername");
+        testUser.setPassword("password");
+        User friend1 = userService.createUser(testUser);
 
+
+        User testUser2 = new User();
+        testUser2.setName("testName1");
+        testUser2.setUsername("testUsername1");
+        testUser2.setPassword("password1");
+        User friend2 = userService.createUser(testUser2);
+
+
+        // add the users as friends in order to create a chat
+        userService.addFriend(friend1.getId(), friend2.getId());
+        userService.addFriend(friend2.getId(), friend1.getId());
+
+        Message message = new Message();
+        message.setSenderId(friend1.getId());
+        message.setContent("TestMessage");
+        message.setSenderUsername(friend1.getUsername());
+
+        userService.postMessage(friend1.getId(), friend2.getId(), message);
+
+        ArrayList<Message> messages = userService.getChat(friend1.getId(), friend2.getId());
+
+        int messageIdToBeDeleted = 0;
+
+        for (Message message1: messages){
+            assertEquals(message1.getContent(), message.getContent());
+            assertEquals(message1.getSenderUsername(), message.getSenderUsername());
+            messageIdToBeDeleted = message1.getMessageId();
+        }
+
+        // check that the posting user has no unread messages and the receiving user does
+        assertFalse(userService.checkUnreadMessages(friend1.getId(), friend2.getId()));
+        assertTrue(userService.checkUnreadMessages(friend2.getId(), friend1.getId()));
+
+        // delete message and assert that the chat is empty afterwards
+        userService.deleteMessage(friend1.getId(), friend2.getId(), messageIdToBeDeleted);
+        ArrayList<Message> messagesAfterDeletion = userService.getChat(friend1.getId(), friend2.getId());
+        assertEquals(0, messagesAfterDeletion.size());
+
+        friendsChatsCollection.deleteOne(or(eq("userId1", friend1.getId()), eq("userId2", friend1.getId())));
+        usersCollection.deleteOne(eq("username", "testUsername"));
+        usersCollection.deleteOne(eq("username", "testUsername1"));
+    }
+
+    @Test
+    public void friendsPostMessageAndReadMessage_success(){
+        User testUser = new User();
+        testUser.setName("testName");
+        testUser.setUsername("testUsername");
+        testUser.setPassword("password");
+        User friend1 = userService.createUser(testUser);
+
+
+        User testUser2 = new User();
+        testUser2.setName("testName1");
+        testUser2.setUsername("testUsername1");
+        testUser2.setPassword("password1");
+        User friend2 = userService.createUser(testUser2);
+
+
+        // add the users as friends in order to create a chat
+        userService.addFriend(friend1.getId(), friend2.getId());
+        userService.addFriend(friend2.getId(), friend1.getId());
+
+        Message message = new Message();
+        message.setSenderId(friend1.getId());
+        message.setContent("TestMessage");
+        message.setSenderUsername(friend1.getUsername());
+
+        userService.postMessage(friend1.getId(), friend2.getId(), message);
+
+        // check that the posting user has no unread messages and the receiving user does
+        assertFalse(userService.checkUnreadMessages(friend1.getId(), friend2.getId()));
+        assertTrue(userService.checkUnreadMessages(friend2.getId(), friend1.getId()));
+
+        // retrieve the chat from the perspective of friend2 and assert that both users have no unread messages afterwards
+        userService.getChat(friend2.getId(), friend1.getId());
+        assertFalse(userService.checkUnreadMessages(friend1.getId(), friend2.getId()));
+        assertFalse(userService.checkUnreadMessages(friend2.getId(), friend1.getId()));
+
+        friendsChatsCollection.deleteOne(or(eq("userId1", friend1.getId()), eq("userId2", friend1.getId())));
+        usersCollection.deleteOne(eq("username", "testUsername"));
+        usersCollection.deleteOne(eq("username", "testUsername1"));
+    }
 
 }

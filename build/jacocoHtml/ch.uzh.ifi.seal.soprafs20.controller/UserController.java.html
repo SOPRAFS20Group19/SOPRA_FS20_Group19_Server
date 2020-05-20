@@ -23,22 +23,22 @@ public class UserController {
 
     private final UserService userService;
 
-<span class="nc" id="L26">    UserController(UserService userService) {</span>
-<span class="nc" id="L27">        this.userService = userService;</span>
-<span class="nc" id="L28">    }</span>
+<span class="fc" id="L26">    UserController(UserService userService) {</span>
+<span class="fc" id="L27">        this.userService = userService;</span>
+<span class="fc" id="L28">    }</span>
 
     @GetMapping(&quot;/users&quot;)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public List&lt;UserGetDTO&gt; getAllUsers() {
         // get the users
-<span class="nc" id="L35">        ArrayList&lt;User&gt; users = userService.getAllUsers();</span>
-<span class="nc" id="L36">        ArrayList&lt;UserGetDTO&gt; usersGetDTO = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L35">        ArrayList&lt;User&gt; users = userService.getAllUsers();</span>
+<span class="fc" id="L36">        ArrayList&lt;UserGetDTO&gt; usersGetDTO = new ArrayList&lt;&gt;();</span>
         // convert the users to the API representation
-<span class="nc bnc" id="L38" title="All 2 branches missed.">        for (User user : users){</span>
-<span class="nc" id="L39">            usersGetDTO.add(DTOMapper.INSTANCE.convertEntityToUserGetDTO(user));</span>
-<span class="nc" id="L40">        }</span>
-<span class="nc" id="L41">        return usersGetDTO;</span>
+<span class="fc bfc" id="L38" title="All 2 branches covered.">        for (User user : users){</span>
+<span class="fc" id="L39">            usersGetDTO.add(DTOMapper.INSTANCE.convertEntityToUserGetDTO(user));</span>
+<span class="fc" id="L40">        }</span>
+<span class="fc" id="L41">        return usersGetDTO;</span>
     }
 
     @GetMapping(&quot;/users/{userId}&quot;)
@@ -46,9 +46,9 @@ public class UserController {
     @ResponseBody
     public UserGetDTO getUserById(@PathVariable int userId) {
         // get the user corresponding to the given ID
-<span class="nc" id="L49">        User user = userService.getUserById(userId);</span>
+<span class="fc" id="L49">        User user = userService.getUserById(userId);</span>
         // convert the user to the API representation
-<span class="nc" id="L51">        return DTOMapper.INSTANCE.convertEntityToUserGetDTO(user);</span>
+<span class="fc" id="L51">        return DTOMapper.INSTANCE.convertEntityToUserGetDTO(user);</span>
     }
 
     @PutMapping (&quot;/users/{userId}&quot;)
@@ -56,21 +56,21 @@ public class UserController {
     @ResponseBody
     public void updateUser(@PathVariable int userId, @RequestBody UserPutDTO userPutDTO) {
         // updates the user identified by the given ID with the given data by the client
-<span class="nc" id="L59">        userService.updateUser(userId, userPutDTO);</span>
-<span class="nc" id="L60">    }</span>
+<span class="fc" id="L59">        userService.updateUser(userId, userPutDTO);</span>
+<span class="fc" id="L60">    }</span>
 
     @PostMapping(&quot;/users&quot;)
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public UserGetDTO createUser(@RequestBody UserPostDTO userPostDTO) {
         // convert API user to internal representation
-<span class="nc" id="L67">        User userInput = DTOMapper.INSTANCE.convertUserPostDTOtoEntity(userPostDTO);</span>
+<span class="fc" id="L67">        User userInput = DTOMapper.INSTANCE.convertUserPostDTOtoEntity(userPostDTO);</span>
 
         // create user
-<span class="nc" id="L70">        User createdUser = userService.createUser(userInput);</span>
+<span class="fc" id="L70">        User createdUser = userService.createUser(userInput);</span>
 
         // convert internal representation of user back to API
-<span class="nc" id="L73">        return DTOMapper.INSTANCE.convertEntityToUserGetDTO(createdUser);</span>
+<span class="fc" id="L73">        return DTOMapper.INSTANCE.convertEntityToUserGetDTO(createdUser);</span>
     }
 
     @PutMapping(&quot;/login&quot;)
@@ -78,13 +78,13 @@ public class UserController {
     @ResponseBody
     public UserGetDTO loginUser(@RequestBody UserPutDTO userPutDTO) {
         // convert API user to internal representation
-<span class="nc" id="L81">        User userInput = DTOMapper.INSTANCE.convertUserPutDTOtoEntity(userPutDTO);</span>
+<span class="fc" id="L81">        User userInput = DTOMapper.INSTANCE.convertUserPutDTOtoEntity(userPutDTO);</span>
 
         // login user
-<span class="nc" id="L84">        User loggedInUser = userService.checkForLogin(userInput);</span>
+<span class="fc" id="L84">        User loggedInUser = userService.checkForLogin(userInput);</span>
 
         // convert internal representation of user back to API
-<span class="nc" id="L87">        return DTOMapper.INSTANCE.convertEntityToUserGetDTO(loggedInUser);</span>
+<span class="fc" id="L87">        return DTOMapper.INSTANCE.convertEntityToUserGetDTO(loggedInUser);</span>
     }
 
     @PutMapping(&quot;/logout/{userId}&quot;)
@@ -100,72 +100,72 @@ public class UserController {
     @ResponseBody
     public List&lt;UserGetDTO&gt; getFriendsOfUser(@PathVariable int userId) {
         // get the friends corresponding to the given ID
-<span class="nc" id="L103">        ArrayList&lt;User&gt; allFriends = userService.getFriends(userId);</span>
-<span class="nc" id="L104">        List&lt;UserGetDTO&gt; allFriendsGetDTO = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L103">        ArrayList&lt;User&gt; allFriends = userService.getFriends(userId);</span>
+<span class="fc" id="L104">        List&lt;UserGetDTO&gt; allFriendsGetDTO = new ArrayList&lt;&gt;();</span>
 
         // convert the friends to the API representation
-<span class="nc bnc" id="L107" title="All 2 branches missed.">        for (User friend : allFriends){</span>
-<span class="nc" id="L108">            allFriendsGetDTO.add(DTOMapper.INSTANCE.convertEntityToUserGetDTO(friend));</span>
-<span class="nc" id="L109">        }</span>
+<span class="fc bfc" id="L107" title="All 2 branches covered.">        for (User friend : allFriends){</span>
+<span class="fc" id="L108">            allFriendsGetDTO.add(DTOMapper.INSTANCE.convertEntityToUserGetDTO(friend));</span>
+<span class="fc" id="L109">        }</span>
 
-<span class="nc" id="L111">        return allFriendsGetDTO;</span>
+<span class="fc" id="L111">        return allFriendsGetDTO;</span>
     }
 
     @PutMapping(&quot;/users/friends/{userId}/{friendId}&quot;)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @ResponseBody
     public void addFriend(@PathVariable int userId, @PathVariable int friendId){
-<span class="nc" id="L118">        userService.addFriend(userId, friendId);</span>
-<span class="nc" id="L119">    }</span>
+<span class="fc" id="L118">        userService.addFriend(userId, friendId);</span>
+<span class="fc" id="L119">    }</span>
 
     @DeleteMapping(&quot;/users/friends/{userId}/{friendId}&quot;)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @ResponseBody
     public void deleteFriend(@PathVariable int userId, @PathVariable int friendId){
-<span class="nc" id="L125">        userService.deleteFriend(userId, friendId);</span>
-<span class="nc" id="L126">    }</span>
+<span class="fc" id="L125">        userService.deleteFriend(userId, friendId);</span>
+<span class="fc" id="L126">    }</span>
 
     @GetMapping(&quot;/users/friends/{userId}/{friendId}&quot;)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public boolean checkIfFriend(@PathVariable int userId, @PathVariable int friendId){
-<span class="nc" id="L132">        return userService.checkFriend(userId, friendId);</span>
+<span class="fc" id="L132">        return userService.checkFriend(userId, friendId);</span>
     }
 
     @GetMapping(&quot;/users/chats/{userId}/{friendId}&quot;)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public ArrayList&lt;MessageGetDTO&gt; getChat(@PathVariable int userId, @PathVariable int friendId){
-<span class="nc" id="L139">        ArrayList&lt;Message&gt; chat = userService.getChat(userId, friendId);</span>
-<span class="nc" id="L140">        ArrayList&lt;MessageGetDTO&gt; chatDTO = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L139">        ArrayList&lt;Message&gt; chat = userService.getChat(userId, friendId);</span>
+<span class="fc" id="L140">        ArrayList&lt;MessageGetDTO&gt; chatDTO = new ArrayList&lt;&gt;();</span>
 
-<span class="nc bnc" id="L142" title="All 2 branches missed.">        for (Message message : chat){</span>
-<span class="nc" id="L143">            chatDTO.add(DTOMapper.INSTANCE.convertEntityToMessageGetDTO(message));</span>
-<span class="nc" id="L144">        }</span>
+<span class="fc bfc" id="L142" title="All 2 branches covered.">        for (Message message : chat){</span>
+<span class="fc" id="L143">            chatDTO.add(DTOMapper.INSTANCE.convertEntityToMessageGetDTO(message));</span>
+<span class="fc" id="L144">        }</span>
 
-<span class="nc" id="L146">        return chatDTO;</span>
+<span class="fc" id="L146">        return chatDTO;</span>
     }
 
     @GetMapping(&quot;/users/chats/news/{userId}/{friendId}&quot;)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public boolean checkUnreadMessages(@PathVariable int userId, @PathVariable int friendId){
-<span class="nc" id="L153">        return userService.checkUnreadMessages(userId, friendId);</span>
+<span class="fc" id="L153">        return userService.checkUnreadMessages(userId, friendId);</span>
     }
 
     @PutMapping(&quot;/users/chats/{userId}/{friendId}&quot;)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @ResponseBody
     public void postMessageToFriend(@PathVariable int userId, @PathVariable int friendId, @RequestBody MessagePostDTO messagePostDTO){
-<span class="nc" id="L160">        userService.postMessage(userId, friendId, DTOMapper.INSTANCE.convertMessagePostDTOToEntity(messagePostDTO));</span>
-<span class="nc" id="L161">    }</span>
+<span class="fc" id="L160">        userService.postMessage(userId, friendId, DTOMapper.INSTANCE.convertMessagePostDTOToEntity(messagePostDTO));</span>
+<span class="fc" id="L161">    }</span>
 
     @DeleteMapping(&quot;/users/chats/{userId}/{friendId}/{messageId}&quot;)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @ResponseBody
     public void deleteMessage(@PathVariable Integer userId, @PathVariable Integer friendId, @PathVariable int messageId) {
-<span class="nc" id="L167">        userService.deleteMessage(userId, friendId, messageId);</span>
-<span class="nc" id="L168">    }</span>
+<span class="fc" id="L167">        userService.deleteMessage(userId, friendId, messageId);</span>
+<span class="fc" id="L168">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
