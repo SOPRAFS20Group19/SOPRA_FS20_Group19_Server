@@ -1,6 +1,7 @@
 package ch.uzh.ifi.seal.soprafs20.database;
 
 import ch.uzh.ifi.seal.soprafs20.constant.UserStatus;
+import ch.uzh.ifi.seal.soprafs20.database.key.Credentials;
 import ch.uzh.ifi.seal.soprafs20.entity.Location;
 import ch.uzh.ifi.seal.soprafs20.entity.User;
 import ch.uzh.ifi.seal.soprafs20.exceptions.UserNotFoundException;
@@ -24,7 +25,7 @@ public class DatabaseConnectorUser {
 
     //connection to mongodb on the cloud with credentials of luca locher
     static MongoClient mongoClient = MongoClients.create(
-            "mongodb+srv://lknufi:abc@knowyourcity-ijzn3.gcp.mongodb.net/test?retryWrites=true&w=majority");
+            Credentials.getMongoCredentials());
     //Establish connection to the Users Database (development purposes only)
     static MongoDatabase usersDevelopment = mongoClient.getDatabase("UsersDevelopment");
     //Establish connection to the Users Collection (development purposes only)

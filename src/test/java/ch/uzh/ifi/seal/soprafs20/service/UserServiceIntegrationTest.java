@@ -23,6 +23,7 @@ import org.bson.Document;
 
 
 import java.util.ArrayList;
+import java.util.function.BooleanSupplier;
 
 /**
  * Test class for the UserResource REST resource.
@@ -400,5 +401,67 @@ public class UserServiceIntegrationTest {
         usersCollection.deleteOne(eq("username", "testUsername"));
         usersCollection.deleteOne(eq("username", "testUsername1"));
     }
+
+    @Test
+    public void getAllUsers_success(){
+        // Tests if all users are in the array list
+        User testUser1 = new User();
+        testUser1.setName("testName1");
+        testUser1.setUsername("testUsername1");
+        testUser1.setPassword("password1");
+        User user1 = userService.createUser(testUser1);
+
+        User testUser2 = new User();
+        testUser2.setName("testName2");
+        testUser2.setUsername("testUsername2");
+        testUser2.setPassword("password2");
+        User user2 = userService.createUser(testUser2);
+
+        User testUser3 = new User();
+        testUser3.setName("testName3");
+        testUser3.setUsername("testUsername3");
+        testUser3.setPassword("password3");
+        User user3 = userService.createUser(testUser3);
+
+        User testUser4 = new User();
+        testUser4.setName("testName4");
+        testUser4.setUsername("testUsername4");
+        testUser4.setPassword("password4");
+        User user4 = userService.createUser(testUser4);
+
+        ArrayList<User> allUsers = userService.getAllUsers();
+
+
+        for(User testFirstUser: allUsers){
+            if(testFirstUser.getId()==(user1.getId())){
+                user1=testFirstUser;
+            }
+            assertTrue(allUsers.contains(testFirstUser));
+
+            if(testFirstUser.getId()==(user2.getId())){
+                user2=testFirstUser;
+            }
+            assertTrue(allUsers.contains(testFirstUser));
+
+            if(testFirstUser.getId()==(user3.getId())){
+                user3=testFirstUser;
+            }
+            assertTrue(allUsers.contains(testFirstUser));
+
+            if(testFirstUser.getId()==(user4.getId())){
+                user4=testFirstUser;
+            }
+            assertTrue(allUsers.contains(testFirstUser));
+        }
+
+        assertTrue(allUsers.size()>= 4);
+
+
+        usersCollection.deleteOne(eq("username", "testUsername1"));
+        usersCollection.deleteOne(eq("username", "testUsername2"));
+        usersCollection.deleteOne(eq("username", "testUsername3"));
+        usersCollection.deleteOne(eq("username", "testUsername4"));
+    }
+
 
 }
