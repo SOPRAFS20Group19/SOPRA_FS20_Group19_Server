@@ -83,6 +83,12 @@ public class LocationServiceIntegrationTest {
     static MongoCollection<Document> chatsCollection = locationChats.getCollection("Chats");
 
     @Autowired
+    static MongoDatabase favoriteLocations = mongoClient.getDatabase("FavoriteLocations");
+
+    @Autowired
+    static MongoCollection<Document> favoriteLocationsCollection = favoriteLocations.getCollection("Locations");
+
+    @Autowired
     //Establish connection to the Users Database (development purposes only)
     static MongoDatabase usersDevelopment = mongoClient.getDatabase("UsersDevelopment");
 
@@ -467,5 +473,76 @@ public class LocationServiceIntegrationTest {
 
         userFountainsCollection.deleteOne(eq("properties.objectid", newFountain.getId()));
     }
+
+    @Test
+    public void updateFavoriteLocations_success(){
+        // Tests if the user can add a location to favorite locations
+        Location testFountain = new Location();
+        testFountain.setLocationType(LocationType.FOUNTAIN);
+        testFountain.setLongitude(0);
+        testFountain.setLatitude(0);
+        Location newFountain = locationService.createLocation(testFountain);
+
+        User testUser = new User();
+        testUser.setName("testName");
+        testUser.setUsername("testUsername");
+        testUser.setPassword("password");
+        User createdUser = userService.createUser(testUser);
+
+        locationService.updateFavoriteLocations(createdUser.getId(), newFountain.getId());
+
+        List<Location> favoriteLocations = locationService.getFavoriteLocations(createdUser.getId());
+
+        for (Location location1: favoriteLocations){
+            assertEquals(location1.getId(), newFountain.getId());
+        }
+
+
+
+        userFountainsCollection.deleteOne(eq("properties.objectid", newFountain.getId()));
+        usersCollection.deleteOne(eq("username", "testUsername"));
+        favoriteLocationsCollection.deleteOne(and(eq("userId", createdUser.getId()), (eq("locationId", newFountain.getId()))));
+
+    }
+
+    @Test
+    public void deleteFavoriteLocations_success(){
+        // Tests if the user can delete a location from favorite locations
+        Location testFountain = new Location();
+        testFountain.setLocationType(LocationType.FOUNTAIN);
+        testFountain.setLongitude(0);
+        testFountain.setLatitude(0);
+        Location newFountain = locationService.createLocation(testFountain);
+
+        User testUser = new User();
+        testUser.setName("testName");
+        testUser.setUsername("testUsername");
+        testUser.setPassword("password");
+        User createdUser = userService.createUser(testUser);
+
+        locationService.updateFavoriteLocations(createdUser.getId(), newFountain.getId());
+
+        List<Location> favoriteLocations = locationService.getFavoriteLocations(createdUser.getId());
+
+        int favoriteLocationToBeDeleted = 0;
+
+        for (Location location2: favoriteLocations){
+            assertEquals(location2.getId(), newFountain.getId());
+            favoriteLocationToBeDeleted = location2.getId();
+        }
+
+        // Delete the favorite location and assert that the list of favorite locations is now empty
+        locationService.deleteFavoriteLocation(createdUser.getId(), favoriteLocationToBeDeleted);
+
+        List<Location> favoriteLocationsAfterDeletion = locationService.getFavoriteLocations(createdUser.getId());
+        assertEquals(0, favoriteLocationsAfterDeletion.size());
+
+
+        userFountainsCollection.deleteOne(eq("properties.objectid", newFountain.getId()));
+        usersCollection.deleteOne(eq("username", "testUsername"));
+        favoriteLocationsCollection.deleteOne(and(eq("userId", createdUser.getId()), (eq("locationId", newFountain.getId()))));
+
+    }
+
 
 }

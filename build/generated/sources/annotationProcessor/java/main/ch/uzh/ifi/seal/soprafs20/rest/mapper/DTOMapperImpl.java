@@ -16,7 +16,11 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
+<<<<<<< HEAD
     date = "2020-05-21T12:35:25+0200",
+=======
+    date = "2020-05-21T08:50:39+0200",
+>>>>>>> 6c7dadea6992038f75616495c36a0b62da53bc11
     comments = "version: 1.3.1.Final, compiler: javac, environment: Java 13.0.2 (Oracle Corporation)"
 )
 public class DTOMapperImpl implements DTOMapper {
