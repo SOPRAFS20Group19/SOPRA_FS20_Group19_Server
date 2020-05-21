@@ -9,7 +9,6 @@ public class UserPutDTO {
     private String username;
     private String password;
     private String birthDate;
-    private UserStatus status;
     private int avatarNr;
 
     public void setBirthDate(String birthDate) {
@@ -44,17 +43,9 @@ public class UserPutDTO {
         return name;
     }
 
-    public UserStatus getOnlineStatus() {
-        return status;
-    }
-
-    public void setOnlineStatus(UserStatus status) {
-        this.status = status;
-    }
-
     public int getAvatarNr(){ return avatarNr; }
 
-    public void setAvatarId(int avatarNr){
+    public void setAvatarNr(int avatarNr){
         this.avatarNr = avatarNr;
     }
 

@@ -29,31 +29,6 @@ import static com.mongodb.client.model.Filters.eq;
 
 @WebAppConfiguration
 public class DatabaseConnectorLocationUnitTest {
-    //connection to mongodb on the cloud with credentials of luca locher
-    static MongoClient mongoClient = MongoClients.create(
-            "mongodb+srv://lknufi:abc@knowyourcity-ijzn3.gcp.mongodb.net/test?retryWrites=true&w=majority");
-    //Establish connection to the Location Database (development purposes only)
-    static MongoDatabase locationStorage = mongoClient.getDatabase("LocationStorage");
-    //Establish connection to the Fountains Collection (development purposes only)
-    static MongoCollection<Document> fountainsCollection = locationStorage.getCollection("Fountains");
-    //Establish connection to the Fireplaces Collection (development purposes only)
-    static MongoCollection<Document> fireplacesCollection = locationStorage.getCollection("Fireplaces");
-    //Establish connection to the Recycling Collection (development purposes only)
-    static MongoCollection<Document> recyclingCollection = locationStorage.getCollection("Recycling");
-
-    static MongoCollection<Document> userFountainsCollection = locationStorage.getCollection("UserFountains");
-
-    static MongoCollection<Document> userFireplacesCollection = locationStorage.getCollection("UserFireplaces");
-
-    static MongoCollection<Document> userRecyclingCollection = locationStorage.getCollection("UserRecycling");
-
-    static MongoCollection<Document> toiletsCollection = locationStorage.getCollection("WC");
-
-    static MongoCollection<Document> userToiletsCollection = locationStorage.getCollection("UserWC");
-
-    static MongoCollection<Document> userTableTennisCollection = locationStorage.getCollection("UserTableTennis");
-
-    static MongoCollection<Document> userBenchCollection = locationStorage.getCollection("UserBench");
 
     @Test
     public void generateFountainIdTest(){

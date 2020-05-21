@@ -53,13 +53,6 @@ public class UserServiceIntegrationTest {
     @Autowired
     private UserService userService;
 
-    /*@BeforeEach
-    public void setup() {
-        userRepository.deleteAll();
-    }
-
-     */
-
     // Checks if a new user is created
     @Test
     public void createUser_validInputs_success() {
@@ -84,7 +77,6 @@ public class UserServiceIntegrationTest {
 
         usersCollection.deleteOne(eq("username", "testUsername"));
     }
-
 
     // Checks if the user can not be created if the username already exists
     @Test

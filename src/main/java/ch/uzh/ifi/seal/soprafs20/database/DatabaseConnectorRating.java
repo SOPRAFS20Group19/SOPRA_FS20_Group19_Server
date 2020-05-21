@@ -30,16 +30,6 @@ public class DatabaseConnectorRating {
     //Establish connection to the Fountains Collection (development purposes only)
     static MongoCollection<Document> ratingsCollection = ratingLocation.getCollection("Ratings");
 
-    /*
-    //creates Entry in the database
-    public static void createEntry(int userId, int locationId) {
-        ArrayList<Integer> emptyFavorites = new ArrayList<Integer>();
-        Document doc = new Document("userId", userId)
-                .append("favoriteLocations", emptyFavorites);
-        ratingsCollection.insertOne(doc);
-    }*/
-
-
     public static int getRating(int userId, int locationId){
         FindIterable<Document> request =  ratingsCollection.find(and((eq("userId", userId)), (eq("locationId", locationId))));
         Document test = request.first();

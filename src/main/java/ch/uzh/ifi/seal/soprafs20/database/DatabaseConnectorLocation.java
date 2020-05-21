@@ -47,13 +47,6 @@ public class DatabaseConnectorLocation {
 
     static MongoCollection<Document> userBenchCollection = locationStorage.getCollection("UserBench");
 
-    public static void getFountainById(int id){
-        Document fountainOne = fountainsCollection.find().first();
-
-        //Document fountain = (Document) fountainsCollection.find(eq("properties.objectid", id));
-        //return fountainToLocation(fountainOne);
-    }
-
     public static void addNewFountainToDatabase(Location location){
         JSONArray coordinatesAsJSON = new JSONArray();
         coordinatesAsJSON.put(location.getLongitude());
@@ -312,7 +305,6 @@ public class DatabaseConnectorLocation {
         return location.getId();
     }
 
-
     public static List<Location> getUserFountains() throws JSONException {
         List<Document> fountainsList = userFountainsCollection.find().into(new ArrayList<>());
         List<Location> fountainsListLocation = new ArrayList<>();
@@ -421,7 +413,6 @@ public class DatabaseConnectorLocation {
         }
         return toiletsListLocation;
     }
-
 
     public static List<Location> getFountains() throws JSONException {
         List<Document> fountainsList = fountainsCollection.find().into(new ArrayList<>());
@@ -736,7 +727,7 @@ public class DatabaseConnectorLocation {
         return newLocation;
     }
 
-    // one time move of address from address DB to location DB for performance reasons, do not use again
+    /* one time move of address from address DB to location DB for performance reasons, do not use again. Keep in code if ever needed again
     public static void moveAddressToLocation(){
         List<Location> listFountains = getFountains();
         List<Location> listFireplaces = getFireplaces();
@@ -766,6 +757,6 @@ public class DatabaseConnectorLocation {
                     .append("closestStreet", DatabaseConnectorAddresses.getClosestAddress(userFireplace.getId())));
             userFireplacesCollection.updateOne(eq("BarbecuePlace.Id", userFireplace.getId()), updatedDoc);
         }
-    }
+    }*/
 
 }

@@ -82,7 +82,6 @@ public class DatabaseConnectorUser {
                 set("online", b));
     }
 
-
     //returns a user with a certain username
     public static User getUserByUsername(String username){
         FindIterable<Document> request =  usersCollection.find(eq("username", username));
@@ -92,7 +91,6 @@ public class DatabaseConnectorUser {
         return userRepresentation;
     }
 
-    //not finished
     public static User getUserById(int id){
         FindIterable<Document> request =  usersCollection.find(eq("userId", id)); //Temporary id-field does not exist by now
         Document user = request.first();
@@ -213,7 +211,7 @@ public class DatabaseConnectorUser {
         return friendsList;
     }
 
-    // initial setup to give all existing users an empty friends List
+    /* initial setup to give all existing users an empty friends List. Keep in code if reuse necessary.
     public static void friendsListSetup(){
         ArrayList<User> allUsers = getAllUsers();
 
@@ -224,6 +222,6 @@ public class DatabaseConnectorUser {
 
             usersCollection.updateOne(eq("userId", user.getId()), updatedDoc);
         }
-    }
+    }*/
 
 }

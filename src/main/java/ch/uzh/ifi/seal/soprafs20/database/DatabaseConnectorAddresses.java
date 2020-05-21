@@ -42,28 +42,6 @@ public class DatabaseConnectorAddresses {
     static MongoCollection<Document> addressCollection = AddressZurich.getCollection("Address");
     static MongoCollection<Document> closestAddressCollection = AddressZurich.getCollection("ClosestAddress");
 
-    // only used for initializing the address collection. Do not run again
-    public static void initialSetup() throws IOException, ParseException {
-        JSONParser parser = new JSONParser();
-        Object obj = parser.parse(new FileReader("/Users/luisknufinke/Documents/UZH/04 - FS20/Softwarepraktikum/Know your City/SOPRA_FS20_Group19_Server/src/main/java/ch/uzh/ifi/seal/soprafs20/geoz.adrstzh_strassennamen_stzh_p.json"));
-        JSONObject file = (JSONObject) obj;
-        JSONArray streetnames = (JSONArray) file.get("features");
-
-        for (JSONObject streetnameObject : (Iterable<JSONObject>) streetnames) {
-            JSONObject properties = (JSONObject) streetnameObject.get("properties");
-            JSONObject geometry = (JSONObject) streetnameObject.get("geometry");
-            JSONArray coordinatesAsJSON = (JSONArray) geometry.get("coordinates");
-            double lat = (double) coordinatesAsJSON.get(1);
-            double lon = (double) coordinatesAsJSON.get(0);
-            String streetname = (String) properties.get("lokalisationsname");
-
-            Document doc = new Document("latitude", lat)
-                    .append("longitude", lon)
-                    .append("streetname", streetname);
-            addressCollection.insertOne(doc);
-        }
-    }
-
     public static ArrayList<Address> getAddresses(){
         List<Document> addressListDoc = addressCollection.find().into(new ArrayList<>());
         ArrayList<Address> addressList = new ArrayList<>();
@@ -163,7 +141,45 @@ public class DatabaseConnectorAddresses {
         return closestAddress.getStreet();
     }
 
-    // initial setup for closest address collection, do not run again
+    public static String getClosestAddress(Integer locationId){
+        FindIterable<Document> request =  closestAddressCollection.find(eq("locationId", locationId));
+        Document doc = request.first();
+        if (doc == null){
+            return " ";
+        }
+        return doc.getString("closestStreet");
+    }
+
+    // adds an entry in the collection for added locations
+    public static void createEntry(Integer locationId){
+        Document doc = new Document("locationId", locationId)
+                .append("closestStreet", calculateClosestAddressStreet(locationId));
+        closestAddressCollection.insertOne(doc);
+    }
+
+    /* only used for initializing the address collection. Do not run again. Keep in code if DB needs to be setup again
+    public static void initialSetup() throws IOException, ParseException {
+        JSONParser parser = new JSONParser();
+        Object obj = parser.parse(new FileReader("/Users/luisknufinke/Documents/UZH/04 - FS20/Softwarepraktikum/Know your City/SOPRA_FS20_Group19_Server/src/main/java/ch/uzh/ifi/seal/soprafs20/geoz.adrstzh_strassennamen_stzh_p.json"));
+        JSONObject file = (JSONObject) obj;
+        JSONArray streetnames = (JSONArray) file.get("features");
+
+        for (JSONObject streetnameObject : (Iterable<JSONObject>) streetnames) {
+            JSONObject properties = (JSONObject) streetnameObject.get("properties");
+            JSONObject geometry = (JSONObject) streetnameObject.get("geometry");
+            JSONArray coordinatesAsJSON = (JSONArray) geometry.get("coordinates");
+            double lat = (double) coordinatesAsJSON.get(1);
+            double lon = (double) coordinatesAsJSON.get(0);
+            String streetname = (String) properties.get("lokalisationsname");
+
+            Document doc = new Document("latitude", lat)
+                    .append("longitude", lon)
+                    .append("streetname", streetname);
+            addressCollection.insertOne(doc);
+        }
+    }*/
+
+    /* initial setup for closest address collection, do not run again. Keep in code if DB needs to be setup again
     public static void setupClosestAddressCollection(){
         List<Location> allLocations = new ArrayList<>();
         List<Location> listFountains = DatabaseConnectorLocation.getFountains();
@@ -189,26 +205,7 @@ public class DatabaseConnectorAddresses {
                 closestAddressCollection.insertOne(doc);
             }
         }
-    }
+    }*/
 
-    public static String getClosestAddress(Integer locationId){
-        FindIterable<Document> request =  closestAddressCollection.find(eq("locationId", locationId));
-        Document doc = request.first();
-        if (doc == null){
-            return " ";
-        }
-        return doc.getString("closestStreet");
-    }
 
-    // adds an entry in the collection for added locations
-    public static void createEntry(Integer locationId){
-        Document doc = new Document("locationId", locationId)
-                .append("closestStreet", calculateClosestAddressStreet(locationId));
-        closestAddressCollection.insertOne(doc);
-    }
-
-    public static void testFieldAdding(Integer locationId){
-        Document updatedDoc = new Document().append("$set", new Document().append("secondAddress", getClosestAddress(locationId)));
-        closestAddressCollection.updateOne(eq("locationId", locationId), updatedDoc);
-    }
 }

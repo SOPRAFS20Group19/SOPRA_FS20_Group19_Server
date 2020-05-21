@@ -29,8 +29,6 @@ public class FilterPostDTO {
     public boolean showTableTennis(){return  tableTennis;}
     public boolean showBenches(){return  bench;}
 
-
-
     public boolean showFireplaces() {
         return fireplaces;
     }
