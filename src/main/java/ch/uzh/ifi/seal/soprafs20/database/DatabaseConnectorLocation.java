@@ -1,6 +1,7 @@
 package ch.uzh.ifi.seal.soprafs20.database;
 
 import ch.uzh.ifi.seal.soprafs20.constant.LocationType;
+import ch.uzh.ifi.seal.soprafs20.database.key.Credentials;
 import ch.uzh.ifi.seal.soprafs20.entity.Location;
 import com.mongodb.client.*;
 import com.mongodb.client.model.Updates;
@@ -23,7 +24,7 @@ public class DatabaseConnectorLocation {
 
     //connection to mongodb on the cloud with credentials of luca locher
     static MongoClient mongoClient = MongoClients.create(
-            "mongodb+srv://lknufi:abc@knowyourcity-ijzn3.gcp.mongodb.net/test?retryWrites=true&w=majority");
+            Credentials.getMongoCredentials());
     //Establish connection to the Location Database (development purposes only)
     static MongoDatabase locationStorage = mongoClient.getDatabase("LocationStorage");
     //Establish connection to the Fountains Collection (development purposes only)
