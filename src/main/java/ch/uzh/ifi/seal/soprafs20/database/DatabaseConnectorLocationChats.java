@@ -28,7 +28,7 @@ public class DatabaseConnectorLocationChats {
     static MongoCollection<Document> chatsCollection = LocationChats.getCollection("Chats");
     static MongoCollection<Document> friendsChatsCollection = LocationChats.getCollection("FriendsChats");
 
-    // only used for initializing the DB collection. Do not run again
+    /* only used for initializing the DB collection. Do not run again. Keep in code if ever needed again
     public static void initialSetup(){
         // set up array for locationIds
         ArrayList<Integer> locationIds = new ArrayList<>();
@@ -77,7 +77,7 @@ public class DatabaseConnectorLocationChats {
                     .append("messages", emptyChat);
             chatsCollection.insertOne(doc);
         }
-    }
+    }*/
 
     public static void createNewFriendsChat(Integer userId1, Integer userId2){
         if (userId1 > userId2){
