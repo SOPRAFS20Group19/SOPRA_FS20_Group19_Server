@@ -9,54 +9,45 @@ import ch.uzh.ifi.seal.soprafs20.constant.UserStatus;
     private String username;
     private String password;
     private String birthDate;
-    private UserStatus status;
     private int avatarNr;
 
     public void setBirthDate(String birthDate) {
-<span class="nc" id="L16">        this.birthDate = birthDate;</span>
-<span class="nc" id="L17">    }</span>
+<span class="nc" id="L15">        this.birthDate = birthDate;</span>
+<span class="nc" id="L16">    }</span>
 
     public String getBirthDate() {
-<span class="nc" id="L20">        return birthDate;</span>
+<span class="nc" id="L19">        return birthDate;</span>
     }
 
     public String getUsername() {
-<span class="nc" id="L24">        return username;</span>
+<span class="nc" id="L23">        return username;</span>
     }
 
     public void setUsername(String username) {
-<span class="nc" id="L28">        this.username = username;</span>
-<span class="nc" id="L29">    }</span>
+<span class="nc" id="L27">        this.username = username;</span>
+<span class="nc" id="L28">    }</span>
 
     public String getPassword() {
-<span class="nc" id="L32">        return password;</span>
+<span class="nc" id="L31">        return password;</span>
     }
 
     public void setPassword(String password) {
-<span class="nc" id="L36">        this.password = password;</span>
-<span class="nc" id="L37">    }</span>
+<span class="nc" id="L35">        this.password = password;</span>
+<span class="nc" id="L36">    }</span>
 
     public void setName(String name) {
-<span class="nc" id="L40">        this.name = name;</span>
-<span class="nc" id="L41">    }</span>
+<span class="nc" id="L39">        this.name = name;</span>
+<span class="nc" id="L40">    }</span>
 
     public String getName() {
-<span class="nc" id="L44">        return name;</span>
+<span class="nc" id="L43">        return name;</span>
     }
 
-    public UserStatus getOnlineStatus() {
-<span class="nc" id="L48">        return status;</span>
-    }
+<span class="nc" id="L46">    public int getAvatarNr(){ return avatarNr; }</span>
 
-    public void setOnlineStatus(UserStatus status) {
-<span class="nc" id="L52">        this.status = status;</span>
-<span class="nc" id="L53">    }</span>
-
-<span class="nc" id="L55">    public int getAvatarNr(){ return avatarNr; }</span>
-
-    public void setAvatarId(int avatarNr){
-<span class="nc" id="L58">        this.avatarNr = avatarNr;</span>
-<span class="nc" id="L59">    }</span>
+    public void setAvatarNr(int avatarNr){
+<span class="nc" id="L49">        this.avatarNr = avatarNr;</span>
+<span class="nc" id="L50">    }</span>
 
 
 }

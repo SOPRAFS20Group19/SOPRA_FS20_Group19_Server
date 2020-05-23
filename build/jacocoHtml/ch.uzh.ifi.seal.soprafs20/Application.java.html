@@ -22,7 +22,7 @@ import java.util.List;
 @RestController
 @SpringBootApplication
 @EnableAutoConfiguration(exclude={MongoAutoConfiguration.class})
-<span class="fc" id="L25">public class Application {</span>
+<span class="nc" id="L25">public class Application {</span>
 
     public static void main(String[] args) {
 <span class="nc" id="L28">        SpringApplication.run(Application.class, args);</span>
@@ -37,11 +37,11 @@ import java.util.List;
 
     @Bean
     public WebMvcConfigurer corsConfigurer() {
-<span class="fc" id="L40">        return new WebMvcConfigurer() {</span>
+<span class="nc" id="L40">        return new WebMvcConfigurer() {</span>
             @Override
             public void addCorsMappings(CorsRegistry registry){
-<span class="fc" id="L43">                registry.addMapping(&quot;/**&quot;).allowedOrigins(&quot;*&quot;).allowedMethods(&quot;*&quot;);</span>
-<span class="fc" id="L44">            }</span>
+<span class="nc" id="L43">                registry.addMapping(&quot;/**&quot;).allowedOrigins(&quot;*&quot;).allowedMethods(&quot;*&quot;);</span>
+<span class="nc" id="L44">            }</span>
         };
     }
 }
