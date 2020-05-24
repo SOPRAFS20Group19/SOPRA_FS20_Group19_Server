@@ -20,153 +20,153 @@ import com.mongodb.client.model.UpdateOptions;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-<span class="nc bnc" id="L23" title="All 2 branches missed.">public class DatabaseConnectorUser {</span>
+<span class="pc bpc" id="L23" title="1 of 2 branches missed.">public class DatabaseConnectorUser {</span>
 <span class="nc" id="L24">    public DatabaseConnectorUser(){}</span>
 
     //connection to mongodb on the cloud with credentials of luca locher
-<span class="nc" id="L27">    static MongoClient mongoClient = MongoClients.create(</span>
-<span class="nc" id="L28">            Credentials.getMongoCredentials());</span>
+<span class="fc" id="L27">    static MongoClient mongoClient = MongoClients.create(</span>
+<span class="fc" id="L28">            Credentials.getMongoCredentials());</span>
     //Establish connection to the Users Database (development purposes only)
-<span class="nc" id="L30">    static MongoDatabase usersDevelopment = mongoClient.getDatabase(&quot;UsersDevelopment&quot;);</span>
+<span class="fc" id="L30">    static MongoDatabase usersDevelopment = mongoClient.getDatabase(&quot;UsersDevelopment&quot;);</span>
     //Establish connection to the Users Collection (development purposes only)
-<span class="nc" id="L32">    static MongoCollection&lt;Document&gt; usersCollection = usersDevelopment.getCollection(&quot;Users&quot;);</span>
+<span class="fc" id="L32">    static MongoCollection&lt;Document&gt; usersCollection = usersDevelopment.getCollection(&quot;Users&quot;);</span>
 
     //creates User in the database; called bi createUser() in UserService
     public static User createUser(User user) {
-<span class="nc" id="L36">        ArrayList&lt;Integer&gt; emptyFriendsList = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L37">        Document doc = new Document(&quot;username&quot;, user.getUsername())</span>
-<span class="nc" id="L38">                .append(&quot;name&quot;, user.getName())</span>
-<span class="nc" id="L39">                .append(&quot;password&quot;, user.getPassword())</span>
-<span class="nc" id="L40">                .append(&quot;creation-date&quot;, user.getCreationDate())</span>
-<span class="nc" id="L41">                .append(&quot;online&quot;, false)</span>
-<span class="nc" id="L42">                .append(&quot;userId&quot;, DatabaseConnectorUser.generateId())</span>
-<span class="nc" id="L43">                .append(&quot;avatarNr&quot;, 0)</span>
-<span class="nc" id="L44">                .append(&quot;friendsList&quot;, emptyFriendsList);</span>
-<span class="nc" id="L45">        usersCollection.insertOne(doc);</span>
+<span class="fc" id="L36">        ArrayList&lt;Integer&gt; emptyFriendsList = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L37">        Document doc = new Document(&quot;username&quot;, user.getUsername())</span>
+<span class="fc" id="L38">                .append(&quot;name&quot;, user.getName())</span>
+<span class="fc" id="L39">                .append(&quot;password&quot;, user.getPassword())</span>
+<span class="fc" id="L40">                .append(&quot;creation-date&quot;, user.getCreationDate())</span>
+<span class="fc" id="L41">                .append(&quot;online&quot;, false)</span>
+<span class="fc" id="L42">                .append(&quot;userId&quot;, DatabaseConnectorUser.generateId())</span>
+<span class="fc" id="L43">                .append(&quot;avatarNr&quot;, 0)</span>
+<span class="fc" id="L44">                .append(&quot;friendsList&quot;, emptyFriendsList);</span>
+<span class="fc" id="L45">        usersCollection.insertOne(doc);</span>
 
         // creates an entry for the new user in the FavoriteLocations DB
-<span class="nc" id="L48">        DatabaseConnectorFavoriteLocations.createEntry(doc.getInteger(&quot;userId&quot;));</span>
+<span class="fc" id="L48">        DatabaseConnectorFavoriteLocations.createEntry(doc.getInteger(&quot;userId&quot;));</span>
 
-<span class="nc" id="L50">        User userToReturn = DatabaseConnectorUser.getUserInfo(doc);</span>
-<span class="nc" id="L51">        return userToReturn;</span>
+<span class="fc" id="L50">        User userToReturn = DatabaseConnectorUser.getUserInfo(doc);</span>
+<span class="fc" id="L51">        return userToReturn;</span>
     }
 
     //Checks if user tried to login with valid credentials
     public static boolean checkIfUserAndPasswordExist(String username, String password){
-<span class="nc" id="L56">        FindIterable&lt;Document&gt; request = usersCollection.find(and(eq(&quot;username&quot;, username), eq(&quot;password&quot;, password)));</span>
-<span class="nc" id="L57">        Document user = request.first();</span>
-<span class="nc bnc" id="L58" title="All 2 branches missed.">        if (user == null){</span>
-<span class="nc" id="L59">            return false;</span>
+<span class="fc" id="L56">        FindIterable&lt;Document&gt; request = usersCollection.find(and(eq(&quot;username&quot;, username), eq(&quot;password&quot;, password)));</span>
+<span class="fc" id="L57">        Document user = request.first();</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">        if (user == null){</span>
+<span class="fc" id="L59">            return false;</span>
         }
-<span class="nc" id="L61">        return true;</span>
+<span class="fc" id="L61">        return true;</span>
     }
 
     //checks if user provided a valid username
     public static boolean checkIfUsernameExists(String username){
-<span class="nc" id="L66">        FindIterable&lt;Document&gt; request = usersCollection.find(eq(&quot;username&quot;, username));</span>
-<span class="nc" id="L67">        Document user = request.first();</span>
-<span class="nc bnc" id="L68" title="All 2 branches missed.">        if (user == null){</span>
-<span class="nc" id="L69">            return false;</span>
+<span class="fc" id="L66">        FindIterable&lt;Document&gt; request = usersCollection.find(eq(&quot;username&quot;, username));</span>
+<span class="fc" id="L67">        Document user = request.first();</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">        if (user == null){</span>
+<span class="fc" id="L69">            return false;</span>
         }
-<span class="nc" id="L71">        return true;</span>
+<span class="fc" id="L71">        return true;</span>
     }
 
     //sets the online status of a user to either true or false
     public static void setOnlineStatus(User user, boolean b){
-<span class="nc" id="L76">        usersCollection.updateOne(eq(&quot;username&quot;, user.getUsername()),</span>
-<span class="nc" id="L77">                set(&quot;online&quot;, b));</span>
-<span class="nc" id="L78">    }</span>
+<span class="fc" id="L76">        usersCollection.updateOne(eq(&quot;username&quot;, user.getUsername()),</span>
+<span class="fc" id="L77">                set(&quot;online&quot;, b));</span>
+<span class="fc" id="L78">    }</span>
 
     //sets the online status of a user to either true or false
     public static void setOnlineStatusById(int id, boolean b){
-<span class="nc" id="L82">        usersCollection.updateOne(eq(&quot;userId&quot;, id),</span>
-<span class="nc" id="L83">                set(&quot;online&quot;, b));</span>
-<span class="nc" id="L84">    }</span>
+<span class="fc" id="L82">        usersCollection.updateOne(eq(&quot;userId&quot;, id),</span>
+<span class="fc" id="L83">                set(&quot;online&quot;, b));</span>
+<span class="fc" id="L84">    }</span>
 
     //returns a user with a certain username
     public static User getUserByUsername(String username){
-<span class="nc" id="L88">        FindIterable&lt;Document&gt; request =  usersCollection.find(eq(&quot;username&quot;, username));</span>
-<span class="nc" id="L89">        Document user = request.first();</span>
+<span class="fc" id="L88">        FindIterable&lt;Document&gt; request =  usersCollection.find(eq(&quot;username&quot;, username));</span>
+<span class="fc" id="L89">        Document user = request.first();</span>
         //create a new user representation
-<span class="nc" id="L91">        User userRepresentation = DatabaseConnectorUser.getUserInfo(user);</span>
-<span class="nc" id="L92">        return userRepresentation;</span>
+<span class="fc" id="L91">        User userRepresentation = DatabaseConnectorUser.getUserInfo(user);</span>
+<span class="fc" id="L92">        return userRepresentation;</span>
     }
 
     public static User getUserById(int id){
-<span class="nc" id="L96">        FindIterable&lt;Document&gt; request =  usersCollection.find(eq(&quot;userId&quot;, id)); //Temporary id-field does not exist by now</span>
-<span class="nc" id="L97">        Document user = request.first();</span>
+<span class="fc" id="L96">        FindIterable&lt;Document&gt; request =  usersCollection.find(eq(&quot;userId&quot;, id)); //Temporary id-field does not exist by now</span>
+<span class="fc" id="L97">        Document user = request.first();</span>
 
-<span class="nc bnc" id="L99" title="All 2 branches missed.">        if (user == null){</span>
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">        if (user == null){</span>
 <span class="nc" id="L100">            throw new UserNotFoundException(&quot;This user could not be found&quot;);</span>
         }
 
         //create a new user representation
-<span class="nc" id="L104">        User userRepresentation = DatabaseConnectorUser.getUserInfo(user);</span>
-<span class="nc" id="L105">        return userRepresentation;</span>
+<span class="fc" id="L104">        User userRepresentation = DatabaseConnectorUser.getUserInfo(user);</span>
+<span class="fc" id="L105">        return userRepresentation;</span>
     }
 
     public static String getUsernameById(int id){
-<span class="nc" id="L109">        FindIterable&lt;Document&gt; request =  usersCollection.find(eq(&quot;userId&quot;, id)); //Temporary id-field does not exist by now</span>
-<span class="nc" id="L110">        Document user = request.first();</span>
+<span class="fc" id="L109">        FindIterable&lt;Document&gt; request =  usersCollection.find(eq(&quot;userId&quot;, id)); //Temporary id-field does not exist by now</span>
+<span class="fc" id="L110">        Document user = request.first();</span>
 
-<span class="nc bnc" id="L112" title="All 2 branches missed.">        if (user == null){</span>
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">        if (user == null){</span>
 <span class="nc" id="L113">            throw new UserNotFoundException(&quot;This user could not be found&quot;);</span>
         }
 
-<span class="nc" id="L116">        return user.getString(&quot;username&quot;);</span>
+<span class="fc" id="L116">        return user.getString(&quot;username&quot;);</span>
     }
 
     //transforms BSON User into Backend User Representation
     public static User getUserInfo(Document user){
-<span class="nc" id="L121">        User userRepresentation = new User();</span>
-<span class="nc" id="L122">        userRepresentation.setUsername(user.getString(&quot;username&quot;));</span>
-<span class="nc" id="L123">        userRepresentation.setName(user.getString(&quot;name&quot;));</span>
-<span class="nc" id="L124">        userRepresentation.setPassword(user.getString(&quot;password&quot;));</span>
-<span class="nc" id="L125">        userRepresentation.setCreationDate(user.getString(&quot;creation-date&quot;));</span>
-<span class="nc" id="L126">        userRepresentation.setId(user.getInteger(&quot;userId&quot;, 0)); //if user has no id he gets assigned id: 0, flag that something is not working properly</span>
-<span class="nc bnc" id="L127" title="All 2 branches missed.">        userRepresentation.setStatus(user.getBoolean(&quot;online&quot;)? UserStatus.ONLINE : UserStatus.OFFLINE);</span>
-<span class="nc" id="L128">        userRepresentation.setAvatarNr(user.getInteger( &quot;avatarNr&quot;, 0)); //if user has no avatar chosen he gets the default value 0</span>
-<span class="nc" id="L129">        userRepresentation.setFriendsList(getFriends(userRepresentation.getId()));</span>
+<span class="fc" id="L121">        User userRepresentation = new User();</span>
+<span class="fc" id="L122">        userRepresentation.setUsername(user.getString(&quot;username&quot;));</span>
+<span class="fc" id="L123">        userRepresentation.setName(user.getString(&quot;name&quot;));</span>
+<span class="fc" id="L124">        userRepresentation.setPassword(user.getString(&quot;password&quot;));</span>
+<span class="fc" id="L125">        userRepresentation.setCreationDate(user.getString(&quot;creation-date&quot;));</span>
+<span class="fc" id="L126">        userRepresentation.setId(user.getInteger(&quot;userId&quot;, 0)); //if user has no id he gets assigned id: 0, flag that something is not working properly</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">        userRepresentation.setStatus(user.getBoolean(&quot;online&quot;)? UserStatus.ONLINE : UserStatus.OFFLINE);</span>
+<span class="fc" id="L128">        userRepresentation.setAvatarNr(user.getInteger( &quot;avatarNr&quot;, 0)); //if user has no avatar chosen he gets the default value 0</span>
+<span class="fc" id="L129">        userRepresentation.setFriendsList(getFriends(userRepresentation.getId()));</span>
 
-<span class="nc" id="L131">        return userRepresentation;</span>
+<span class="fc" id="L131">        return userRepresentation;</span>
     }
 
     //Helper function which generates a unique user id
     public static int generateId(){
-<span class="nc" id="L136">        int random = (int) (Math.random() * 100000);</span>
-<span class="nc" id="L137">        FindIterable&lt;Document&gt; request = usersCollection.find(eq(&quot;userId&quot;, random));</span>
-<span class="nc bnc" id="L138" title="All 2 branches missed.">        if (request.first() != null){random = DatabaseConnectorUser.generateId();};</span>
-<span class="nc" id="L139">        return random;</span>
+<span class="fc" id="L136">        int random = (int) (Math.random() * 100000);</span>
+<span class="fc" id="L137">        FindIterable&lt;Document&gt; request = usersCollection.find(eq(&quot;userId&quot;, random));</span>
+<span class="pc bpc" id="L138" title="1 of 2 branches missed.">        if (request.first() != null){random = DatabaseConnectorUser.generateId();};</span>
+<span class="fc" id="L139">        return random;</span>
     }
 
     //returns all users represented as User.class
     public static ArrayList&lt;User&gt; getAllUsers(){
-<span class="nc" id="L144">        List&lt;Document&gt; request = usersCollection.find().into(new ArrayList&lt;&gt;());</span>
-<span class="nc" id="L145">        ArrayList&lt;User&gt; allUsers = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L146" title="All 2 branches missed.">        for (Document doc : request){</span>
-<span class="nc" id="L147">            User tempUser = DatabaseConnectorUser.getUserInfo(doc);</span>
-<span class="nc" id="L148">            allUsers.add(tempUser);</span>
-<span class="nc" id="L149">        }</span>
-<span class="nc" id="L150">        return allUsers;</span>
+<span class="fc" id="L144">        List&lt;Document&gt; request = usersCollection.find().into(new ArrayList&lt;&gt;());</span>
+<span class="fc" id="L145">        ArrayList&lt;User&gt; allUsers = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L146" title="All 2 branches covered.">        for (Document doc : request){</span>
+<span class="fc" id="L147">            User tempUser = DatabaseConnectorUser.getUserInfo(doc);</span>
+<span class="fc" id="L148">            allUsers.add(tempUser);</span>
+<span class="fc" id="L149">        }</span>
+<span class="fc" id="L150">        return allUsers;</span>
     }
 
     //updates the name of a user
     public static void updateName(User userToUpdate){
-<span class="nc" id="L155">        usersCollection.updateOne(eq(&quot;userId&quot;, userToUpdate.getId()),</span>
-<span class="nc" id="L156">                set(&quot;name&quot;, userToUpdate.getName()));</span>
-<span class="nc" id="L157">    }</span>
+<span class="fc" id="L155">        usersCollection.updateOne(eq(&quot;userId&quot;, userToUpdate.getId()),</span>
+<span class="fc" id="L156">                set(&quot;name&quot;, userToUpdate.getName()));</span>
+<span class="fc" id="L157">    }</span>
 
     //updates the username of a user
     public static void updateUsername(User userToUpdate){
-<span class="nc" id="L161">        usersCollection.updateOne(eq(&quot;userId&quot;, userToUpdate.getId()),</span>
-<span class="nc" id="L162">                set(&quot;username&quot;, userToUpdate.getUsername()));</span>
-<span class="nc" id="L163">    }</span>
+<span class="fc" id="L161">        usersCollection.updateOne(eq(&quot;userId&quot;, userToUpdate.getId()),</span>
+<span class="fc" id="L162">                set(&quot;username&quot;, userToUpdate.getUsername()));</span>
+<span class="fc" id="L163">    }</span>
 
     //updates the username of a user
     public static void updatePassword(User userToUpdate){
-<span class="nc" id="L167">        usersCollection.updateOne(eq(&quot;userId&quot;, userToUpdate.getId()),</span>
-<span class="nc" id="L168">                set(&quot;password&quot;, userToUpdate.getPassword()));</span>
-<span class="nc" id="L169">    }</span>
+<span class="fc" id="L167">        usersCollection.updateOne(eq(&quot;userId&quot;, userToUpdate.getId()),</span>
+<span class="fc" id="L168">                set(&quot;password&quot;, userToUpdate.getPassword()));</span>
+<span class="fc" id="L169">    }</span>
 
     //updates the new avatar number
     public static void updateAvatarNr(User userToUpdate){
@@ -175,41 +175,41 @@ import org.json.JSONObject;
 <span class="nc" id="L175">    }</span>
 
     public static void addFriend(int addingUserId, int toBeAddedUserId){
-<span class="nc" id="L178">        ArrayList&lt;Integer&gt; currentFriends = getFriends(addingUserId);</span>
-<span class="nc" id="L179">        boolean shouldAdd = true;</span>
+<span class="fc" id="L178">        ArrayList&lt;Integer&gt; currentFriends = getFriends(addingUserId);</span>
+<span class="fc" id="L179">        boolean shouldAdd = true;</span>
         // check if friend to be added is already included in list
-<span class="nc bnc" id="L181" title="All 2 branches missed.">        for (Integer friendId : currentFriends){</span>
+<span class="pc bpc" id="L181" title="1 of 2 branches missed.">        for (Integer friendId : currentFriends){</span>
 <span class="nc bnc" id="L182" title="All 2 branches missed.">            if (friendId == toBeAddedUserId) {</span>
 <span class="nc" id="L183">                shouldAdd = false;</span>
 <span class="nc" id="L184">                break;</span>
             }
 <span class="nc" id="L186">        }</span>
-<span class="nc bnc" id="L187" title="All 2 branches missed.">        if (shouldAdd){</span>
-<span class="nc" id="L188">            usersCollection.updateOne(eq(&quot;userId&quot;, addingUserId), Updates.addToSet(&quot;friendsList&quot;, toBeAddedUserId));</span>
+<span class="pc bpc" id="L187" title="1 of 2 branches missed.">        if (shouldAdd){</span>
+<span class="fc" id="L188">            usersCollection.updateOne(eq(&quot;userId&quot;, addingUserId), Updates.addToSet(&quot;friendsList&quot;, toBeAddedUserId));</span>
         }
-<span class="nc" id="L190">    }</span>
+<span class="fc" id="L190">    }</span>
 
     public static void deleteFriend(int deletingUserId, int toBeDeletedUserId){
-<span class="nc" id="L193">        usersCollection.updateOne(eq(&quot;userId&quot;, deletingUserId),</span>
-<span class="nc" id="L194">                Updates.pull(&quot;friendsList&quot;, toBeDeletedUserId));</span>
-<span class="nc" id="L195">    }</span>
+<span class="fc" id="L193">        usersCollection.updateOne(eq(&quot;userId&quot;, deletingUserId),</span>
+<span class="fc" id="L194">                Updates.pull(&quot;friendsList&quot;, toBeDeletedUserId));</span>
+<span class="fc" id="L195">    }</span>
 
     public static ArrayList&lt;Integer&gt; getFriends(int userId){
-<span class="nc" id="L198">        FindIterable&lt;Document&gt; request =  usersCollection.find(eq(&quot;userId&quot;, userId));</span>
-<span class="nc" id="L199">        Document user = request.first();</span>
+<span class="fc" id="L198">        FindIterable&lt;Document&gt; request =  usersCollection.find(eq(&quot;userId&quot;, userId));</span>
+<span class="fc" id="L199">        Document user = request.first();</span>
 
-<span class="nc bnc" id="L201" title="All 4 branches missed.">        assert user != null;</span>
-<span class="nc" id="L202">        String userAsString = user.toJson();</span>
-<span class="nc" id="L203">        JSONObject userAsJson = new JSONObject(userAsString);</span>
+<span class="pc bpc" id="L201" title="2 of 4 branches missed.">        assert user != null;</span>
+<span class="fc" id="L202">        String userAsString = user.toJson();</span>
+<span class="fc" id="L203">        JSONObject userAsJson = new JSONObject(userAsString);</span>
 
-<span class="nc" id="L205">        JSONArray friendsListJson = userAsJson.getJSONArray(&quot;friendsList&quot;);</span>
-<span class="nc" id="L206">        ArrayList&lt;Integer&gt; friendsList = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L205">        JSONArray friendsListJson = userAsJson.getJSONArray(&quot;friendsList&quot;);</span>
+<span class="fc" id="L206">        ArrayList&lt;Integer&gt; friendsList = new ArrayList&lt;&gt;();</span>
 
-<span class="nc bnc" id="L208" title="All 2 branches missed.">        for (int i = 0; i &lt; friendsListJson.length(); i++){</span>
-<span class="nc" id="L209">            friendsList.add(friendsListJson.getInt(i));</span>
+<span class="fc bfc" id="L208" title="All 2 branches covered.">        for (int i = 0; i &lt; friendsListJson.length(); i++){</span>
+<span class="fc" id="L209">            friendsList.add(friendsListJson.getInt(i));</span>
         }
 
-<span class="nc" id="L212">        return friendsList;</span>
+<span class="fc" id="L212">        return friendsList;</span>
     }
 
     /* initial setup to give all existing users an empty friends List. Keep in code if reuse necessary.

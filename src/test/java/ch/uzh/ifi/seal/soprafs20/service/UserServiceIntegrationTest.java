@@ -437,21 +437,6 @@ public class UserServiceIntegrationTest {
                 user1=testFirstUser;
             }
             assertTrue(allUsers.contains(testFirstUser));
-
-            if(testFirstUser.getId()==(user2.getId())){
-                user2=testFirstUser;
-            }
-            assertTrue(allUsers.contains(testFirstUser));
-
-            if(testFirstUser.getId()==(user3.getId())){
-                user3=testFirstUser;
-            }
-            assertTrue(allUsers.contains(testFirstUser));
-
-            if(testFirstUser.getId()==(user4.getId())){
-                user4=testFirstUser;
-            }
-            assertTrue(allUsers.contains(testFirstUser));
         }
 
         assertTrue(allUsers.size()>= 4);

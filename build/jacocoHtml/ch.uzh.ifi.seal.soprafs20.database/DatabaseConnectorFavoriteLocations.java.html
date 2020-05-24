@@ -23,20 +23,20 @@ public class DatabaseConnectorFavoriteLocations {
 <span class="nc" id="L23">    public DatabaseConnectorFavoriteLocations(){}</span>
 
     //connection to mongodb on the cloud with credentials of luca locher
-<span class="nc" id="L26">    static MongoClient mongoClient = MongoClients.create(</span>
-<span class="nc" id="L27">            Credentials.getMongoCredentials());</span>
+<span class="fc" id="L26">    static MongoClient mongoClient = MongoClients.create(</span>
+<span class="fc" id="L27">            Credentials.getMongoCredentials());</span>
     //Establish connection to the Location Database (development purposes only)
-<span class="nc" id="L29">    static MongoDatabase favoriteLocations = mongoClient.getDatabase(&quot;FavoriteLocations&quot;);</span>
+<span class="fc" id="L29">    static MongoDatabase favoriteLocations = mongoClient.getDatabase(&quot;FavoriteLocations&quot;);</span>
     //Establish connection to the Fountains Collection (development purposes only)
-<span class="nc" id="L31">    static MongoCollection&lt;Document&gt; locationsCollection = favoriteLocations.getCollection(&quot;Locations&quot;);</span>
+<span class="fc" id="L31">    static MongoCollection&lt;Document&gt; locationsCollection = favoriteLocations.getCollection(&quot;Locations&quot;);</span>
 
     //creates Entry in the database
     public static void createEntry(int userId) {
-<span class="nc" id="L35">        ArrayList&lt;Integer&gt; emptyFavorites = new ArrayList&lt;Integer&gt;();</span>
-<span class="nc" id="L36">        Document doc = new Document(&quot;userId&quot;, userId)</span>
-<span class="nc" id="L37">                .append(&quot;favoriteLocations&quot;, emptyFavorites);</span>
-<span class="nc" id="L38">        locationsCollection.insertOne(doc);</span>
-<span class="nc" id="L39">    }</span>
+<span class="fc" id="L35">        ArrayList&lt;Integer&gt; emptyFavorites = new ArrayList&lt;Integer&gt;();</span>
+<span class="fc" id="L36">        Document doc = new Document(&quot;userId&quot;, userId)</span>
+<span class="fc" id="L37">                .append(&quot;favoriteLocations&quot;, emptyFavorites);</span>
+<span class="fc" id="L38">        locationsCollection.insertOne(doc);</span>
+<span class="fc" id="L39">    }</span>
 
     public static ArrayList&lt;Integer&gt; getFavoriteLocations(int userId){
 <span class="nc" id="L42">        FindIterable&lt;Document&gt; request =  locationsCollection.find(eq(&quot;userId&quot;, userId));</span>

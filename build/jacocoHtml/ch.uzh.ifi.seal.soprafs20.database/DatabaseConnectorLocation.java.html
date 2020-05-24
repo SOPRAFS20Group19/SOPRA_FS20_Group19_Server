@@ -23,30 +23,30 @@ public class DatabaseConnectorLocation {
 <span class="nc" id="L23">    public DatabaseConnectorLocation(){}</span>
 
     //connection to mongodb on the cloud with credentials of luca locher
-<span class="fc" id="L26">    static MongoClient mongoClient = MongoClients.create(</span>
-<span class="fc" id="L27">            Credentials.getMongoCredentials());</span>
+<span class="nc" id="L26">    static MongoClient mongoClient = MongoClients.create(</span>
+<span class="nc" id="L27">            Credentials.getMongoCredentials());</span>
     //Establish connection to the Location Database (development purposes only)
-<span class="fc" id="L29">    static MongoDatabase locationStorage = mongoClient.getDatabase(&quot;LocationStorage&quot;);</span>
+<span class="nc" id="L29">    static MongoDatabase locationStorage = mongoClient.getDatabase(&quot;LocationStorage&quot;);</span>
     //Establish connection to the Fountains Collection (development purposes only)
-<span class="fc" id="L31">    static MongoCollection&lt;Document&gt; fountainsCollection = locationStorage.getCollection(&quot;Fountains&quot;);</span>
+<span class="nc" id="L31">    static MongoCollection&lt;Document&gt; fountainsCollection = locationStorage.getCollection(&quot;Fountains&quot;);</span>
     //Establish connection to the Fireplaces Collection (development purposes only)
-<span class="fc" id="L33">    static MongoCollection&lt;Document&gt; fireplacesCollection = locationStorage.getCollection(&quot;Fireplaces&quot;);</span>
+<span class="nc" id="L33">    static MongoCollection&lt;Document&gt; fireplacesCollection = locationStorage.getCollection(&quot;Fireplaces&quot;);</span>
     //Establish connection to the Recycling Collection (development purposes only)
-<span class="fc" id="L35">    static MongoCollection&lt;Document&gt; recyclingCollection = locationStorage.getCollection(&quot;Recycling&quot;);</span>
+<span class="nc" id="L35">    static MongoCollection&lt;Document&gt; recyclingCollection = locationStorage.getCollection(&quot;Recycling&quot;);</span>
 
-<span class="fc" id="L37">    static MongoCollection&lt;Document&gt; userFountainsCollection = locationStorage.getCollection(&quot;UserFountains&quot;);</span>
+<span class="nc" id="L37">    static MongoCollection&lt;Document&gt; userFountainsCollection = locationStorage.getCollection(&quot;UserFountains&quot;);</span>
 
-<span class="fc" id="L39">    static MongoCollection&lt;Document&gt; userFireplacesCollection = locationStorage.getCollection(&quot;UserFireplaces&quot;);</span>
+<span class="nc" id="L39">    static MongoCollection&lt;Document&gt; userFireplacesCollection = locationStorage.getCollection(&quot;UserFireplaces&quot;);</span>
 
-<span class="fc" id="L41">    static MongoCollection&lt;Document&gt; userRecyclingCollection = locationStorage.getCollection(&quot;UserRecycling&quot;);</span>
+<span class="nc" id="L41">    static MongoCollection&lt;Document&gt; userRecyclingCollection = locationStorage.getCollection(&quot;UserRecycling&quot;);</span>
 
-<span class="fc" id="L43">    static MongoCollection&lt;Document&gt; toiletsCollection = locationStorage.getCollection(&quot;WC&quot;);</span>
+<span class="nc" id="L43">    static MongoCollection&lt;Document&gt; toiletsCollection = locationStorage.getCollection(&quot;WC&quot;);</span>
 
-<span class="fc" id="L45">    static MongoCollection&lt;Document&gt; userToiletsCollection = locationStorage.getCollection(&quot;UserWC&quot;);</span>
+<span class="nc" id="L45">    static MongoCollection&lt;Document&gt; userToiletsCollection = locationStorage.getCollection(&quot;UserWC&quot;);</span>
 
-<span class="fc" id="L47">    static MongoCollection&lt;Document&gt; userTableTennisCollection = locationStorage.getCollection(&quot;UserTableTennis&quot;);</span>
+<span class="nc" id="L47">    static MongoCollection&lt;Document&gt; userTableTennisCollection = locationStorage.getCollection(&quot;UserTableTennis&quot;);</span>
 
-<span class="fc" id="L49">    static MongoCollection&lt;Document&gt; userBenchCollection = locationStorage.getCollection(&quot;UserBench&quot;);</span>
+<span class="nc" id="L49">    static MongoCollection&lt;Document&gt; userBenchCollection = locationStorage.getCollection(&quot;UserBench&quot;);</span>
 
     public static void addNewFountainToDatabase(Location location){
 <span class="nc" id="L52">        JSONArray coordinatesAsJSON = new JSONArray();</span>
@@ -216,58 +216,58 @@ public class DatabaseConnectorLocation {
 
     //Helper function which generates a unique table tennis id
     public static int generateBenchId(){
-<span class="fc" id="L219">        int random = (int) (Math.random() * 10000) + 60000000;</span>
-<span class="fc" id="L220">        FindIterable&lt;Document&gt; request = userBenchCollection.find(eq(&quot;objectid&quot;, random));</span>
+<span class="nc" id="L219">        int random = (int) (Math.random() * 10000) + 60000000;</span>
+<span class="nc" id="L220">        FindIterable&lt;Document&gt; request = userBenchCollection.find(eq(&quot;objectid&quot;, random));</span>
 
-<span class="pc bpc" id="L222" title="1 of 2 branches missed.">        if (request.first() != null){DatabaseConnectorLocation.generateBenchId();};</span>
-<span class="fc" id="L223">        return  random;</span>
+<span class="nc bnc" id="L222" title="All 2 branches missed.">        if (request.first() != null){DatabaseConnectorLocation.generateBenchId();};</span>
+<span class="nc" id="L223">        return  random;</span>
     }
 
     //Helper function which generates a unique table tennis id
     public static int generateTableTennisId(){
-<span class="fc" id="L228">        int random = (int) (Math.random() * 10000) + 50000000;</span>
-<span class="fc" id="L229">        FindIterable&lt;Document&gt; request = userTableTennisCollection.find(eq(&quot;objectid&quot;, random));</span>
+<span class="nc" id="L228">        int random = (int) (Math.random() * 10000) + 50000000;</span>
+<span class="nc" id="L229">        FindIterable&lt;Document&gt; request = userTableTennisCollection.find(eq(&quot;objectid&quot;, random));</span>
 
-<span class="pc bpc" id="L231" title="1 of 2 branches missed.">        if (request.first() != null){DatabaseConnectorLocation.generateTableTennisId();};</span>
-<span class="fc" id="L232">        return  random;</span>
+<span class="nc bnc" id="L231" title="All 2 branches missed.">        if (request.first() != null){DatabaseConnectorLocation.generateTableTennisId();};</span>
+<span class="nc" id="L232">        return  random;</span>
     }
 
     //Helper function which generates a unique toilet id
     public static int generateToiletId(){
-<span class="fc" id="L237">        int random = (int) (Math.random() * 10000) + 40000000;</span>
-<span class="fc" id="L238">        FindIterable&lt;Document&gt; request = toiletsCollection.find(eq(&quot;objectid&quot;, random));</span>
-<span class="fc" id="L239">        FindIterable&lt;Document&gt; request2 = userToiletsCollection.find(eq(&quot;objectid&quot;, random));</span>
+<span class="nc" id="L237">        int random = (int) (Math.random() * 10000) + 40000000;</span>
+<span class="nc" id="L238">        FindIterable&lt;Document&gt; request = toiletsCollection.find(eq(&quot;objectid&quot;, random));</span>
+<span class="nc" id="L239">        FindIterable&lt;Document&gt; request2 = userToiletsCollection.find(eq(&quot;objectid&quot;, random));</span>
 
-<span class="pc bpc" id="L241" title="2 of 4 branches missed.">        if (request.first() != null || request2.first() != null){DatabaseConnectorLocation.generateToiletId();};</span>
-<span class="fc" id="L242">        return  random;</span>
+<span class="nc bnc" id="L241" title="All 4 branches missed.">        if (request.first() != null || request2.first() != null){DatabaseConnectorLocation.generateToiletId();};</span>
+<span class="nc" id="L242">        return  random;</span>
     }
 
     //Helper function which generates a unique fountain id
     public static int generateFountainId(){
-<span class="fc" id="L247">        int random = (int) (Math.random() * 10000) + 10000000;</span>
-<span class="fc" id="L248">        FindIterable&lt;Document&gt; request = userFountainsCollection.find(eq(&quot;properties.objectid&quot;, random));</span>
-<span class="fc" id="L249">        FindIterable&lt;Document&gt; request2 = fountainsCollection.find(eq(&quot;properties.objectid&quot;, random));</span>
+<span class="nc" id="L247">        int random = (int) (Math.random() * 10000) + 10000000;</span>
+<span class="nc" id="L248">        FindIterable&lt;Document&gt; request = userFountainsCollection.find(eq(&quot;properties.objectid&quot;, random));</span>
+<span class="nc" id="L249">        FindIterable&lt;Document&gt; request2 = fountainsCollection.find(eq(&quot;properties.objectid&quot;, random));</span>
 
-<span class="pc bpc" id="L251" title="2 of 4 branches missed.">        if (request.first() != null || request2.first() != null){DatabaseConnectorLocation.generateFountainId();};</span>
-<span class="fc" id="L252">        return  random;</span>
+<span class="nc bnc" id="L251" title="All 4 branches missed.">        if (request.first() != null || request2.first() != null){DatabaseConnectorLocation.generateFountainId();};</span>
+<span class="nc" id="L252">        return  random;</span>
     }
 
     //Helper function which generates a unique fireplace id
     public static int generateFireplaceId(){
-<span class="fc" id="L257">        int random = (int) (Math.random() * 10000) + 20000000;</span>
-<span class="fc" id="L258">        FindIterable&lt;Document&gt; request = userFireplacesCollection.find(eq(&quot;BarbecuePlace.Id&quot;, random));</span>
-<span class="fc" id="L259">        FindIterable&lt;Document&gt; request2 = fireplacesCollection.find(eq(&quot;BarbecuePlace.Id&quot;, random));</span>
-<span class="pc bpc" id="L260" title="2 of 4 branches missed.">        if (request.first() != null || request2.first() != null){DatabaseConnectorLocation.generateFireplaceId();};</span>
-<span class="fc" id="L261">        return  random;</span>
+<span class="nc" id="L257">        int random = (int) (Math.random() * 10000) + 20000000;</span>
+<span class="nc" id="L258">        FindIterable&lt;Document&gt; request = userFireplacesCollection.find(eq(&quot;BarbecuePlace.Id&quot;, random));</span>
+<span class="nc" id="L259">        FindIterable&lt;Document&gt; request2 = fireplacesCollection.find(eq(&quot;BarbecuePlace.Id&quot;, random));</span>
+<span class="nc bnc" id="L260" title="All 4 branches missed.">        if (request.first() != null || request2.first() != null){DatabaseConnectorLocation.generateFireplaceId();};</span>
+<span class="nc" id="L261">        return  random;</span>
     }
 
     //Helper function which generates a unique fireplace id
     public static int generateRecyclingId(){
-<span class="fc" id="L266">        int random = (int) (Math.random() * 10000) + 30000000;</span>
-<span class="fc" id="L267">        FindIterable&lt;Document&gt; request = userRecyclingCollection.find(eq(&quot;properties.objectid&quot;, Integer.toString(random)));</span>
-<span class="fc" id="L268">        FindIterable&lt;Document&gt; request2 = recyclingCollection.find(eq(&quot;properties.objectid&quot;, Integer.toString(random)));</span>
-<span class="pc bpc" id="L269" title="2 of 4 branches missed.">        if (request.first() != null || request2.first() != null){DatabaseConnectorLocation.generateRecyclingId();};</span>
-<span class="fc" id="L270">        return  random;</span>
+<span class="nc" id="L266">        int random = (int) (Math.random() * 10000) + 30000000;</span>
+<span class="nc" id="L267">        FindIterable&lt;Document&gt; request = userRecyclingCollection.find(eq(&quot;properties.objectid&quot;, Integer.toString(random)));</span>
+<span class="nc" id="L268">        FindIterable&lt;Document&gt; request2 = recyclingCollection.find(eq(&quot;properties.objectid&quot;, Integer.toString(random)));</span>
+<span class="nc bnc" id="L269" title="All 4 branches missed.">        if (request.first() != null || request2.first() != null){DatabaseConnectorLocation.generateRecyclingId();};</span>
+<span class="nc" id="L270">        return  random;</span>
     }
 
     public static int createLocation(Location location){
