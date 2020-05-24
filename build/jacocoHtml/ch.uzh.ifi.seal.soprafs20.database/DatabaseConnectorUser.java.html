@@ -96,8 +96,8 @@ import org.json.JSONObject;
 <span class="fc" id="L96">        FindIterable&lt;Document&gt; request =  usersCollection.find(eq(&quot;userId&quot;, id)); //Temporary id-field does not exist by now</span>
 <span class="fc" id="L97">        Document user = request.first();</span>
 
-<span class="pc bpc" id="L99" title="1 of 2 branches missed.">        if (user == null){</span>
-<span class="nc" id="L100">            throw new UserNotFoundException(&quot;This user could not be found&quot;);</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">        if (user == null){</span>
+<span class="fc" id="L100">            throw new UserNotFoundException(&quot;This user could not be found&quot;);</span>
         }
 
         //create a new user representation

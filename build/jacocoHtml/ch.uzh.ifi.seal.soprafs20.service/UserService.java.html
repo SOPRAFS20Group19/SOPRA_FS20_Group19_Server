@@ -167,12 +167,12 @@ import java.util.*;
     public ArrayList&lt;Message&gt; getChat(int userId, int friendId){
         ArrayList&lt;Message&gt; chatToReturn;
 <span class="pc bpc" id="L169" title="1 of 2 branches missed.">        if (userId &lt;= friendId){</span>
-<span class="nc" id="L170">            chatToReturn = DatabaseConnectorLocationChats.getChatFriends(userId, friendId);</span>
-<span class="nc" id="L171">            DatabaseConnectorLocationChats.setOnRead(userId, friendId, userId);</span>
+<span class="fc" id="L170">            chatToReturn = DatabaseConnectorLocationChats.getChatFriends(userId, friendId);</span>
+<span class="fc" id="L171">            DatabaseConnectorLocationChats.setOnRead(userId, friendId, userId);</span>
         }
         else {
-<span class="fc" id="L174">            chatToReturn = DatabaseConnectorLocationChats.getChatFriends(friendId, userId);</span>
-<span class="fc" id="L175">            DatabaseConnectorLocationChats.setOnRead(friendId, userId, userId);</span>
+<span class="nc" id="L174">            chatToReturn = DatabaseConnectorLocationChats.getChatFriends(friendId, userId);</span>
+<span class="nc" id="L175">            DatabaseConnectorLocationChats.setOnRead(friendId, userId, userId);</span>
         }
 
 <span class="fc" id="L178">        return chatToReturn;</span>

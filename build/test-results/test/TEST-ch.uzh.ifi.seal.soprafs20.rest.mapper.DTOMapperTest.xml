@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ch.uzh.ifi.seal.soprafs20.rest.mapper.DTOMapperTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2020-05-24T11:44:59" hostname="Luis-MacBook-Pro.local" time="0.039">
+  <properties/>
+  <testcase name="testCreateUser_fromUserPostDTO_toUser_success()" classname="ch.uzh.ifi.seal.soprafs20.rest.mapper.DTOMapperTest" time="0.001"/>
+  <testcase name="testPostLocation_fromLocationPostDTO_toEntity_success()" classname="ch.uzh.ifi.seal.soprafs20.rest.mapper.DTOMapperTest" time="0.002"/>
+  <testcase name="testGetMessage_fromEntity_toMessageGetDTO_success()" classname="ch.uzh.ifi.seal.soprafs20.rest.mapper.DTOMapperTest" time="0.001"/>
+  <testcase name="testGetUser_fromUser_toUserGetDTO_success()" classname="ch.uzh.ifi.seal.soprafs20.rest.mapper.DTOMapperTest" time="0.016"/>
+  <testcase name="testGetLocation_fromLocation_toLocationGetDTO_success()" classname="ch.uzh.ifi.seal.soprafs20.rest.mapper.DTOMapperTest" time="0.003"/>
+  <testcase name="testSendMessage_fromMessagePostDTO_toEntity_success()" classname="ch.uzh.ifi.seal.soprafs20.rest.mapper.DTOMapperTest" time="0.002"/>
+  <testcase name="testUpdateUser_fromUserPutDTO_toUser_success()" classname="ch.uzh.ifi.seal.soprafs20.rest.mapper.DTOMapperTest" time="0.003"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

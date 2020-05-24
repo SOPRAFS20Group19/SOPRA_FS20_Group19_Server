@@ -24,63 +24,63 @@ public class DatabaseConnectorRating {
 <span class="nc" id="L24">    public DatabaseConnectorRating(){}</span>
 
     //connection to mongodb on the cloud with credentials of luca locher
-<span class="nc" id="L27">    static MongoClient mongoClient = MongoClients.create(</span>
-<span class="nc" id="L28">            Credentials.getMongoCredentials());</span>
+<span class="fc" id="L27">    static MongoClient mongoClient = MongoClients.create(</span>
+<span class="fc" id="L28">            Credentials.getMongoCredentials());</span>
     //Establish connection to the Location Database (development purposes only)
-<span class="nc" id="L30">    static MongoDatabase ratingLocation = mongoClient.getDatabase(&quot;RatingLocation&quot;);</span>
+<span class="fc" id="L30">    static MongoDatabase ratingLocation = mongoClient.getDatabase(&quot;RatingLocation&quot;);</span>
     //Establish connection to the Fountains Collection (development purposes only)
-<span class="nc" id="L32">    static MongoCollection&lt;Document&gt; ratingsCollection = ratingLocation.getCollection(&quot;Ratings&quot;);</span>
+<span class="fc" id="L32">    static MongoCollection&lt;Document&gt; ratingsCollection = ratingLocation.getCollection(&quot;Ratings&quot;);</span>
 
     public static int getRating(int userId, int locationId){
-<span class="nc" id="L35">        FindIterable&lt;Document&gt; request =  ratingsCollection.find(and((eq(&quot;userId&quot;, userId)), (eq(&quot;locationId&quot;, locationId))));</span>
-<span class="nc" id="L36">        Document test = request.first();</span>
-<span class="nc" id="L37">        int total = 0;</span>
-<span class="nc" id="L38">        int finalRating=0;</span>
-<span class="nc" id="L39">        int timesRated=0;</span>
-<span class="nc bnc" id="L40" title="All 2 branches missed.">        if (test != null) {</span>
-<span class="nc bnc" id="L41" title="All 2 branches missed.">            for (Document singleRating : request) {</span>
-<span class="nc" id="L42">                JSONObject ratingAsJSON = new JSONObject(singleRating.toJson());</span>
-<span class="nc" id="L43">                int oneRating = ratingAsJSON.getInt(&quot;rating&quot;);</span>
-<span class="nc" id="L44">                total = total + oneRating;</span>
-<span class="nc" id="L45">                timesRated = timesRated + 1;</span>
-<span class="nc" id="L46">            }</span>
-<span class="nc" id="L47">            finalRating = total / timesRated;</span>
+<span class="fc" id="L35">        FindIterable&lt;Document&gt; request =  ratingsCollection.find(and((eq(&quot;userId&quot;, userId)), (eq(&quot;locationId&quot;, locationId))));</span>
+<span class="fc" id="L36">        Document test = request.first();</span>
+<span class="fc" id="L37">        int total = 0;</span>
+<span class="fc" id="L38">        int finalRating=0;</span>
+<span class="fc" id="L39">        int timesRated=0;</span>
+<span class="pc bpc" id="L40" title="1 of 2 branches missed.">        if (test != null) {</span>
+<span class="fc bfc" id="L41" title="All 2 branches covered.">            for (Document singleRating : request) {</span>
+<span class="fc" id="L42">                JSONObject ratingAsJSON = new JSONObject(singleRating.toJson());</span>
+<span class="fc" id="L43">                int oneRating = ratingAsJSON.getInt(&quot;rating&quot;);</span>
+<span class="fc" id="L44">                total = total + oneRating;</span>
+<span class="fc" id="L45">                timesRated = timesRated + 1;</span>
+<span class="fc" id="L46">            }</span>
+<span class="fc" id="L47">            finalRating = total / timesRated;</span>
         }
-<span class="nc" id="L49">        return finalRating;</span>
+<span class="fc" id="L49">        return finalRating;</span>
     }
 
     public static double getAverageRating(Integer locationId){
-<span class="nc" id="L53">        FindIterable&lt;Document&gt; request = ratingsCollection.find((eq(&quot;locationId&quot;, locationId)));</span>
-<span class="nc" id="L54">        Document noDoc = request.first();</span>
-<span class="nc" id="L55">        double total = 0;</span>
-<span class="nc" id="L56">        double finalRating = 0;</span>
-<span class="nc" id="L57">        int timesRated = 0;</span>
-<span class="nc bnc" id="L58" title="All 2 branches missed.">        if (noDoc == null){</span>
-<span class="nc" id="L59">            return finalRating;</span>
+<span class="fc" id="L53">        FindIterable&lt;Document&gt; request = ratingsCollection.find((eq(&quot;locationId&quot;, locationId)));</span>
+<span class="fc" id="L54">        Document noDoc = request.first();</span>
+<span class="fc" id="L55">        double total = 0;</span>
+<span class="fc" id="L56">        double finalRating = 0;</span>
+<span class="fc" id="L57">        int timesRated = 0;</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">        if (noDoc == null){</span>
+<span class="fc" id="L59">            return finalRating;</span>
         }
 
-<span class="nc bnc" id="L62" title="All 2 branches missed.">        for (Document doc : request){</span>
-<span class="nc" id="L63">            JSONObject ratingAsJSON = new JSONObject(doc.toJson());</span>
-<span class="nc" id="L64">            int oneRating = ratingAsJSON.getInt(&quot;rating&quot;);</span>
-<span class="nc" id="L65">            total += oneRating;</span>
-<span class="nc" id="L66">            timesRated++;</span>
-<span class="nc" id="L67">        }</span>
-<span class="nc" id="L68">        finalRating = (double) Math.round(100*(total/timesRated))/100;</span>
-<span class="nc" id="L69">        return finalRating;</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">        for (Document doc : request){</span>
+<span class="fc" id="L63">            JSONObject ratingAsJSON = new JSONObject(doc.toJson());</span>
+<span class="fc" id="L64">            int oneRating = ratingAsJSON.getInt(&quot;rating&quot;);</span>
+<span class="fc" id="L65">            total += oneRating;</span>
+<span class="fc" id="L66">            timesRated++;</span>
+<span class="fc" id="L67">        }</span>
+<span class="fc" id="L68">        finalRating = (double) Math.round(100*(total/timesRated))/100;</span>
+<span class="fc" id="L69">        return finalRating;</span>
     }
 
     //updates the rating
     public static void updateRating(int userId, int locationId, int rating){
-<span class="nc" id="L74">        FindIterable&lt;Document&gt; request =  ratingsCollection.find(and((eq(&quot;userId&quot;, userId)), (eq(&quot;locationId&quot;, locationId))));</span>
-<span class="nc" id="L75">        Document test = request.first();</span>
-<span class="nc bnc" id="L76" title="All 2 branches missed.">        if (test == null){</span>
-<span class="nc" id="L77">            Document doc = new Document(&quot;userId&quot;, userId)</span>
-<span class="nc" id="L78">                    .append(&quot;locationId&quot;, locationId)</span>
-<span class="nc" id="L79">                    .append(&quot;rating&quot;, rating);</span>
-<span class="nc" id="L80">            ratingsCollection.insertOne(doc);</span>
-<span class="nc" id="L81">        }</span>
-<span class="nc" id="L82">        else{ratingsCollection.updateOne(and(eq(&quot;userId&quot;, userId), (eq(&quot;locationId&quot;, locationId))),</span>
-<span class="nc" id="L83">                set(&quot;rating&quot;, rating));}</span>
-<span class="nc" id="L84">    }</span>
+<span class="fc" id="L74">        FindIterable&lt;Document&gt; request =  ratingsCollection.find(and((eq(&quot;userId&quot;, userId)), (eq(&quot;locationId&quot;, locationId))));</span>
+<span class="fc" id="L75">        Document test = request.first();</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">        if (test == null){</span>
+<span class="fc" id="L77">            Document doc = new Document(&quot;userId&quot;, userId)</span>
+<span class="fc" id="L78">                    .append(&quot;locationId&quot;, locationId)</span>
+<span class="fc" id="L79">                    .append(&quot;rating&quot;, rating);</span>
+<span class="fc" id="L80">            ratingsCollection.insertOne(doc);</span>
+<span class="fc" id="L81">        }</span>
+<span class="fc" id="L82">        else{ratingsCollection.updateOne(and(eq(&quot;userId&quot;, userId), (eq(&quot;locationId&quot;, locationId))),</span>
+<span class="fc" id="L83">                set(&quot;rating&quot;, rating));}</span>
+<span class="fc" id="L84">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
